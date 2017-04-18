@@ -1,0 +1,52 @@
+{
+  "id": 0,
+  "map": {
+    "width": 20,
+    "height": 20,
+    "base_terrain": 0,
+    "fields": [
+      {"x":10, "y":10, "terrain":1}
+    ],
+    "start_field": {"x":5,"y":5},
+    "groups": [{
+      "id": 1,
+      "name": "Players",
+      "team": 1
+    },{
+      "id": 2,
+      "name": "Dragon",
+      "team": 2
+    },{
+      "id": 3,
+      "name": "Princess",
+      "team": 1
+    }
+    ],
+    "units": [{
+      "type": 1,
+      "name": "Princess Anne",
+      "x": 15,
+      "y":15
+    },{
+      "type": 2,
+      "name": "Dragon Mortifer",
+      "x": 10,
+      "y":10
+    },{
+      "name": "Servant Sencha",
+      "type": 3,
+      "x": 10,
+      "y": 5
+    }]
+  },
+  "langs": {
+    "en": {
+      "name": "For the princess",
+      "description": "Princess is captured by the dragon Mortifer. The kingdom needs a hero!!"
+    },
+    "cz": {
+      "name": "Záchrana princezny",
+      "description": "Princeznu unesl drak Mortifer. Království hledá hrdinu, jenž by princeznu zachránil."
+    }
+  }
+}
