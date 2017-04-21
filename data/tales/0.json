@@ -4,10 +4,10 @@
     "width": 20,
     "height": 20,
     "base_terrain": 0,
-    "fields": [
-      {"x":10, "y":10, "terrain":1}
-    ],
-    "start_field": {"x":5,"y":5},
+    "fields": {
+      "10_10": 1
+    },
+    "start_field": "5_5",
     "groups": [{
       "id": 1,
       "name": "Players",
@@ -22,31 +22,45 @@
       "team": 1
     }
     ],
+    "triggers": [
+      {
+        "event": "playerUnitSpottedBy(2)",
+        "action": "dialog(dragonSpeech)"
+      }
+    ],
+    "dialogs": [{
+      "name": "dragonSpeech",
+      "image": "portraitOf(2)"
+    }],
     "units": [{
       "type": 1,
       "name": "Princess Anne",
-      "x": 15,
-      "y":15
+      "field": "15_15"
     },{
       "type": 2,
       "name": "Dragon Mortifer",
-      "x": 10,
-      "y":10
+      "field": "10_10"
     },{
       "name": "Servant Sencha",
       "type": 3,
-      "x": 10,
-      "y": 5
+      "field": "10_5"
     }]
   },
   "langs": {
     "en": {
       "name": "For the princess",
-      "description": "Princess is captured by the dragon Mortifer. The kingdom needs a hero!!"
+      "description": "Princess is captured by the dragon Mortifer. The kingdom needs a hero!!",
+      "onInit": "Once upon a time .. ",
+      "onVictory": "You are victorious",
+      "emailText": "Very long introduction to tale's mysteries.",
+      "dragonSpeech": "You poor mortal. Your stupidity have no match across whole land in this world."
     },
     "cz": {
       "name": "Záchrana princezny",
-      "description": "Princeznu unesl drak Mortifer. Království hledá hrdinu, jenž by princeznu zachránil."
+      "description": "Princeznu unesl drak Mortifer. Království hledá hrdinu, jenž by princeznu zachránil.",
+      "onInit": "Bylo nebylo ..",
+      "onVictory": "Vítězství",
+      "dragonSpeech": "Ubohý smrtelníče. Tvá hloupost v této zemi nemá rovno mezi všemi. Ohněm mým se vypaříš, svou rodinu již nespatříš."
     }
   }
 }

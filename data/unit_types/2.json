@@ -1,0 +1,23 @@
+{
+  "id": 2,
+  "race": "dragon",
+  "health": 30,
+  "armor": 2,
+  "speed": 4,
+  "attack": "0 2 3 4 5 6",
+  "cost": 50,
+  "size": 2,
+  "image": "fire_dragon_wesnoth.png",
+  "abilities": [
+    "move",
+    "attack"
+  ],
+  "langs": {
+    "cz": {
+      "name": "Drak"
+    },
+    "en": {
+      "name": "Dragon"
+    }
+  }
+}

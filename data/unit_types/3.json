@@ -1,0 +1,22 @@
+{
+  "id": 3,
+  "race": "human",
+  "health": 1,
+  "armor": 0,
+  "speed": 4,
+  "attack": "0 0 0 1 2 3",
+  "cost": 1,
+  "image": "unit_pikeman.png",
+  "abilities": [
+    "move",
+    "attack"
+  ],
+  "langs": {
+    "cz": {
+      "name": "Kopiník"
+    },
+    "en": {
+      "name": "Pikeman"
+    }
+  }
+}

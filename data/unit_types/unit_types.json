@@ -1,0 +1,311 @@
+[
+  {
+    "id":"pikeman",
+    "race":"human",
+    "health":1,
+    "armor":0,
+    "speed":4,
+    "attack":[0,0,0,1,2,2],
+    "cost":1,
+    "abilities":["move","attack"]
+  },{
+  "id":"warrior",
+  "race":"human",
+  "health":4,
+  "armor":2,
+  "speed":2,
+  "attack":[0,0,1,2,2,2],
+  "cost":2,
+  "abilities":["move","attack"]
+},{
+  "id":"archer",
+  "race":"human",
+  "health":1,
+  "armor":1,
+  "speed":3,
+  "range":5,
+  "attack":[0,0,0,1,3,3],
+  "cost":3,
+  "abilities":["move","shoot"]
+},{
+  "id":"crossbowman",
+  "race":"human",
+  "health":3,
+  "armor":1,
+  "range":4,
+  "speed":2,
+  "attack":[0,0,2,3,5,6],
+  "cost":6,
+  "abilities":["move","shoot"]
+},{
+  "id":"lancer",
+  "race":"human",
+  "health":4,
+  "armor":0,
+  "speed":6,
+  "attack":[0,0,2,3,4,3],
+  "cost":4,
+  "abilities":["move","attack", {
+    "class": "change_type",
+    "to": "warrior"
+  }]
+},{
+  "id":"mage",
+  "race":"human",
+  "health":1,
+  "armor":0,
+  "speed":4,
+  "range":4,
+  "attack":[0,0,1,1,2,2],
+  "cost":6,
+  "abilities":["move","shoot","heal","revive"]
+},{
+  "id":"goblin",
+  "race":"gultam",
+  "health":1,
+  "armor":0,
+  "speed":4,
+  "attack":[0,0,0,0,4,3],
+  "cost":1,
+  "abilities":["move","attack"]
+},{
+  "id":"wolf",
+  "race":"gultam",
+  "health":2,
+  "armor":0,
+  "speed":6,
+  "attack":[0,0,1,2,2,1],
+  "cost":2,
+  "abilities":["move","attack"]
+},{
+  "id":"speargultam",
+  "race":"gultam",
+  "health":7,
+  "armor":0,
+  "speed":4,
+  "range":4,
+  "attack":[0,0,2,2,3,3],
+  "cost":5,
+  "abilities":["move","shoot"]
+},{
+  "id":"ogre",
+  "race":"gultam",
+  "health":9,
+  "armor":2,
+  "speed":3,
+  "range":3,
+  "attack":[0,0,0,3,5,6],
+  "cost":8,
+  "abilities":["move","shoot"]
+},{
+  "id":"garrior",
+  "race":"gultam",
+  "health":8,
+  "armor":1,
+  "speed":5,
+  "attack":[0,0,0,3,5,6],
+  "cost":8,
+  "abilities":["move","attack", "regeneration"]
+},{
+  "id":"shaman",
+  "race":"gultam",
+  "health":7,
+  "armor":0,
+  "speed":3,
+  "range":4,
+  "attack":[0,0,0,2,4,5],
+  "cost":7,
+  "abilities":["move","shoot","hand_heal","boost"]
+},{
+  "id":"lizzard",
+  "race":"elf",
+  "health":1,
+  "armor":1,
+  "speed":4,
+  "attack":[0,0,0,0,3,1],
+  "cost":2,
+  "abilities":["linked_move","attack"],
+  "tags":["ethernal"]
+},{
+  "id":"swordself",
+  "race":"elf",
+  "health":2,
+  "armor":3,
+  "speed":4,
+  "attack":[0,1,2,3,4,3],
+  "cost":5,
+  "abilities":["move","attack"]
+},{
+  "id":"ent",
+  "race":"elf",
+  "health":12,
+  "armor":1,
+  "speed":2,
+  "attack":[5,5],
+  "cost":5,
+  "abilities":["move",{
+    "class": "attack",
+    "img": "ability_attack_area2next",
+    "areaType": "next",
+    "fields": 2,
+    "fullStrength": true
+  }]
+},{
+  "id":"archerine",
+  "race":"elf",
+  "health":1,
+  "armor":0,
+  "speed":5,
+  "range":4,
+  "attack":[1,1,2,1],
+  "cost":5,
+  "actions":2,
+  "abilities":["move","shoot"]
+},{
+  "id":"ranger",
+  "race":"elf",
+  "health":5,
+  "armor":0,
+  "speed":5,
+  "range":4,
+  "attack":[1,2,2,3,4],
+  "cost":7,
+  "abilities":["move","step_shoot"]
+},{
+  "id":"druid",
+  "race":"elf",
+  "health":1,
+  "armor":0,
+  "speed":4,
+  "range":4,
+  "attack":[1,2,3,2],
+  "cost":9,
+  "abilities":[
+    "move","shoot","light",
+    {
+      "class": "summon",
+      "what": "lizzard",
+      "range": "range",
+      "alea": 0
+    },{
+      "class": "fly",
+      "what": "lizzard",
+      "range": "range",
+      "img": "ability_lizzard_fly",
+      "fromAllUnitsOftype": true
+    }
+  ]
+},{
+  "id":"ghost",
+  "race":"undead",
+  "health":1,
+  "armor":0,
+  "speed":4,
+  "attack":[1,2,1],
+  "cost":1,
+  "abilities":["move","attack"],
+  "tags":["ethernal","undead"]
+},{
+  "id":"bone_archer",
+  "race":"undead",
+  "health":1,
+  "armor":0,
+  "speed":2,
+  "range":4,
+  "attack":[1,1,2,3],
+  "cost":2,
+  "abilities":["move","shoot"],
+  "tags":["undead"]
+},{
+  "id":"skeleton",
+  "race":"undead",
+  "health":3,
+  "armor":3,
+  "speed":4,
+  "attack":[1,2,3,3],
+  "cost":5,
+  "abilities":["move","attack"],
+  "tags":["undead"]
+},{
+  "id":"wyvern",
+  "race":"undead",
+  "health":7,
+  "armor":1,
+  "speed":4,
+  "attack":[0,0,1,1,2,2],
+  "cost":6,
+  "abilities":["move","attack",{
+    "class": "attack",
+    "img": "ability_attack_area2ray",
+    "areaType": "ray",
+    "fields": 2,
+    "fullStrength": true
+  }],
+  "tags":["undead"]
+},{
+  "id":"witcher",
+  "race":"undead",
+  "health":3,
+  "armor":1,
+  "speed":4,
+  "range":5,
+  "attack":[1,2,2,2],
+  "cost":9,
+  "abilities":[
+    "blink",
+    "shoot",{
+      "class": "teleport",
+      "img": "ability_teleport",
+      "me":"range",
+      "from":"range",
+      "toDistance":10
+    },{
+      "id":"raise_ghost",
+      "class": "raise",
+      "img":"ability_raise_ghost",
+      "what":[
+        {
+          "alea":0,
+          "unit":"ghost",
+          "targets":["corpse"]
+        }
+      ]
+    }],
+    "tags": ["undead"]
+  }
+  ,{
+      "id":"nekromancer",
+      "race":"undead",
+      "health":6,
+      "armor":1,
+      "speed":3,
+      "range":4,
+      "attack":[3,4,4,3],
+      "cost":10,
+      "abilities":[
+        "move",
+        "shoot",
+        "dark_shoot",
+        {
+          "class":"raise",
+          "img":"raise_undead",
+          "what":[
+            {
+              "alea":3,
+              "unit":"bone_archer",
+              "targets":["not_undead_corpse"]
+            },{
+              "alea":6,
+              "unit":"skeleton",
+              "targets":["not_undead_corpse"]
+            },{
+              "alea":10,
+              "unit":"wyvern",
+              "targets":["not_undead_corpse"]
+            }
+          ]
+        }
+      ],
+      "tags":["undead"]
+    }
+  ]
