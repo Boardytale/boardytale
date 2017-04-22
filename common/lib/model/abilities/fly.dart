@@ -1,10 +1,10 @@
 part of model;
 
-class FlyAbility extends Ability{
+class DismissAbility extends Ability{
 
   @override
   Ability clone(){
-    return new FlyAbility();
+    return new DismissAbility();
   }
 
   @override

@@ -20,7 +20,7 @@ class MoveAbility extends Ability{
   }
 
   @override
-  void fromJson(Map ability) {
-    super.fromJson(ability);
+  void fromMap(Map ability) {
+    super.fromMap(ability);
   }
 }

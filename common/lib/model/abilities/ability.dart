@@ -13,12 +13,35 @@ abstract class Ability{
   Unit invoker;
   int actions = 1;
   String trigger;
-
   int range;
   String name;
-  String id;
+  String className;
   String img;
   List<String> target = [];
+
+  static Ability createAbility(Map data){
+    String abilityClass = data["class"];
+    switch(abilityClass){
+      case "move": return new MoveAbility()..fromMap(data);
+      case "attack": return new AttackAbility()..fromMap(data);
+      case "shoot": return new ShootAbility()..fromMap(data);
+      case "heal": return new HealAbility()..fromMap(data);
+      case "revive": return new ReviveAbility()..fromMap(data);
+      case "hand_heal": return new HandHealAbility()..fromMap(data);
+      case "boost": return new BoostAbility()..fromMap(data);
+      case "linked_move": return new LinkedMoveAbility()..fromMap(data);
+      case "step_shoot": return new StepShootAbility()..fromMap(data);
+      case "light": return new LightAbility()..fromMap(data);
+      case "summon": return new SummonAbility()..fromMap(data);
+      case "dismiss": return new DismissAbility()..fromMap(data);
+      case "raise": return new RaiseAbility()..fromMap(data);
+      case "teleport": return new TeleportAbility()..fromMap(data);
+      case "dark_shoot": return new DarkShootAbility()..fromMap(data);
+      case "regeneration": return new RegenerationAbility()..fromMap(data);
+      case "change_type": return new ChangeTypeAbility()..fromMap(data);
+    }
+    throw "ability $abilityClass $data not implemented";
+  }
   
   void setInvoker(Unit unit){
     invoker = unit;
@@ -31,19 +54,29 @@ abstract class Ability{
   }
 
   void setDefaults(Map defaults){}
+
+  Ability createAbilityWithUnitData(Map unitAbilityData){
+    Ability abilityClone = clone();
+    abilityClone.fromMap(unitAbilityData);
+    return abilityClone;
+  }
   
   Ability clone();
   
-  void fromJson(Map ability){
-    id = ability["class"].toString().toLowerCase();
+  void fromMap(Map ability){
+    name = ability["name"].toString().toLowerCase();
     img = ability["img"];
     target = ability["target"];
+    className = ability["class"];
   }
 
 
-  Map toJson(){
+  Map toMap(){
     Map out = {};
     out["name"] = name;
+    out["img"] = img;
+    out["target"] = target;
+    out["class"] = className;
     return out;
   }
   /// steps needed to next
@@ -54,27 +87,4 @@ abstract class Ability{
   bool freeWayNeeded(){
     return true;
   }
-}
-
-Ability getAbilityByType(String type){
-  switch(type){
-    case "move": return new MoveAbility();
-    case "attack": return new AttackAbility();
-    case "shoot": return new ShootAbility();
-    case "heal": return new HealAbility();
-    case "revive": return new ReviveAbility();
-    case "hand_heal": return new HandHealAbility();
-    case "boost": return new BoostAbility();
-    case "linked_move": return new LinkedMoveAbility();
-    case "step_shoot": return new StepShootAbility();
-    case "light": return new LightAbility();
-    case "summon": return new SummonAbility();
-    case "fly": return new FlyAbility();
-    case "raise": return new RaiseAbility();
-    case "teleport": return new TeleportAbility();
-    case "dark_shoot": return new DarkShootAbility();
-    case "regeneration": return new RegenerationAbility();
-    case "change_type": return new ChangeTypeAbility();
-  }
-  return null;
 }

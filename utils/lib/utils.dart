@@ -14,3 +14,15 @@ String convertToCamelCase(String name) {
   }
   return out;
 }
+
+class Call{
+  String name;
+  List arguments;
+
+  Call(String literal){
+    int argumentsStart = literal.indexOf("(");
+    int argumentsEnd = literal.indexOf(")");
+    name = literal.substring(0,argumentsStart);
+    arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
+  }
+}

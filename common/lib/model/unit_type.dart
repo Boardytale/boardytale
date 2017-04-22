@@ -3,27 +3,32 @@ part of model;
 class UnitType {
   static const TAG_UNDEAD = "undead";
   static const TAG_ETHERNAL = "ethernal";
-  String _id;
-  String _name;
-  String _race;
+  int _id;
+  Race _race;
   int _health;
   int _armor;
   int _speed;
   int _range;
-  int _actions;
+  int _actions = 1;
   List _attack;
   int _cost;
   List<Ability> _abilities = new List<Ability>();
   List<String> tags = [];
-  List<int> _abilityIds;
-  List<int> _imageIds;
+  List<Map> _abilitiesData;
+  String _imageId;
+  String _name;
+  String image;
   Notificator onChange = new Notificator();
 
-  String get id => _id;
+  String raceId;
+
+  List<Map> get abilitiesData => _abilitiesData;
+
+  int get id => _id;
 
   String get name => _name;
 
-  String get race => _race;
+  Race get race => _race;
 
   int get health => _health;
 
@@ -41,17 +46,14 @@ class UnitType {
 
   List<Ability> get abilities => _abilities;
 
-  set id(String val) {
+  String get imageId => _imageId;
+
+  set id(int val) {
     _id = val;
     onChange.notify();
   }
 
-  set name(String val) {
-    _name = val;
-    onChange.notify();
-  }
-
-  set race(String val) {
+  set race(Race val) {
     _race = val;
     onChange.notify();
   }
@@ -93,7 +95,7 @@ class UnitType {
 
   void fromMap(Map data) {
     dynamic __id = data["id"];
-    if (__id is String) {
+    if (__id is int) {
       _id = __id;
     } else {
       _badData("id");
@@ -106,7 +108,7 @@ class UnitType {
     }
     dynamic __race = data["race"];
     if (__race is String) {
-      _race = __race;
+      raceId = __race;
     } else {
       _badData("race");
     }
@@ -131,13 +133,13 @@ class UnitType {
     dynamic __range = data["range"];
     if (__range is int) {
       _range = __range;
-    } else {
+    } else if (__range != null) {
       _badData("range");
     }
     dynamic __actions = data["actions"];
     if (__actions is int) {
       _actions = __actions;
-    } else {
+    } else if (__actions != null) {
       _badData("actions");
     }
     dynamic __attack = data["attack"];
@@ -158,18 +160,18 @@ class UnitType {
       _badData("cost");
     }
 
-    dynamic __abilityIds = data["abilities"];
-    if (__abilityIds is List<int>) {
-      _abilityIds = __abilityIds;
+    dynamic __abilitiesData = data["abilities"];
+    if (__abilitiesData is List<Map>) {
+      _abilitiesData = __abilitiesData;
     } else {
-      _badData("cost");
+      _badData("abilities data");
     }
 
-    dynamic __imageIds = data["abilities"];
-    if (__imageIds is List<int>) {
-      _imageIds = __imageIds;
+    dynamic __imageId = data["image"];
+    if (__imageId is String) {
+      _imageId = __imageId;
     } else {
-      _badData("cost");
+      _badData("image");
     }
   }
 

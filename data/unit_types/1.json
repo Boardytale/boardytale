@@ -6,16 +6,9 @@
   "speed": 3,
   "attack": "0 0 0 0 0 0",
   "cost": 100,
-  "image": "sylph_defend_wesnoth.png",
+  "image": "sylphDefendWesnoth.png",
   "abilities": [
-    "move"
+    {"class": "move"}
   ],
-  "langs": {
-    "cz": {
-      "name": "Princezna"
-    },
-    "en": {
-      "name": "Princess"
-    }
-  }
+  "name": "unit_princess"
 }

@@ -219,7 +219,7 @@ class Unit {
     Map out = {};
     out["id"] = id;
     out["type"] = type.id;
-    out["field"] = field.toSimpleJson();
+    out["field"] = field.toMap();
     out["player"] = player.id;
     return out;
   }

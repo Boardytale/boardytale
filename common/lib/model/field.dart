@@ -1,13 +1,19 @@
 part of model;
 
 class Field {
-  int index;
   List<Unit> units = [];
+  String id;
+  World world;
+  int terrainId;
   int x;
   int y;
   bool get hasUnit => !units.isEmpty;
 
-  Field(this.index, this.x, this.y);
+  Field(this.id, this.world){
+    List<String> xy = id.split("_");
+    x = int.parse(xy[0]);
+    y = int.parse(xy[1]);
+  }
 
   List<Unit> alivesOnField() {
     List<Unit> out = [];
@@ -43,19 +49,19 @@ class Field {
 
   Field getFieldWithUnitNear() {
     if (hasUnit) return this;
-    var fields = World.instance.getFieldsRound(this);
-    for (Field field in fields) {
-      if (field.hasUnit) return field;
-    }
+//    var fields = World.instance.getFieldsRound(this);
+//    for (Field field in fields) {
+//      if (field.hasUnit) return field;
+//    }
     return null;
   }
 
   Field getFieldWithAliveUnitNear() {
     if (isAliveOnField()) return this;
-    var fields = World.instance.getFieldsRound(this);
-    for (Field field in fields) {
-      if (field.isAliveOnField()) return field;
-    }
+//    var fields = World.instance.getFieldsRound(this);
+//    for (Field field in fields) {
+//      if (field.isAliveOnField()) return field;
+//    }
     return null;
   }
 
@@ -96,10 +102,14 @@ class Field {
     return !units.isEmpty;
   }
 
-  Map toSimpleJson(){
-    return {
-      "x": x,
-      "y": y
-    };
+  Map toMap() {
+    Map out = {};
+    out["id"] = id;
+    out["terrain"] = terrainId;
+    return out;
+  }
+
+  void fromMap(Map map) {
+    terrainId = map["terrainId"];
   }
 }

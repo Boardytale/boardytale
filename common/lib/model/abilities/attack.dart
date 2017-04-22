@@ -2,10 +2,10 @@ part of model;
 
 
 class AttackAbility extends Ability{
-  
+
   @override
   Ability clone() {
-    return new AttackAbility();
+    return new AttackAbility()..fromMap(toMap());
   }
 
   @override
@@ -19,7 +19,7 @@ class AttackAbility extends Ability{
   }
 
   @override
-  void fromJson(Map ability) {
-    super.fromJson(ability);
+  void fromMap(Map ability) {
+    super.fromMap(ability);
   }
 }

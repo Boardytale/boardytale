@@ -1,12 +1,12 @@
 [
-  {
-    "name":"move",
-    "class":"move",
-    "img":"ability_move",
-    "fields":"speed",
-    "modify":0,
-    "target":["ally","corpse","me","woundedAlly"]
-  },{
+{
+  "name":"move",
+  "class":"move",
+  "img":"ability_move",
+  "fields":"speed",
+  "modify":0,
+  "target":["ally","corpse","me","woundedAlly"]
+},{
   "name":"attack",
   "class":"attack",
   "img":"ability_attack",
@@ -30,8 +30,7 @@
   "modify" : 0 ,
   "target":["woundedAlly"]
 },{
-  "name":"ability_revive",
-  "class": "revive",
+  "name":"revive",
   "img":"ability_revive",
   "strength": [1,2,3,4,5,6],
   "convertMultiply": 2.0,
@@ -66,7 +65,6 @@
   "target":["enemy"]
 },{
   "name":"light",
-  "class": "light",
   "img":"ability_light",
   "range": "range",
   "strength": "attack",
