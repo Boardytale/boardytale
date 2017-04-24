@@ -6,7 +6,7 @@
   "speed": 4,
   "attack": "0 0 0 1 2 3",
   "cost": 1,
-  "image": "unitPikeman.png",
+  "imageId": 25,
   "abilities": [
     {"class": "move"},
     {"class": "attack"}

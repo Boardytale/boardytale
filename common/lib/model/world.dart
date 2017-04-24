@@ -35,7 +35,10 @@ class World {
         Field field = new Field(key, this);
         if(indexedFieldsData.containsKey(key)){
           field.fromMap(indexedFieldsData[key]);
+        }else{
+          field.terrainId = baseTerrainId;
         }
+        fields[key] = field;
       }
     }
 
@@ -46,5 +49,21 @@ class World {
       throw "Start field must be set";
     }
 
+  }
+
+  Map toMap() {
+    Map out = {};
+    out["width"] = width;
+    out["height"] = height;
+    out["baseTerrain"] = baseTerrainId;
+    out["startField"] = startField.id;
+    Map<String, int> fieldsData = {};
+    fields.forEach((k,v){
+      if(v.terrainId != baseTerrainId){
+        fieldsData[k] = v.terrainId;
+      }
+    });
+    out["fields"] = fieldsData;
+    return out;
   }
 }

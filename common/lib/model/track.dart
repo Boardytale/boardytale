@@ -91,18 +91,18 @@ class Track {
     return false;
   }
 
-  Map toJson() {
-    List out = [];
-    for (Field f in fields) {
-      out.add(f.toMap());
-    }
-    return {"fields": out};
-  }
+//  Map toJson() {
+//    List out = [];
+//    for (Field f in fields) {
+//      out.add(f.toMap());
+//    }
+//    return {"fields": out};
+//  }
 
-  fromJson(Map data, World world) {
-    List fields = data["fields"];
-    for (Map f in fields) {
-      this.fields.add(world.fields[f["id"]]);
-    }
-  }
+//  void fromJson(Map data, World world) {
+//    List fields = data["fields"];
+//    for (Map f in fields) {
+//      this.fields.add(world.fields[f["id"]]);
+//    }
+//  }
 }

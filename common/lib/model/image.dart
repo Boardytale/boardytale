@@ -1,10 +1,12 @@
 part of model;
 
 class Image {
-  String id;
+  int id;
   String data;
   int width;
   int height;
+  int top = 0; // option to possible make smaller images
+  int left = 0;
   String name;
   String type;
   String authorId;
@@ -48,6 +50,18 @@ class Image {
     if (data["tags"] is List<String>) {
       tags = data["tags"];
     }
+  }
+
+  Map toMap() {
+    Map out = {};
+    out["id"] = id;
+    out["data"] = data;
+    out["width"] = width;
+    out["height"] = height;
+    out["top"] = top;
+    out["left"] = left;
+    out["name"] = name;
+    return out;
   }
 }
 

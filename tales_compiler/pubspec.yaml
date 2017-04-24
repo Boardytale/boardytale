@@ -5,6 +5,7 @@ dependencies:
     path: '../io_utils'
   boardytale_commons:
     path: '../common'
+  image: any
 dev_dependencies:
   test: "^0.12.0"
 

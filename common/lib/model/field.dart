@@ -110,6 +110,6 @@ class Field {
   }
 
   void fromMap(Map map) {
-    terrainId = map["terrainId"];
+    terrainId = map["terrain"];
   }
 }

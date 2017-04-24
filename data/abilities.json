@@ -2,14 +2,14 @@
   {
     "name":"move",
     "class":"move",
-    "img":"ability_move",
+    "imageId":"ability_move.png",
     "fields":"speed",
     "modify":0,
     "target":["ally","corpse","me","woundedAlly"]
   },{
   "name":"attack",
   "class":"attack",
-  "img":"ability_attack",
+  "imageId":"ability_attack.png",
   "areaType": "none",
   "fields": 1,
   "fullStrength": true,
@@ -17,7 +17,7 @@
 },{
   "name":"shoot",
   "class":"shoot",
-  "img":"ability_shoot",
+  "imageId":"ability_shoot.png",
   "range":"range",
   "attack":"attack",
   "modify_attack":0,
@@ -25,14 +25,14 @@
 },{
   "name":"heal",
   "class":"heal",
-  "img":"ability_heal",
+  "imageId":"ability_heal.png",
   "strength":"attack",
   "modify" : 0 ,
   "target":["woundedAlly"]
 },{
   "name":"ability_revive",
   "class": "revive",
-  "img":"ability_revive",
+  "imageId":"ability_revive.png",
   "strength": [1,2,3,4,5,6],
   "convertMultiply": 2.0,
   "modify": 0,
@@ -40,41 +40,41 @@
 },{
   "name":"hand_heal",
   "class":"hand_heal",
-  "img":"ability_hand_heal",
+  "imageId":"ability_hand_heal.png",
   "strength":[2,3,4,5,6],
   "modify": 0,
   "target":["woundedAlly"]
 },{
   "name":"boost",
   "class":"boost",
-  "img":"ability_boost",
+  "imageId":"ability_boost.png",
   "strength": 2.0,
   "target":["ally"],
   "range": "range"
 },{
   "name":"linked_move",
   "class":"linked_move",
-  "img":"ability_linked_move",
+  "imageId":"ability_linked_move.png",
   "toUnitType": "druid",
   "range": 4,
   "target":["ally","corpse","me","woundedAlly"]
 },{
   "name":"step_shoot",
   "class":"step_shoot",
-  "img":"ability_step_shoot",
+  "imageId":"ability_step_shoot.png",
   "steps": 1,
   "target":["enemy"]
 },{
   "name":"light",
   "class": "light",
-  "img":"ability_light",
+  "imageId":"ability_light.png",
   "range": "range",
   "strength": "attack",
   "target":["ally","corpse","me","woundedAlly","enemy"]
 },{
   "name":"summon",
   "class":"summon",
-  "img":"ability_summon_lizzard",
+  "imageId":"ability_summon_lizzard.png",
   "what": "lizzard",
   "range": 1,
   "alea": 0,
@@ -82,14 +82,14 @@
 },{
   "name":"ability_lizzard_fly",
   "class":"dismiss",
-  "img":"ability_fly",
+  "imageId":"ability_fly.png",
   "what": "lizzard",
   "range": "range",
   "fromAllUnitsOftype": true
 },{
   "name":"raise",
   "class":"raise",
-  "img":"ability_raise",
+  "imageId":"ability_raise.png",
   "range": "range",
   "what":[
     {
@@ -109,7 +109,7 @@
 },{
   "name": "teleport",
   "class": "teleport",
-  "img": "ability_teleport",
+  "imageId": "ability_teleport.png",
   "me":"range",
   "from":"range",
   "toDistance":10,
@@ -117,19 +117,19 @@
 },{
   "name":"dark_shoot",
   "class":"dark_shoot",
-  "img":"ability_dark_shoot",
+  "imageId":"ability_dark_shoot.png",
   "range": "range",
   "target":["enemy"]
 },{
   "name":"regeneration",
   "class":"regeneration",
-  "img":"ability_regeneration",
+  "imageId":"ability_regeneration.png",
   "strength": 2,
   "trigger": "mine_turn_start"
 },{
   "name":"change_type",
   "class":"change_type",
-  "img":"ability_change_type",
+  "imageId":"ability_change_type.png",
   "to": "warrior"
 }
 ]

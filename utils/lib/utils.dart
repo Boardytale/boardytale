@@ -25,4 +25,9 @@ class Call{
     name = literal.substring(0,argumentsStart);
     arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
   }
+
+  @override
+  String toString(){
+     return "$name(${arguments.join(",")})";
+  }
 }

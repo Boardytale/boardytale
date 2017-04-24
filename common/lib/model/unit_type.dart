@@ -10,14 +10,14 @@ class UnitType {
   int _speed;
   int _range;
   int _actions = 1;
-  List _attack;
+  List<int> _attack;
   int _cost;
   List<Ability> _abilities = new List<Ability>();
   List<String> tags = [];
   List<Map> _abilitiesData;
-  String _imageId;
+  int _imageId;
   String _name;
-  String image;
+  Image image;
   Notificator onChange = new Notificator();
 
   String raceId;
@@ -40,13 +40,13 @@ class UnitType {
 
   int get actions => _actions;
 
-  List get attack => _attack;
+  List<int> get attack => _attack;
 
   int get cost => _cost;
 
   List<Ability> get abilities => _abilities;
 
-  String get imageId => _imageId;
+  int get imageId => _imageId;
 
   set id(int val) {
     _id = val;
@@ -83,7 +83,7 @@ class UnitType {
     onChange.notify();
   }
 
-  set attack(List val) {
+  set attack(List<int> val) {
     _attack = val;
     onChange.notify();
   }
@@ -143,10 +143,10 @@ class UnitType {
       _badData("actions");
     }
     dynamic __attack = data["attack"];
-    if (__attack is List) {
+    if (__attack is List<int>) {
       _attack = __attack;
     } else if (__attack is String) {
-      _attack = __attack.split(" ");
+      _attack = __attack.split(" ").map((String s)=>int.parse(s)).toList();
     } else {
       _badData("attack");
     }
@@ -167,11 +167,11 @@ class UnitType {
       _badData("abilities data");
     }
 
-    dynamic __imageId = data["image"];
-    if (__imageId is String) {
+    dynamic __imageId = data["imageId"];
+    if (__imageId is int) {
       _imageId = __imageId;
     } else {
-      _badData("image");
+      _badData("imageId");
     }
   }
 
@@ -179,13 +179,13 @@ class UnitType {
     Map out = {};
     out["id"] = _id;
     out["name"] = _name;
-    out["race"] = _race;
+    out["race"] = _race.id;
     out["health"] = _health;
     out["armor"] = _armor;
     out["speed"] = _speed;
     out["range"] = _range;
     out["actions"] = _actions;
-    out["attack"] = _attack;
+    out["attack"] = _attack.join(" ");
     out["cost"] = _cost;
     return out;
   }

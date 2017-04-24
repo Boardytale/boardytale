@@ -5,19 +5,19 @@ class Unit {
   int speed = 0;
   int range = 0;
   List<int> attack;
-
   int _health = 0;
   int _far = 0;
-  String id;
+  int id;
   int _actions = 1;
   int _steps = 1;
   UnitType type;
   Field field;
+  String fieldId;
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
-
   List<String> tags = [];
+  String name;
 
   bool get isUndead=> tags.contains(UnitType.TAG_UNDEAD);
 
@@ -65,16 +65,11 @@ class Unit {
 
   Unit.bare();
 
-  Unit(this.id, this.type, this.player, this.field){
+  Unit(this.id, this.type){
     _recalculate();
     _health = type.health;
     _steps = type.speed;
     setType(type);
-//    _health = type.health;
-//    for(Ability ability in type.abilities){
-//      abilities.add(ability.clone());
-//    }
-    field.addUnit(this);
   }
 
   int get actions=> _actions;
@@ -259,5 +254,17 @@ class Unit {
       }
     }
     return possibles[used];
+  }
+
+  fromMap(Map m) {
+    dynamic __fieldId = m["fieldId"];
+    if(__fieldId is String){
+      fieldId = __fieldId;
+    }
+
+    dynamic __name = m["name"];
+    if(__name is String){
+      name = __name;
+    }
   }
 }

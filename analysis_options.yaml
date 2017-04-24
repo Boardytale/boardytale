@@ -1,0 +1,10 @@
+analyzer:
+  exclude:
+    - from_prev_versions/**
+    - class_generator/**
+
+linter:
+  rules:
+    - avoid_empty_else
+    - cancel_subscriptions
+    - close_sinks

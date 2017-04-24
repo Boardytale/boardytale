@@ -17,7 +17,9 @@ abstract class Ability{
   String name;
   String className;
   String img;
+  String imageId;
   List<String> target = [];
+  Ability type;
 
   static Ability createAbility(Map data){
     String abilityClass = data["class"];
@@ -57,6 +59,7 @@ abstract class Ability{
 
   Ability createAbilityWithUnitData(Map unitAbilityData){
     Ability abilityClone = clone();
+    abilityClone.type = this;
     abilityClone.fromMap(unitAbilityData);
     return abilityClone;
   }
@@ -65,7 +68,7 @@ abstract class Ability{
   
   void fromMap(Map ability){
     name = ability["name"].toString().toLowerCase();
-    img = ability["img"];
+    imageId = ability["imageId"];
     target = ability["target"];
     className = ability["class"];
   }

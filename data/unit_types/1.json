@@ -6,7 +6,7 @@
   "speed": 3,
   "attack": "0 0 0 0 0 0",
   "cost": 100,
-  "image": "sylphDefendWesnoth.png",
+  "imageId": 7,
   "abilities": [
     {"class": "move"}
   ],

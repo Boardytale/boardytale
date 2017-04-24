@@ -9,19 +9,26 @@
     },
     "startField": "5_5"
   },
-  "groups": [{
-    "id": 1,
-    "name": "Players",
-    "team": 1
-  },{
-    "id": 2,
-    "name": "Dragon",
-    "team": 2
-  },{
-    "id": 3,
-    "name": "Princess",
-    "team": 1
-  }
+  "humanPlayersTeam": 1,
+  "players": [
+    {
+      "id": 1,
+      "name": "Servant",
+      "handler": "firstHuman",
+      "team": 1
+    },
+    {
+      "id": 2,
+      "name": "Dragon",
+      "handler": "UI",
+      "team": 2
+    },
+    {
+      "id": 3,
+      "name": "Princess",
+      "handler": "passive",
+      "team": 1
+    }
   ],
   "triggers": [
     {
@@ -29,23 +36,29 @@
       "action": "dialog(dragonSpeech)"
     }
   ],
-  "dialogs": [{
-    "name": "dragonSpeech",
-    "image": "portraitOf(2)"
-  }],
-  "units": [{
-    "type": 1,
-    "name": "Princess Anne",
-    "field": "15_15"
-  },{
-    "type": 2,
-    "name": "Dragon Mortifer",
-    "field": "10_10"
-  },{
-    "name": "Servant Sencha",
-    "type": 3,
-    "field": "10_5"
-  }],
+  "dialogs": [
+    {
+      "name": "dragonSpeech",
+      "image": "portraitOf(2)"
+    }
+  ],
+  "units": [
+    {
+      "type": 1,
+      "name": "Princess Anne",
+      "field": "15_15"
+    },
+    {
+      "type": 2,
+      "name": "Dragon Mortifer",
+      "field": "10_10"
+    },
+    {
+      "name": "Servant Sencha",
+      "type": 3,
+      "field": "10_5"
+    }
+  ],
   "langs": {
     "en": {
       "name": "For the princess",
