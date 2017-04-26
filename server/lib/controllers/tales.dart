@@ -13,7 +13,9 @@ class TalesController extends HTTPController {
     String path = "web/tales/$index.json";
     File tale = new File(path);
     if(tale.existsSync()){
-      return new Response.ok(tale.readAsStringSync())..contentType = ContentType.JSON;;
+      String output = tale.readAsStringSync();
+      // TODO: copy tale assets to webserver - it is silly to decode and encode (AQUEDUCT should make something with this)
+      return new Response.ok(JSON.decode(output))..contentType = ContentType.JSON;
     }else{
       return new Response.notFound();
     }

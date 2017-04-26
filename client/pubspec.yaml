@@ -5,9 +5,16 @@ environment:
   sdk: '>=1.19.0 <2.0.0'
 dependencies:
   angular2: ^2.2.0
+  utils:
+    path: '../utils'
+  boardytale_commons:
+    path: '../boardytale_commons'
+  tales_compiler:
+    path: '../tales_compiler'
 dev_dependencies:
   browser: ^0.10.0
   pub_serve_rewrites: any
+  angular2_components: any
 transformers:
 - angular2:
     platform_directives:

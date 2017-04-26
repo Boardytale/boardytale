@@ -11,6 +11,6 @@ void main(){
   Map<int, Tale> tales = getTalesFromFileMap(fileMap);
 
   tales.forEach((k,v){
-    new File("output/${v.id}.json").writeAsStringSync(JSON.encode(createAssetsPack(v)));
+    new File("output/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
   });
 }

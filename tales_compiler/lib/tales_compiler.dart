@@ -13,14 +13,12 @@ Map<int, Tale> getTalesFromFileMap(Map fileMap) {
 
 Map<int, UnitType> getUnitsFromFileMap(Map fileMap) {
   Map<int, Image> images = loadImages(fileMap);
-  Map abilities = loadAbilities(fileMap);
-  Map races = loadRaces(fileMap);
-  return loadUnits(fileMap, images, abilities, races);
+  Map abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]));
+  Map races = loadRaces(JSON.decode(fileMap["races.json"]));
+  return loadUnits(fileMap["unitTypes"].values.toList(), images, abilities, races);
 }
 
-Map loadRaces(Map<String, dynamic> fileMap) {
-  String racesString = fileMap["races.json"];
-  List racesData = JSON.decode(racesString);
+Map loadRaces(List racesData) {
   Map<String, Race> races = {};
   for (Map race in racesData) {
     races[race["id"]] = new Race()
@@ -32,23 +30,27 @@ Map loadRaces(Map<String, dynamic> fileMap) {
 Map loadTales(Map<String, dynamic> fileMap, Map<int, UnitType> units) {
   Map talesData = fileMap["tales"];
   Map<int, Tale> tales = {};
-  talesData.forEach((k, v) {
-    Tale tale = new Tale()
-      ..fromMap(JSON.decode(v));
+  talesData.forEach((k, String v) {
+    Tale tale = loadTaleFromAssets(JSON.decode(v), units);
     tales[tale.id] = tale;
-    int unitId = 0;
-    for (Map m in tale.unitData) {
-      Unit unit = new Unit(unitId++, units[m["type"]])
-        ..fromMap(m);
-      tale.units[unit.id] = unit;
-    }
   });
   return tales;
 }
 
-Map loadAbilities(Map<String, dynamic> fileMap) {
+Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units){
+  Tale tale = new Tale()
+    ..fromMap(taleData);
+  int unitId = 0;
+  for (Map m in tale.unitData) {
+    Unit unit = new Unit(unitId++, units[m["type"]])
+      ..fromMap(m);
+    tale.units[unit.id] = unit;
+  }
+  return tale;
+}
+
+Map loadAbilities(List abilitiesList) {
   Map<String, Ability> abilities = {};
-  List abilitiesList = JSON.decode(fileMap["abilities.json"]);
   for (Map abilityData in abilitiesList) {
     Ability ability = Ability.createAbility(abilityData);
     abilities[ability.className] = ability;
@@ -56,16 +58,15 @@ Map loadAbilities(Map<String, dynamic> fileMap) {
   return abilities;
 }
 
-Map<int, UnitType> loadUnits(Map<String, dynamic> fileMap, Map images,
+Map<int, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
     Map<String, Ability> abilities, Map races) {
-  Map unitTypesMap = fileMap["unitTypes"];
   Map<int, UnitType> unitTypes = {};
-  unitTypesMap.forEach((k, v) {
+  for(dynamic unitData in unitTypesList){
     Map unit;
-    if (v is Map) {
-      unit = v;
-    } else if (v is String) {
-      unit = JSON.decode(v);
+    if (unitData is Map) {
+      unit = unitData;
+    } else if (unitData is String) {
+      unit = JSON.decode(unitData);
     } else {
       throw "unsupported unit format";
     }
@@ -79,6 +80,6 @@ Map<int, UnitType> loadUnits(Map<String, dynamic> fileMap, Map images,
               abilityData));
     }
     unitType.race = races[unitType.raceId];
-  });
+  }
   return unitTypes;
 }

@@ -10,3 +10,5 @@ dependencies:
   aqueduct: any
   tales_compiler:
     path: '../tales_compiler'
+  boardytale_commons:
+    path: '../boardytale_commons'

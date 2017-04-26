@@ -52,7 +52,7 @@ class BoardytaleRequestSink extends RequestSink {
     Map<int, Tale> tales = getTalesFromFileMap(fileMap);
 
     tales.forEach((k,v){
-      new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(createAssetsPack(v)));
+      new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
     });
 //    if (config.configurationFilePath == null) {
 //      throw new ApplicationStartupException(

@@ -187,6 +187,8 @@ class UnitType {
     out["actions"] = _actions;
     out["attack"] = _attack.join(" ");
     out["cost"] = _cost;
+    out["abilities"] = _abilitiesData;
+    out["imageId"] = _imageId;
     return out;
   }
 

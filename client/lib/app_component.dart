@@ -9,9 +9,8 @@ import 'game/game.dart';
 import 'trial/trial.dart';
 
 @Component(
-    selector: 'my-app',
+    selector: 'boardytale',
     template: '''
-      <h1>{{title}}</h1>
       <nav>
         <a [routerLink]="['Lobby']">Lobby</a>
         <a [routerLink]="['Game']">Game</a>
@@ -35,8 +34,6 @@ class AppComponent {
   String title = 'Tour of Heroes';
 
   AppComponent() {
-    HttpRequest.getString("http://localhost:8086/tales/0").then((String s) {
-      print(JSON.encode(JSON.decode(s)));
-    });
+
   }
 }

@@ -6,6 +6,7 @@ main(){
       r'^(\S+\.(json|html|js|dart|css|png))$',
     ])
     ..rewrite('/admin/(.*)',to:'admin.html')
+    ..ignore('/tales/(.*)')
     ..rewrite(r'(.*)',to:'/index.html')
     ..start('http://localhost:8082');
 }

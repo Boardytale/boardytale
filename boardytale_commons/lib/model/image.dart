@@ -28,9 +28,12 @@ class Image {
     authorId = data["authorId"];
     parentId = data["parentId"];
     rating = data["rating"];
-    created = new DateTime.fromMillisecondsSinceEpoch(data["created"]);
+    dynamic __created = data["created"];
+    if(__created is int){
+      created = new DateTime.fromMillisecondsSinceEpoch(__created);
+    }
     if (data["data"] is String) {
-      data = data["data"];
+      this.data = data["data"];
     }
     if (data["width"] is int) {
       width = data["width"];
