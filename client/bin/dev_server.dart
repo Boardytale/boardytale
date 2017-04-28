@@ -7,6 +7,7 @@ main(){
     ])
     ..rewrite('/admin/(.*)',to:'admin.html')
     ..ignore('/tales/(.*)')
+    ..ignore('/img/(.*)')
     ..rewrite(r'(.*)',to:'/index.html')
     ..start('http://localhost:8082');
 }
