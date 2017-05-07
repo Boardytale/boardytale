@@ -54,7 +54,7 @@ class WorldComponent implements OnDestroy {
   }
 
   void detectChanges([_]) {
-    if (destroyed) return;
+    if (destroyed || view == null) return;
     view.repaint();
     changeDetector.markForCheck();
     changeDetector.detectChanges();
@@ -70,21 +70,21 @@ class WorldComponent implements OnDestroy {
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
 
-    stage_lib.Stage objectsStage = new stage_lib.Stage(
+    stage_lib.Stage unitStage = new stage_lib.Stage(
         mapObjectsElement, width: window.innerWidth,
         height: window.innerHeight,
         options: new stage_lib.StageOptions()
           ..antialias = true
-          ..backgroundColor  = 0
+          ..backgroundColor = 0
           ..transparent = true);
-    objectsStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
-    objectsStage.align = stage_lib.StageAlign.TOP_LEFT;
+    unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
+    unitStage.align = stage_lib.StageAlign.TOP_LEFT;
 
-    view = new WorldView(worldStage, model, objectsStage);
+    view = new WorldView(worldStage, model, unitStage);
 
 
-//    var renderLoop = new RenderLoop();
-//    renderLoop.addStage(stage);
+    var renderLoop = new stage_lib.RenderLoop();
+    renderLoop.addStage(unitStage);
     detectChanges();
   }
 
@@ -95,6 +95,8 @@ class WorldComponent implements OnDestroy {
   int _startOffsetLeft;
 
   void onMouseDown(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
     _moving = true;
     _start = event.page;
     _startOffsetTop = model.userTopOffset;
@@ -102,11 +104,20 @@ class WorldComponent implements OnDestroy {
   }
 
   void onMouseUp(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
     _moving = false;
   }
 
   void onMouseMove(MouseEvent event) {
-    if (!_moving) return;
+    event.preventDefault();
+    event.stopPropagation();
+    if (!_moving) {
+      view.setActiveField(
+          model.getFieldByMouseOffset(event.page.x, event.page.y));
+
+      return;
+    }
     int deltaX = event.page.x - _start.x;
     int deltaY = event.page.y - _start.y;
     model.userLeftOffset = _startOffsetLeft - deltaX;
@@ -117,29 +128,32 @@ class WorldComponent implements OnDestroy {
   }
 
   void onMouseWheel(WheelEvent event) {
-    double zoomDelta = event.deltaY < 0 ? 0.1 : -0.1;
-    model.zoom += zoomDelta;
+    event.preventDefault();
+    event.stopPropagation();
+    double oldZoom = model.zoom;
+    double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
+    model.zoom *= zoomMultiply;
 
     if (model.zoom < 0.3) {
       model.zoom = 0.3;
     } else {
-      // TODO: BAD pivot transformation, find out why
-      double deltaX = (event.page.x + model.userLeftOffset) * zoomDelta;
-      double deltaY = (event.page.y + model.userTopOffset) * zoomDelta;
-      print(deltaX);
-      model.userLeftOffset += deltaX.toInt();
-      model.userTopOffset += deltaY.toInt();
+      int topOfMap = event.page.y + model.userTopOffset;
+      int leftOfMap = event.page.x + model.userLeftOffset;
+      model.userLeftOffset += (leftOfMap*zoomMultiply - leftOfMap).toInt();
+      model.userTopOffset += (topOfMap*zoomMultiply - topOfMap).toInt();
     }
     model.recalculate();
     view.repaint();
   }
 
   void onMouseOut(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
     _moving = false;
   }
 
   @override
-  ngOnDestroy() {
+  void ngOnDestroy() {
     destroyed = true;
     onResizeSubscription.cancel();
   }

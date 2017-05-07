@@ -45,6 +45,7 @@ Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units){
     Unit unit = new Unit(unitId++, units[m["type"]])
       ..fromMap(m);
     tale.units[unit.id] = unit;
+
   }
   return tale;
 }

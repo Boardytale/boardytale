@@ -3,10 +3,12 @@ library world_model;
 import 'dart:math';
 import 'package:boardytale_commons/model/model.dart';
 import 'package:stagexl/stagexl.dart' as stage_lib;
+import 'package:utils/utils.dart';
 
 part 'sized_field.dart';
 
 class WorldModel {
+  Notificator onDimensionsChanged = new Notificator();
   World get world => tale.map;
   Tale tale;
   Map<String, SizedField> fields = {};
@@ -32,6 +34,7 @@ class WorldModel {
     fieldHeight = fieldWidth * widthHeightRatio;
     fields.forEach((k, v) => v.recalculate());
     defaultHex.recalculate();
+    onDimensionsChanged.notify();
   }
 
 
@@ -45,6 +48,7 @@ class WorldModel {
     if (verticalSegment % 3 == 0) {
       SizedField main = _getMainFieldBySegments(
           verticalSegment, horizontalSegment);
+      if(main == null)return null;
       if (verticalSegment % 6 == 0) {
         double deltaTop = userTop - main.left.y;
         double deltaLeft = userLeft - main.left.x;

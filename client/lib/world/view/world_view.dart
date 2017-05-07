@@ -6,7 +6,9 @@ import 'package:boardytale_client/world/model/world_model.dart';
 import 'package:boardytale_commons/model/model.dart';
 import 'package:stagexl/stagexl.dart';
 
-part 'objects_stage.dart';
+part 'unit_manager.dart';
+part 'paintable.dart';
+part 'unit_paintable.dart';
 
 class WorldView {
   WorldModel model;
@@ -15,10 +17,10 @@ class WorldView {
   bool _imageLoaded = false;
   Map<int, ImageElement> resources = {};
   Map<String, ViewField> fields = {};
-  ObjectsManager objectsManager;
+  UnitManager unitManager;
 
-  WorldView(this.worldStage, this.model, Stage objectsStage) {
-    objectsManager = new ObjectsManager(objectsStage, this);
+  WorldView(this.worldStage, this.model, Stage unitStage) {
+    unitManager = new UnitManager(unitStage, this);
     ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
     resources[0] = grassImage;
     ImageElement rockImage = new ImageElement(src: "img/rock.png");
@@ -49,9 +51,9 @@ class WorldView {
       ..strokeColor(0xff1E350D, 1.8);
 
     Map<int, BitmapData> resourcesData = {};
-    resources.forEach((k,ImageElement v){
-      v.width = defaultHex.rectangle.width.toInt()+1;
-      v.height = defaultHex.rectangle.height.toInt()+1;
+    resources.forEach((k, ImageElement v) {
+      v.width = defaultHex.rectangle.width.toInt() + 1;
+      v.height = defaultHex.rectangle.height.toInt() + 1;
       BitmapData data = new BitmapData.fromImageElement(v);
       data.draw(path);
       resourcesData[k] = data;
@@ -76,7 +78,8 @@ class WorldView {
 
     fields.forEach((key, ViewField field) {
       if (field.terrain == null) {
-        Bitmap terrain = new Bitmap(new BitmapData.fromBitmapData(resourcesData[field.original.terrainId], defaultHex.rectangle));
+        Bitmap terrain = new Bitmap(new BitmapData.fromBitmapData(
+            resourcesData[field.original.terrainId], defaultHex.rectangle));
         terrain.x = field.offset.x;
         terrain.y = field.offset.y;
         terrain.width = model.fieldWidth;
@@ -91,17 +94,19 @@ class WorldView {
       }
 //      print("painted grass on ${field.offset.x} ${field.offset.y} ${model.fieldWidth}");
 
-//      var textField = new TextField();
-//      textField.defaultTextFormat =
-//      new TextFormat('Spicy Rice', 30, Color.Black);
-//      textField.text = field.original.id;
-//      textField.x = field.offset.x + 20;
-//      textField.y = field.offset.y + 20;
-//      textField.width = 100;
-//      textField.height = 50;
-//      textField.wordWrap = true;
-//      stage.addChild(textField);
-
+//      if (field.label == null) {
+//        var textField = new TextField();
+//        textField.defaultTextFormat =
+//        new TextFormat('Spicy Rice', 30, Color.Black);
+//        textField.text = field.original.id;
+//        field.label = textField;
+//        worldStage.addChild(textField);
+//      }
+//      field.label.x = field.offset.x + 20;
+//      field.label.y = field.offset.y + 20;
+//      field.label.width = 100;
+//      field.label.height = 50;
+//      field.label.wordWrap = true;
     });
     worldStage.materialize(0.0, 0.0);
   }
@@ -122,11 +127,16 @@ class WorldView {
 //    _startTime+=16.6;
   }
 
+  void setActiveField(SizedField field) {
+    unitManager.setActiveField(field);
+  }
+
 }
 
 class ViewField {
   SizedField sized;
   Bitmap terrain;
+  TextField label;
 
   ViewField(this.sized) {
   }

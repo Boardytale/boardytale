@@ -53,6 +53,15 @@ class Image {
     if (data["tags"] is List<String>) {
       tags = data["tags"];
     }
+
+    dynamic __top = data["top"];
+    if(__top is int){
+      top = __top;
+    }
+    dynamic __left = data["left"];
+    if(__left is int){
+      left = __left;
+    }
   }
 
   Map toMap() {

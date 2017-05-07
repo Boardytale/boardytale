@@ -257,7 +257,7 @@ class Unit {
   }
 
   fromMap(Map m) {
-    dynamic __fieldId = m["fieldId"];
+    dynamic __fieldId = m["field"];
     if(__fieldId is String){
       fieldId = __fieldId;
     }
