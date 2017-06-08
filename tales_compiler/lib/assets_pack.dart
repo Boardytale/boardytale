@@ -13,6 +13,17 @@ class TaleAssetsPack{
       if (!imagesOut.containsKey(image.id)) {
         imagesOut[image.id] = image.toMap();
       }
+
+      image = unit.type.bigImage;
+      if (image != null && !imagesOut.containsKey(image.id)) {
+        imagesOut[image.id] = image.toMap();
+      }
+
+      image = unit.type.iconImage;
+      if (image != null && !imagesOut.containsKey(image.id)) {
+        imagesOut[image.id] = image.toMap();
+      }
+
       for(Ability ability in unit.type.abilities){
         if(!abilitiesOut.containsKey(ability.type.name)){
           abilitiesOut[ability.type.name] = ability.type.toMap();

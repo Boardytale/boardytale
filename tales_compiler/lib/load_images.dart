@@ -8,17 +8,19 @@ Map<int, Image> loadImages(Map fileMap) {
     Map imageData = JSON.decode(v);
     Image image = new Image()..fromMap(imageData);
     int dataRef = imageData["dataRef"];
-    Map<String, String> sources = fileMap["imagesSources"];
-    List<String> key = sources.keys.where(
-            (String key)=>key.startsWith("${dataRef}-")
-    ).toList();
-    if(key.length!=1){
-      throw "source image does not exist";
-    }
-    image.data = sources[key.first];
-//    print(k);
-//    Image image = createImageClassWrapperFromBase64(k, v);
     out[image.id] = image;
+    if(dataRef != null){
+      Map<String, String> sources = fileMap["imagesSources"];
+      List<String> key = sources.keys.where(
+              (String key)=>key.startsWith("${dataRef}-")
+      ).toList();
+      if(key.length!=1){
+        throw "source image does not exist";
+      }
+      image.data = sources[key.first];
+    }else if(image.imageSrc == null){
+      throw "image source or data must be defined";
+    }
   });
   return out;
 }

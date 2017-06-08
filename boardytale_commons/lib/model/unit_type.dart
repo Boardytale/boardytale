@@ -18,6 +18,10 @@ class UnitType {
   int _imageId;
   String _name;
   Image image;
+  int bigImageId;
+  Image bigImage;
+  int iconId;
+  Image iconImage;
   Notificator onChange = new Notificator();
 
   String raceId;
@@ -173,6 +177,23 @@ class UnitType {
     } else {
       _badData("imageId");
     }
+
+    dynamic __bigImageId = data["bigImageId"];
+    if(__bigImageId != null){
+      if (__bigImageId is int) {
+        bigImageId = __bigImageId;
+      } else {
+        _badData("bigImageId");
+      }
+    }
+    dynamic __iconId = data["iconId"];
+    if(__iconId != null){
+      if (__iconId is int) {
+        iconId = __iconId;
+      } else {
+        _badData("iconId");
+      }
+    }
   }
 
   Map toMap() {
@@ -189,10 +210,12 @@ class UnitType {
     out["cost"] = _cost;
     out["abilities"] = _abilitiesData;
     out["imageId"] = _imageId;
+    out["bigImageId"] = bigImageId;
+    out["iconId"] = iconId;
     return out;
   }
 
   void _badData(String key) {
-    throw "key $key is in bad";
+    throw "key $key is not ok";
   }
 }

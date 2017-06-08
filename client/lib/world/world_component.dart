@@ -1,11 +1,9 @@
 import 'dart:html';
-import 'dart:convert';
 import 'package:angular2/core.dart';
 import 'package:angular2/src/facade/async.dart';
 import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/world/model/world_model.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
-import 'package:boardytale_commons/model/model.dart';
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -113,9 +111,8 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      view.setActiveField(
-          model.getFieldByMouseOffset(event.page.x, event.page.y));
-
+      SizedField field = model.getFieldByMouseOffset(event.page.x, event.page.y);
+      view.setActiveField(field);
       return;
     }
     int deltaX = event.page.x - _start.x;
@@ -130,7 +127,6 @@ class WorldComponent implements OnDestroy {
   void onMouseWheel(WheelEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    double oldZoom = model.zoom;
     double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
     model.zoom *= zoomMultiply;
 

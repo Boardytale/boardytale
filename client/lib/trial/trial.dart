@@ -1,5 +1,3 @@
-import 'dart:html';
-import 'dart:convert';
 import 'package:angular2/core.dart';
 import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/world/world_component.dart';

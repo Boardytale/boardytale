@@ -7,7 +7,9 @@
   "attack": "0 2 3 4 5 6",
   "cost": 50,
   "size": 2,
-  "imageId": 3,
+  "imageId": 37,
+  "bigImageId": 3,
+  "iconId": 38,
   "abilities": [
     {"class": "move"},
     {"class": "attack"}

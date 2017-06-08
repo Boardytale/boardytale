@@ -1,10 +1,10 @@
 library tales_compiler;
 
 import 'dart:convert';
-import 'package:image/image.dart' as image_lib;
 import 'package:boardytale_commons/model/model.dart';
 
 part 'assets_pack.dart';
+
 part 'load_images.dart';
 
 Map<int, Tale> getTalesFromFileMap(Map fileMap) {
@@ -15,7 +15,8 @@ Map<int, UnitType> getUnitsFromFileMap(Map fileMap) {
   Map<int, Image> images = loadImages(fileMap);
   Map abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]));
   Map races = loadRaces(JSON.decode(fileMap["races.json"]));
-  return loadUnits(fileMap["unitTypes"].values.toList(), images, abilities, races);
+  return loadUnits(
+      fileMap["unitTypes"].values.toList(), images, abilities, races);
 }
 
 Map loadRaces(List racesData) {
@@ -37,7 +38,7 @@ Map loadTales(Map<String, dynamic> fileMap, Map<int, UnitType> units) {
   return tales;
 }
 
-Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units){
+Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units) {
   Tale tale = new Tale()
     ..fromMap(taleData);
   int unitId = 0;
@@ -45,7 +46,6 @@ Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units){
     Unit unit = new Unit(unitId++, units[m["type"]])
       ..fromMap(m);
     tale.units[unit.id] = unit;
-
   }
   return tale;
 }
@@ -62,7 +62,7 @@ Map loadAbilities(List abilitiesList) {
 Map<int, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
     Map<String, Ability> abilities, Map races) {
   Map<int, UnitType> unitTypes = {};
-  for(dynamic unitData in unitTypesList){
+  for (dynamic unitData in unitTypesList) {
     Map unit;
     if (unitData is Map) {
       unit = unitData;
@@ -74,6 +74,12 @@ Map<int, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
     UnitType unitType = new UnitType();
     unitType.fromMap(unit);
     unitType.image = images[unitType.imageId];
+    if (unitType.bigImageId != null) {
+      unitType.bigImage = images[unitType.bigImageId];
+    }
+    if (unitType.iconId != null) {
+      unitType.iconImage = images[unitType.iconId];
+    }
     unitTypes[unitType.id] = unitType;
     for (Map abilityData in unitType.abilitiesData) {
       unitType.abilities.add(

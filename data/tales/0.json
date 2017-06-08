@@ -9,7 +9,8 @@
       "12_11": 1,
       "12_10": 1,
       "12_9": 1,
-      "12_8": 1
+      "12_8": 1,
+      "12_7": 1
     },
     "startField": "5_5"
   },
@@ -19,16 +20,19 @@
       "id": 1,
       "name": "Servant",
       "handler": "firstHuman",
+      "color": "blue",
       "team": 1
     },
     {
       "id": 2,
       "name": "Dragon",
-      "handler": "UI",
+      "handler": "AI",
+      "color": "red",
       "team": 2
     },
     {
       "id": 3,
+      "color": "yellow",
       "name": "Princess",
       "handler": "passive",
       "team": 1
@@ -36,14 +40,15 @@
   ],
   "triggers": [
     {
-      "event": "playerUnitSpottedBy(2)",
-      "action": "dialog(dragonSpeech)"
+      "playerUnitSpottedBy": 2,
+      "dialog": "dragonSpeech"
     }
   ],
   "dialogs": [
     {
       "name": "dragonSpeech",
-      "image": "portraitOf(2)"
+      "portraitOf": 2,
+      "next": "princessCry"
     }
   ],
   "units": [
@@ -60,7 +65,7 @@
     {
       "name": "Servant Sencha",
       "type": 3,
-      "field": "10_5"
+      "field": "3_0"
     }
   ],
   "langs": {

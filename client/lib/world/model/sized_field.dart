@@ -30,6 +30,9 @@ class SizedField extends HexaBorders {
     bottomLeft = new FieldPoint(left1, bottom);
     bottomRight = new FieldPoint(left2, bottom);
   }
+
+  @override
+  String toString()=>original.id;
 }
 
 class FieldPoint {

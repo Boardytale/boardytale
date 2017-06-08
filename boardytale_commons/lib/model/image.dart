@@ -3,6 +3,8 @@ part of model;
 class Image {
   int id;
   String data;
+  String imageSrc;
+  double multiply = 1.0;
   int width;
   int height;
   int top = 0; // option to possible make smaller images
@@ -53,6 +55,12 @@ class Image {
     if (data["tags"] is List<String>) {
       tags = data["tags"];
     }
+    if(data["imageSrc"] is String){
+      imageSrc = data["imageSrc"];
+    }
+    if(data["multiply"] is num){
+      multiply = data["multiply"].toDouble();
+    }
 
     dynamic __top = data["top"];
     if(__top is int){
@@ -73,6 +81,8 @@ class Image {
     out["top"] = top;
     out["left"] = left;
     out["name"] = name;
+    out["imageSrc"] = imageSrc;
+    out["multiply"] = multiply;
     return out;
   }
 }
