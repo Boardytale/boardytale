@@ -2,6 +2,7 @@ name: io_utils
 description: Common file tasks
 dependencies:
   path: any
+  args: any
   utils:
     path: '../utils'
 

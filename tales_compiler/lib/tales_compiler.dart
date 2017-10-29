@@ -32,15 +32,15 @@ Map loadTales(Map<String, dynamic> fileMap, Map<int, UnitType> units) {
   Map talesData = fileMap["tales"];
   Map<int, Tale> tales = {};
   talesData.forEach((k, String v) {
-    Tale tale = loadTaleFromAssets(JSON.decode(v), units);
+    Tale tale = new Tale();
+    tale = loadTaleFromAssets(JSON.decode(v), units, tale);
     tales[tale.id] = tale;
   });
   return tales;
 }
 
-Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units) {
-  Tale tale = new Tale()
-    ..fromMap(taleData);
+Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units, Tale tale) {
+  tale.fromMap(taleData);
   int unitId = 0;
   for (Map m in tale.unitData) {
     Unit unit = new Unit(unitId++, units[m["type"]])

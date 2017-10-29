@@ -55,17 +55,20 @@
     {
       "type": 1,
       "name": "Princess Anne",
-      "field": "15_15"
+      "field": "15_15",
+      "player": 1
     },
     {
       "type": 2,
       "name": "Dragon Mortifer",
-      "field": "10_10"
+      "field": "10_10",
+      "player": 2
     },
     {
       "name": "Servant Sencha",
       "type": 3,
-      "field": "3_0"
+      "field": "3_0",
+      "player": 3
     }
   ],
   "langs": {

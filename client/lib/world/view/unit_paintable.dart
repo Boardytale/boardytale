@@ -1,36 +1,41 @@
 part of world_view;
 
-
 class UnitPaintable extends Paintable {
   Unit unit;
   List<Unit> units = [];
+  SettingsService settings;
   static Map<String, stage_lib.BitmapData> unitGlobalCache = {};
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(this.unit, stage_lib.Stage stage, WorldView view,
-      SizedField field)
+  UnitPaintable(
+      this.unit,
+      stage_lib.Stage stage,
+      WorldViewService view,
+      Field field,
+      this.settings
+      )
       : super(view, field, stage) {
     leftOffset = 0;
     topOffset = 0;
-    height = model.fieldHeight.toInt();
-    width = model.fieldWidth.toInt();
+    height = world.fieldHeight.toInt();
+    width = world.fieldWidth.toInt();
     createBitmap();
     view.model.onResolutionLevelChanged.add(createBitmap);
   }
 
-  WorldModel get model => view.model;
+  WorldService get world => view.model;
 
-  int get resolutionLevel => model.resolutionLevel;
+  int get resolutionLevel => world.resolutionLevel;
 
   double get pixelRatio => [0.5, 1.0, 2.0][resolutionLevel];
 
   double get lifeBarHeight => const[6.0, 5.0, 8.0][resolutionLevel];
 
-  double get rectWidth => model.defaultFieldWidth * pixelRatio;
+  double get rectWidth => settings.defaultFieldWidth * pixelRatio;
 
-  double get rectHeight => model.defaultFieldHeight * pixelRatio;
+  double get rectHeight => world.defaultFieldHeight * pixelRatio;
 
   stage_lib.Rectangle get rectangle {
     return new stage_lib.Rectangle(0, 0, rectWidth, rectHeight);
@@ -40,7 +45,7 @@ class UnitPaintable extends Paintable {
   Future<stage_lib.Bitmap> createBitmap() async {
     int resolutionLevel = view.model.resolutionLevel;
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
-    Image primaryImage = getPrimaryImage();
+    commonModel.Image primaryImage = getPrimaryImage();
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
       data = new stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
@@ -62,8 +67,8 @@ class UnitPaintable extends Paintable {
       data = unitGlobalCache[state];
     }
     bitmap = new stage_lib.Bitmap(data);
-    bitmap.width = model.fieldWidth;
-    bitmap.height = model.fieldHeight;
+    bitmap.width = world.fieldWidth;
+    bitmap.height = world.fieldHeight;
     return bitmap;
   }
 
@@ -105,7 +110,7 @@ class UnitPaintable extends Paintable {
         .steps}ms${unit.type.speed}a${unit.armor}r${unit.range}";
   }
 
-  Image getPrimaryImage() {
+  commonModel.Image getPrimaryImage() {
     int resolutionLevel = view.model.resolutionLevel;
     if (resolutionLevel == 0) {
       if (unit.type.iconImage != null) {

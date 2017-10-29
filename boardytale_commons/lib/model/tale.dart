@@ -37,11 +37,11 @@ class Tale {
     }
     events.clear();
     for (Trigger trigger in allTriggers) {
-      String name = trigger.event.name;
-      if (!events.containsKey(name)) {
-        events[name] = new Event(name);
-      }
-      events[name].triggers.add(trigger);
+//      String name = trigger.event.name;
+//      if (!events.containsKey(name)) {
+//        events[name] = new Event(name);
+//      }
+//      events[name].triggers.add(trigger);
     }
 
     dialogs.clear();
@@ -92,8 +92,8 @@ class Trigger {
   Call action;
 
   fromMap(Map data) {
-    event = new Call(data["event"]);
-    action = new Call(data["action"]);
+//    event = new Call(data["event"]);
+//    action = new Call(data["action"]);
   }
 
   Map toMap() {

@@ -20,14 +20,15 @@ class Call{
   List arguments;
 
   Call(String literal){
-    int argumentsStart = literal.indexOf("(");
-    int argumentsEnd = literal.indexOf(")");
-    name = literal.substring(0,argumentsStart);
-    arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
+//    int argumentsStart = literal.indexOf("(");
+//    int argumentsEnd = literal.indexOf(")");
+//    name = literal.substring(0,argumentsStart);
+//    arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
   }
 
   @override
   String toString(){
-     return "$name(${arguments.join(",")})";
+    return '';
+//     return "$name(${arguments.join(",")})";
   }
 }

@@ -6,7 +6,7 @@ class World {
   int baseTerrainId = 0;
   Map<String, Field> fields = {};
   Field startField;
-
+  Tale tale;
 
   World(){
 

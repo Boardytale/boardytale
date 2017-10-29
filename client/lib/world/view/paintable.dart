@@ -4,10 +4,10 @@ part of world_view;
 /// if active added to stage or waiting for image data
 /// scaled according to map
 abstract class Paintable {
-  SizedField _field;
+  Field _field;
   stage_lib.Bitmap _bitmap;
   String _state = "default";
-  WorldView view;
+  WorldViewService view;
   stage_lib.Stage stage;
   int height;
   int width;
@@ -35,9 +35,9 @@ abstract class Paintable {
     _resolveState();
   }
 
-  SizedField get field => _field;
+  Field get field => _field;
 
-  set field(SizedField value) {
+  set field(Field value) {
     _field = value;
     _resolveState();
   }

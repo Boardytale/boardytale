@@ -44,10 +44,10 @@ class TaleAssetsPack{
     return out;
   }
 
-  static Tale unpack(Map pack){
+  static Tale unpack(Map pack, Tale tale){
     Map<int, UnitType> unitTypes = getUnitsFromPack(pack);
-    Tale out = loadTaleFromAssets(pack["tale"], unitTypes);
-    return out;
+    loadTaleFromAssets(pack["tale"], unitTypes, tale);
+    return tale;
   }
 
   static Map<int, UnitType> getUnitsFromPack(Map pack) {

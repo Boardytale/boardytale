@@ -1,5 +1,8 @@
-import 'package:angular2/core.dart';
+import 'package:angular/core.dart';
+import 'package:boardytale_client/services/settings_service.dart';
 import 'package:boardytale_client/services/tale_service.dart';
+import 'package:boardytale_client/services/world_service.dart';
+import 'package:boardytale_client/world/view/world_view.dart';
 import 'package:boardytale_client/world/world_component.dart';
 
 @Component(
@@ -9,7 +12,12 @@ import 'package:boardytale_client/world/world_component.dart';
      <world></world>
       ''',
     directives: const[WorldComponent],
-    providers: const[TaleService])
+    providers: const[
+      SettingsService,
+      TaleService,
+      WorldService,
+      WorldViewService
+    ])
 class TrialComponent {
   TaleService taleService;
   TrialComponent(this.taleService){

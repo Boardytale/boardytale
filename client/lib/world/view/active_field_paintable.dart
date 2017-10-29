@@ -4,7 +4,7 @@ part of world_view;
 class ActiveFieldPaintable extends Paintable {
   ImageElement highlightImage;
 
-  ActiveFieldPaintable(WorldView view, SizedField field, stage_lib.Stage stage)
+  ActiveFieldPaintable(WorldViewService view, Field field, stage_lib.Stage stage)
       : super(view, field, stage){
     createBitmap();
   }

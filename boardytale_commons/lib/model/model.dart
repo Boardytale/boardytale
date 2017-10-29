@@ -15,6 +15,8 @@ part 'alea.dart';
 part 'player.dart';
 part 'tale.dart';
 part 'buff.dart';
+part 'settings.dart';
+part 'stage_geometry.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/raise.dart";
@@ -37,3 +39,9 @@ part 'services/unit_service.dart';
 part 'services/platform_service.dart';
 part 'services/player_service.dart';
 part 'services/game_service.dart';
+
+Settings settings;
+
+void setSettings(Settings input) {
+  settings = input;
+}

@@ -2,8 +2,12 @@ library world_view;
 
 import 'dart:async';
 import 'dart:html';
-import 'package:boardytale_client/world/model/world_model.dart';
-import 'package:boardytale_commons/model/model.dart';
+import 'package:angular/di.dart';
+import 'package:boardytale_client/services/settings_service.dart';
+import 'package:boardytale_client/services/tale_service.dart';
+import 'package:boardytale_client/services/world_service.dart';
+import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_commons/model/model.dart' as commonModel;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 part 'unit_manager.dart';
@@ -14,30 +18,36 @@ part 'unit_paintable.dart';
 
 part 'active_field_paintable.dart';
 
-class WorldView {
-  WorldModel model;
+@Injectable()
+class WorldViewService {
+  WorldService model;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
   Map<int, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
   UnitManager unitManager;
+  SettingsService settings;
 
-  WorldView(this.worldStage, this.model, stage_lib.Stage unitStage) {
-    Map<int, ImageElement> resources = {};
-    unitManager = new UnitManager(unitStage, this);
-    ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
-    resources[0] = grassImage;
-    ImageElement rockImage = new ImageElement(src: "img/rock.png");
-    resources[1] = rockImage;
-    Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
-      _imageLoaded = true;
-      createBitmapsByTerrain(resources);
-      init();
-    });
-    model.fields.forEach((key, SizedField field) {
-      fields[key] = new ViewField(field);
-    });
+  WorldViewService(
+      this.worldStage,
+      this.model,
+      this.settings
+      ) {
+//    Map<int, ImageElement> resources = {};
+//    unitManager = new UnitManager(unitStage, this, settings);
+//    ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
+//    resources[0] = grassImage;
+//    ImageElement rockImage = new ImageElement(src: "img/rock.png");
+//    resources[1] = rockImage;
+//    Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
+//      _imageLoaded = true;
+//      createBitmapsByTerrain(resources);
+//      init();
+//    });
+//    model.fields.forEach((key, Field field) {
+//      fields[key] = new ViewField(field);
+//    });
   }
 
   void createBitmapsByTerrain(Map<int, ImageElement> resources) {
@@ -84,8 +94,8 @@ class WorldView {
         worldStage.addChild(terrain);
         field.terrain = terrain;
       }
-      field.terrain.x = field.offset.x;
-      field.terrain.y = field.offset.y;
+      field.terrain.x = field.original.offset.x;
+      field.terrain.y = field.original.offset.y;
       field.terrain.width = model.fieldWidth;
       field.terrain.height = model.fieldHeight;
     });
@@ -101,21 +111,18 @@ class WorldView {
     worldStage.materialize(0.0, 16.6);
   }
 
-  void setActiveField(SizedField field) {
+  void setActiveField(Field field) {
     unitManager.setActiveField(field);
   }
 
 }
 
 class ViewField {
-  SizedField sized;
+  Field original;
   stage_lib.Bitmap terrain;
   stage_lib.TextField label;
 
-  ViewField(this.sized) {
+  ViewField(this.original) {
   }
 
-  Field get original => sized.original;
-
-  FieldPoint get offset => sized.offset;
 }

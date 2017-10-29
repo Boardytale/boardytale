@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:html';
-import 'package:angular2/core.dart';
-import 'package:angular2/src/facade/async.dart';
+
+import 'package:angular/angular.dart';
+
 import 'package:boardytale_client/services/tale_service.dart';
-import 'package:boardytale_client/world/model/world_model.dart';
+import 'package:boardytale_client/services/world_service.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
+import 'package:boardytale_commons/model/model.dart';
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -20,7 +23,12 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 
         ></div>
       ''',
-    providers: const[TaleService],
+    directives: const[COMMON_DIRECTIVES],
+    providers: const[
+      TaleService,
+      WorldService,
+      WorldViewService
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";
@@ -28,17 +36,18 @@ class WorldComponent implements OnDestroy {
   String get heightString => "${window.innerHeight}px";
   bool destroyed = false;
   stage_lib.Stage worldStage;
-  WorldModel model;
-  WorldView view;
+  WorldService world;
+  WorldViewService view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
   StreamSubscription onResizeSubscription;
-  TaleService taleService;
   ChangeDetectorRef changeDetector;
 
-  WorldComponent(this.taleService, this.changeDetector) {
-    this.taleService.onTaleLoaded.add(taleLoaded);
+  WorldComponent(this.changeDetector,
+      this.world,
+      this.view) {
     onResizeSubscription = window.onResize.listen(detectChanges);
+    world.onModelLoaded.add(this.modelLoaded);
   }
 
   @ViewChild("world")
@@ -58,8 +67,7 @@ class WorldComponent implements OnDestroy {
     changeDetector.detectChanges();
   }
 
-  void taleLoaded() {
-    model = new WorldModel(taleService.tale);
+  void modelLoaded() {
     worldStage = new stage_lib.Stage(worldElement, width: window.innerWidth,
         height: window.innerHeight,
         options: new stage_lib.StageOptions()
@@ -78,8 +86,7 @@ class WorldComponent implements OnDestroy {
     unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     unitStage.align = stage_lib.StageAlign.TOP_LEFT;
 
-    view = new WorldView(worldStage, model, unitStage);
-
+//    view = new WorldViewService(worldStage, world, unitStage, settings);
 
     var renderLoop = new stage_lib.RenderLoop();
     renderLoop.addStage(unitStage);
@@ -97,8 +104,8 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     _moving = true;
     _start = event.page;
-    _startOffsetTop = model.userTopOffset;
-    _startOffsetLeft = model.userLeftOffset;
+    _startOffsetTop = world.userTopOffset;
+    _startOffsetLeft = world.userLeftOffset;
   }
 
   void onMouseUp(MouseEvent event) {
@@ -111,16 +118,16 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      SizedField field = model.getFieldByMouseOffset(event.page.x, event.page.y);
+      Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       view.setActiveField(field);
       return;
     }
     int deltaX = event.page.x - _start.x;
     int deltaY = event.page.y - _start.y;
-    model.userLeftOffset = _startOffsetLeft - deltaX;
-    model.userTopOffset = _startOffsetTop - deltaY;
+    world.userLeftOffset = _startOffsetLeft - deltaX;
+    world.userTopOffset = _startOffsetTop - deltaY;
     // TODO: stack on anim frame
-    model.recalculate();
+    world.recalculate();
     view.repaint();
   }
 
@@ -128,17 +135,17 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
-    model.zoom *= zoomMultiply;
+    world.zoom *= zoomMultiply;
 
-    if (model.zoom < 0.3) {
-      model.zoom = 0.3;
+    if (world.zoom < 0.3) {
+      world.zoom = 0.3;
     } else {
-      int topOfMap = event.page.y + model.userTopOffset;
-      int leftOfMap = event.page.x + model.userLeftOffset;
-      model.userLeftOffset += (leftOfMap*zoomMultiply - leftOfMap).toInt();
-      model.userTopOffset += (topOfMap*zoomMultiply - topOfMap).toInt();
+      int topOfMap = event.page.y + world.userTopOffset;
+      int leftOfMap = event.page.x + world.userLeftOffset;
+      world.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
+      world.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
     }
-    model.recalculate();
+    world.recalculate();
     view.repaint();
   }
 

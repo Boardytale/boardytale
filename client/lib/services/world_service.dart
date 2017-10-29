@@ -1,38 +1,29 @@
-library world_model;
-
 import 'dart:math';
-import 'package:boardytale_commons/model/model.dart';
-import 'package:stagexl/stagexl.dart' as stage_lib;
+import 'package:angular/di.dart';
+import 'package:boardytale_client/services/settings_service.dart';
+import 'package:boardytale_client/services/tale_service.dart';
+import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_commons/model/model.dart' as commonModel;
 import 'package:utils/utils.dart';
 
-part 'sized_field.dart';
-
-class WorldModel {
+@Injectable()
+class WorldService extends commonModel.World{
+  SettingsService settings;
+  @override
+  TaleService tale;
+  Map<String, Field> fields = {};
+  List<Function> onModelLoaded = [];
   Notificator onDimensionsChanged = new Notificator();
   Notificator onResolutionLevelChanged = new Notificator();
-
-  World get world => tale.map;
-  Tale tale;
-  Map<String, SizedField> fields = {};
   int userTopOffset = 0;
   int userLeftOffset = 0;
   double _zoom = 1.0;
   int _resolutionLevel = 1;
-  double defaultFieldWidth = 100.0;
   double defaultFieldHeight;
   double widthHeightRatio = sqrt(3) / 2;
   double fieldWidth;
   double fieldHeight;
   HexaBorders defaultHex;
-
-  WorldModel(this.tale) {
-    defaultFieldHeight = defaultFieldWidth * widthHeightRatio;
-    world.fields.forEach((k, v) {
-      fields[k] = new SizedField(v, this);
-    });
-    defaultHex = new HexaBorders(this);
-    recalculate();
-  }
 
   double get zoom => _zoom;
 
@@ -55,15 +46,37 @@ class WorldModel {
     onResolutionLevelChanged.notify();
   }
 
+  WorldService(
+      this.tale,
+      this.settings
+      ) {
+    Map settingsData = {};
+    settings.fromMap(settingsData);
+    commonModel.setSettings(this.settings);
+    tale.onTaleLoaded.add(taleLoaded);
+  }
+
+  void taleLoaded() {
+    defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
+    tale.map.fields.forEach((k, v) {
+      fields[k] = new Field(v, this);
+    });
+    defaultHex = new HexaBorders(this);
+    recalculate();
+    onModelLoaded.forEach((f)=>f());
+  }
+
+
+
   void recalculate() {
-    fieldWidth = zoom * defaultFieldWidth;
+    fieldWidth = zoom * settings.defaultFieldWidth;
     fieldHeight = fieldWidth * widthHeightRatio;
     fields.forEach((k, v) => v.recalculate());
     defaultHex.recalculate();
     onDimensionsChanged.notify();
   }
 
-  SizedField getFieldByMouseOffset(int x, int y) {
+  Field getFieldByMouseOffset(int x, int y) {
     // TODO: make segmentation over three axis ... Šmoďo, až se k tomu jednou dostaneš, předělej to
     double qWidth = fieldWidth / 4;
     int userTop = userTopOffset + y;
@@ -73,7 +86,7 @@ class WorldModel {
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
     if (verticalSegment % 3 == 0) {
       // resolving field by corner
-      SizedField main = _getMainFieldBySegments(
+      Field main = _getMainFieldBySegments(
           verticalSegment, horizontalSegment);
       if (main == null) return null;
       if (verticalSegment % 6 == 0) {
@@ -124,7 +137,7 @@ class WorldModel {
     }
   }
 
-  SizedField _getMainFieldBySegments(int verticalSegment,
+  Field _getMainFieldBySegments(int verticalSegment,
       int horizontalSegment) {
     int fx;
     int fy;

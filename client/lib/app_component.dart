@@ -1,5 +1,6 @@
-import 'package:angular2/core.dart';
-import 'package:angular2/router.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/core.dart';
+import 'package:angular_router/angular_router.dart';
 
 import 'editor/editor.dart';
 import 'lobby/lobby.dart';
@@ -17,7 +18,9 @@ import 'trial/trial.dart';
       </nav>
       <router-outlet></router-outlet>''',
     directives: const [ROUTER_DIRECTIVES],
-    providers: const [ROUTER_PROVIDERS],
+    providers: const [
+      ROUTER_PROVIDERS,
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
   const Route(
