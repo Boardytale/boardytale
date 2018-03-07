@@ -18,8 +18,7 @@ part 'unit_paintable.dart';
 
 part 'active_field_paintable.dart';
 
-@Injectable()
-class WorldViewService {
+class WorldView {
   WorldService model;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
@@ -27,27 +26,27 @@ class WorldViewService {
   Map<int, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
   UnitManager unitManager;
-  SettingsService settings;
+//  SettingsService settings;
 
-  WorldViewService(
+  WorldView(
       this.worldStage,
-      this.model,
-      this.settings
+      this.model
+//      this.settings
       ) {
-//    Map<int, ImageElement> resources = {};
+    Map<int, ImageElement> resources = {};
 //    unitManager = new UnitManager(unitStage, this, settings);
-//    ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
-//    resources[0] = grassImage;
-//    ImageElement rockImage = new ImageElement(src: "img/rock.png");
-//    resources[1] = rockImage;
-//    Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
-//      _imageLoaded = true;
-//      createBitmapsByTerrain(resources);
-//      init();
-//    });
-//    model.fields.forEach((key, Field field) {
-//      fields[key] = new ViewField(field);
-//    });
+    ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
+    resources[0] = grassImage;
+    ImageElement rockImage = new ImageElement(src: "img/rock.png");
+    resources[1] = rockImage;
+    Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
+      _imageLoaded = true;
+      createBitmapsByTerrain(resources);
+      init();
+    });
+    model.fields.forEach((key, Field field) {
+      fields[key] = new ViewField(field);
+    });
   }
 
   void createBitmapsByTerrain(Map<int, ImageElement> resources) {
@@ -100,7 +99,7 @@ class WorldViewService {
       field.terrain.height = model.fieldHeight;
     });
     worldStage.materialize(0.0, 0.0);
-    print(stopwatch.elapsedMilliseconds);
+//    print(stopwatch.elapsedMilliseconds);
   }
 
   void repaint() {
@@ -112,7 +111,7 @@ class WorldViewService {
   }
 
   void setActiveField(Field field) {
-    unitManager.setActiveField(field);
+//    unitManager.setActiveField(field);
   }
 
 }

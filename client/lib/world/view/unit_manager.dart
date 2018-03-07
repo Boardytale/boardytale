@@ -2,7 +2,7 @@ part of world_view;
 
 class UnitManager {
   stage_lib.Stage stage;
-  WorldViewService view;
+  WorldView view;
   TaleService tale;
   SettingsService settings;
   List<Paintable> paintables = [];

@@ -15,8 +15,7 @@ import 'package:boardytale_client/world/world_component.dart';
     providers: const[
       SettingsService,
       TaleService,
-      WorldService,
-      WorldViewService
+      WorldService
     ])
 class TrialComponent {
   TaleService taleService;

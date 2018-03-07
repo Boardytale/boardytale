@@ -7,7 +7,7 @@ abstract class Paintable {
   Field _field;
   stage_lib.Bitmap _bitmap;
   String _state = "default";
-  WorldViewService view;
+  WorldView view;
   stage_lib.Stage stage;
   int height;
   int width;

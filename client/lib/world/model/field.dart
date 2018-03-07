@@ -11,22 +11,22 @@ class Field extends commonModel.Field {
 
   Field(String id, WorldService world) : super(id, world);
 
-  @override
-  WorldService world;
+  Field.fromField(commonModel.Field original, WorldService worldService) : super(original.id, worldService) {
+    terrainId = original.terrainId;
+  }
+
+  WorldService get worldService => world;
 
   stageLib.Rectangle<num> get rectangle =>
-      new stageLib.Rectangle<num>(
-          offset.x, offset.y, world.fieldWidth, world.fieldHeight);
+      new stageLib.Rectangle<num>(offset.x, offset.y, worldService.fieldWidth, worldService.fieldHeight);
 
   void recalculate() {
-    double fieldWidth = world.fieldWidth;
-    double fieldHeight = world.fieldHeight;
+    double fieldWidth = worldService.fieldWidth;
+    double fieldHeight = worldService.fieldHeight;
     double halfHeight = fieldHeight / 2;
     double quarterWidth = fieldWidth / 4;
-    offset = new FieldPoint(
-        x * 3 / 4 * fieldWidth - world.userLeftOffset,
-        y * fieldHeight + (x % 2) * fieldHeight / 2 -
-            world.userTopOffset);
+    offset = new FieldPoint(x * 3 / 4 * fieldWidth - worldService.userLeftOffset,
+        y * fieldHeight + (x % 2) * fieldHeight / 2 - worldService.userTopOffset);
     double bottom = offset.y + fieldHeight;
     double left1 = offset.x + quarterWidth;
     double left2 = offset.x + quarterWidth * 3;

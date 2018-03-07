@@ -48,7 +48,7 @@ class BoardytaleRequestSink extends RequestSink {
   }
 
   static Future initializeApplication(ApplicationConfiguration config) async {
-    Map fileMap = getFileMap(new Directory(pathToData));
+    Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
     Map<int, Tale> tales = getTalesFromFileMap(fileMap);
 
     tales.forEach((k,v){

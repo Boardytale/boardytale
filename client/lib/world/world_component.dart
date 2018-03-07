@@ -26,8 +26,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
     directives: const[COMMON_DIRECTIVES],
     providers: const[
       TaleService,
-      WorldService,
-      WorldViewService
+      WorldService
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
@@ -37,15 +36,14 @@ class WorldComponent implements OnDestroy {
   bool destroyed = false;
   stage_lib.Stage worldStage;
   WorldService world;
-  WorldViewService view;
+  WorldView view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
   StreamSubscription onResizeSubscription;
   ChangeDetectorRef changeDetector;
 
   WorldComponent(this.changeDetector,
-      this.world,
-      this.view) {
+      this.world) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     world.onModelLoaded.add(this.modelLoaded);
   }
@@ -75,6 +73,7 @@ class WorldComponent implements OnDestroy {
           ..backgroundColor = stage_lib.Color.Transparent);
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
+    view = new WorldView(worldStage,world);
 
     stage_lib.Stage unitStage = new stage_lib.Stage(
         mapObjectsElement, width: window.innerWidth,

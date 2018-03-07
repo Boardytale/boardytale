@@ -1,9 +1,7 @@
 import 'dart:io';
 
 String harmonizePath() {
-  if (Directory.current.path
-      .split("\\")
-      .last == "runner") {
+  if (Directory.current.path.split(new RegExp("[\\/]")).last == "runner") {
     return new Directory("../").path;
   }
 

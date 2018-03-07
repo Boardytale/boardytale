@@ -12,7 +12,7 @@ class UnitPaintable extends Paintable {
   UnitPaintable(
       this.unit,
       stage_lib.Stage stage,
-      WorldViewService view,
+      WorldView view,
       Field field,
       this.settings
       )

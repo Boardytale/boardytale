@@ -59,7 +59,7 @@ class WorldService extends commonModel.World{
   void taleLoaded() {
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     tale.map.fields.forEach((k, v) {
-      fields[k] = new Field(v, this);
+      fields[k] = new Field.fromField(v, this);
     });
     defaultHex = new HexaBorders(this);
     recalculate();
