@@ -18,7 +18,7 @@ import 'trial/trial.dart';
       </nav>
       <router-outlet></router-outlet>''',
     directives: const [ROUTER_DIRECTIVES],
-    providers: const [
+    providers: const <dynamic>[
       ROUTER_PROVIDERS,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)

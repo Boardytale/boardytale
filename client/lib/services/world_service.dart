@@ -10,7 +10,7 @@ import 'package:utils/utils.dart';
 class WorldService extends commonModel.World{
   SettingsService settings;
   @override
-  TaleService tale;
+  TaleService tale; // ignore: strong_mode_invalid_method_override
   Map<String, Field> fields = {};
   List<Function> onModelLoaded = [];
   Notificator onDimensionsChanged = new Notificator();
@@ -50,7 +50,7 @@ class WorldService extends commonModel.World{
       this.tale,
       this.settings
       ) {
-    Map settingsData = {};
+    Map settingsData = <String,dynamic>{};
     settings.fromMap(settingsData);
     commonModel.setSettings(this.settings);
     tale.onTaleLoaded.add(taleLoaded);
@@ -76,8 +76,10 @@ class WorldService extends commonModel.World{
     onDimensionsChanged.notify();
   }
 
-  Field getFieldByMouseOffset(int x, int y) {
+  Field getFieldByMouseOffset(num nx, num ny) {
     // TODO: make segmentation over three axis ... Šmoďo, až se k tomu jednou dostaneš, předělej to
+    int x=nx.toInt();
+    int y=ny.toInt();
     double qWidth = fieldWidth / 4;
     int userTop = userTopOffset + y;
     int userLeft = userLeftOffset + x;

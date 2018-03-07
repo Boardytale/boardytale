@@ -1,6 +1,6 @@
 import 'package:pub_serve_rewrites/rewrites.dart';
 
-main() {
+void main() {
   server(port: 8080)
     ..ignoreAll([
       r'^(\S+\.(json|html|js|dart|css|png))$',

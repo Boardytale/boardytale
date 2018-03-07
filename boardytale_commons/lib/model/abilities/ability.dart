@@ -21,8 +21,8 @@ abstract class Ability{
   List<String> target = [];
   Ability type;
 
-  static Ability createAbility(Map data){
-    String abilityClass = data["class"];
+  static Ability createAbility(Map<String,dynamic> data){
+    String abilityClass = data["class"] as String;
     switch(abilityClass){
       case "move": return new MoveAbility()..fromMap(data);
       case "attack": return new AttackAbility()..fromMap(data);
@@ -57,7 +57,7 @@ abstract class Ability{
 
   void setDefaults(Map defaults){}
 
-  Ability createAbilityWithUnitData(Map unitAbilityData){
+  Ability createAbilityWithUnitData(Map<String,dynamic> unitAbilityData){
     Ability abilityClone = clone();
     abilityClone.type = this;
     abilityClone.fromMap(unitAbilityData);
@@ -66,16 +66,16 @@ abstract class Ability{
   
   Ability clone();
   
-  void fromMap(Map ability){
+  void fromMap(Map<String,dynamic> ability){
     name = ability["name"].toString().toLowerCase();
-    imageId = ability["imageId"];
-    target = ability["target"];
-    className = ability["class"];
+    imageId = ability["imageId"] as String;
+    target = ability["target"] as List<String>;
+    className = ability["class"] as String;
   }
 
 
-  Map toMap(){
-    Map out = {};
+  Map<String,dynamic> toMap(){
+    Map<String,dynamic> out = <String,dynamic>{};
     out["name"] = name;
     out["img"] = img;
     out["target"] = target;

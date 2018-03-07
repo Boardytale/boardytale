@@ -102,7 +102,7 @@ class Unit {
   void destroy(){
   }
 
-  get actualHealth=> _health;
+  int get actualHealth=> _health;
 
   int get far=> _far;
 
@@ -212,7 +212,7 @@ class Unit {
   }
 
   Map toSimpleJson(){
-    Map out = {};
+    Map<String,dynamic> out = <String,dynamic>{};
     out["id"] = id;
     out["type"] = type.id;
     out["field"] = field.toMap();
@@ -257,7 +257,7 @@ class Unit {
     return possibles[used];
   }
 
-  fromMap(Map m) {
+  void fromMap(Map m) {
     dynamic __fieldId = m["field"];
     if(__fieldId is String){
       fieldId = __fieldId;

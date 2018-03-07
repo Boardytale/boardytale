@@ -12,7 +12,7 @@ import 'package:boardytale_client/world/world_component.dart';
      <world></world>
       ''',
     directives: const[WorldComponent],
-    providers: const[
+    providers: const<Object>[
       SettingsService,
       TaleService,
       WorldService

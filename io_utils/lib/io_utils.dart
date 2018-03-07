@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
 
 Map<String, dynamic> getFileMap(Directory dir) {
-  Map<String, dynamic> out = {};
+  Map<String, dynamic> out = <String, dynamic>{};
   for (FileSystemEntity f in dir.listSync()) {
     String key = convertToCamelCase(path_lib.basename(f.path));
     if (FileSystemEntity.isFileSync(f.path)) {
@@ -15,7 +15,7 @@ Map<String, dynamic> getFileMap(Directory dir) {
       try {
         if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif") {
           String contentType = "image/${ext.replaceAll(".", "")}";
-          List byteList = file.readAsBytesSync();
+          List<int> byteList = file.readAsBytesSync();
           String header = "data:$contentType;base64,";
           String base64 = BASE64.encode(byteList);
           out[key] = "$header$base64";
@@ -122,7 +122,7 @@ Future<bool> terminateMe(int port,[int terminateDelay = 50]) async{
     var socket = await Socket.connect('127.0.0.1', port);
     socket.write('terminate');
     // time to terminate
-    await new Future.delayed(new Duration(milliseconds: terminateDelay));
+    await new Future<dynamic>.delayed(new Duration(milliseconds: terminateDelay));
     return true;
   } catch (e) {
     return false;
@@ -197,7 +197,7 @@ void recursiveFolderCopySync(String path1, String path2,[List<String> forbiddenF
 
 
 void deleteRecursively(Directory root,
-    {Function deleteFileChecker, Function deleteDirectoryChecker}) {
+    {bool deleteFileChecker(String fileName), bool deleteDirectoryChecker(String dirName)}) {
   root.listSync().forEach((FileSystemEntity element) {
     if (element is File) {
       if (deleteFileChecker(path_lib.basename(element.path))) {

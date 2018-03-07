@@ -1,5 +1,7 @@
 library utils;
 
+import 'dart:convert';
+
 part 'notificator.dart';
 
 String convertToCamelCase(String name) {
@@ -13,6 +15,17 @@ String convertToCamelCase(String name) {
     }
   }
   return out;
+}
+
+Map<String,dynamic> parseJsonMap(String json){
+  dynamic result =  JSON.decode(json);
+  if(result is Map<String,dynamic>) return result;
+  return null;
+}
+List<dynamic> parseJsonList(String json){
+  dynamic result =  JSON.decode(json);
+  if(result is List<dynamic>) return result;
+  return null;
 }
 
 class Call{

@@ -36,17 +36,17 @@ class Buff{
 
   Buff.fromJson(Map json){
     if(json.containsKey("speed"))
-      speedDelta = json["speed"].toInt();
+      speedDelta = json["speed"] as int;
     if(json.containsKey("armor"))
-      armorDelta = json["armor"].toInt();
+      armorDelta = json["armor"] as int;
     if(json.containsKey("range"))
-      rangeDelta = json["range"].toInt();
+      rangeDelta = json["range"] as int;
     if(json.containsKey("health"))
-      healthDelta = json["health"].toInt();
+      healthDelta = json["health"] as int;
     if(json.containsKey("attack"))
-      attackDelta = json["speed"];
+      attackDelta = json["speed"] as List<int>;
     if(json.containsKey("expiration"))
-      expiration = json["expiration"].toInt();
+      expiration = json["expiration"] as int;
   }
 
   void exchange(){

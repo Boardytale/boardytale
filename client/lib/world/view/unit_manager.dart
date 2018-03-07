@@ -30,7 +30,7 @@ class UnitManager {
 
   }
 
-  UnitPaintable getFirstUnitPaintableOnField(Field field) {
+  UnitPaintable getFirstUnitPaintableOnField(commonModel.Field field) {
     for(Paintable paintable in paintables){
       if(paintable is! UnitPaintable) continue;
       if(paintable.field!=field) continue;

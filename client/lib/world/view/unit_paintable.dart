@@ -128,7 +128,7 @@ class UnitPaintable extends Paintable {
   }
 
   Future<ImageElement> getBigImageData() {
-    Completer completer = new Completer();
+    Completer<ImageElement> completer = new Completer<ImageElement>();
     ImageElement imageElement;
     if (unit.type.bigImage != null) {
       imageElement =

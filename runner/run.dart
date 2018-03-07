@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
-main() {
+void main() {
   String projectDirectoryPath = harmonizePath();
 
   Process.start(dartExecutable,

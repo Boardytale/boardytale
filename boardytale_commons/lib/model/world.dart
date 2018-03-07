@@ -13,17 +13,17 @@ class World {
   }
 
   void fromMap(Map data){
-    width = data["width"];
-    height = data["height"];
-    baseTerrainId = data["baseTerrain"];
-    Map<String, dynamic> fieldsData = data["fields"];
-    Map<String, Map> indexedFieldsData = {};
+    width = data["width"] as int;
+    height = data["height"] as int;
+    baseTerrainId = data["baseTerrain"] as int;
+    Map<String, dynamic> fieldsData = data["fields"] as Map<String, dynamic>;
+    Map<String, Map<String,dynamic>> indexedFieldsData = <String,Map<String,dynamic>>{};
     if(fieldsData != null){
-     fieldsData.forEach((k,v){
+     fieldsData.forEach((String k,dynamic v){
        if(v is int){
-         indexedFieldsData[k] = {"terrain": v};
+         indexedFieldsData[k] = <String,int>{"terrain": v};
        }
-       if(v is Map){
+       if(v is Map<String,dynamic>){
          indexedFieldsData[k] = v;
        }
      });
@@ -52,7 +52,7 @@ class World {
   }
 
   Map toMap() {
-    Map out = {};
+    Map<String,dynamic> out = <String,dynamic>{};
     out["width"] = width;
     out["height"] = height;
     out["baseTerrain"] = baseTerrainId;

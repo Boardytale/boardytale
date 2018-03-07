@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:boardytale_server/boardytale_server.dart';
 
-main() async {
+Future main() async {
   try {
     var app = new Application<BoardytaleRequestSink>();
     var config = new ApplicationConfiguration()

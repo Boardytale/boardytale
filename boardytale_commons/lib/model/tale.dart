@@ -13,15 +13,15 @@ class Tale {
 
   void fromMap(Map data) {
     // TODO: strict validate
-    id = data["id"];
-    langs = data["langs"];
-    humanPlayersTeam = data["humanPlayersTeam"];
+    id = data["id"] as int;
+    langs = data["langs"] as Map<String,dynamic>;
+    humanPlayersTeam = data["humanPlayersTeam"] as int;
     map = new World()
-      ..fromMap(data["map"]);
+      ..fromMap(data["map"] as Map);
     players.clear();
     dynamic __groups = data["groups"];
-    if (__groups is List) {
-      for (Map playerData in __groups) {
+    if (__groups is List<Map<String,dynamic>>) {
+      for (Map<String,dynamic> playerData in __groups) {
         Player player = new Player()
           ..fromMap(playerData);
         players[player.id] = player;
@@ -30,7 +30,7 @@ class Tale {
 
     List<Trigger> allTriggers = [];
     dynamic __triggers = data["triggers"];
-    if (__triggers is List) {
+    if (__triggers is List<Map>) {
       for (Map triggerData in __triggers) {
         allTriggers.add(new Trigger()..fromMap(triggerData));
       }
@@ -62,7 +62,7 @@ class Tale {
   }
 
   Map toMap() {
-    Map out = {};
+    Map<String,dynamic> out = <String,dynamic>{};
     out["id"] = id;
     out["langs"] = langs;
     out["groups"] = players.values.map((g)=>g.toMap()).toList();
@@ -70,7 +70,7 @@ class Tale {
     out["dialogs"] = dialogs.values.map((d)=>d.toMap()).toList();
     out["units"] = unitData;
     out["map"] = map.toMap();
-    List triggers = [];
+    List<Map<String,dynamic>> triggers = [];
     events.forEach((k,v){
       v.triggers.forEach((t)=>triggers.add(t.toMap()));
     });
@@ -91,13 +91,13 @@ class Trigger {
   Call event;
   Call action;
 
-  fromMap(Map data) {
+  void fromMap(Map data) {
 //    event = new Call(data["event"]);
 //    action = new Call(data["action"]);
   }
 
-  Map toMap() {
-    return{
+  Map<String,dynamic> toMap() {
+    return <String,dynamic>{
       "event": event.toString(),
       "action": action.toString()
     };
@@ -109,12 +109,12 @@ class Dialog {
   Call image;
 
   void fromMap(Map data) {
-    name = data["name"];
-    image = new Call(data["image"]);
+    name = data["name"] as String;
+    image = new Call(data["image"] as String);
   }
 
-  Map toMap() {
-    return {
+  Map<String,dynamic> toMap() {
+    return <String,dynamic>{
       "name": name,
       "image": image.toString()
     };

@@ -7,7 +7,7 @@ import 'package:boardytale_client/services/settings_service.dart';
 import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/services/world_service.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
-import 'package:boardytale_commons/model/model.dart';
+import 'package:boardytale_client/world/model/model.dart';
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -25,7 +25,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
         ></div>
       ''',
     directives: const[COMMON_DIRECTIVES],
-    providers: const[
+    providers: const<dynamic>[
       TaleService,
       WorldService
     ],
@@ -60,15 +60,15 @@ class WorldComponent implements OnDestroy {
 
   @ViewChild("world")
   set worldElementRef(ElementRef element) {
-    worldElement = element.nativeElement;
+    worldElement = element.nativeElement as CanvasElement;
   }
 
   @ViewChild("objects")
   set objectsElementRef(ElementRef element) {
-    mapObjectsElement = element.nativeElement;
+    mapObjectsElement = element.nativeElement as CanvasElement;
   }
 
-  void detectChanges([_]) {
+  void detectChanges([dynamic _]) {
     if (destroyed || view == null) return;
     view.repaint();
     changeDetector.markForCheck();
@@ -141,8 +141,8 @@ class WorldComponent implements OnDestroy {
     if(_draggedUnit!=null){
       return;
     }
-    int deltaX = event.page.x - _start.x;
-    int deltaY = event.page.y - _start.y;
+    int deltaX = (event.page.x - _start.x).toInt();
+    int deltaY = (event.page.y - _start.y).toInt();
     world.userLeftOffset = _startOffsetLeft - deltaX;
     world.userTopOffset = _startOffsetTop - deltaY;
     // TODO: stack on anim frame
@@ -159,8 +159,8 @@ class WorldComponent implements OnDestroy {
     if (world.zoom < 0.3) {
       world.zoom = 0.3;
     } else {
-      int topOfMap = event.page.y + world.userTopOffset;
-      int leftOfMap = event.page.x + world.userLeftOffset;
+      int topOfMap = (event.page.y + world.userTopOffset).toInt();
+      int leftOfMap = (event.page.x + world.userLeftOffset).toInt();
       world.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
       world.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
     }

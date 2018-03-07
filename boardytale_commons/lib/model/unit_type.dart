@@ -197,7 +197,7 @@ class UnitType {
   }
 
   Map toMap() {
-    Map out = {};
+    Map<String,dynamic> out = <String,dynamic>{};
     out["id"] = _id;
     out["name"] = _name;
     out["race"] = _race.id;

@@ -5,7 +5,7 @@ class Settings {
 
   void fromMap(Map map) {
     if (map['defaultFieldWidth'] is double) {
-      defaultFieldWidth = map['defaultFieldWidth'];
+      defaultFieldWidth = map['defaultFieldWidth'] as double;
     }
   }
 }

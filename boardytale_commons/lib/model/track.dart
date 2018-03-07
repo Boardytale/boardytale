@@ -13,7 +13,7 @@ class Track {
 
   bool get isEmpty => fields.isEmpty;
 
-  get first => fields.first;
+  Field get first => fields.first;
 
   bool isEnemy(Player ofPlayer) {
     for (Field f in fields) {

@@ -102,14 +102,14 @@ class Field {
     return !units.isEmpty;
   }
 
-  Map toMap() {
-    Map out = {};
+  Map<String,dynamic> toMap() {
+    Map<String,dynamic> out = <String,dynamic>{};
     out["id"] = id;
     out["terrain"] = terrainId;
     return out;
   }
 
-  void fromMap(Map map) {
-    terrainId = map["terrain"];
+  void fromMap(Map<String,dynamic> map) {
+    terrainId = map["terrain"] as int;
   }
 }

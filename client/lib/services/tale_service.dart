@@ -13,7 +13,7 @@ class TaleService extends Tale {
 
   TaleService(){
     HttpRequest.getString("http://localhost:8086/tales/0").then((String s) {
-      Map data = JSON.decode(s);
+      Map data = parseJsonMap(s);
       TaleAssetsPack.unpack(data, this);
       onTaleLoaded.notify();
     });

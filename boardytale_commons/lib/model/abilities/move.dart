@@ -20,7 +20,7 @@ class MoveAbility extends Ability{
   }
 
   @override
-  void fromMap(Map ability) {
+  void fromMap(Map<String,dynamic> ability) {
     super.fromMap(ability);
   }
 }

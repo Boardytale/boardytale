@@ -15,7 +15,7 @@ class Field extends commonModel.Field {
     terrainId = original.terrainId;
   }
 
-  WorldService get worldService => world;
+  WorldService get worldService => world as WorldService;
 
   stageLib.Rectangle<num> get rectangle =>
       new stageLib.Rectangle<num>(offset.x, offset.y, worldService.fieldWidth, worldService.fieldHeight);
