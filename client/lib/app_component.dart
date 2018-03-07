@@ -10,7 +10,7 @@ import 'trial/trial.dart';
 @Component(
     selector: 'boardytale',
     template: '''
-      <nav>
+      <nav style="z-index: 1">
         <a [routerLink]="['Lobby']">Lobby</a>
         <a [routerLink]="['Game']">Game</a>
         <a [routerLink]="['Editor']">Tale editor</a>
@@ -21,6 +21,9 @@ import 'trial/trial.dart';
     providers: const <dynamic>[
       ROUTER_PROVIDERS,
     ],
+    host: const{
+      "style":"position:relative"
+    },
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
   const Route(

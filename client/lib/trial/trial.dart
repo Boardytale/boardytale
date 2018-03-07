@@ -8,7 +8,7 @@ import 'package:boardytale_client/world/world_component.dart';
 @Component(
     selector: 'trial',
     template: '''
-      <h1>trial</h1>
+      <h1 style="position: absolute">trial</h1>
      <world></world>
       ''',
     directives: const[WorldComponent],
