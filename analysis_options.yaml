@@ -1,4 +1,7 @@
 analyzer:
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
   exclude:
     - from_prev_versions/**
     - class_generator/**

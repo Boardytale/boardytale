@@ -179,6 +179,7 @@ class Unit {
 
   void transport(Field field){
     this.field.removeUnit(this);
+    this.field = field;
     field.addUnit(this);
   }
 

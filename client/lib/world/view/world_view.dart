@@ -2,7 +2,6 @@ library world_view;
 
 import 'dart:async';
 import 'dart:html';
-import 'package:angular/di.dart';
 import 'package:boardytale_client/services/settings_service.dart';
 import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/services/world_service.dart';
@@ -25,16 +24,12 @@ class WorldView {
   bool _imageLoaded = false;
   Map<int, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
-  UnitManager unitManager;
-//  SettingsService settings;
 
   WorldView(
       this.worldStage,
       this.model
-//      this.settings
       ) {
     Map<int, ImageElement> resources = {};
-//    unitManager = new UnitManager(unitStage, this, settings);
     ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
     resources[0] = grassImage;
     ImageElement rockImage = new ImageElement(src: "img/rock.png");
@@ -108,10 +103,6 @@ class WorldView {
     }
     init();
     worldStage.materialize(0.0, 16.6);
-  }
-
-  void setActiveField(Field field) {
-//    unitManager.setActiveField(field);
   }
 
 }

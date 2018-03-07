@@ -2,7 +2,7 @@ part of world_view;
 
 class UnitPaintable extends Paintable {
   Unit unit;
-  List<Unit> units = [];
+//  List<Unit> units = [];
   SettingsService settings;
   static Map<String, stage_lib.BitmapData> unitGlobalCache = {};
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};

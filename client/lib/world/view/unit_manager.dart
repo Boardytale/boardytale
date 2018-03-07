@@ -17,7 +17,8 @@ class UnitManager {
     activeField = new ActiveFieldPaintable(view, null, stage);
     tale.units.forEach((id, unit) {
       Field field = view.model.fields[unit.fieldId];
-      paintables.add(new UnitPaintable(unit, stage, view, field, settings));
+      unit.field = field;
+      paintables.add(new UnitPaintable(new Unit.fromUnit(unit), stage, view, field, settings));
     });
   }
 
@@ -27,5 +28,14 @@ class UnitManager {
 
   void repaintActiveField() {
 
+  }
+
+  UnitPaintable getFirstUnitPaintableOnField(Field field) {
+    for(Paintable paintable in paintables){
+      if(paintable is! UnitPaintable) continue;
+      if(paintable.field!=field) continue;
+      return (paintable as UnitPaintable);
+    }
+    return null;
   }
 }

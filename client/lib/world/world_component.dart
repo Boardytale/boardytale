@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 
+import 'package:boardytale_client/services/settings_service.dart';
 import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/services/world_service.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
@@ -35,14 +36,23 @@ class WorldComponent implements OnDestroy {
   String get heightString => "${window.innerHeight}px";
   bool destroyed = false;
   stage_lib.Stage worldStage;
+  stage_lib.Stage unitStage;
   WorldService world;
   WorldView view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
   StreamSubscription onResizeSubscription;
   ChangeDetectorRef changeDetector;
+  final SettingsService settings;
+  UnitManager unitManager;
 
-  WorldComponent(this.changeDetector,
+  bool _moving = false;
+  UnitPaintable _draggedUnit;
+  Point _start;
+  int _startOffsetTop;
+  int _startOffsetLeft;
+
+  WorldComponent(this.changeDetector,this.settings,
       this.world) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     world.onModelLoaded.add(this.modelLoaded);
@@ -75,7 +85,7 @@ class WorldComponent implements OnDestroy {
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
     view = new WorldView(worldStage,world);
 
-    stage_lib.Stage unitStage = new stage_lib.Stage(
+    unitStage = new stage_lib.Stage(
         mapObjectsElement, width: window.innerWidth,
         height: window.innerHeight,
         options: new stage_lib.StageOptions()
@@ -84,6 +94,7 @@ class WorldComponent implements OnDestroy {
           ..transparent = true);
     unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     unitStage.align = stage_lib.StageAlign.TOP_LEFT;
+    unitManager = new UnitManager(unitStage, view, settings);
 
 //    view = new WorldViewService(worldStage, world, unitStage, settings);
 
@@ -92,25 +103,31 @@ class WorldComponent implements OnDestroy {
     detectChanges();
   }
 
-
-  bool _moving = false;
-  Point _start;
-  int _startOffsetTop;
-  int _startOffsetLeft;
-
   void onMouseDown(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    _moving = true;
-    _start = event.page;
-    _startOffsetTop = world.userTopOffset;
-    _startOffsetLeft = world.userLeftOffset;
+    Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+    UnitPaintable unit = unitManager.getFirstUnitPaintableOnField(field);
+    if(unit!=null){
+      _draggedUnit=unit;
+    }else{
+      _moving = true;
+      _start = event.page;
+      _startOffsetTop = world.userTopOffset;
+      _startOffsetLeft = world.userLeftOffset;
+    }
   }
 
   void onMouseUp(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
+    if(_draggedUnit!=null){
+      Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+      _draggedUnit.unit.move(field, 0);
+      _draggedUnit.field=field;
+    }
     _moving = false;
+    _draggedUnit = null;
   }
 
   void onMouseMove(MouseEvent event) {
@@ -118,7 +135,10 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (!_moving) {
       Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-      view.setActiveField(field);
+      unitManager.setActiveField(field);
+      return;
+    }
+    if(_draggedUnit!=null){
       return;
     }
     int deltaX = event.page.x - _start.x;
@@ -152,6 +172,7 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     _moving = false;
+    _draggedUnit = null;
   }
 
   @override
