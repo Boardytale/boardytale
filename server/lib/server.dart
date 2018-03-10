@@ -1,5 +1,10 @@
+library boardytale.server;
+
 import 'dart:convert';
 import 'dart:io';
+import 'package:boardytale_commons/model/model.dart';
+import 'package:io_utils/io_utils.dart';
+import 'package:tales_compiler/tales_compiler.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_route/shelf_route.dart' as route;
@@ -9,17 +14,28 @@ import 'package:shelf_exception_response/exception_response.dart';
 import 'package:shelf_cors/shelf_cors.dart' as shelf_cors;
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-Map<String, WebSocketChannel> connections = {};
+part 'connection.dart';
+part 'connection_list.dart';
+
+ConnectionList connections = new ConnectionList();
+String pathToData = "../data";
 
 void main(List<String> arguments) {
+  Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
+  Map<String, Tale> tales = getTalesFromFileMap(fileMap);
+
+  tales.forEach((k, v) {
+    new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
+  });
 //  var authMiddleware = sAuth.authenticate(
 //      [new MyAuthenticator()],
 //      sessionHandler: new sAuth.JwtSessionHandler('bla', 'blub', new UserLookup()),
 //      allowHttp: true,
 //      allowAnonymousAccess: false);
 
-  var router =
-      (route.router()..get('/tales/{index}', _sendTale)..get('/ws', sWs.webSocketHandler(_handleWebSocketConnect)));
+  var router = (route.router()
+    ..get('/tales/{index}', _sendTale)
+    ..get('/ws', sWs.webSocketHandler((WebSocketChannel channel) => new Connection(channel))));
 
   var handler = const shelf.Pipeline()
       .addMiddleware(exceptionResponse())
@@ -41,32 +57,8 @@ shelf.Response _sendTale(shelf.Request request) {
   File tale = new File(path);
   if (tale.existsSync()) {
     String output = tale.readAsStringSync();
-    // TODO: copy tale assets to webserver - it is silly to decode and encode (AQUEDUCT should make something with this)
     return new shelf.Response.ok(output); //..contentType = ContentType.JSON;
   } else {
     return new shelf.Response.notFound(null);
-  }
-}
-
-void _handleWebSocketConnect(WebSocketChannel channel) {
-  String connectionName = "Socket: ${channel.hashCode}";
-  connections[connectionName] = channel;
-  channel.sink.add(JSON.encode({"name": connectionName}));
-  updateOthers();
-  channel.stream.listen((message) {
-    channel.sink.add(message);
-  }, onDone: () {
-    connections.remove(connectionName);
-    updateOthers();
-  }, onError: () {
-    connections.remove(connectionName);
-    updateOthers();
-  });
-}
-
-void updateOthers() {
-  var socketMessage = JSON.encode({"sockets": connections.keys.toList(growable: false)});
-  for (WebSocketChannel c in connections.values) {
-    c.sink.add(socketMessage);
   }
 }

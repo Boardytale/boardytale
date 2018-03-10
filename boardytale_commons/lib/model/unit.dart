@@ -35,6 +35,7 @@ class Unit {
 
   // called on buffs and type change
   void _recalculate(){
+    assert(type!=null);
     armor = type.armor;
     speed = type.speed;
     range = type.range;

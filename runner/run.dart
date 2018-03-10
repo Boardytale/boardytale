@@ -5,14 +5,8 @@ import 'common.dart';
 void main() {
   String projectDirectoryPath = harmonizePath();
 
-//  Process.start(dartExecutable,
-//      ["bin/start.dart"],
-//      workingDirectory: projectDirectoryPath + "/server")
-//      .then((Process process) {
-//    printFromOutputStreams(process, "Aqueduct");
-//  });
   Process.start(dartExecutable,
-      ["shelf/server.dart"],
+      ["lib/server.dart"],
       workingDirectory: projectDirectoryPath + "/server")
       .then((Process process) {
     printFromOutputStreams(process, "Shelf");

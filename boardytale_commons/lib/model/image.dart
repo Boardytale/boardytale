@@ -1,7 +1,7 @@
 part of model;
 
 class Image {
-  int id;
+  String id;
   String data;
   String imageSrc;
   double multiply = 1.0;
@@ -24,7 +24,7 @@ class Image {
   void fromMap(Map data) {
     dynamic __id = data["id"];
     if (__id != null){
-        id = __id as int;
+        id = __id.toString();
     }
     assert(id != null);
     authorId = data["authorId"] as String;

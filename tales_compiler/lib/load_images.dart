@@ -1,9 +1,9 @@
 part of tales_compiler;
 
 
-Map<int, Image> loadImages(Map fileMap) {
+Map<String, Image> loadImages(Map fileMap) {
   Map<String, String> images = fileMap["images"];
-  Map<int, Image> out = {};
+  Map<String, Image> out = {};
   images.forEach((k, v) {
     Map imageData = JSON.decode(v);
     Image image = new Image()..fromMap(imageData);

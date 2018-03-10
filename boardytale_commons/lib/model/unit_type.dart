@@ -3,7 +3,7 @@ part of model;
 class UnitType {
   static const TAG_UNDEAD = "undead";
   static const TAG_ETHERNAL = "ethernal";
-  int _id;
+  String _id;
   Race _race;
   int _health;
   int _armor;
@@ -15,12 +15,12 @@ class UnitType {
   List<Ability> _abilities = new List<Ability>();
   List<String> tags = [];
   List<Map> _abilitiesData;
-  int _imageId;
+  String _imageId;
   String _name;
   Image image;
-  int bigImageId;
+  String bigImageId;
   Image bigImage;
-  int iconId;
+  String iconId;
   Image iconImage;
   Notificator onChange = new Notificator();
 
@@ -28,7 +28,7 @@ class UnitType {
 
   List<Map> get abilitiesData => _abilitiesData;
 
-  int get id => _id;
+  String get id => _id;
 
   String get name => _name;
 
@@ -50,9 +50,9 @@ class UnitType {
 
   List<Ability> get abilities => _abilities;
 
-  int get imageId => _imageId;
+  String get imageId => _imageId;
 
-  set id(int val) {
+  set id(String val) {
     _id = val;
     onChange.notify();
   }
@@ -99,11 +99,7 @@ class UnitType {
 
   void fromMap(Map data) {
     dynamic __id = data["id"];
-    if (__id is int) {
-      _id = __id;
-    } else {
-      _badData("id");
-    }
+    _id = __id.toString();
     dynamic __name = data["name"];
     if (__name is String) {
       _name = __name;
@@ -165,34 +161,30 @@ class UnitType {
     }
 
     dynamic __abilitiesData = data["abilities"];
-    if (__abilitiesData is List<Map>) {
+    if (__abilitiesData is List) {
       _abilitiesData = __abilitiesData;
     } else {
       _badData("abilities data");
     }
 
     dynamic __imageId = data["imageId"];
-    if (__imageId is int) {
-      _imageId = __imageId;
-    } else {
-      _badData("imageId");
-    }
+      _imageId = __imageId.toString();
 
     dynamic __bigImageId = data["bigImageId"];
     if(__bigImageId != null){
-      if (__bigImageId is int) {
-        bigImageId = __bigImageId;
-      } else {
-        _badData("bigImageId");
-      }
+//      if (__bigImageId is String) {
+        bigImageId = __bigImageId.toString();
+//      } else {
+//        _badData("bigImageId");
+//      }
     }
     dynamic __iconId = data["iconId"];
     if(__iconId != null){
-      if (__iconId is int) {
-        iconId = __iconId;
-      } else {
-        _badData("iconId");
-      }
+      iconId = __iconId.toString();
+//      if (__iconId is String) {
+//      } else {
+//        _badData("iconId");
+//      }
     }
   }
 

@@ -1,7 +1,7 @@
 part of model;
 
 class Tale {
-  int id;
+  String id;
   int humanPlayersTeam;
   Map langs;
   World map;
@@ -13,14 +13,14 @@ class Tale {
 
   void fromMap(Map data) {
     // TODO: strict validate
-    id = data["id"] as int;
-    langs = data["langs"] as Map<String,dynamic>;
+    id = data["id"].toString();
+    langs = data["langs"] as Map;
     humanPlayersTeam = data["humanPlayersTeam"] as int;
     map = new World()
       ..fromMap(data["map"] as Map);
     players.clear();
     dynamic __groups = data["groups"];
-    if (__groups is List<Map<String,dynamic>>) {
+    if (__groups is List) {
       for (Map<String,dynamic> playerData in __groups) {
         Player player = new Player()
           ..fromMap(playerData);
@@ -30,7 +30,7 @@ class Tale {
 
     List<Trigger> allTriggers = [];
     dynamic __triggers = data["triggers"];
-    if (__triggers is List<Map>) {
+    if (__triggers is List) {
       for (Map triggerData in __triggers) {
         allTriggers.add(new Trigger()..fromMap(triggerData));
       }
@@ -46,7 +46,7 @@ class Tale {
 
     dialogs.clear();
     dynamic __dialogs = data["dialogs"];
-    if (__dialogs is List<Map>) {
+    if (__dialogs is List) {
       for (Map dialogData in __dialogs) {
         Dialog dialog = new Dialog()
           ..fromMap(dialogData);
@@ -56,7 +56,7 @@ class Tale {
 
     units.clear();
     dynamic __units = data["units"];
-    if (__units is List<Map>) {
+    if (__units is List) {
       unitData = __units;
     }
   }

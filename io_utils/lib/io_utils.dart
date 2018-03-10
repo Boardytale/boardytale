@@ -122,7 +122,7 @@ Future<bool> terminateMe(int port,[int terminateDelay = 50]) async{
     var socket = await Socket.connect('127.0.0.1', port);
     socket.write('terminate');
     // time to terminate
-    await new Future<dynamic>.delayed(new Duration(milliseconds: terminateDelay));
+    await new Future<dynamic>.delayed(new Duration(milliseconds: terminateDelay)).then((_){socket.close();});
     return true;
   } catch (e) {
     return false;
@@ -216,6 +216,14 @@ void deleteRecursively(Directory root,
       throw new Exception('File is neither File nor Directory. HOW?!');
     }
   });
+}
+String thisPackagePath() {
+  Directory directory = Directory.current;
+  while(!directory.listSync().any((entity)=>entity.path.contains("pubspec.yaml"))){
+    directory=directory.parent;
+  }
+
+  return directory.path;
 }
 
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {

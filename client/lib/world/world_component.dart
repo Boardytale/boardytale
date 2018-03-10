@@ -25,10 +25,6 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
         ></div>
       ''',
     directives: const[COMMON_DIRECTIVES],
-    providers: const<dynamic>[
-      TaleService,
-      WorldService
-    ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";

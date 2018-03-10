@@ -8,7 +8,7 @@ String pathToData = "../data";
 
 void main(){
   Map fileMap = getFileMap(new Directory(pathToData));
-  Map<int, Tale> tales = getTalesFromFileMap(fileMap);
+  Map<String, Tale> tales = getTalesFromFileMap(fileMap);
 
   tales.forEach((k,v){
     new File("output/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));

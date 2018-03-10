@@ -3,10 +3,10 @@ part of tales_compiler;
 class TaleAssetsPack{
   static Map pack(Tale tale){
     Map out = {};
-    Map<int, Map> imagesOut = new Map<int, Map>();
+    Map<String, Map> imagesOut = new Map<String, Map>();
     Map<String, Map> abilitiesOut = new Map<String, Map>();
     Map<String, Map> racesOut = new Map<String, Map>();
-    Map<int, Map> unitsOut = new Map<int, Map>();
+    Map<String, Map> unitsOut = new Map<String, Map>();
 
     tale.units.forEach((id, Unit unit) {
       Image image = unit.type.image;
@@ -45,20 +45,20 @@ class TaleAssetsPack{
   }
 
   static Tale unpack(Map pack, Tale tale){
-    Map<int, UnitType> unitTypes = getUnitsFromPack(pack);
+    Map<String, UnitType> unitTypes = getUnitsFromPack(pack);
     loadTaleFromAssets(pack["tale"], unitTypes, tale);
     return tale;
   }
 
-  static Map<int, UnitType> getUnitsFromPack(Map pack) {
-    Map<int, Image> images = loadImagesFromPack(pack);
+  static Map<String, UnitType> getUnitsFromPack(Map pack) {
+    Map<String, Image> images = loadImagesFromPack(pack);
     Map abilities = loadAbilities(pack["abilities"]);
     Map races = loadRaces(pack["races"]);
     return loadUnits(pack["units"], images, abilities, races);
   }
 
-  static Map<int, Image> loadImagesFromPack(Map pack){
-    Map<int, Image> out = {};
+  static Map<String, Image> loadImagesFromPack(Map pack){
+    Map<String, Image> out = {};
      for(Map imageData in pack["images"]){
        Image image = new Image()..fromMap(imageData);
        out[image.id] = image;

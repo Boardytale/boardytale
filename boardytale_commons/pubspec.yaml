@@ -3,6 +3,5 @@ description: Multiplayre webgame on hexagonal fields common library
 dependencies:
   utils:
     path: '../utils'
-  stagexl: any
 
 

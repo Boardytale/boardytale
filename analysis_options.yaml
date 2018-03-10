@@ -5,6 +5,7 @@ analyzer:
   exclude:
     - from_prev_versions/**
     - class_generator/**
+    - tales_compiler/**
 
 linter:
   rules:

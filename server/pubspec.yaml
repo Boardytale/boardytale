@@ -7,7 +7,6 @@ environment:
   sdk: '>=1.20.0 <2.0.0'
 
 dependencies:
-  aqueduct: any
   tales_compiler:
     path: '../tales_compiler'
   boardytale_commons:
@@ -17,3 +16,4 @@ dependencies:
   shelf_route: any
   shelf_cors: any
   shelf_exception_response: any
+  shelf_web_socket: any

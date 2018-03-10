@@ -7,19 +7,19 @@ part 'assets_pack.dart';
 
 part 'load_images.dart';
 
-Map<int, Tale> getTalesFromFileMap(Map fileMap) {
+Map<String, Tale> getTalesFromFileMap(Map fileMap) {
   return loadTales(fileMap, getUnitsFromFileMap(fileMap));
 }
 
-Map<int, UnitType> getUnitsFromFileMap(Map fileMap) {
-  Map<int, Image> images = loadImages(fileMap);
+Map<String, UnitType> getUnitsFromFileMap(Map fileMap) {
+  Map<String, Image> images = loadImages(fileMap);
   Map abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]));
   Map races = loadRaces(JSON.decode(fileMap["races.json"]));
   return loadUnits(
       fileMap["unitTypes"].values.toList(), images, abilities, races);
 }
 
-Map loadRaces(List racesData) {
+Map<String, Race> loadRaces(List racesData) {
   Map<String, Race> races = {};
   for (Map race in racesData) {
     races[race["id"]] = new Race()
@@ -28,9 +28,9 @@ Map loadRaces(List racesData) {
   return races;
 }
 
-Map loadTales(Map<String, dynamic> fileMap, Map<int, UnitType> units) {
+Map<String,Tale> loadTales(Map<String, dynamic> fileMap, Map<String, UnitType> units) {
   Map talesData = fileMap["tales"];
-  Map<int, Tale> tales = {};
+  Map<String, Tale> tales = {};
   talesData.forEach((k, String v) {
     Tale tale = new Tale();
     tale = loadTaleFromAssets(JSON.decode(v), units, tale);
@@ -39,11 +39,13 @@ Map loadTales(Map<String, dynamic> fileMap, Map<int, UnitType> units) {
   return tales;
 }
 
-Tale loadTaleFromAssets(Map taleData, Map<int, UnitType> units, Tale tale) {
+Tale loadTaleFromAssets(Map taleData, Map<String, UnitType> units, Tale tale) {
   tale.fromMap(taleData);
   int unitId = 0;
   for (Map m in tale.unitData) {
-    Unit unit = new Unit(unitId++, units[m["type"]])
+    String typeId = m["type"].toString();
+    if(!units.containsKey(typeId)) throw "Type $typeId is not defined";
+    Unit unit = new Unit(unitId++, units[typeId])
       ..fromMap(m);
     tale.units[unit.id] = unit;
   }
@@ -59,9 +61,9 @@ Map loadAbilities(List abilitiesList) {
   return abilities;
 }
 
-Map<int, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
+Map<String, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
     Map<String, Ability> abilities, Map races) {
-  Map<int, UnitType> unitTypes = {};
+  Map<String, UnitType> unitTypes = {};
   for (dynamic unitData in unitTypesList) {
     Map unit;
     if (unitData is Map) {

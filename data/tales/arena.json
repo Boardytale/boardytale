@@ -1,0 +1,88 @@
+{
+  "id": "arena",
+  "map": {
+    "width": 20,
+    "height": 20,
+    "baseTerrain": 0,
+    "fields": {
+    },
+    "startField": "5_5"
+  },
+  "humanPlayersTeam": 1,
+  "players": [
+    {
+      "id": 1,
+      "name": "Gladiator Tom",
+      "handler": "firstHuman",
+      "color": "blue",
+      "team": 1
+    },
+    {
+      "id": 2,
+      "name": "Gladiatoress Elene",
+      "handler": "everyHuman",
+      "color": "green",
+      "team": 1
+    },
+    {
+      "id": 3,
+      "name": "Gladiator Zogan",
+      "handler": "everyHuman",
+      "color": "orange",
+      "team": 1
+    },
+    {
+      "id": 4,
+      "name": "Gradiatoress Victoria",
+      "handler": "everyHuman",
+      "color": "yellow",
+      "team": 1
+    },
+    {
+      "id": 5,
+      "name": "Enemies",
+      "handler": "AI",
+      "color": "red",
+      "team": 2
+    }
+  ],
+  "triggers": [
+  ],
+  "dialogs": [
+  ],
+  "units": [
+    {
+      "type": "gladiator_tom",
+      "field": "15_15",
+      "player": 1
+    },
+    {
+      "type": "gladiator_zogan",
+      "field": "15_16",
+      "player": 2
+    },
+    {
+      "type": "gladiatoress_elene",
+      "field": "15_17",
+      "player": 3
+    },
+    {
+      "type": "gladiatoress_victoria",
+      "field": "15_18",
+      "player": 4
+    },
+    {
+      "type": "pikeman",
+      "health": 0,
+      "field": "14_16",
+      "player": 5
+    },
+    {
+      "type": "pikeman",
+      "field": "14_167",
+      "player": 5
+    }
+  ],
+  "langs": {
+  }
+}

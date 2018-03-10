@@ -28,3 +28,5 @@ pubspec.lock
 server/web/tales/*
 !server/web/tales/.gitkeep
 .idea/
+/tales_compiler/output/*
+!/tales_compiler/output/.gitkeep
