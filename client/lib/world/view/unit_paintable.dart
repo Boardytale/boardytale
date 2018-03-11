@@ -55,6 +55,7 @@ class UnitPaintable extends Paintable {
         getBigImageData();
       } else {
         imageElement = new ImageElement(src: primaryImage.data);
+        await new Future.delayed(Duration.ZERO);
       }
       data.drawPixels(new stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
           new stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,

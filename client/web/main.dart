@@ -8,7 +8,7 @@ void main() {
   var taleService = new TaleService();
   Map settingsData = <String, dynamic>{};
   SettingsService settings = new SettingsService()..fromMap(settingsData);
-  bootstrap(AppComponent, [
+  bootstrap(AppComponent, <dynamic>[
     provide(TaleService, useValue: taleService),
     provide(WorldService, useValue: new WorldService(taleService, settings)),
     provide(SettingsService, useValue: settings)

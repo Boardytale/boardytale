@@ -21,8 +21,8 @@ class WorldService extends commonModel.World{
   int _resolutionLevel = 1;
   double defaultFieldHeight;
   double widthHeightRatio = sqrt(3) / 2;
-  double fieldWidth;
-  double fieldHeight;
+  double fieldWidth = 1.0;
+  double fieldHeight = 1.0;
   HexaBorders defaultHex;
 
   double get zoom => _zoom;

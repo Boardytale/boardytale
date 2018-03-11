@@ -9,7 +9,6 @@ import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_route/shelf_route.dart' as route;
 import 'package:shelf_web_socket/shelf_web_socket.dart' as sWs;
-import 'package:shelf_auth/shelf_auth.dart' as sAuth;
 import 'package:shelf_exception_response/exception_response.dart';
 import 'package:shelf_cors/shelf_cors.dart' as shelf_cors;
 import 'package:web_socket_channel/web_socket_channel.dart';

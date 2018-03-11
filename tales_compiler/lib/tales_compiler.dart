@@ -31,7 +31,7 @@ Map<String, Race> loadRaces(List racesData) {
 Map<String,Tale> loadTales(Map<String, dynamic> fileMap, Map<String, UnitType> units) {
   Map talesData = fileMap["tales"];
   Map<String, Tale> tales = {};
-  talesData.forEach((k, String v) {
+  talesData.forEach((dynamic k, dynamic v) {
     Tale tale = new Tale();
     tale = loadTaleFromAssets(JSON.decode(v), units, tale);
     tales[tale.id] = tale;

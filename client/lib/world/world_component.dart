@@ -4,7 +4,6 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/services/tale_service.dart';
 import 'package:boardytale_client/services/world_service.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
 import 'package:boardytale_client/world/model/model.dart';

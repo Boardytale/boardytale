@@ -1,6 +1,5 @@
 library tale_service;
 
-import 'dart:convert';
 import 'dart:html';
 import 'package:angular/core.dart';
 import 'package:utils/utils.dart';

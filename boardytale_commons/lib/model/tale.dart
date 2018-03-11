@@ -36,13 +36,13 @@ class Tale {
       }
     }
     events.clear();
-    for (Trigger trigger in allTriggers) {
-//      String name = trigger.event.name;
-//      if (!events.containsKey(name)) {
-//        events[name] = new Event(name);
-//      }
-//      events[name].triggers.add(trigger);
-    }
+//    for (Trigger trigger in allTriggers) {
+////      String name = trigger.event.name;
+////      if (!events.containsKey(name)) {
+////        events[name] = new Event(name);
+////      }
+////      events[name].triggers.add(trigger);
+//    }
 
     dialogs.clear();
     dynamic __dialogs = data["dialogs"];

@@ -91,7 +91,7 @@ class Images {
   static Map<String, Image> images = {};
 
   void fromMap(Map data) {
-    data.forEach((String id, Map image) {
+    data.forEach((dynamic id, dynamic image) {
       images[id] = new Image()
         ..fromMap(image);
     });

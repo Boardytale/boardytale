@@ -29,12 +29,12 @@ class LobbyComponent {
   LobbyComponent(this.changeDetector) {
     socket = new WebSocket('ws://127.0.0.1:8086/ws');
     socket.onMessage.listen((MessageEvent e) {
-      Map<String, dynamic> message = JSON.decode(e.data);
+      Map<String, dynamic> message = JSON.decode(e.data.toString());
       if (message.containsKey("name")) {
-        connection = message["name"];
+        connection = message["name"].toString();
       }
       if (message.containsKey("sockets")) {
-        connections = message["sockets"];
+        connections = message["sockets"] as List<String>;
       }
       changeDetector.detectChanges();
       print(message);

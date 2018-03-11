@@ -4,12 +4,12 @@ import 'common.dart';
 
 void main() {
   String projectDirectoryPath = harmonizePath();
-
+  print("OPEN BROWSER ON http://localhost:8080");
   Process.start(dartExecutable,
       ["lib/server.dart"],
       workingDirectory: projectDirectoryPath + "/server")
       .then((Process process) {
-    printFromOutputStreams(process, "Shelf");
+    printFromOutputStreams(process, "Shelf proxy");
   });
 
   Process.start(pubExecutable,
