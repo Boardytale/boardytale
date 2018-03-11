@@ -8,11 +8,9 @@ class World {
   Field startField;
   Tale tale;
 
-  World(){
+  World(this.tale);
 
-  }
-
-  void fromMap(Map data){
+  void fromMap(Map data, ClassGenerator generator){
     width = data["width"] as int;
     height = data["height"] as int;
     baseTerrainId = data["baseTerrain"] as int;
@@ -32,7 +30,7 @@ class World {
     for(int x = 0;x<width;x++){
       for(int y = 0;y<height;y++){
         String key = "${x}_$y";
-        Field field = new Field(key, this);
+        Field field = generator.field(key, this);
         if(indexedFieldsData.containsKey(key)){
           field.fromMap(indexedFieldsData[key]);
         }else{

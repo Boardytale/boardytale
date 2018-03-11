@@ -24,6 +24,7 @@ import 'trial/trial.dart';
     host: const{
       "style":"position:relative"
     },
+    styles: const[":host{display: block;}"],
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
   const Route(

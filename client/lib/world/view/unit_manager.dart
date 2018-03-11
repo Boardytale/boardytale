@@ -3,7 +3,7 @@ part of world_view;
 class UnitManager {
   stage_lib.Stage stage;
   WorldView view;
-  TaleService tale;
+  ClientTale tale;
   SettingsService settings;
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
@@ -18,7 +18,7 @@ class UnitManager {
     tale.units.forEach((id, unit) {
       Field field = view.model.fields[unit.fieldId];
       unit.field = field;
-      paintables.add(new UnitPaintable(new Unit.fromUnit(unit), stage, view, field, settings));
+      paintables.add(new UnitPaintable(unit, stage, view, field, settings));
     });
   }
 

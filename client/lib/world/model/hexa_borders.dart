@@ -7,7 +7,7 @@ class HexaBorders {
   FieldPoint left;
   FieldPoint bottomLeft;
   FieldPoint bottomRight;
-  WorldService world;
+  ClientWorld world;
 
   HexaBorders(this.world);
 

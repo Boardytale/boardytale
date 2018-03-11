@@ -3,8 +3,6 @@ library world_view;
 import 'dart:async';
 import 'dart:html';
 import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/services/tale_service.dart';
-import 'package:boardytale_client/services/world_service.dart';
 import 'package:boardytale_client/world/model/model.dart';
 import 'package:boardytale_commons/model/model.dart' as commonModel;
 import 'package:stagexl/stagexl.dart' as stage_lib;
@@ -18,7 +16,7 @@ part 'unit_paintable.dart';
 part 'active_field_paintable.dart';
 
 class WorldView {
-  WorldService model;
+  ClientWorld model;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;

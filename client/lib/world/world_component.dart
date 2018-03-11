@@ -4,7 +4,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/services/world_service.dart';
+import 'package:boardytale_client/services/state_service.dart';
 import 'package:boardytale_client/world/view/world_view.dart';
 import 'package:boardytale_client/world/model/model.dart';
 import 'package:stagexl/stagexl.dart' as stage_lib;
@@ -23,6 +23,13 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 
         ></div>
       ''',
+    styles: const["""
+      :host{
+        display: block;
+        position:absolute;
+        top: 0;
+      }
+    """],
     directives: const[COMMON_DIRECTIVES],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
@@ -32,7 +39,7 @@ class WorldComponent implements OnDestroy {
   bool destroyed = false;
   stage_lib.Stage worldStage;
   stage_lib.Stage unitStage;
-  WorldService world;
+  StateService state;
   WorldView view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
@@ -47,11 +54,11 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
 
-  WorldComponent(this.changeDetector,this.settings,
-      this.world) {
+  WorldComponent(this.changeDetector,this.settings, this.state) {
     onResizeSubscription = window.onResize.listen(detectChanges);
-    world.onModelLoaded.add(this.modelLoaded);
+    state.onWorldLoaded.add(this.modelLoaded);
   }
+  ClientWorld get world => state.world;
 
   @ViewChild("world")
   set worldElementRef(ElementRef element) {

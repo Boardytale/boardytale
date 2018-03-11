@@ -3,6 +3,7 @@ library boardytale.server;
 import 'dart:convert';
 import 'dart:io';
 import 'package:boardytale_commons/model/model.dart';
+import 'package:boardytale_server/model/model.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:tales_compiler/tales_compiler.dart';
 import 'package:shelf/shelf.dart' as shelf;
@@ -21,7 +22,7 @@ String pathToData = "../data";
 
 void main(List<String> arguments) {
   Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
-  Map<String, Tale> tales = getTalesFromFileMap(fileMap);
+  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new ServerClassGenerator());
 
   tales.forEach((k, v) {
     new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));

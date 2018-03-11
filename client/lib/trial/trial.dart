@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:angular/core.dart';
-import 'package:boardytale_client/services/tale_service.dart';
+import 'package:boardytale_client/services/state_service.dart';
+import 'package:boardytale_client/world/model/model.dart';
 import 'package:boardytale_client/world/world_component.dart';
 
 @Component(
@@ -9,17 +10,19 @@ import 'package:boardytale_client/world/world_component.dart';
       <h1 style="position: absolute">trial</h1>
      <world></world>
       ''',
-    directives: const[WorldComponent])
+    directives: const [
+      WorldComponent
+    ],
+    styles: const[":host{display: block;}"]
+    )
 class TrialComponent {
-  TaleService taleService;
-  TrialComponent(this.taleService){
-    this.taleService.onTaleLoaded.add(taleLoaded);
-    new Future<Null>.delayed(const Duration(seconds: 1)).then((_){
-      this.taleService.load("0");
-    });
+  StateService state;
+  TrialComponent(this.state) {
+    this.state.onTaleLoaded.add(taleLoaded);
+    this.state.loadTale("0");
   }
 
-  void taleLoaded(){
+  void taleLoaded() {
     // DO initialization of players
   }
 }

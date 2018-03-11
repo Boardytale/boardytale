@@ -53,33 +53,33 @@
   "units": [
     {
       "type": "gladiator_tom",
-      "field": "15_15",
+      "field": "0_0",
       "player": 1
     },
     {
       "type": "gladiator_zogan",
-      "field": "15_16",
+      "field": "1_0",
       "player": 2
     },
     {
       "type": "gladiatoress_elene",
-      "field": "15_17",
+      "field": "2_0",
       "player": 3
     },
     {
       "type": "gladiatoress_victoria",
-      "field": "15_18",
+      "field": "3_0",
       "player": 4
     },
     {
       "type": "pikeman",
       "health": 0,
-      "field": "14_16",
+      "field": "4_0",
       "player": 5
     },
     {
       "type": "pikeman",
-      "field": "14_167",
+      "field": "5_0",
       "player": 5
     }
   ],

@@ -3,6 +3,7 @@ body{
     height: 100%;
     overflow: hidden;
     background-color: black;
+    margin: 0;
 }
 
 #worldMap{

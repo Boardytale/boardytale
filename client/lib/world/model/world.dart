@@ -1,18 +1,11 @@
-import 'dart:math';
-import 'package:angular/di.dart';
-import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/services/tale_service.dart';
-import 'package:boardytale_client/world/model/model.dart';
-import 'package:boardytale_commons/model/model.dart' as commonModel;
-import 'package:utils/utils.dart';
+part of client_model;
 
-@Injectable()
-class WorldService extends commonModel.World{
+class ClientWorld extends commonModel.World{
+  StateService state;
   SettingsService settings;
   @override
-  TaleService tale; // ignore: strong_mode_invalid_method_override
+  ClientTale tale; // ignore: strong_mode_invalid_method_override
   Map<String, Field> fields = {};
-  List<Function> onModelLoaded = [];
   Notificator onDimensionsChanged = new Notificator();
   Notificator onResolutionLevelChanged = new Notificator();
   int userTopOffset = 0;
@@ -46,27 +39,16 @@ class WorldService extends commonModel.World{
     onResolutionLevelChanged.notify();
   }
 
-  WorldService(
-      this.tale,
-      this.settings
-      ) {
-    Map settingsData = <String,dynamic>{};
-    settings.fromMap(settingsData);
-    commonModel.setSettings(this.settings);
-    tale.onTaleLoaded.add(taleLoaded);
-  }
-
-  void taleLoaded() {
+  ClientWorld(this.tale):super(tale);
+  void init(StateService state,SettingsService settings){
+    this.state=state;
+    this.settings=settings;
+    commonModel.setSettings(settings);
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
-    tale.map.fields.forEach((k, v) {
-      fields[k] = new Field.fromField(v, this);
-    });
     defaultHex = new HexaBorders(this);
     recalculate();
-    onModelLoaded.forEach((f)=>f());
+    state.onWorldLoaded.notify();
   }
-
-
 
   void recalculate() {
     fieldWidth = zoom * settings.defaultFieldWidth;

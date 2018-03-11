@@ -44,23 +44,23 @@ class TaleAssetsPack{
     return out;
   }
 
-  static Tale unpack(Map pack, Tale tale){
-    Map<String, UnitType> unitTypes = getUnitsFromPack(pack);
-    loadTaleFromAssets(pack["tale"], unitTypes, tale);
+  static Tale unpack(Map pack, Tale tale, ClassGenerator generator){
+    Map<String, UnitType> unitTypes = getUnitsFromPack(pack,generator);
+    loadTaleFromAssets(pack["tale"], unitTypes, tale,generator);
     return tale;
   }
 
-  static Map<String, UnitType> getUnitsFromPack(Map pack) {
-    Map<String, Image> images = loadImagesFromPack(pack);
+  static Map<String, UnitType> getUnitsFromPack(Map pack,ClassGenerator generator) {
+    Map<String, Image> images = loadImagesFromPack(pack,generator);
     Map abilities = loadAbilities(pack["abilities"]);
-    Map races = loadRaces(pack["races"]);
-    return loadUnits(pack["units"], images, abilities, races);
+    Map races = loadRaces(pack["races"],generator);
+    return loadUnits(pack["units"], images, abilities, races,generator);
   }
 
-  static Map<String, Image> loadImagesFromPack(Map pack){
+  static Map<String, Image> loadImagesFromPack(Map pack,ClassGenerator generator){
     Map<String, Image> out = {};
      for(Map imageData in pack["images"]){
-       Image image = new Image()..fromMap(imageData);
+       Image image = generator.image()..fromMap(imageData);
        out[image.id] = image;
      }
     return out;

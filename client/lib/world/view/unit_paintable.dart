@@ -25,7 +25,7 @@ class UnitPaintable extends Paintable {
     view.model.onResolutionLevelChanged.add(createBitmap);
   }
 
-  WorldService get world => view.model;
+  ClientWorld get world => view.model;
 
   int get resolutionLevel => world.resolutionLevel;
 

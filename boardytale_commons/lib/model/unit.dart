@@ -217,6 +217,7 @@ class Unit {
     out["id"] = id;
     out["type"] = type.id;
     out["field"] = field.toMap();
+    out["health"] = _health;
     out["player"] = player.id;
     return out;
   }
@@ -267,6 +268,10 @@ class Unit {
     dynamic __name = m["name"];
     if(__name is String){
       name = __name;
+    }
+    dynamic __health = m["health"];
+    if(__health is int){
+      _health = __health;
     }
   }
 }

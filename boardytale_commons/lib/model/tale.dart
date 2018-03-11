@@ -11,18 +11,18 @@ class Tale {
   Map<int, Unit> units = {};
   List<Map> unitData = [];
 
-  void fromMap(Map data) {
+  void fromMap(Map data, ClassGenerator generator) {
     // TODO: strict validate
     id = data["id"].toString();
     langs = data["langs"] as Map;
     humanPlayersTeam = data["humanPlayersTeam"] as int;
-    map = new World()
-      ..fromMap(data["map"] as Map);
+    map = generator.world(this)
+      ..fromMap(data["map"] as Map, generator);
     players.clear();
     dynamic __groups = data["groups"];
     if (__groups is List) {
       for (Map<String,dynamic> playerData in __groups) {
-        Player player = new Player()
+        Player player = generator.player()
           ..fromMap(playerData);
         players[player.id] = player;
       }
@@ -32,7 +32,7 @@ class Tale {
     dynamic __triggers = data["triggers"];
     if (__triggers is List) {
       for (Map triggerData in __triggers) {
-        allTriggers.add(new Trigger()..fromMap(triggerData));
+        allTriggers.add(generator.trigger()..fromMap(triggerData));
       }
     }
     events.clear();
@@ -48,7 +48,7 @@ class Tale {
     dynamic __dialogs = data["dialogs"];
     if (__dialogs is List) {
       for (Map dialogData in __dialogs) {
-        Dialog dialog = new Dialog()
+        Dialog dialog = generator.dialog()
           ..fromMap(dialogData);
         dialogs[dialog.name] = dialog;
       }

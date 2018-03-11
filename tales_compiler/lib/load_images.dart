@@ -1,12 +1,12 @@
 part of tales_compiler;
 
 
-Map<String, Image> loadImages(Map fileMap) {
+Map<String, Image> loadImages(Map fileMap,ClassGenerator generator) {
   Map<String, String> images = fileMap["images"];
   Map<String, Image> out = {};
   images.forEach((k, v) {
     Map imageData = JSON.decode(v);
-    Image image = new Image()..fromMap(imageData);
+    Image image = generator.image()..fromMap(imageData);
     int dataRef = imageData["dataRef"];
     out[image.id] = image;
     if(dataRef != null){
