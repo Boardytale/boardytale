@@ -20,12 +20,12 @@ String convertToCamelCase(String name) {
 Map<String,dynamic> parseJsonMap(String json){
   dynamic result =  JSON.decode(json);
   if(result is Map<String,dynamic>) return result;
-  return null;
+  throw new ArgumentError("json is not Map");
 }
 List<dynamic> parseJsonList(String json){
   dynamic result =  JSON.decode(json);
   if(result is List<dynamic>) return result;
-  return null;
+  throw new ArgumentError("json is not List");
 }
 
 class Call{

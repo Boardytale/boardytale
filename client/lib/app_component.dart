@@ -10,7 +10,7 @@ import 'trial/trial.dart';
 @Component(
     selector: 'boardytale',
     template: '''
-      <nav style="z-index: 1">
+      <nav>
         <a [routerLink]="['Lobby']">Lobby</a>
         <a [routerLink]="['Game']">Game</a>
         <a [routerLink]="['Editor']">Tale editor</a>
@@ -22,7 +22,7 @@ import 'trial/trial.dart';
       ROUTER_PROVIDERS,
     ],
     host: const {"style": "position:relative"},
-    styles: const [":host{display: block;}"],
+    styles: const [":host{display: block;}","nav{z-index: 2;position:relative;}"],
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
   const Route(path: '/lobby', name: 'Lobby', component: LobbyComponent, useAsDefault: true),

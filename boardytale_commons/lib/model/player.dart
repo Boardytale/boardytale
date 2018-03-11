@@ -5,7 +5,7 @@ class Player {
   String name;
   int team;
   String handler;
-  static const List<String> _possibleHandlers = const ["firstHuman", "UI", "passive", "everyHuman"];
+  static const List<String> _possibleHandlers = const ["firstHuman", "AI", "passive", "everyHuman"];
 
   void fromMap(Map<String, dynamic> data) {
     // TODO validate here

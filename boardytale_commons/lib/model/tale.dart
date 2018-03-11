@@ -18,7 +18,7 @@ class Tale {
     humanPlayersTeam = data["humanPlayersTeam"] as int;
     map = generator.world(this)..fromMap(data["map"] as Map, generator);
     players.clear();
-    dynamic __groups = data["groups"];
+    dynamic __groups = data["players"];
     if (__groups is List) {
       for (Map<String, dynamic> playerData in __groups) {
         Player player = generator.player()..fromMap(playerData);
@@ -62,7 +62,7 @@ class Tale {
     Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["langs"] = langs;
-    out["groups"] = players.values.map((g) => g.toMap()).toList();
+    out["players"] = players.values.map((g) => g.toMap()).toList();
     out["humanPlayersTeam"] = humanPlayersTeam;
     out["dialogs"] = dialogs.values.map((d) => d.toMap()).toList();
     out["units"] = unitData;

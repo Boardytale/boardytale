@@ -1,41 +1,32 @@
 library boardytale.server;
 
-import 'dart:convert';
 import 'dart:io';
-import 'package:boardytale_commons/model/model.dart';
-import 'package:boardytale_server/model/model.dart';
-import 'package:io_utils/io_utils.dart';
-import 'package:tales_compiler/tales_compiler.dart';
+import 'package:boardytale_server/services/connection_handler.dart';
+import 'package:boardytale_server/services/game.dart';
+import 'package:boardytale_server/services/tale_filer.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_route/shelf_route.dart' as route;
 import 'package:shelf_web_socket/shelf_web_socket.dart' as sWs;
 import 'package:shelf_exception_response/exception_response.dart';
 import 'package:shelf_cors/shelf_cors.dart' as shelf_cors;
-import 'package:web_socket_channel/web_socket_channel.dart';
 
-part 'connection.dart';
-part 'connection_list.dart';
-
-ConnectionList connections = new ConnectionList();
+ConnectionHandler connectionHandler=new ConnectionHandler();
 String pathToData = "../data";
 
 void main(List<String> arguments) {
-  Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
-  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new ServerClassGenerator());
-
-  tales.forEach((k, v) {
-    new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
-  });
+  compileTales();
+  Game  currentGame = new Game("arena");
+  connectionHandler.currentGame = currentGame;
 //  var authMiddleware = sAuth.authenticate(
 //      [new MyAuthenticator()],
 //      sessionHandler: new sAuth.JwtSessionHandler('bla', 'blub', new UserLookup()),
 //      allowHttp: true,
 //      allowAnonymousAccess: false);
 
-  var router = (route.router()
+  var router = route.router()
     ..get('/tales/{index}', _sendTale)
-    ..get('/ws', sWs.webSocketHandler((WebSocketChannel channel) => new Connection(channel))));
+    ..get('/ws', sWs.webSocketHandler(connectionHandler.handleConnection));
 
   var handler = const shelf.Pipeline()
       .addMiddleware(exceptionResponse())

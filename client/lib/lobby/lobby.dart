@@ -30,17 +30,17 @@ class LobbyComponent {
     socket = new WebSocket('ws://127.0.0.1:8086/ws');
     socket.onMessage.listen((MessageEvent e) {
       Map<String, dynamic> message = JSON.decode(e.data.toString());
-      if (message.containsKey("name")) {
-        connection = message["name"].toString();
-      }
-      if (message.containsKey("sockets")) {
-        connections = message["sockets"] as List<String>;
-      }
+//      if (message.containsKey("name")) {
+//        connection = message["name"].toString();
+//      }
+//      if (message.containsKey("sockets")) {
+//        connections = message["sockets"] as List<String>;
+//      }
       changeDetector.detectChanges();
       print(message);
     });
     socket.onOpen.listen((_) {
-      socket.send(JSON.encode({"message": "ahoj"}));
+      socket.send(JSON.encode({"type":"ping","message": "ahoj"}));
     });
   }
 }
