@@ -1,11 +1,10 @@
 part of model;
 
-class User{
+class User {
   String id;
   String name;
 }
 
-class Users{
+class Users {
   static Map<String, User> users = {};
-
 }

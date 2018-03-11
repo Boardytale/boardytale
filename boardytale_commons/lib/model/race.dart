@@ -33,8 +33,8 @@ class Race {
     }
   }
 
-  Map<String,dynamic> toMap() {
-    Map<String,dynamic> out = <String,dynamic>{};
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = _id;
     out["name"] = _name;
     return out;

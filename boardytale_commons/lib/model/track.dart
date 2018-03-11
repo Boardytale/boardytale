@@ -34,7 +34,6 @@ class Track {
     return out;
   }
 
-
   bool matchTarget(List<String> target, Unit unit) {
     List<Unit> alives = last.alivesOnField();
     if (fields.length == 1 && target.contains(Ability.TARGET_ME)) {
@@ -56,16 +55,14 @@ class Track {
         if (target.contains(Ability.TARGET_ALLY)) {
           return true;
         }
-        if (target.contains(Ability.TARGET_WOUNDED_ALLY)
-            && containsWounded(alives)) {
+        if (target.contains(Ability.TARGET_WOUNDED_ALLY) && containsWounded(alives)) {
           return true;
         }
       } else {
         if (target.contains(Ability.TARGET_ENEMY)) {
           return true;
         }
-        if (target.contains(Ability.TARGET_WOUNDED_ENEMY)
-            && containsWounded(alives)) {
+        if (target.contains(Ability.TARGET_WOUNDED_ENEMY) && containsWounded(alives)) {
           return true;
         }
       }

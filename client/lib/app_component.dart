@@ -21,17 +21,11 @@ import 'trial/trial.dart';
     providers: const <dynamic>[
       ROUTER_PROVIDERS,
     ],
-    host: const{
-      "style":"position:relative"
-    },
-    styles: const[":host{display: block;}"],
+    host: const {"style": "position:relative"},
+    styles: const [":host{display: block;}"],
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
-  const Route(
-      path: '/lobby',
-      name: 'Lobby',
-      component: LobbyComponent,
-      useAsDefault: true),
+  const Route(path: '/lobby', name: 'Lobby', component: LobbyComponent, useAsDefault: true),
   const Route(path: '/game', name: 'Game', component: GameComponent),
   const Route(path: '/editor', name: 'Editor', component: EditorComponent),
   const Route(path: '/trial', name: 'Trial', component: TrialComponent)
@@ -39,7 +33,5 @@ import 'trial/trial.dart';
 class AppComponent {
   String title = 'Tour of Heroes';
 
-  AppComponent() {
-
-  }
+  AppComponent() {}
 }

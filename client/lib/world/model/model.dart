@@ -7,7 +7,6 @@ import 'package:boardytale_commons/model/model.dart' as commonModel;
 import 'package:stagexl/stagexl.dart' as stageLib;
 import 'package:utils/utils.dart';
 
-
 part 'field.dart';
 part 'hexa_borders.dart';
 part 'unit.dart';

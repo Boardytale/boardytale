@@ -4,7 +4,5 @@ class StageGeometry {
   double fieldWidth;
   double fieldHeight;
 
-  StageGeometry() {
-
-  }
+  StageGeometry() {}
 }

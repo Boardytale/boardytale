@@ -11,19 +11,17 @@ class Tale {
   Map<int, Unit> units = {};
   List<Map> unitData = [];
 
-  void fromMap(Map data, ClassGenerator generator) {
+  void fromMap(Map data, InstanceGenerator generator) {
     // TODO: strict validate
     id = data["id"].toString();
     langs = data["langs"] as Map;
     humanPlayersTeam = data["humanPlayersTeam"] as int;
-    map = generator.world(this)
-      ..fromMap(data["map"] as Map, generator);
+    map = generator.world(this)..fromMap(data["map"] as Map, generator);
     players.clear();
     dynamic __groups = data["groups"];
     if (__groups is List) {
-      for (Map<String,dynamic> playerData in __groups) {
-        Player player = generator.player()
-          ..fromMap(playerData);
+      for (Map<String, dynamic> playerData in __groups) {
+        Player player = generator.player()..fromMap(playerData);
         players[player.id] = player;
       }
     }
@@ -48,8 +46,7 @@ class Tale {
     dynamic __dialogs = data["dialogs"];
     if (__dialogs is List) {
       for (Map dialogData in __dialogs) {
-        Dialog dialog = generator.dialog()
-          ..fromMap(dialogData);
+        Dialog dialog = generator.dialog()..fromMap(dialogData);
         dialogs[dialog.name] = dialog;
       }
     }
@@ -62,22 +59,21 @@ class Tale {
   }
 
   Map toMap() {
-    Map<String,dynamic> out = <String,dynamic>{};
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["langs"] = langs;
-    out["groups"] = players.values.map((g)=>g.toMap()).toList();
+    out["groups"] = players.values.map((g) => g.toMap()).toList();
     out["humanPlayersTeam"] = humanPlayersTeam;
-    out["dialogs"] = dialogs.values.map((d)=>d.toMap()).toList();
+    out["dialogs"] = dialogs.values.map((d) => d.toMap()).toList();
     out["units"] = unitData;
     out["map"] = map.toMap();
-    List<Map<String,dynamic>> triggers = [];
-    events.forEach((k,v){
-      v.triggers.forEach((t)=>triggers.add(t.toMap()));
+    List<Map<String, dynamic>> triggers = [];
+    events.forEach((k, v) {
+      v.triggers.forEach((t) => triggers.add(t.toMap()));
     });
     out["triggers"] = triggers;
     return out;
   }
-
 }
 
 class Event {
@@ -96,11 +92,8 @@ class Trigger {
 //    action = new Call(data["action"]);
   }
 
-  Map<String,dynamic> toMap() {
-    return <String,dynamic>{
-      "event": event.toString(),
-      "action": action.toString()
-    };
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{"event": event.toString(), "action": action.toString()};
   }
 }
 
@@ -113,10 +106,7 @@ class Dialog {
     image = new Call(data["image"] as String);
   }
 
-  Map<String,dynamic> toMap() {
-    return <String,dynamic>{
-      "name": name,
-      "image": image.toString()
-    };
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{"name": name, "image": image.toString()};
   }
 }

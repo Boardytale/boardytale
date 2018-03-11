@@ -1,6 +1,6 @@
 part of model;
 
-abstract class ClassGenerator {
+abstract class InstanceGenerator {
   Unit unit(int id, UnitType type);
   Tale tale() => new Tale();
   Race race() => new Race();
@@ -9,12 +9,12 @@ abstract class ClassGenerator {
   UnitType unitType();
   Field field(String id, World world);
   World world(Tale tale);
-  Player player()=>new Player();
-  Trigger trigger()=>new Trigger();
+  Player player() => new Player();
+  Trigger trigger() => new Trigger();
   Dialog dialog() => new Dialog();
 }
 
-class CommonClassGenerator extends ClassGenerator {
+class CommonInstanceGenerator extends InstanceGenerator {
   @override
   Field field(String id, World world) => new Field(id, world);
 

@@ -1,9 +1,8 @@
 part of boardytale.server.model;
 
-class ServerClassGenerator extends model_lib.ClassGenerator{
-
+class ServerClassGenerator extends model_lib.InstanceGenerator {
   @override
-  model_lib.Field field(String id, model_lib.World world) =>new model_lib.Field(id,world);
+  model_lib.Field field(String id, model_lib.World world) => new model_lib.Field(id, world);
 
   @override
   model_lib.Unit unit(int id, model_lib.UnitType type) => new model_lib.Unit(id, type);

@@ -23,14 +23,16 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 
         ></div>
       ''',
-    styles: const["""
+    styles: const [
+      """
       :host{
         display: block;
         position:absolute;
         top: 0;
       }
-    """],
-    directives: const[COMMON_DIRECTIVES],
+    """
+    ],
+    directives: const [COMMON_DIRECTIVES],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";
@@ -54,7 +56,7 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
 
-  WorldComponent(this.changeDetector,this.settings, this.state) {
+  WorldComponent(this.changeDetector, this.settings, this.state) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     state.onWorldLoaded.add(this.modelLoaded);
   }
@@ -78,17 +80,18 @@ class WorldComponent implements OnDestroy {
   }
 
   void modelLoaded() {
-    worldStage = new stage_lib.Stage(worldElement, width: window.innerWidth,
+    worldStage = new stage_lib.Stage(worldElement,
+        width: window.innerWidth,
         height: window.innerHeight,
         options: new stage_lib.StageOptions()
           ..antialias = true
           ..backgroundColor = stage_lib.Color.Transparent);
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
-    view = new WorldView(worldStage,world);
+    view = new WorldView(worldStage, world);
 
-    unitStage = new stage_lib.Stage(
-        mapObjectsElement, width: window.innerWidth,
+    unitStage = new stage_lib.Stage(mapObjectsElement,
+        width: window.innerWidth,
         height: window.innerHeight,
         options: new stage_lib.StageOptions()
           ..antialias = true
@@ -110,9 +113,9 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
     UnitPaintable unit = unitManager.getFirstUnitPaintableOnField(field);
-    if(unit!=null){
-      _draggedUnit=unit;
-    }else{
+    if (unit != null) {
+      _draggedUnit = unit;
+    } else {
       _moving = true;
       _start = event.page;
       _startOffsetTop = world.userTopOffset;
@@ -123,10 +126,10 @@ class WorldComponent implements OnDestroy {
   void onMouseUp(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    if(_draggedUnit!=null){
+    if (_draggedUnit != null) {
       Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       _draggedUnit.unit.move(field, 0);
-      _draggedUnit.field=field;
+      _draggedUnit.field = field;
     }
     _moving = false;
     _draggedUnit = null;
@@ -140,7 +143,7 @@ class WorldComponent implements OnDestroy {
       unitManager.setActiveField(field);
       return;
     }
-    if(_draggedUnit!=null){
+    if (_draggedUnit != null) {
       return;
     }
     int deltaX = (event.page.x - _start.x).toInt();

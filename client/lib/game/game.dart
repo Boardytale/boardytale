@@ -9,17 +9,16 @@ import 'package:boardytale_client/world/world_component.dart';
       <h1>game</h1>
       <world></world>
       ''',
-    directives: const[WorldComponent],
-      styles: const[":host{display: block;}"]
-)
+    directives: const [WorldComponent],
+    styles: const [":host{display: block;}"])
 class GameComponent {
-      StateService state;
-      GameComponent(this.state){
-        this.state.onTaleLoaded.add(taleLoaded);
-        this.state.loadTale("arena");
-      }
+  StateService state;
+  GameComponent(this.state) {
+    this.state.onTaleLoaded.add(taleLoaded);
+    this.state.loadTale("arena");
+  }
 
-      void taleLoaded(){
-            // DO initialization of players
-      }
+  void taleLoaded() {
+    // DO initialization of players
+  }
 }

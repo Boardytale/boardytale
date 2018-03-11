@@ -1,25 +1,23 @@
 part of model;
 
-class BoostAbility extends Ability{
-
+class BoostAbility extends Ability {
   @override
-  Ability clone(){
+  Ability clone() {
     return new BoostAbility();
   }
 
   @override
-  void perform(Track track){
+  void perform(Track track) {
     // TODO: implement perform
   }
 
   @override
-  void show(Track track){
+  void show(Track track) {
     // TODO: implement show
   }
 
   @override
-  void setDefaults(Map defaults){
+  void setDefaults(Map defaults) {
     // TODO: implement setDefaults
   }
 }
-

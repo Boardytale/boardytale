@@ -1,19 +1,18 @@
 part of model;
 
-class HealAbility extends Ability{
-
+class HealAbility extends Ability {
   @override
-  Ability clone(){
+  Ability clone() {
     return new HealAbility();
   }
 
   @override
-  void perform(Track track){
+  void perform(Track track) {
     // TODO: implement perform
   }
 
   @override
-  void show(Track track){
+  void show(Track track) {
     // TODO: implement show
   }
 }

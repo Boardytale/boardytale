@@ -7,46 +7,43 @@ part 'assets_pack.dart';
 
 part 'load_images.dart';
 
-Map<String, Tale> getTalesFromFileMap(Map fileMap,ClassGenerator generator) {
-  return loadTales(fileMap, getUnitsFromFileMap(fileMap,generator),generator);
+Map<String, Tale> getTalesFromFileMap(Map fileMap, InstanceGenerator generator) {
+  return loadTales(fileMap, getUnitsFromFileMap(fileMap, generator), generator);
 }
 
-Map<String, UnitType> getUnitsFromFileMap(Map fileMap,ClassGenerator generator) {
-  Map<String, Image> images = loadImages(fileMap,generator);
+Map<String, UnitType> getUnitsFromFileMap(Map fileMap, InstanceGenerator generator) {
+  Map<String, Image> images = loadImages(fileMap, generator);
   Map abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]));
-  Map races = loadRaces(JSON.decode(fileMap["races.json"]),generator);
-  return loadUnits(
-      fileMap["unitTypes"].values.toList(), images, abilities, races,generator);
+  Map races = loadRaces(JSON.decode(fileMap["races.json"]), generator);
+  return loadUnits(fileMap["unitTypes"].values.toList(), images, abilities, races, generator);
 }
 
-Map<String, Race> loadRaces(List racesData,ClassGenerator generator) {
+Map<String, Race> loadRaces(List racesData, InstanceGenerator generator) {
   Map<String, Race> races = {};
   for (Map race in racesData) {
-    races[race["id"]] = generator.race()
-      ..fromMap(race);
+    races[race["id"]] = generator.race()..fromMap(race);
   }
   return races;
 }
 
-Map<String,Tale> loadTales(Map<String, dynamic> fileMap, Map<String, UnitType> units,ClassGenerator generator) {
+Map<String, Tale> loadTales(Map<String, dynamic> fileMap, Map<String, UnitType> units, InstanceGenerator generator) {
   Map talesData = fileMap["tales"];
   Map<String, Tale> tales = {};
   talesData.forEach((dynamic k, dynamic v) {
     Tale tale = generator.tale();
-    tale = loadTaleFromAssets(JSON.decode(v), units, tale,generator);
+    tale = loadTaleFromAssets(JSON.decode(v), units, tale, generator);
     tales[tale.id] = tale;
   });
   return tales;
 }
 
-Tale loadTaleFromAssets(Map taleData, Map<String, UnitType> units, Tale tale,ClassGenerator generator) {
-  tale.fromMap(taleData,generator);
+Tale loadTaleFromAssets(Map taleData, Map<String, UnitType> units, Tale tale, InstanceGenerator generator) {
+  tale.fromMap(taleData, generator);
   int unitId = 0;
   for (Map m in tale.unitData) {
     String typeId = m["type"].toString();
-    if(!units.containsKey(typeId)) throw "Type $typeId is not defined";
-    Unit unit = generator.unit(unitId++, units[typeId])
-      ..fromMap(m);
+    if (!units.containsKey(typeId)) throw "Type $typeId is not defined";
+    Unit unit = generator.unit(unitId++, units[typeId])..fromMap(m);
     tale.units[unit.id] = unit;
   }
   return tale;
@@ -61,8 +58,8 @@ Map loadAbilities(List abilitiesList) {
   return abilities;
 }
 
-Map<String, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
-    Map<String, Ability> abilities, Map races,ClassGenerator generator) {
+Map<String, UnitType> loadUnits(
+    List<dynamic> unitTypesList, Map images, Map<String, Ability> abilities, Map races, InstanceGenerator generator) {
   Map<String, UnitType> unitTypes = {};
   for (dynamic unitData in unitTypesList) {
     Map unit;
@@ -83,9 +80,7 @@ Map<String, UnitType> loadUnits(List<dynamic> unitTypesList, Map images,
     }
     unitTypes[unitType.id] = unitType;
     for (Map abilityData in unitType.abilitiesData) {
-      unitType.abilities.add(
-          abilities[abilityData["class"]].createAbilityWithUnitData(
-              abilityData));
+      unitType.abilities.add(abilities[abilityData["class"]].createAbilityWithUnitData(abilityData));
     }
     unitType.race = races[unitType.raceId];
   }

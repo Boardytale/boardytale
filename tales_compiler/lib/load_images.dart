@@ -1,7 +1,6 @@
 part of tales_compiler;
 
-
-Map<String, Image> loadImages(Map fileMap,ClassGenerator generator) {
+Map<String, Image> loadImages(Map fileMap, InstanceGenerator generator) {
   Map<String, String> images = fileMap["images"];
   Map<String, Image> out = {};
   images.forEach((k, v) {
@@ -9,16 +8,14 @@ Map<String, Image> loadImages(Map fileMap,ClassGenerator generator) {
     Image image = generator.image()..fromMap(imageData);
     int dataRef = imageData["dataRef"];
     out[image.id] = image;
-    if(dataRef != null){
+    if (dataRef != null) {
       Map<String, String> sources = fileMap["imagesSources"];
-      List<String> key = sources.keys.where(
-              (String key)=>key.startsWith("${dataRef}-")
-      ).toList();
-      if(key.length!=1){
+      List<String> key = sources.keys.where((String key) => key.startsWith("${dataRef}-")).toList();
+      if (key.length != 1) {
         throw "source image does not exist";
       }
       image.data = sources[key.first];
-    }else if(image.imageSrc == null){
+    } else if (image.imageSrc == null) {
       throw "image source or data must be defined";
     }
   });

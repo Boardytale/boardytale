@@ -6,11 +6,11 @@ import 'package:tales_compiler/tales_compiler.dart';
 
 String pathToData = "../data";
 
-void main(){
+void main() {
   Map fileMap = getFileMap(new Directory(pathToData));
-  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new CommonClassGenerator());
+  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new CommonInstanceGenerator());
 
-  tales.forEach((k,v){
+  tales.forEach((k, v) {
     new File("output/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
   });
 }

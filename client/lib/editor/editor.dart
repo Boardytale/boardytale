@@ -5,5 +5,4 @@ import 'package:angular/core.dart';
     template: '''
       <h1>editor</h1>
       ''')
-class EditorComponent {
-}
+class EditorComponent {}

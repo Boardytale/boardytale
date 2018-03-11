@@ -9,13 +9,7 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(
-      this.unit,
-      stage_lib.Stage stage,
-      WorldView view,
-      Field field,
-      this.settings
-      )
+  UnitPaintable(this.unit, stage_lib.Stage stage, WorldView view, Field field, this.settings)
       : super(view, field, stage) {
     leftOffset = 0;
     topOffset = 0;
@@ -31,7 +25,7 @@ class UnitPaintable extends Paintable {
 
   double get pixelRatio => [0.5, 1.0, 2.0][resolutionLevel];
 
-  double get lifeBarHeight => const[6.0, 5.0, 8.0][resolutionLevel];
+  double get lifeBarHeight => const [6.0, 5.0, 8.0][resolutionLevel];
 
   double get rectWidth => settings.defaultFieldWidth * pixelRatio;
 
@@ -51,17 +45,16 @@ class UnitPaintable extends Paintable {
       data = new stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
       if (primaryImage == unit.type.bigImage) {
-        imageElement = await
-        getBigImageData();
+        imageElement = await getBigImageData();
       } else {
         imageElement = new ImageElement(src: primaryImage.data);
         await new Future.delayed(Duration.ZERO);
       }
-      data.drawPixels(new stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
+      data.drawPixels(
+          new stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
           new stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
               primaryImage.height * pixelRatio / primaryImage.multiply),
-          new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio)
-      );
+          new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
       unitGlobalCache[state] = data;
       data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
     } else {
@@ -132,8 +125,7 @@ class UnitPaintable extends Paintable {
     Completer<ImageElement> completer = new Completer<ImageElement>();
     ImageElement imageElement;
     if (unit.type.bigImage != null) {
-      imageElement =
-      new ImageElement(src: "img/big_units/" + unit.type.bigImage.imageSrc);
+      imageElement = new ImageElement(src: "img/big_units/" + unit.type.bigImage.imageSrc);
     } else {
       imageElement = new ImageElement(src: unit.type.image.data);
     }

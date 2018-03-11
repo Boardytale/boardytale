@@ -1,6 +1,5 @@
 part of model;
 
-abstract class PlayerService{
+abstract class PlayerService {
   String language = "en";
 }
-

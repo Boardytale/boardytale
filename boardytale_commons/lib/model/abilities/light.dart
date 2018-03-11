@@ -1,19 +1,18 @@
 part of model;
 
-class LightAbility extends Ability{
-
+class LightAbility extends Ability {
   @override
-  Ability clone(){
+  Ability clone() {
     return new LightAbility();
   }
 
   @override
-  void perform(Track track){
+  void perform(Track track) {
     // TODO: implement perform
   }
 
   @override
-  void show(Track track){
+  void show(Track track) {
     // TODO: implement show
   }
 }

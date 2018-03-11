@@ -1,13 +1,12 @@
 import 'package:boardytale_client/world/model/model.dart';
 import 'package:boardytale_commons/model/model.dart' as model_lib;
 
-class ClientClassGenerator extends model_lib.ClassGenerator{
+class ClientInstanceGenerator extends model_lib.InstanceGenerator {
+  @override
+  model_lib.Field field(String id, model_lib.World world) => new Field(id, world);
 
   @override
-  model_lib.Field field(String id, model_lib.World world) =>new Field(id,world);
-
-  @override
-  model_lib.Unit unit(int id, model_lib.UnitType type) =>new Unit(id,type);
+  model_lib.Unit unit(int id, model_lib.UnitType type) => new Unit(id, type);
 
   @override
   model_lib.UnitType unitType() => new model_lib.UnitType();

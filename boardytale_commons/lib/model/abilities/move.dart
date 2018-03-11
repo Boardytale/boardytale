@@ -1,8 +1,7 @@
 part of model;
 
-class MoveAbility extends Ability{
+class MoveAbility extends Ability {
   String imgData;
-
 
   @override
   void perform(Track track) {
@@ -10,9 +9,7 @@ class MoveAbility extends Ability{
   }
 
   @override
-  void show(Track track) {
-
-  }
+  void show(Track track) {}
 
   @override
   Ability clone() {
@@ -20,7 +17,7 @@ class MoveAbility extends Ability{
   }
 
   @override
-  void fromMap(Map<String,dynamic> ability) {
+  void fromMap(Map<String, dynamic> ability) {
     super.fromMap(ability);
   }
 }

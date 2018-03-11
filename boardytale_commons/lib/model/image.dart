@@ -23,15 +23,15 @@ class Image {
 
   void fromMap(Map data) {
     dynamic __id = data["id"];
-    if (__id != null){
-        id = __id.toString();
+    if (__id != null) {
+      id = __id.toString();
     }
     assert(id != null);
     authorId = data["authorId"] as String;
     parentId = data["parentId"] as String;
     rating = data["rating"] as double;
     dynamic __created = data["created"];
-    if(__created is int){
+    if (__created is int) {
       created = new DateTime.fromMillisecondsSinceEpoch(__created);
     }
     if (data["data"] is String) {
@@ -55,25 +55,25 @@ class Image {
     if (data["tags"] is List<String>) {
       tags = data["tags"] as List<String>;
     }
-    if(data["imageSrc"] is String){
+    if (data["imageSrc"] is String) {
       imageSrc = data["imageSrc"] as String;
     }
-    if(data["multiply"] is num){
+    if (data["multiply"] is num) {
       multiply = (data["multiply"] as num).toDouble();
     }
 
     dynamic __top = data["top"];
-    if(__top is int){
+    if (__top is int) {
       top = __top;
     }
     dynamic __left = data["left"];
-    if(__left is int){
+    if (__left is int) {
       left = __left;
     }
   }
 
-  Map<String,dynamic> toMap() {
-    Map<String,dynamic> out = <String,dynamic>{};
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["data"] = data;
     out["width"] = width;
@@ -92,8 +92,7 @@ class Images {
 
   void fromMap(Map data) {
     data.forEach((dynamic id, dynamic image) {
-      images[id] = new Image()
-        ..fromMap(image);
+      images[id] = new Image()..fromMap(image);
     });
     images.forEach((String id, Image image) {
       if (image.authorId != null) {

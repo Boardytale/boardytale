@@ -10,11 +10,8 @@ import 'package:boardytale_client/world/world_component.dart';
       <h1 style="position: absolute">trial</h1>
      <world></world>
       ''',
-    directives: const [
-      WorldComponent
-    ],
-    styles: const[":host{display: block;}"]
-    )
+    directives: const [WorldComponent],
+    styles: const [":host{display: block;}"])
 class TrialComponent {
   StateService state;
   TrialComponent(this.state) {

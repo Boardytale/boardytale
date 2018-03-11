@@ -1,6 +1,6 @@
 part of client_model;
 
-class ClientWorld extends commonModel.World{
+class ClientWorld extends commonModel.World {
   StateService state;
   SettingsService settings;
   @override
@@ -39,10 +39,10 @@ class ClientWorld extends commonModel.World{
     onResolutionLevelChanged.notify();
   }
 
-  ClientWorld(this.tale):super(tale);
-  void init(StateService state,SettingsService settings){
-    this.state=state;
-    this.settings=settings;
+  ClientWorld(this.tale) : super(tale);
+  void init(StateService state, SettingsService settings) {
+    this.state = state;
+    this.settings = settings;
     commonModel.setSettings(settings);
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = new HexaBorders(this);
@@ -60,8 +60,8 @@ class ClientWorld extends commonModel.World{
 
   Field getFieldByMouseOffset(num nx, num ny) {
     // TODO: make segmentation over three axis ... Šmoďo, až se k tomu jednou dostaneš, předělej to
-    int x=nx.toInt();
-    int y=ny.toInt();
+    int x = nx.toInt();
+    int y = ny.toInt();
     double qWidth = fieldWidth / 4;
     int userTop = userTopOffset + y;
     int userLeft = userLeftOffset + x;
@@ -70,8 +70,7 @@ class ClientWorld extends commonModel.World{
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
     if (verticalSegment % 3 == 0) {
       // resolving field by corner
-      Field main = _getMainFieldBySegments(
-          verticalSegment, horizontalSegment);
+      Field main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
       if (verticalSegment % 6 == 0) {
         double deltaLeft = x - main.left.x;
@@ -81,8 +80,7 @@ class ClientWorld extends commonModel.World{
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(
-                verticalSegment - 1, horizontalSegment);
+            return _getMainFieldBySegments(verticalSegment - 1, horizontalSegment);
           }
         } else {
           // left bottom
@@ -90,8 +88,7 @@ class ClientWorld extends commonModel.World{
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(
-                verticalSegment - 1, horizontalSegment);
+            return _getMainFieldBySegments(verticalSegment - 1, horizontalSegment);
           }
         }
       } else {
@@ -102,16 +99,14 @@ class ClientWorld extends commonModel.World{
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(
-                verticalSegment + 1, horizontalSegment);
+            return _getMainFieldBySegments(verticalSegment + 1, horizontalSegment);
           }
         } else {
           // right bottom
           if (deltaTop / deltaLeft > sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(
-                verticalSegment + 1, horizontalSegment);
+            return _getMainFieldBySegments(verticalSegment + 1, horizontalSegment);
           }
         }
       }
@@ -121,8 +116,7 @@ class ClientWorld extends commonModel.World{
     }
   }
 
-  Field _getMainFieldBySegments(int verticalSegment,
-      int horizontalSegment) {
+  Field _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
     if (verticalSegment < 0 || horizontalSegment < 0) return null;

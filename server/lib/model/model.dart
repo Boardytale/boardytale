@@ -5,4 +5,4 @@ import 'package:tales_compiler/tales_compiler.dart';
 import 'package:utils/utils.dart';
 
 part 'tale.dart';
-part 'class_generator.dart';
+part 'instance_generator.dart';

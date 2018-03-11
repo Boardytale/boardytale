@@ -1,8 +1,6 @@
 part of model;
 
-
-class AttackAbility extends Ability{
-
+class AttackAbility extends Ability {
   @override
   Ability clone() {
     return new AttackAbility()..fromMap(toMap());
@@ -19,7 +17,7 @@ class AttackAbility extends Ability{
   }
 
   @override
-  void fromMap(Map<String,dynamic> ability) {
+  void fromMap(Map<String, dynamic> ability) {
     super.fromMap(ability);
   }
 }

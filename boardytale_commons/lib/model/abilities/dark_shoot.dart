@@ -1,19 +1,18 @@
 part of model;
 
-class DarkShootAbility extends Ability{
-
+class DarkShootAbility extends Ability {
   @override
-  Ability clone(){
+  Ability clone() {
     return new DarkShootAbility();
   }
 
   @override
-  void perform(Track track){
+  void perform(Track track) {
     // TODO: implement perform
   }
 
   @override
-  void show(Track track){
+  void show(Track track) {
     // TODO: implement show
   }
 }

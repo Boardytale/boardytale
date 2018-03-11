@@ -39,7 +39,7 @@ part 'services/unit_service.dart';
 part 'services/platform_service.dart';
 part 'services/player_service.dart';
 part 'services/game_service.dart';
-part 'services/class_generator.dart';
+part 'services/instance_generator.dart';
 
 Settings settings;
 

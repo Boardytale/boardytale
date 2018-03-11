@@ -146,7 +146,7 @@ class UnitType {
     if (__attack is List<int>) {
       _attack = __attack;
     } else if (__attack is String) {
-      _attack = __attack.split(" ").map((String s)=>int.parse(s)).toList();
+      _attack = __attack.split(" ").map((String s) => int.parse(s)).toList();
     } else {
       _badData("attack");
     }
@@ -168,18 +168,18 @@ class UnitType {
     }
 
     dynamic __imageId = data["imageId"];
-      _imageId = __imageId.toString();
+    _imageId = __imageId.toString();
 
     dynamic __bigImageId = data["bigImageId"];
-    if(__bigImageId != null){
+    if (__bigImageId != null) {
 //      if (__bigImageId is String) {
-        bigImageId = __bigImageId.toString();
+      bigImageId = __bigImageId.toString();
 //      } else {
 //        _badData("bigImageId");
 //      }
     }
     dynamic __iconId = data["iconId"];
-    if(__iconId != null){
+    if (__iconId != null) {
       iconId = __iconId.toString();
 //      if (__iconId is String) {
 //      } else {
@@ -189,7 +189,7 @@ class UnitType {
   }
 
   Map toMap() {
-    Map<String,dynamic> out = <String,dynamic>{};
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = _id;
     out["name"] = _name;
     out["race"] = _race.id;

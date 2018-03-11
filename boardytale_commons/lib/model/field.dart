@@ -9,7 +9,7 @@ class Field {
   int y;
   bool get hasUnit => !units.isEmpty;
 
-  Field(this.id, this.world){
+  Field(this.id, this.world) {
     List<String> xy = id.split("_");
     x = int.parse(xy[0]);
     y = int.parse(xy[1]);
@@ -18,17 +18,17 @@ class Field {
   List<Unit> alivesOnField() {
     List<Unit> out = [];
     for (Unit unit in units) {
-      if (unit.isAlive){
+      if (unit.isAlive) {
         out.add(unit);
       }
     }
     return out;
   }
-  
+
   List<Unit> deathsOnField() {
     List<Unit> out = [];
     for (Unit unit in units) {
-      if (!unit.isAlive){
+      if (!unit.isAlive) {
         out.add(unit);
       }
     }
@@ -102,14 +102,14 @@ class Field {
     return !units.isEmpty;
   }
 
-  Map<String,dynamic> toMap() {
-    Map<String,dynamic> out = <String,dynamic>{};
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["terrain"] = terrainId;
     return out;
   }
 
-  void fromMap(Map<String,dynamic> map) {
+  void fromMap(Map<String, dynamic> map) {
     terrainId = map["terrain"] as int;
   }
 }

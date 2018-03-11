@@ -8,11 +8,7 @@ class UnitManager {
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
 
-  UnitManager(
-      this.stage,
-      this.view,
-      this.settings
-      ) {
+  UnitManager(this.stage, this.view, this.settings) {
     tale = view.model.tale;
     activeField = new ActiveFieldPaintable(view, null, stage);
     tale.units.forEach((id, unit) {
@@ -26,14 +22,12 @@ class UnitManager {
     activeField.field = field;
   }
 
-  void repaintActiveField() {
-
-  }
+  void repaintActiveField() {}
 
   UnitPaintable getFirstUnitPaintableOnField(commonModel.Field field) {
-    for(Paintable paintable in paintables){
-      if(paintable is! UnitPaintable) continue;
-      if(paintable.field!=field) continue;
+    for (Paintable paintable in paintables) {
+      if (paintable is! UnitPaintable) continue;
+      if (paintable.field != field) continue;
       return (paintable as UnitPaintable);
     }
     return null;

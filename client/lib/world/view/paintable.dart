@@ -21,7 +21,7 @@ abstract class Paintable {
   stage_lib.Bitmap get bitmap => _bitmap;
 
   set bitmap(stage_lib.Bitmap value) {
-    if(stage.contains(bitmap)){
+    if (stage.contains(bitmap)) {
       stage.removeChild(bitmap);
     }
     _bitmap = value;
@@ -50,7 +50,7 @@ abstract class Paintable {
         }
         _transformBitmap();
       }
-    } else if(stage.contains(bitmap)){
+    } else if (stage.contains(bitmap)) {
       stage.removeChild(bitmap);
     }
   }
@@ -59,7 +59,7 @@ abstract class Paintable {
 
   // scale bitmap according to map
   void _transformBitmap() {
-    if(bitmap == null || field == null)return;
+    if (bitmap == null || field == null) return;
     bitmap.x = _field.offset.x + (leftOffset * view.model.zoom);
     bitmap.y = _field.offset.y + (topOffset * view.model.zoom);
     bitmap.width = width * view.model.zoom;
