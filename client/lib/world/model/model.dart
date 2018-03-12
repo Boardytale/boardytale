@@ -12,3 +12,4 @@ part 'hexa_borders.dart';
 part 'unit.dart';
 part 'tale.dart';
 part 'world.dart';
+part 'player.dart';

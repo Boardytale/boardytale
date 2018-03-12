@@ -44,8 +44,9 @@ class TaleAssetsPack {
     return out;
   }
 
-  static Tale unpack(Map pack, Tale tale, InstanceGenerator generator) {
+  static Tale unpack(Map pack, InstanceGenerator generator) {
     Map<String, UnitType> unitTypes = getUnitsFromPack(pack, generator);
+    Tale tale = generator.tale();
     loadTaleFromAssets(pack["tale"], unitTypes, tale, generator);
     return tale;
   }

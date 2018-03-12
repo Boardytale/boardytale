@@ -11,12 +11,12 @@ import 'package:shelf_web_socket/shelf_web_socket.dart' as sWs;
 import 'package:shelf_exception_response/exception_response.dart';
 import 'package:shelf_cors/shelf_cors.dart' as shelf_cors;
 
-ConnectionHandler connectionHandler=new ConnectionHandler();
+ConnectionHandler connectionHandler = new ConnectionHandler();
 String pathToData = "../data";
 
 void main(List<String> arguments) {
   compileTales();
-  Game  currentGame = new Game("arena");
+  Game currentGame = new Game("arena");
   connectionHandler.currentGame = currentGame;
 //  var authMiddleware = sAuth.authenticate(
 //      [new MyAuthenticator()],

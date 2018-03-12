@@ -11,7 +11,7 @@ part 'connection.dart';
 class ConnectionHandler {
   Game currentGame;
 
-  void handleConnection(WebSocketChannel channel){
+  void handleConnection(WebSocketChannel channel) {
     Connection connection = new Connection(channel);
     currentGame.addConnection(connection);
   }

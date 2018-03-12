@@ -6,8 +6,7 @@ import 'package:boardytale_server/server.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:tales_compiler/tales_compiler.dart';
 
-
-void compileTales(){
+void compileTales() {
   Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
   Map<String, Tale> tales = getTalesFromFileMap(fileMap, new ServerClassGenerator());
 
@@ -16,6 +15,6 @@ void compileTales(){
   });
 }
 
-String loadTaleData(String name){
+String loadTaleData(String name) {
   return new File("web/tales/${name}.json").readAsStringSync();
 }

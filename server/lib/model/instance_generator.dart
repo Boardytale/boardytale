@@ -16,4 +16,6 @@ class ServerClassGenerator extends model_lib.InstanceGenerator {
   @override
   model_lib.Player player() => new Player();
 
+  @override
+  model_lib.Tale tale() => new ServerTale();
 }

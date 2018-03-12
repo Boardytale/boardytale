@@ -13,7 +13,7 @@ import 'package:boardytale_client/world/world_component.dart';
     directives: const [WorldComponent],
     styles: const [":host{display: block;}"])
 class TrialComponent {
-  StateService state;
+  final StateService state;
   TrialComponent(this.state) {
     this.state.onTaleLoaded.add(taleLoaded);
     this.state.loadTale("0");

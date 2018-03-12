@@ -18,13 +18,14 @@ class StateService {
 
   StateService(this.settings);
   void loadTale(String taleId) {
-    HttpRequest.getString("http://localhost:8086/tales/$taleId").then((String s) {
-      Map data = parseJsonMap(s);
-      tale = new ClientTale();
-      TaleAssetsPack.unpack(data, tale, new ClientInstanceGenerator());
-      world = tale.map;
-      world.init(this, settings);
-      onTaleLoaded.notify();
-    });
+    HttpRequest.getString("http://localhost:8086/tales/$taleId").then(loadTaleFromData);
+  }
+
+  void loadTaleFromData(String source) {
+    Map data = parseJsonMap(source);
+    tale = TaleAssetsPack.unpack(data, new ClientInstanceGenerator());
+    world = tale.map;
+    world.init(this, settings);
+    onTaleLoaded.notify();
   }
 }

@@ -5,6 +5,7 @@ class Player {
   String name;
   int team;
   String handler;
+  String color;
   static const List<String> _possibleHandlers = const ["firstHuman", "AI", "passive", "everyHuman"];
 
   void fromMap(Map<String, dynamic> data) {
@@ -12,6 +13,7 @@ class Player {
     id = data["id"] as int;
     name = data["name"] as String;
     team = data["team"] as int;
+    color = data["color"] ?? "gold";
 
     dynamic __handler = data["handler"];
     if (__handler is String && _possibleHandlers.contains(__handler)) {
@@ -22,6 +24,6 @@ class Player {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{"id": id, "name": name, "team": team, "handler": handler};
+    return <String, dynamic>{"id": id, "name": name, "team": team, "handler": handler, "color": color};
   }
 }
