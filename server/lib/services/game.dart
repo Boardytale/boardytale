@@ -56,9 +56,10 @@ class Game {
     sendToAll(data);
   }
 
-  void testMove1(){
-    commonLib.Field target = tale.map.fields["1_1"];
-    commonLib.Unit unit = tale.units[0];
+  void testMove(int unitIndex, int direction){
+    commonLib.Unit unit = tale.units[unitIndex];
+    commonLib.Field target = tale.map.fields[unit.field.stepToDirection(direction)];
     unit.move(target,target.distance(unit.field));
+    sendStateForAll();
   }
 }

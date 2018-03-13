@@ -122,6 +122,28 @@ class Field {
       return max(dx.abs(),dy.abs());
     }
     return dy.abs()+dx.abs();
+  }
+  String stepToDirection(int direction){
+    if(x.isEven){
+      switch(direction){
+        case 0: return "${x}_${y-1}";
+        case 1: return "${x+1}_${y-1}";
+        case 2: return "${x+1}_${y}";
+        case 3: return "${x}_${y+1}";
+        case 4: return "${x-1}_${y}";
+        case 5: return "${x-1}_${y-1}";
+      }
+    }else{
+      switch(direction){
+        case 0: return "${x}_${y-1}";
+        case 1: return "${x+1}_${y}";
+        case 2: return "${x+1}_${y+1}";
+        case 3: return "${x}_${y+1}";
+        case 4: return "${x-1}_${y+1}";
+        case 5: return "${x-1}_${y}";
+      }
+    }
+    return null;
 
   }
 }
