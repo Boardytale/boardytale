@@ -34,7 +34,7 @@ class Game {
     firstFreePlayer.connection = connection;
     connection.send({"type": "connection", "name": connection.name});
     sendPlayersToAll();
-    sendTaleData(connection);
+    connection.send({"type": "tale", "tale": taleData});
     return true;
   }
 
@@ -50,7 +50,15 @@ class Game {
     sendToAll(message);
   }
 
-  void sendTaleData(Connection connection) {
-    connection.send({"type": "tale", "tale": taleData});
+  void sendStateForAll(){
+    Map<String,dynamic> data={"type":"state"};
+    data["units"]=tale.units.values.map((commonLib.Unit unit)=>unit.toSimpleJson()).toList();
+    sendToAll(data);
+  }
+
+  void testMove1(){
+    commonLib.Field target = tale.map.fields["1_1"];
+    commonLib.Unit unit = tale.units[0];
+    unit.move(target,target.distance(unit.field));
   }
 }

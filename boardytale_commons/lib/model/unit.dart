@@ -63,8 +63,6 @@ class Unit {
   Notificator onStepsChanged = new Notificator();
   Notificator onActionStateChanged = new Notificator();
 
-  Unit.bare();
-
   Unit(this.id, this.type) {
     _recalculate();
     _health = type.health;

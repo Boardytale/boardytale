@@ -4,4 +4,7 @@ dependencies:
   utils:
     path: '../utils'
 
+dev_dependencies:
+  test: any
+
 

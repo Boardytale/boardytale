@@ -1,6 +1,7 @@
 library model;
 
 import "dart:math" as Math;
+import 'dart:math';
 import 'package:utils/utils.dart';
 
 part 'image.dart';

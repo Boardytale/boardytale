@@ -112,4 +112,16 @@ class Field {
   void fromMap(Map<String, dynamic> map) {
     terrainId = map["terrain"] as int;
   }
+
+  int distance(Field field) {
+    int yt=y-(x/2).floor();
+    int fyt=field.y-(field.x/2).floor();
+    int dx=(x-field.x);
+    int dy=(yt-fyt);
+    if(dx*dy<0){
+      return max(dx.abs(),dy.abs());
+    }
+    return dy.abs()+dx.abs();
+
+  }
 }
