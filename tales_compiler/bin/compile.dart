@@ -8,9 +8,11 @@ String pathToData = "../data";
 
 void main() {
   Map fileMap = getFileMap(new Directory(pathToData));
-  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new CommonInstanceGenerator());
+  InstanceGenerator generator = new CommonInstanceGenerator();
+  Resources allResources = getResourcesFromFileMap(fileMap, generator);
+  Map<String, Tale> tales = loadTales(fileMap,allResources);
 
   tales.forEach((k, v) {
-    new File("output/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
+    new File("output/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v,allResources)));
   });
 }

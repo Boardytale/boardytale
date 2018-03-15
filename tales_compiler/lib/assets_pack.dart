@@ -1,7 +1,7 @@
 part of tales_compiler;
 
 class TaleAssetsPack {
-  static Map pack(Tale tale) {
+  static Map pack(Tale tale, Resources allResources) {
     Map out = {};
     Map<String, Map> imagesOut = new Map<String, Map>();
     Map<String, Map> abilitiesOut = new Map<String, Map>();
@@ -45,22 +45,19 @@ class TaleAssetsPack {
   }
 
   static Tale unpack(Map pack, InstanceGenerator generator) {
-    Map<String, UnitType> unitTypes = getUnitsFromPack(pack, generator);
-    Tale tale = generator.tale();
-    loadTaleFromAssets(pack["tale"], unitTypes, tale, generator);
+    Resources resources = generator.resources();
+    resources.images = loadImages(pack["images"], generator);
+    resources.abilities = loadAbilities(pack["abilities"]);
+    resources.races = loadRaces(pack["races"], generator);
+    resources.unitTypes= loadUnitsTypes(pack["unitTypes"], resources);
+    Tale tale = loadTaleFromAssets(pack["tale"], resources);
+    tale.resources=resources;
     return tale;
   }
 
-  static Map<String, UnitType> getUnitsFromPack(Map pack, InstanceGenerator generator) {
-    Map<String, Image> images = loadImagesFromPack(pack, generator);
-    Map abilities = loadAbilities(pack["abilities"]);
-    Map races = loadRaces(pack["races"], generator);
-    return loadUnits(pack["units"], images, abilities, races, generator);
-  }
-
-  static Map<String, Image> loadImagesFromPack(Map pack, InstanceGenerator generator) {
+  static Map<String, Image> loadImages(List<Map> imageDataList, InstanceGenerator generator) {
     Map<String, Image> out = {};
-    for (Map imageData in pack["images"]) {
+    for (Map imageData in imageDataList) {
       Image image = generator.image()..fromMap(imageData);
       out[image.id] = image;
     }

@@ -1,6 +1,7 @@
 part of model;
 
 class Unit {
+  String name;
   int armor = 0;
   int speed = 0;
   int range = 0;
@@ -12,12 +13,10 @@ class Unit {
   int _steps = 1;
   UnitType type;
   Field field;
-  String fieldId;
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
   List<String> tags = [];
-  String name;
 
   bool get isUndead => tags.contains(UnitType.TAG_UNDEAD);
 
@@ -211,7 +210,7 @@ class Unit {
     Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["type"] = type.id;
-    out["field"] = field.toMap();
+    out["field"] = field.id;
     out["health"] = _health;
     out["player"] = player.id;
     return out;
@@ -260,10 +259,10 @@ class Unit {
     return possibles[used];
   }
 
-  void fromMap(Map m) {
+  void fromMap(Map m, Tale tale) {
     dynamic __fieldId = m["field"];
     if (__fieldId is String) {
-      fieldId = __fieldId;
+      field = tale.world.fields[__fieldId];
     }
 
     dynamic __name = m["name"];
@@ -273,6 +272,10 @@ class Unit {
     dynamic __health = m["health"];
     if (__health is int) {
       _health = __health;
+    }
+    dynamic __player = m["player"];
+    if (__player is int) {
+      player = tale.players[__player];
     }
   }
 }

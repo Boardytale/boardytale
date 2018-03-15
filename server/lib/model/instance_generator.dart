@@ -1,6 +1,6 @@
 part of boardytale.server.model;
 
-class ServerClassGenerator extends model_lib.InstanceGenerator {
+class ServerInstanceGenerator extends model_lib.InstanceGenerator {
   @override
   model_lib.Field field(String id, model_lib.World world) => new model_lib.Field(id, world);
 
@@ -17,5 +17,5 @@ class ServerClassGenerator extends model_lib.InstanceGenerator {
   model_lib.Player player() => new Player();
 
   @override
-  model_lib.Tale tale() => new ServerTale();
+  model_lib.Tale tale(model_lib.Resources resources) => new ServerTale(resources);
 }

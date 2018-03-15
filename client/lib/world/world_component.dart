@@ -60,7 +60,7 @@ class WorldComponent implements OnDestroy {
     onResizeSubscription = window.onResize.listen(detectChanges);
     state.onWorldLoaded.add(this.modelLoaded);
   }
-  ClientWorld get world => state.world;
+  ClientWorld get world => state.tale.world;
 
   @ViewChild("world")
   set worldElementRef(ElementRef element) {

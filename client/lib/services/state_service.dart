@@ -13,7 +13,6 @@ class StateService {
   Notificator onTaleLoaded = new Notificator();
   Notificator onWorldLoaded = new Notificator();
   ClientTale tale;
-  ClientWorld world;
   SettingsService settings;
 
   StateService(this.settings);
@@ -24,8 +23,7 @@ class StateService {
   void loadTaleFromData(String source) {
     Map data = parseJsonMap(source);
     tale = TaleAssetsPack.unpack(data, new ClientInstanceGenerator());
-    world = tale.map;
-    world.init(this, settings);
+    (tale.world as ClientWorld).init(this, settings);
     onTaleLoaded.notify();
   }
 }

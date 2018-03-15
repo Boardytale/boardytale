@@ -6,14 +6,18 @@ import '../bin/compile.dart' as compile;
 main() {
   group("compiler", () {
     String compilerPath = thisPackagePath();
-    setUpAll((){
-     compile.main();
+    setUpAll(() {
+      new Directory("$compilerPath/output").listSync().forEach((FileSystemEntity file){
+        if(file.path.endsWith(".gitkeep")) return;
+        file.deleteSync();
+      });
+      compile.main();
     });
-    test("0",(){
-      expect(new File("$compilerPath/output/0.json").exists(),completion(true));
+    test("0", () {
+      expect(new File("$compilerPath/output/0.json").exists(), completion(true));
     });
-    test("arena",(){
-      expect(new File("$compilerPath/output/arena.json").exists(),completion(true));
+    test("arena", () {
+      expect(new File("$compilerPath/output/arena.json").exists(), completion(true));
     });
   });
 }

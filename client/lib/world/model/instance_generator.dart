@@ -15,7 +15,7 @@ class ClientInstanceGenerator extends model_lib.InstanceGenerator {
   model_lib.World world(model_lib.Tale tale) => new ClientWorld(tale);
 
   @override
-  model_lib.Tale tale() => new ClientTale();
+  model_lib.Tale tale(model_lib.Resources resources) => new ClientTale(resources);
   @override
   model_lib.Player player() => new Player();
 }

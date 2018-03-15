@@ -4,19 +4,22 @@ class Tale {
   String id;
   int humanPlayersTeam;
   Map langs;
-  World map;
+  World world;
+  Resources resources;
   Map<int, Player> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<int, Unit> units = {};
-  List<Map> unitData = [];
 
-  void fromMap(Map data, InstanceGenerator generator) {
+  Tale(this.resources);
+
+  void fromMap(Map data) {
     // TODO: strict validate
     id = data["id"].toString();
     langs = data["langs"] as Map;
     humanPlayersTeam = data["humanPlayersTeam"] as int;
-    map = generator.world(this)..fromMap(data["map"] as Map, generator);
+    InstanceGenerator generator = resources.generator;
+    world = generator.world(this)..fromMap(data["map"] as Map, generator);
     players.clear();
     dynamic __groups = data["players"];
     if (__groups is List) {
@@ -54,7 +57,14 @@ class Tale {
     units.clear();
     dynamic __units = data["units"];
     if (__units is List) {
-      unitData = __units;
+      int unitId = 0;
+      for (Map m in __units) {
+        String typeId = m["type"].toString();
+        if (!resources.unitTypes.containsKey(typeId)) throw "Type $typeId is not defined";
+        UnitType unitType = resources.unitTypes[typeId];
+        Unit unit = resources.generator.unit(unitId++, unitType)..fromMap(m,this);
+        units[unit.id] = unit;
+      }
     }
   }
 
@@ -65,8 +75,8 @@ class Tale {
     out["players"] = players.values.map((g) => g.toMap()).toList();
     out["humanPlayersTeam"] = humanPlayersTeam;
     out["dialogs"] = dialogs.values.map((d) => d.toMap()).toList();
-    out["units"] = unitData;
-    out["map"] = map.toMap();
+    out["units"] = units.values.map((Unit unit)=>unit.toSimpleJson()).toList(growable: false);
+    out["map"] = world.toMap();
     List<Map<String, dynamic>> triggers = [];
     events.forEach((k, v) {
       v.triggers.forEach((t) => triggers.add(t.toMap()));

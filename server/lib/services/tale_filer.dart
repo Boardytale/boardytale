@@ -8,10 +8,12 @@ import 'package:tales_compiler/tales_compiler.dart';
 
 void compileTales() {
   Map<String, dynamic> fileMap = getFileMap(new Directory(pathToData));
-  Map<String, Tale> tales = getTalesFromFileMap(fileMap, new ServerClassGenerator());
+  InstanceGenerator generator = new ServerInstanceGenerator();
+  Resources allResources = getResourcesFromFileMap(fileMap, generator);
+  Map<String, Tale> tales = loadTales(fileMap,allResources);
 
   tales.forEach((k, v) {
-    new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v)));
+    new File("web/tales/${v.id}.json").writeAsStringSync(JSON.encode(TaleAssetsPack.pack(v,allResources)));
   });
 }
 

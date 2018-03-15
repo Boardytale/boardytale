@@ -10,6 +10,8 @@ class World {
 
   World(this.tale);
 
+  Field operator[](String fieldId)=>fields[fieldId];
+
   void fromMap(Map data, InstanceGenerator generator) {
     width = data["width"] as int;
     height = data["height"] as int;

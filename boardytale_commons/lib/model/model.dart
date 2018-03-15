@@ -18,6 +18,7 @@ part 'tale.dart';
 part 'buff.dart';
 part 'settings.dart';
 part 'stage_geometry.dart';
+part 'resources.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/raise.dart";
