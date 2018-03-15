@@ -12,7 +12,8 @@ class Unit {
   int _actions = 1;
   int _steps = 1;
   UnitType type;
-  Field field;
+  Field _field;
+
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
@@ -62,12 +63,7 @@ class Unit {
   Notificator onStepsChanged = new Notificator();
   Notificator onActionStateChanged = new Notificator();
 
-  Unit(this.id, this.type) {
-    _recalculate();
-    _health = type.health;
-    _steps = type.speed;
-    setType(type);
-  }
+  Unit(this.id);
 
   int get actions => _actions;
 
@@ -79,6 +75,14 @@ class Unit {
     } else {
       field.refresh();
     }
+  }
+  Field get field => _field;
+
+  void set field(Field field) {
+    _field?.removeUnit(this);
+    _field = field;
+    field.addUnit(this);
+    onFieldChanged.notify();
   }
 
   set actualHealth(int val) {
@@ -160,6 +164,7 @@ class Unit {
     }
 
     _recalculate();
+    onTypeChanged.notify();
   }
 
   void addAbility(Ability ability) {
@@ -169,13 +174,7 @@ class Unit {
 
   void move(Field field, int steps) {
     this.steps -= steps;
-    transport(field);
-  }
-
-  void transport(Field field) {
-    this.field.removeUnit(this);
-    this.field = field;
-    field.addUnit(this);
+    this.field=field;
   }
 
   int harm(Alea alea) {
@@ -190,12 +189,12 @@ class Unit {
     return realDamage;
   }
 
-  void newTurn(bool playerOnMove) {
+  void newTurn() {
     _steps = speed;
     _actions = type.actions;
     _far = 0;
     for (Ability a in abilities) {
-      if (a.trigger != null && a.trigger == Ability.TRIGGER_MINE_TURN_START && playerOnMove) {
+      if (a.trigger != null && a.trigger == Ability.TRIGGER_MINE_TURN_START) {
         a.perform(null);
       }
     }
@@ -213,6 +212,7 @@ class Unit {
     out["field"] = field.id;
     out["health"] = _health;
     out["player"] = player.id;
+    out["steps"] = _steps;
     return out;
   }
 
@@ -259,7 +259,12 @@ class Unit {
     return possibles[used];
   }
 
-  void fromMap(Map m, Tale tale) {
+  void fromMap(Map<String, dynamic> m, Tale tale) {
+    type = tale.resources.unitTypes[m["type"].toString()];
+    _recalculate();
+    _health = type.health;
+    _steps = type.speed;
+//    setType(type);
     dynamic __fieldId = m["field"];
     if (__fieldId is String) {
       field = tale.world.fields[__fieldId];
@@ -270,12 +275,16 @@ class Unit {
       name = __name;
     }
     dynamic __health = m["health"];
-    if (__health is int) {
-      _health = __health;
+    if (__health is int && __health!=_health) {
+      actualHealth = __health;
     }
     dynamic __player = m["player"];
     if (__player is int) {
       player = tale.players[__player];
+    }
+    dynamic __steps = m["steps"];
+    if (__steps is int && _steps!=__steps) {
+      steps = __steps;
     }
   }
 }

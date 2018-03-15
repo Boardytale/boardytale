@@ -5,6 +5,7 @@ import 'package:angular_router/angular_router.dart';
 import 'editor/editor.dart';
 import 'lobby/lobby.dart';
 import 'game/game.dart';
+import 'package:boardytale_client/components/alerts.dart';
 import 'trial/trial.dart';
 
 @Component(
@@ -16,8 +17,9 @@ import 'trial/trial.dart';
         <a [routerLink]="['Editor']">Tale editor</a>
         <a [routerLink]="['Trial']">Try it</a>
       </nav>
+      <alerts></alerts>
       <router-outlet></router-outlet>''',
-    directives: const [ROUTER_DIRECTIVES],
+    directives: const [ROUTER_DIRECTIVES,AlertsComponent],
     providers: const <dynamic>[
       ROUTER_PROVIDERS,
     ],

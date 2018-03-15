@@ -14,6 +14,7 @@ class StateService {
   Notificator onWorldLoaded = new Notificator();
   ClientTale tale;
   SettingsService settings;
+  ValueNotificator<Map> onAlert = new ValueNotificator<Map>();
 
   StateService(this.settings);
   void loadTale(String taleId) {
@@ -25,5 +26,15 @@ class StateService {
     tale = TaleAssetsPack.unpack(data, new ClientInstanceGenerator());
     (tale.world as ClientWorld).init(this, settings);
     onTaleLoaded.notify();
+  }
+
+  void alertError(String text){
+    onAlert.notify({"text":text,"type":"error"});
+  }
+  void alertWarning(String text){
+    onAlert.notify({"text":text,"type":"warning"});
+  }
+  void alertNote(String text){
+    onAlert.notify({"text":text,"type":"note"});
   }
 }

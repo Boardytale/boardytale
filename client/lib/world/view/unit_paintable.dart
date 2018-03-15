@@ -2,7 +2,6 @@ part of world_view;
 
 class UnitPaintable extends Paintable {
   Unit unit;
-//  List<Unit> units = [];
   SettingsService settings;
   static Map<String, stage_lib.BitmapData> unitGlobalCache = {};
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};
@@ -17,6 +16,11 @@ class UnitPaintable extends Paintable {
     width = world.fieldWidth.toInt();
     createBitmap();
     view.model.onResolutionLevelChanged.add(createBitmap);
+    unit.onFieldChanged.add((){
+      this.field=unit.field;
+    });
+    unit.onHealthChanged.add((_)=>createBitmap());
+    unit.onStepsChanged.add(()=>createBitmap());
   }
 
   ClientWorld get world => view.model;
@@ -57,6 +61,7 @@ class UnitPaintable extends Paintable {
           new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
       unitGlobalCache[state] = data;
       data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
+      data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight-lifeBarHeight));
     } else {
       data = unitGlobalCache[state];
     }
@@ -93,6 +98,33 @@ class UnitPaintable extends Paintable {
       return data;
     }
   }
+  stage_lib.BitmapData getStepsBar() {
+    int resolutionLevel = view.model.resolutionLevel;
+    String description = "${unit.speed}_${unit.steps}_$resolutionLevel";
+    double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
+    if (unit.speed < 10) {
+      bitSpace = 1.0;
+    }
+    if (stepsGlobalCache.containsKey(description)) {
+      return stepsGlobalCache[description];
+    } else {
+      double width = rectWidth / 2;
+      stage_lib.BitmapData data = new stage_lib.BitmapData(width, lifeBarHeight);
+      data.fillRect(getLifeBarRect(), stage_lib.Color.Black);
+      double bitWidth = (width - (unit.speed + 1) * bitSpace) / unit.speed;
+      for (int i = 0; i < unit.speed; i++) {
+        stage_lib.Rectangle bitRectangle = new stage_lib.Rectangle(
+            i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
+        if (i < unit.steps) {
+          data.fillRect(bitRectangle, stage_lib.Color.Blue);
+        } else {
+          data.fillRect(bitRectangle, stage_lib.Color.Gray);
+        }
+      }
+      stepsGlobalCache[description] = data;
+      return data;
+    }
+  }
 
   stage_lib.Rectangle getLifeBarRect() {
     double width = view.model.fieldWidth / 2;
@@ -101,7 +133,7 @@ class UnitPaintable extends Paintable {
 
   String getUnitPaintedState(Unit unit) {
     return "u${unit.type.id}h${unit.actualHealth}mh${unit.type.health}s${unit
-        .steps}ms${unit.type.speed}a${unit.armor}r${unit.range}";
+        .steps}ms${unit.speed}a${unit.armor}r${unit.range}";
   }
 
   commonModel.Image getPrimaryImage() {

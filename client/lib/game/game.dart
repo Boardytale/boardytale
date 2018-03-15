@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:angular/core.dart';
 import 'package:boardytale_client/services/state_service.dart';
 import 'package:boardytale_client/world/world_component.dart';

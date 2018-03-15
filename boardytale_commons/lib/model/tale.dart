@@ -61,10 +61,27 @@ class Tale {
       for (Map m in __units) {
         String typeId = m["type"].toString();
         if (!resources.unitTypes.containsKey(typeId)) throw "Type $typeId is not defined";
-        UnitType unitType = resources.unitTypes[typeId];
-        Unit unit = resources.generator.unit(unitId++, unitType)..fromMap(m,this);
+        Unit unit = resources.generator.unit(unitId++)..fromMap(m,this);
         units[unit.id] = unit;
       }
+    }
+  }
+
+  void update(Map<String,dynamic> state){
+    List<Map<String,dynamic>> unitMapList=state["units"];
+    Map<int,Unit> oldUnits=units;
+    units={};
+    for(Map<String,dynamic> unitMap in unitMapList){
+      Unit unit = oldUnits[unitMap["id"]];
+      if(unit==null){
+        UnitType type=resources.unitTypes[unitMap["type"]];
+        if(type==null){
+          print("ERROR - missing unitType");
+          continue;
+        }
+        unit=resources.generator.unit(unitMap["id"]);
+      }
+      units[unit.id]=unit..fromMap(unitMap,this);
     }
   }
 

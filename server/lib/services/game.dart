@@ -26,6 +26,9 @@ class Game {
       }
     });
     clock=new Clock(players,tale);
+    clock.onNextTeam.add((){
+      sendStateForAll();
+    });
   }
   bool addConnection(Connection connection) {
     Player firstFreePlayer = players.firstWhere((Player player) => player.connection == null, orElse: () => null);
@@ -37,6 +40,8 @@ class Game {
     connection.send({"type": "connection", "name": connection.name});
     sendPlayersToAll();
     connection.send({"type": "tale", "tale": taleData});
+    sendStateForAll();
+    handleCommands(firstFreePlayer);
     return true;
   }
 
@@ -59,10 +64,11 @@ class Game {
           int steps = target.distance(origin);
           if(unit.steps< steps) return cancel("too few steps");
           unit.move(target, steps);
-          return sendStateForAll();
+          break;
         default:
           return cancel("too few steps");
       }
+      return sendStateForAll();
     });
   }
 
@@ -79,7 +85,7 @@ class Game {
   }
 
   void sendStateForAll() {
-    Map<String, dynamic> data = {"type": "state"};
+    Map<String, dynamic> data = {"type": "state","playing":clock.teamPlaying};
     data["units"] = tale.units.values.map((commonLib.Unit unit) => unit.toSimpleJson()).toList();
     sendToAll(data);
   }

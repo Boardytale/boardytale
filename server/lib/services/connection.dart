@@ -13,6 +13,7 @@ class Connection {
     name = "Socket: ${channel.hashCode}";
     listen("ping", (Map<String, dynamic> message) => send(message));
     channel.stream.listen((message) {
+      print(message);
       Map<String, dynamic> messageMap = parseJsonMap(message);
       if (!messageMap.containsKey("type")) {
         send({"type": "message", "message": "Missing \"type\" key"});
@@ -25,7 +26,7 @@ class Connection {
       });
     }, onDone: () {
       close();
-    }, onError: () {
+    }, onError: (_) {
       close();
     });
   }

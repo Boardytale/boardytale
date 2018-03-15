@@ -1,7 +1,7 @@
 part of model;
 
 abstract class InstanceGenerator {
-  Unit unit(int id, UnitType type);
+  Unit unit(int id);
   Tale tale(Resources resources);
   Race race() => new Race();
   Image image() => new Image();
@@ -19,7 +19,7 @@ class CommonInstanceGenerator extends InstanceGenerator {
   @override
   Field field(String id, World world) => new Field(id, world);
   @override
-  Unit unit(int id, UnitType type) => new Unit(id, type);
+  Unit unit(int id) => new Unit(id);
   @override
   UnitType unitType() => new UnitType();
   @override

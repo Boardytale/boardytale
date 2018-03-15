@@ -5,7 +5,7 @@ class ServerInstanceGenerator extends model_lib.InstanceGenerator {
   model_lib.Field field(String id, model_lib.World world) => new model_lib.Field(id, world);
 
   @override
-  model_lib.Unit unit(int id, model_lib.UnitType type) => new model_lib.Unit(id, type);
+  model_lib.Unit unit(int id) => new model_lib.Unit(id);
 
   @override
   model_lib.UnitType unitType() => new model_lib.UnitType();
