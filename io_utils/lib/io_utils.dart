@@ -4,6 +4,7 @@ import 'package:path/path.dart' as path_lib;
 import 'package:utils/utils.dart';
 import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
+import 'package:console/console.dart';
 
 Map<String, dynamic> getFileMap(Directory dir) {
   Map<String, dynamic> out = <String, dynamic>{};
@@ -66,34 +67,69 @@ Future<bool> waitForSignal(Process process, String signal,
   return completer.future;
 }
 
-void printFromOutputStreams(Object process, [String prefix = ""]) {
-  Stream<List<int>> stdout;
-  Stream<List<int>> stderr;
+void printFromOutputStreams(Object process, String prefix,String color) {
+  Console.init();
+  int colorCode=_getColor(color).id;
   if (process is Process) {
-    stdout = process.stdout;
-    stderr = process.stderr;
-    stderr.transform(UTF8.decoder).listen((String data) {
-      print("error$prefix: $data");
+    process.stdout.transform(UTF8.decoder).listen((String data) {
+      _outToConsole(prefix, data, colorCode);
     });
-    stdout.transform(UTF8.decoder).listen((String data) {
-      print("out$prefix: $data");
+    process.stderr.transform(UTF8.decoder).listen((String data) {
+      _errToConsole(prefix, data, colorCode);
     });
   } else if (process is ProcessResult) {
     if (process.stdout is String) {
-      if (process.stdout != "")
-        print("out$prefix: ${process.stdout}");
+      _outToConsole(prefix, process.stdout , colorCode);
     } else {
-      print("out$prefix: ${new String.fromCharCodes(process.stdout as List<int>)}");
+      _outToConsole(prefix, new String.fromCharCodes(process.stdout as List<int>) , colorCode);
     }
     if (process.stderr is String) {
-      if (process.stderr != "")
-        print("err$prefix: ${process.stderr}");
+        _errToConsole(prefix, process.stderr , colorCode);
     } else {
-      print("err$prefix: ${new String.fromCharCodes(process.stderr as List<int>)}");
+      _errToConsole(prefix, new String.fromCharCodes(process.stderr as List<int>) , colorCode);
     }
   } else {
     throw new ArgumentError("unknown type - cannot extract stdout and stderr");
   }
+}
+void _errToConsole(String prefix,String data,int color){
+  if(data==null || data=="") return;
+  Console.setBold(true);
+  Console.setTextColor(color);
+  Console.write("ERROR-$prefix: ");
+  Console.setBold(false);
+  Console.setTextColor(Color.RED.id);
+  Console.write(data);
+  Console.resetTextColor();
+}
+void _outToConsole(String prefix,String data,int color){
+  if(data==null || data=="") return;
+  Console.setBold(true);
+  Console.setTextColor(color);
+  Console.write("$prefix: ");
+  Console.setBold(false);
+  Console.write(data);
+  Console.resetTextColor();
+}
+Color _getColor(String string){
+  return (const{
+    "black": Color.BLACK,
+    "gray": Color.GRAY,
+    "red": Color.RED,
+    "dark_red": Color.DARK_RED,
+    "lime": Color.LIME,
+    "green": Color.GREEN,
+    "gold": Color.GOLD,
+    "yellow": Color.YELLOW,
+    "blue": Color.BLUE,
+    "dark_blue": Color.DARK_BLUE,
+    "magenta": Color.MAGENTA,
+    "light_magenta": Color.LIGHT_MAGENTA,
+    "cyan": Color.CYAN,
+    "light_cyan": Color.LIGHT_CYAN,
+    "light_gray": Color.LIGHT_GRAY,
+    "white": Color.WHITE
+  })[string];
 }
 
 String getProjectDirectoryName() {

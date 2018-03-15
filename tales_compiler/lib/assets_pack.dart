@@ -37,7 +37,7 @@ class TaleAssetsPack {
       }
     });
     out["tale"] = tale.toMap();
-    out["units"] = unitsOut.values.toList();
+    out["unitTypes"] = unitsOut.values.toList();
     out["abilities"] = abilitiesOut.values.toList();
     out["races"] = racesOut.values.toList();
     out["images"] = imagesOut.values.toList();
