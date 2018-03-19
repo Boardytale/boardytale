@@ -1,0 +1,9 @@
+//@unitGroup
+{
+  "name": "text_id5",
+  "aiPlayer": "aiPlayer_id2",
+  "aiSettings": {
+//    aiSpecific
+//    priorities, aggresivness, ...
+  }
+}

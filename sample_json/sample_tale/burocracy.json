@@ -1,0 +1,238 @@
+{
+  "taleId": 666,
+  "taleNameId": "text_taleName",
+  "taleVersion": 1,
+  "defaultDifficulty": 10,
+  "compilerVersion": {
+    "version": 0,
+    "subversion": 0,
+    "subsubversion": 0
+  },
+  "map": {
+    "width": 10,
+    "height": 10,
+    "baseTerrainId": "terr_flat",
+    "fields": {
+      "5_5": {
+        "x": 5,
+        "y": 5,
+        "terrainId": "terr_pentagram",
+        "height": 0,
+        "customTextureId": "img_pentagram"
+      }
+//
+//      "5_5": {
+//        "x": 5,
+//        "y": 5,
+//        "terrainId": "terr_pentagram",
+//        "height": 0,
+//        "customTextureId": "img_pentagram"
+//      }
+    }
+  },
+  "terrains": {
+    "terr_id1": {
+      "name": "text_id1",
+      "description": "text_id2",
+      "terrainGroups": [
+        "terr_id2",
+        "terr_id3"
+      ],
+      "textures": [
+        "img_id1", "img_id2"
+      ],
+      "barrier": {
+        "linear": true,
+        "ballistic": false,
+        "occurrence": false,
+        "unit": false,
+        "vision": false
+      },
+      "defaultStepCost": 1
+    }
+  },
+  "units": {
+    "unit_id1": {
+      "name": "text_id1",
+      "unitType": "uType_id1",
+      "currentHP": 8,
+      "currentSteps": 2,
+      "buffs": [
+        "buff_id1", "buff_id2"
+      ],
+      "unitGroup": "uGroup_id1",
+      "aiPlayer": "aiPlayer_id1"
+    }
+  },
+  "unitGroups": {
+    "unitGroup_id1": {
+      "name": "text_id5",
+      "aiPlayer": "aiPlayer_id2",
+      "aiSettings": {
+      }
+    }
+  },
+  "buffs": {
+    "buff_id1": {
+      "name": "text_id4",
+      "description": "text_id8",
+      "values": [{}],
+      "graphics":{
+        "imgIcon": "img_id5",
+        "imgField": "img_id9",
+        "applyAnimation": "animation_id5",
+        "ticAnimation": "animation_id7",
+        "dissipateAnimation": "animation_id9",
+        "purgeAnimation": "animation_id12",
+        "ambientAnimation": "animation_id18"
+      },
+      "triggers": {
+      }
+    }
+  },
+  "unitTypes": {
+    "unitType_id1": {
+      "name": "text_id9",
+      "iconImg": "img_id54",
+      "unitImgs": ["img_id1", "img_id2"],
+      "race": "cylon",
+      "hp": 5,
+      "dmg": [0,0,1,2,4,3],
+      "armor": 3,
+      "steps": 4,
+      "range": 0,
+      "bounty": 7,
+      "defaultAttackAbility": "abil_move",
+      "defaultMoveAbility": "abil_meelee_attack",
+      "defaultCtrlAbility": "abil_id8",
+      "defaultShiftAbility": "abil_id9",
+      "abilities": [
+        "abil_move", "abil_meelee_attack", "abil_id8", "abil_id9"
+      ]
+    }
+  },
+  "heroes": [
+    {
+      "x": 5,
+      "y": 8,
+      "currentHP": 8,
+      "currentSteps": 2,
+      "buffs": [
+        "buff_id1", "buff_id2"
+      ],
+      "additionalAbilities" : [
+        "abil_id9"
+      ]
+    }
+  ],
+  "abilities": {
+    "abil_id1": {
+    }
+  },
+  "events": {
+    "event_id1": {
+      "type": "UNIT_ATTACKS",
+      "filledVariables": ["TRIGGERING_UNIT","ATTACKED_UNIT"]
+    }
+  },
+  "actions": {
+    "action_id1": {
+      "actionType": "ASSIGN",
+      "members": ["PICKED_UNITS", "member_id28"]
+    }
+  },
+  "triggers": {
+    "event_id1": [
+      {
+        "condition": "member_id1",
+        "events": [
+          "event_id1",
+          "event_id2",
+          "event_id3"
+        ]
+      }
+    ]
+  },
+  "sounds": {
+    "sound_id_154": "comprimed_representation"
+  },
+  "images": {
+    "img_id1": {
+      "name": "actual unlocalized name",
+      "base64": "big fucking base64 string Lorem ipsum and shit..."
+    }
+  },
+  "animations": {
+    "animation_id1": {
+      "type": "blade_strike_component_3",
+      "defaultColors": ["#FF12A5", "#0000BB"],
+      "defaultImgSize": 100,
+      "defaultFontSize": 12,
+      "defaultOpacity": 80,
+      "delayInMs": 200,
+      "animationTimeInMs": 500
+    }
+  },
+  "ais": {
+    "ai_id": {
+      "name": "Ogress",
+      "agressivness": 85,
+      "target": "var_id9",
+      "mode": "KING_OF_THE_HILL",
+      "eraticity": 12
+    }
+  },
+  "aiPlayers": {
+    "name": "text_id154",
+    "description": "text_id542",
+    "ai": "ai_id3",
+    "attitudeTowardsHumans": "NEUTRAL",
+    "enemies": ["aiPlayer_id2"],
+    "allies": ["aiPlayer_id5"]
+  },
+  "texts": {
+    "text_taleName": {
+      "defaultValue": "bureaucracy",
+      "cs": "Pekelná byrokracie",
+      "en": "Infernal bureaucracy"
+    }
+  },
+  "dialogs": {
+    "dial_id8": {
+      "title": "text_id52",
+      "text": "text_id63",
+      "options": [
+        {
+          "buttonText": "text_id87",
+          "followupDialog": "dial_542",
+          "optionCondition": "member_id54",
+          "unconditionalActions": ["action_id8"],
+          "conditionalActions": [
+            {
+              "condition": "member_id8",
+              "actions": ["action_id14, action_id5"]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "variables": {
+    "var_id1": {
+      "name": "sacred parking lot",
+      "type": "field",
+      "initialValue": "8_8"
+    }
+  },
+  "members": {
+    "member_id5": {
+      "operationType": "REAL_ADD",
+      "submembers": [
+        "var_id65",
+        "member_id8"
+      ]
+    }
+  },
+  "other": {
+  }
+}

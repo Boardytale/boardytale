@@ -1,0 +1,21 @@
+//@dialog
+{
+  "title": "text_id52",
+  "text": "text_id63",
+  "options": [
+    {
+      "buttonText": "text_id87",
+      "followupDialog": "dial_542",
+//      conditions are simply members expected to evaluate as boolean
+//      whether option is enabled
+      "optionCondition": "member_id54",
+      "unconditionalActions": ["action_id8"],
+      "conditionalActions": [
+        {
+          "condition": "member_id8",
+          "actions": ["action_id14, action_id5"]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+Please do not add generated_* files to git
+
+Reference folder is used as design tool and design template for contemporary development (3/2018)
+
+notes for folder reference{
+    The JSON modeled here is meant as 2/3 stage in JSON compiling - after resource extraction from storage and waiting
+    for info about playing players to be compiled onto final JSON. On the other hand, this JSON is being designed
+    in a way, so resource extraction would be easy.
+
+    Files in this folder are of 4 kinds:
+
+    complete.json   - centralpiece, compact version of what aforementioned json is meant to look like
+    *.json          - other .json files, are meant as sort of a classes - to be included into complete.json
+    include.dart    - running include.dart will generate two composed .json files - one with and one without comment
+    generated_*     - files to be used as templates and completed view of design
+
+    running include.dart will generate two composed .json files - one with and one without comment
+
+    @something in complete.json functions as include "something.json"
+    $something is used only as human reference
+
+    all notes and criticism are welcome in form of comments (both "//" and "/**/"), noncommented code should be modified
+    only with care. If you wish to followup with discussion, then ideally with end your note with recognizable #signature
+}
+
+files corresponding with sample_tale/* are being worked on.

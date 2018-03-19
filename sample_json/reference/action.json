@@ -1,0 +1,6 @@
+//@action
+{
+//  model action: pick units
+  "actionType": "ASSIGN",
+  "members": ["PICKED_UNITS", "member_id28"]
+}

@@ -1,0 +1,15 @@
+//@hero
+{
+  "x": 5,
+  "y": 8,
+//  default full hp
+  "currentHP": 8,
+//  default full steps
+  "currentSteps": 2,
+  "buffs": [
+    "buff_id1", "buff_id2"
+  ],
+  "additionalAbilities" : [
+    "abil_id9"
+  ]
+}

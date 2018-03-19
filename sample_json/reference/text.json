@@ -1,0 +1,8 @@
+//@text
+{
+  "defaultValue": "defaultString",
+//  "name": "internal name of the text",
+//  "description": "internal descriptions",
+  "cs": "česká obdoba textu",
+  "en": "english version of the text"
+}
