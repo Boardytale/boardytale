@@ -1,7 +1,8 @@
-//@event
-{
+import {IEventType, IVariableId} from "../storage_identifiers";
+
+export interface IEvent{
 //  many different types, compiler and interpret must be ready for each one
-  "type": "UNIT_ATTACKS",
+  type: IEventType,
 //  some predefined variables will be filled so later conditions and actions can work with them
-  "filledVariables": ["TRIGGERING_UNIT","ATTACKED_UNIT"]
+  filledVariables: [IVariableId]
 }

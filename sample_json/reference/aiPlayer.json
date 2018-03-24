@@ -1,9 +1,0 @@
-//@aiPlayer
-{
-  "name": "text_id154",
-  "description": "text_id542",
-  "ai": "ai_id3",
-  "attitudeTowardsHumans": "NEUTRAL",
-  "enemies": ["aiPlayer_id2"],
-  "allies": ["aiPlayer_id5"]
-}

@@ -29,7 +29,7 @@ class Tale {
     }
 
     List<Trigger> allTriggers = [];
-    dynamic __triggers = data["triggers"];
+    dynamic __triggers = data["implicitTriggers"];
     if (__triggers is List) {
       for (Map triggerData in __triggers) {
         allTriggers.add(new Trigger()..fromMap(triggerData));
@@ -41,7 +41,7 @@ class Tale {
 //      if (!events.containsKey(name)) {
 //        events[name] = new Event(name);
 //      }
-//      events[name].triggers.add(trigger);
+//      events[name].implicitTriggers.add(trigger);
     }
 
     dialogs.clear();
@@ -74,7 +74,7 @@ class Tale {
     events.forEach((k,v){
       v.triggers.forEach((t)=>triggers.add(t.toMap()));
     });
-    out["triggers"] = triggers;
+    out["implicitTriggers"] = triggers;
     return out;
   }
 
