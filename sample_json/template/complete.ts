@@ -31,7 +31,18 @@ import {
     ITerrainId,
     IRaceId,
     ITextId,
-    IBuffId
+    IBuffId,
+    IFavouriteControls,
+    IEffectType,
+    ITargetType,
+    IActionType,
+    IAnimationType,
+    IAiType,
+    IAttitudeTowardsHumans,
+    IVariableType,
+    IOperationType,
+    IEventType,
+    ILangId,
 } from './storage_identifiers';
 
 //@marker1
@@ -98,12 +109,12 @@ export interface ITale {
     dialogs: { [key: string]: IDialog },
     variables: { [key: string]: IVariable },
     members: { [key: string]: IMember },
-    langs: [ILang],
-    // events: { [key: string]: IEvent },
-    // sounds: { [key: string]: ISound },
+    langs: ILang[],
+// events: { [key: string]: IEvent },
+// sounds: { [key: string]: ISound },
 
-    triggers: [ITrigger],
-    heroes: [IHero],
+    triggers: ITrigger[],
+    heroes: IHero[],
 
     other: {
         //    hotfix-stuff
@@ -125,7 +136,6 @@ export type ISuperBuff = IBuffId | IBuff | string;
 export type ISuperUnitGroup = IUnitGroup | string;
 export type ISuperAiPlayer = IAiPlayer | IAiPlayerId | string;
 export type ISuperAnimation = IAnimation | IAnimationId | string;
-export type ISuperAbility = IAbility | IAbilityId | string;
 export type ISuperVariable = IVariable | IVariableId | string;
 // export type ISuperEvent        = IEventId | IEvent | string;
 
