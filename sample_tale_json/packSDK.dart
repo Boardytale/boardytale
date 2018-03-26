@@ -33,7 +33,7 @@ void packSDK(String directory, {bool removeComments: true}){
     new File("sdk_packed.ts").writeAsStringSync(packed);
   }
   else{
-    String path = directory+"/sdk_packed.ts";
+    String path = directory+"/tale_format.ts";
     new File(path).writeAsStringSync(packed);
   }
 
