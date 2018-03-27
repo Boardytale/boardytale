@@ -4,10 +4,10 @@ import {ISuperText, ISuperImage, ISuperRace, ISuperAbility} from '../complete';
 export interface IUnitType {
     name: ISuperText,
     iconImg: ISuperImage,
-    unitImgs: [ISuperImage],
+    unitImgs: ISuperImage[],
     race: ISuperRace,
     hp: number,
-    dmg: [number],
+    dmg: number[],
     armor: number,
     steps: number,
     range: number,
@@ -18,5 +18,5 @@ export interface IUnitType {
     defaultMoveAbility: ISuperAbility,
     defaultCtrlAbility: ISuperAbility,
     defaultShiftAbility: ISuperAbility,
-    abilities: [ISuperAbility]
+    abilities: ISuperAbility[]
 }

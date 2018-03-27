@@ -6,6 +6,6 @@ export interface IAiPlayer{
   description: ISuperText,
   ai: ISuperAi,
   attitudeTowardsHumans: IAttitudeTowardsHumans,
-  enemies: [IAiPlayer],
-  allies: [IAiPlayer]
+  enemies: IAiPlayer[],
+  allies: IAiPlayer[]
 }

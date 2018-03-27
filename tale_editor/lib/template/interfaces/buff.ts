@@ -4,7 +4,7 @@ export interface IBuff{
   name: ISuperText,
   description: ISuperText,
 // values exist so that there do not have to be more types of buffs only because of differing strngth/parameters
-  values: [{}],
+  values: ({})[],
   graphics:{
     imgIcon: ISuperImage,
     imgField: ISuperImage,
@@ -16,5 +16,5 @@ export interface IBuff{
   },
 //  implicitTriggers are a duplicity, but this is how buffs will be stored in storage
 //  -> easy compilation, easy validation
-  implicitTriggers: [ITrigger]
+  implicitTriggers: ITrigger[]
 }

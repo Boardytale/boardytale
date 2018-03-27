@@ -7,7 +7,7 @@ export interface IUnit{
   currentHP: number,
 // default full steps
   currentSteps: number,
-  buffs: [ISuperBuff],
+  buffs: ISuperBuff[],
 //  duplicities: keep?
   unitGroup: ISuperUnitGroup,
   aiPlayer: ISuperAiPlayer,

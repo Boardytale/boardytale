@@ -7,8 +7,8 @@ export interface ITerrain{
 //  to enable terrain mechanics on custom terrains:
 //  e.g.: magical forrest river will have ids of forest and river, so forest and river mechanics will work,
 //  but you can add your own
-        terrainGroups: [ITerrainId],
-        textures:[ISuperImage],
+        terrainGroups: ITerrainId[],
+        textures:ISuperImage[],
 //  which kind of projectiles or other it blocks
         barrier: {
         linear: Boolean,

@@ -10,13 +10,11 @@ export interface IDialog{
 //      conditions are simply members expected to evaluate as boolean
 //      whether option is enabled
       optionCondition: ISuperMember,
-      unconditionalActions: [ISuperAction],
-      conditionalActions: [
-        {
+      unconditionalActions: ISuperAction[],
+      conditionalActions: ({
           condition: ISuperMember,
-          actions: [ISuperAction]
-        }
-      ]
+          actions: ISuperAction[]
+      })[]
     }
   ]
 }

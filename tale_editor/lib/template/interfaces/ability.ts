@@ -4,8 +4,8 @@ import {IEffectType, IFavouriteControls, ITargetType} from "../storage_identifie
 export interface IAbility{
     name: ISuperText,
     favouriteControls: IFavouriteControls,
-    effects: [IEffectType],
-    values: [ISuperMember|string|number|null],
+    effects: IEffectType[],
+    values: (ISuperMember|string|number|null)[],
     targetType: ITargetType,
-    variablesFilled: [ISuperVariable]
+    variablesFilled: (ISuperVariable)[]
 }

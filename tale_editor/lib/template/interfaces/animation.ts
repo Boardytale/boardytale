@@ -3,7 +3,7 @@ import {IAnimationType} from "../storage_identifiers";
 export interface IAnimation{
 //  type = fade, move, accelerated move, desc. move, ascention, ...
   type: IAnimationType,
-  defaultColors: [string],
+  defaultColors: string[],
   defaultImgSize: 100,
   defaultFontSize: 12,
   defaultOpacity: 80,

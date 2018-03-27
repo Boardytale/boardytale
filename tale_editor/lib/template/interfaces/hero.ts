@@ -7,6 +7,6 @@ export interface IHero{
   currentHP: number,
 // default full steps
   currentSteps: number,
-  buffs: [ISuperBuff],
-  additionalAbilities: [ISuperAbility],
+  buffs: ISuperBuff[],
+  additionalAbilities: ISuperAbility[],
 }
