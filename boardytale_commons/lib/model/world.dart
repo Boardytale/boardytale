@@ -65,4 +65,6 @@ class World {
     out["fields"] = fieldsData;
     return out;
   }
+
+  getFieldById(String id)=>fields[id];
 }

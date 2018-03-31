@@ -10,7 +10,7 @@ part 'load_images.dart';
 Resources getResourcesFromFileMap(Map fileMap, InstanceGenerator generator) {
   Resources resources = generator.resources();
   resources.images = loadImages(fileMap, generator);
-  resources.abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]));
+  resources.abilities = loadAbilities(JSON.decode(fileMap["abilities.json"]), generator);
   resources.races = loadRaces(JSON.decode(fileMap["races.json"]), generator);
   resources.unitTypes = loadUnitsTypes(fileMap["unitTypes"].values.toList(), resources);
   return resources;
@@ -39,27 +39,36 @@ Tale loadTaleFromAssets(Map taleData, Resources resources) {
   return tale;
 }
 
-Map<String, Ability> loadAbilities(List abilitiesList) {
-  Map<String, Ability> abilities = {};
+Map<String, Map> loadAbilities(List abilitiesList, InstanceGenerator generator) {
+  Map<String, Map> abilities = {};
   for (Map abilityData in abilitiesList) {
-    Ability ability = Ability.createAbility(abilityData);
-    abilities[ability.className] = ability;
+    abilities[abilityData["class"]] = abilityData;
   }
   return abilities;
 }
 
+void addAbilitiesToUnitType(UnitType unitType, Resources resources) {
+  for (Map abilityData in unitType.abilitiesData) {
+    Map sourceAbility = resources.abilities[abilityData["class"]];
+    if (sourceAbility != null) {
+      abilityData.addAll(sourceAbility);
+    }
+    unitType.abilities.add(resources.generator.ability(abilityData));
+  }
+}
+
 Map<String, UnitType> loadUnitsTypes(List<dynamic> unitTypesList, Resources resources) {
   Map<String, UnitType> unitTypes = {};
-  for (dynamic unitData in unitTypesList) {
-    Map unit;
-    if (unitData is Map) {
-      unit = unitData;
-    } else if (unitData is String) {
-      unit = JSON.decode(unitData);
+  for (dynamic unitTypeData in unitTypesList) {
+    Map unitTypeMap;
+    if (unitTypeData is Map) {
+      unitTypeMap = unitTypeData;
+    } else if (unitTypeData is String) {
+      unitTypeMap = JSON.decode(unitTypeData);
     } else {
       throw "unsupported unit format";
     }
-    UnitType unitType = resources.generator.unitType()..fromMap(unit);
+    UnitType unitType = resources.generator.unitType()..fromMap(unitTypeMap);
     unitType.image = resources.images[unitType.imageId];
     if (unitType.bigImageId != null) {
       unitType.bigImage = resources.images[unitType.bigImageId];
@@ -68,9 +77,7 @@ Map<String, UnitType> loadUnitsTypes(List<dynamic> unitTypesList, Resources reso
       unitType.iconImage = resources.images[unitType.iconId];
     }
     unitTypes[unitType.id] = unitType;
-    for (Map abilityData in unitType.abilitiesData) {
-      unitType.abilities.add(resources.abilities[abilityData["class"]].createAbilityWithUnitData(abilityData));
-    }
+    addAbilitiesToUnitType(unitType, resources);
     unitType.race = resources.races[unitType.raceId];
   }
   return unitTypes;

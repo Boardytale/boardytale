@@ -2,8 +2,8 @@ library world_view;
 
 import 'dart:async';
 import 'dart:html';
-import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_client/src/services/settings_service.dart';
+import 'package:boardytale_client/src/world/model/model.dart';
 import 'package:boardytale_commons/model/model.dart' as commonModel;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 

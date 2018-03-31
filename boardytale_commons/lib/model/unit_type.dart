@@ -13,7 +13,7 @@ class UnitType {
   List<int> _attack;
   int _cost;
   List<Ability> _abilities = new List<Ability>();
-  List<String> tags = [];
+  Set<String> tags = new Set();
   List<Map> _abilitiesData;
   String _imageId;
   String _name;
@@ -200,7 +200,7 @@ class UnitType {
     out["actions"] = _actions;
     out["attack"] = _attack.join(" ");
     out["cost"] = _cost;
-    out["abilities"] = _abilitiesData;
+    out["abilities"] = abilities.map((Ability ability)=>ability.toMap()).toList(growable: false);
     out["imageId"] = _imageId;
     out["bigImageId"] = bigImageId;
     out["iconId"] = iconId;

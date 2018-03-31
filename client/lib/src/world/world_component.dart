@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-
-import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/services/state_service.dart';
-import 'package:boardytale_client/world/view/world_view.dart';
-import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_client/src/services/gateway_service.dart';
+import 'package:boardytale_client/src/services/settings_service.dart';
+import 'package:boardytale_client/src/services/state_service.dart';
+import 'package:boardytale_client/src/world/model/model.dart';
+import 'package:boardytale_client/src/world/view/world_view.dart';
+import 'package:boardytale_commons/model/model.dart' as commonLib;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -48,6 +49,7 @@ class WorldComponent implements OnDestroy {
   StreamSubscription onResizeSubscription;
   ChangeDetectorRef changeDetector;
   final SettingsService settings;
+  final GatewayService gateway;
   UnitManager unitManager;
 
   bool _moving = false;
@@ -56,10 +58,11 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
 
-  WorldComponent(this.changeDetector, this.settings, this.state) {
+  WorldComponent(this.changeDetector, this.settings, this.state, this.gateway) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     state.onWorldLoaded.add(this.modelLoaded);
   }
+
   ClientWorld get world => state.tale.world;
 
   @ViewChild("world")
@@ -128,8 +131,14 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (_draggedUnit != null) {
       Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-      _draggedUnit.unit.move(field, 0);
-      _draggedUnit.field = field;
+      List<String> path = _draggedUnit.unit.field.getShortestPath(field);
+      commonLib.Track track = new commonLib.Track.fromIds(path, state.tale);
+      commonLib.Ability ability = _draggedUnit.unit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
+      if (ability != null) {
+        gateway.sendCommand(_draggedUnit.unit, track.path, ability);
+      }
+//      _draggedUnit.unit.move(track);
+//      _draggedUnit.field = field;
     }
     _moving = false;
     _draggedUnit = null;

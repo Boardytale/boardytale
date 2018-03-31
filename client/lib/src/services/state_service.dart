@@ -2,9 +2,9 @@ library state_service;
 
 import 'dart:html';
 import 'package:angular/core.dart';
-import 'package:boardytale_client/services/settings_service.dart';
-import 'package:boardytale_client/world/model/instance_generator.dart';
-import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_client/src/services/settings_service.dart';
+import 'package:boardytale_client/src/world/model/instance_generator.dart';
+import 'package:boardytale_client/src/world/model/model.dart';
 import 'package:utils/utils.dart';
 import 'package:tales_compiler/tales_compiler.dart';
 
@@ -28,13 +28,15 @@ class StateService {
     onTaleLoaded.notify();
   }
 
-  void alertError(String text){
-    onAlert.notify({"text":text,"type":"error"});
+  void alertError(String text) {
+    onAlert.notify({"text": text, "type": "error"});
   }
-  void alertWarning(String text){
-    onAlert.notify({"text":text,"type":"warning"});
+
+  void alertWarning(String text) {
+    onAlert.notify({"text": text, "type": "warning"});
   }
-  void alertNote(String text){
-    onAlert.notify({"text":text,"type":"note"});
+
+  void alertNote(String text) {
+    onAlert.notify({"text": text, "type": "note"});
   }
 }

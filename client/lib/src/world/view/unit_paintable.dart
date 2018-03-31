@@ -16,11 +16,11 @@ class UnitPaintable extends Paintable {
     width = world.fieldWidth.toInt();
     createBitmap();
     view.model.onResolutionLevelChanged.add(createBitmap);
-    unit.onFieldChanged.add((){
-      this.field=unit.field;
+    unit.onFieldChanged.add(() {
+      this.field = unit.field;
     });
-    unit.onHealthChanged.add((_)=>createBitmap());
-    unit.onStepsChanged.add(()=>createBitmap());
+    unit.onHealthChanged.add((_) => createBitmap());
+    unit.onStepsChanged.add(() => createBitmap());
   }
 
   ClientWorld get world => view.model;
@@ -61,7 +61,7 @@ class UnitPaintable extends Paintable {
           new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
       unitGlobalCache[state] = data;
       data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
-      data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight-lifeBarHeight));
+      data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
     } else {
       data = unitGlobalCache[state];
     }
@@ -98,9 +98,21 @@ class UnitPaintable extends Paintable {
       return data;
     }
   }
+  Map<String,int> activeStepColors={
+    "me":0xFF00D2FF,
+    "team":0xFFFFFF00,
+    "enemy":0xFFFF0000
+  };
+  Map<String,int> usedStepColors={
+    "me":0xFF007088,
+    "team":0xFF787700,
+    "enemy":0xFF780000
+  };
+
   stage_lib.BitmapData getStepsBar() {
     int resolutionLevel = view.model.resolutionLevel;
-    String description = "${unit.speed}_${unit.steps}_$resolutionLevel";
+    Player player = unit.player;
+    String description = "${unit.speed}_${unit.steps}_${resolutionLevel}_${player.meId}";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.speed < 10) {
       bitSpace = 1.0;
@@ -116,9 +128,9 @@ class UnitPaintable extends Paintable {
         stage_lib.Rectangle bitRectangle = new stage_lib.Rectangle(
             i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.steps) {
-          data.fillRect(bitRectangle, stage_lib.Color.Blue);
+          data.fillRect(bitRectangle, activeStepColors[player.meId]);
         } else {
-          data.fillRect(bitRectangle, stage_lib.Color.Gray);
+          data.fillRect(bitRectangle, usedStepColors[player.meId]);
         }
       }
       stepsGlobalCache[description] = data;

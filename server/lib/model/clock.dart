@@ -48,7 +48,7 @@ class Clock {
     currentPlayers.forEach((Player player) {
       player.roundDone = false;
     });
-    tale.units.forEach((int, model_lib.Unit unit) {
+    tale.units.forEach((int, commonLib.Unit unit) {
       if (unit.player.team == team) {
         unit.newTurn();
       }

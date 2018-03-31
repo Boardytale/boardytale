@@ -1,7 +1,6 @@
 library model;
 
 import "dart:math" as Math;
-import 'dart:math';
 import 'package:utils/utils.dart';
 
 part 'image.dart';
@@ -16,6 +15,7 @@ part 'alea.dart';
 part 'player.dart';
 part 'tale.dart';
 part 'buff.dart';
+part 'targets.dart';
 part 'settings.dart';
 part 'stage_geometry.dart';
 part 'resources.dart';

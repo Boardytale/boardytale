@@ -5,7 +5,7 @@ abstract class InstanceGenerator {
   Tale tale(Resources resources);
   Race race() => new Race();
   Image image() => new Image();
-  Ability ability(Map<String, dynamic> data) => Ability.createAbility(data);
+  Ability ability(Map<String, dynamic> data);
   UnitType unitType();
   Field field(String id, World world);
   World world(Tale tale);
@@ -26,4 +26,6 @@ class CommonInstanceGenerator extends InstanceGenerator {
   World world(Tale tale) => new World(tale);
   @override
   Tale tale(Resources resources) => new Tale(resources);
+  @override
+  Ability ability(Map<String, dynamic> data) => Ability.createAbility(data);
 }

@@ -24,11 +24,11 @@ class TaleAssetsPack {
         imagesOut[image.id] = image.toMap();
       }
 
-      for (Ability ability in unit.type.abilities) {
-        if (!abilitiesOut.containsKey(ability.type.name)) {
-          abilitiesOut[ability.type.name] = ability.type.toMap();
-        }
-      }
+//      for (Ability ability in unit.type.abilities) {
+//        if (!abilitiesOut.containsKey(ability.type.name)) {
+//          abilitiesOut[ability.type.name] = ability.type.toMap();
+//        }
+//      }
       if (!racesOut.containsKey(unit.type.race.id)) {
         racesOut[unit.type.race.id] = unit.type.race.toMap();
       }
@@ -47,7 +47,7 @@ class TaleAssetsPack {
   static Tale unpack(Map pack, InstanceGenerator generator) {
     Resources resources = generator.resources();
     resources.images = loadImages(pack["images"], generator);
-    resources.abilities = loadAbilities(pack["abilities"]);
+    resources.abilities = loadAbilities(pack["abilities"],generator);
     resources.races = loadRaces(pack["races"], generator);
     resources.unitTypes= loadUnitsTypes(pack["unitTypes"], resources);
     Tale tale = loadTaleFromAssets(pack["tale"], resources);

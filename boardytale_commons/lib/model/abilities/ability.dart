@@ -1,16 +1,13 @@
 part of model;
 
 abstract class Ability {
-  static const TARGET_ENEMY = "enemy";
-  static const TARGET_FIELD = "field";
-  static const TARGET_ALLY = "ally";
-  static const TARGET_CORPSE = "corpse";
-  static const TARGET_ME = "me";
-  static const TARGET_WOUNDED_ALLY = "wonundedAlly";
-  static const TARGET_WOUNDED_ENEMY = "woundedEnemy";
-  static const TARGET_NOT_UNDEAD_CORPSE = "not_undead_corpse";
   static const TRIGGER_MINE_TURN_START = "mine_turn_start";
-  Unit invoker;
+
+  static const REACH_MOVE = "reachMove";
+  static const REACH_HAND = "reachHand";
+  static const REACH_ARROW = "reachArrow";
+  static const REACH_CONJURATION = "reachConjuration";
+
   int actions = 1;
   String trigger;
   int range;
@@ -18,8 +15,10 @@ abstract class Ability {
   String className;
   String img;
   String imageId;
-  List<String> target = [];
-  Ability type;
+  Targets targets;
+//  List<String> target = [];
+  String get reach;
+  Map<String, dynamic> _abilityData;
 
   static Ability createAbility(Map<String, dynamic> data) {
     String abilityClass = data["class"] as String;
@@ -62,47 +61,46 @@ abstract class Ability {
     throw "ability $abilityClass $data not implemented";
   }
 
-  void setInvoker(Unit unit) {
-    invoker = unit;
+  String validate(Unit unit, Track track) {
+    if (unit.actions < actions) return "too few actions";
+    if (reach == REACH_ARROW || reach == REACH_CONJURATION) {
+      if (unit.far > 0) {
+        return "unit already moved too far";
+      }
+    }
+    if (reach == REACH_HAND || reach == REACH_MOVE) {
+      if (unit.steps < track.length) return "too few steps";
+      if (reach == REACH_MOVE) {
+        if (!track.isFreeWay(unit.player)) return "no free way";
+      } else {
+        if (!track.isHandMove(unit.player)) return "no free way";
+      }
+    }
+
+    //match target
+    if (!targets.match(unit, track)) {
+      return "no correct target";
+    }
+    return null;
   }
 
-  void show(Track track);
-  void perform(Track track);
   void resetProperties() {}
 
   void setDefaults(Map defaults) {}
 
-  Ability createAbilityWithUnitData(Map<String, dynamic> unitAbilityData) {
-    Ability abilityClone = clone();
-    abilityClone.type = this;
-    abilityClone.fromMap(unitAbilityData);
-    return abilityClone;
-  }
-
-  Ability clone();
-
   void fromMap(Map<String, dynamic> ability) {
+    if (_abilityData == null) {
+      _abilityData = ability;
+    } else {
+      _abilityData.addAll(ability);
+    }
     name = ability["name"].toString().toLowerCase();
     imageId = ability["imageId"] as String;
-    target = ability["target"] as List<String>;
+    targets = new Targets()..fromList(ability["target"] as List<String>);
     className = ability["class"] as String;
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> out = <String, dynamic>{};
-    out["name"] = name;
-    out["img"] = img;
-    out["target"] = target;
-    out["class"] = className;
-    return out;
-  }
-
-  /// steps needed to next
-  int getPossiblesSteps() {
-    return 0;
-  }
-
-  bool freeWayNeeded() {
-    return true;
+    return _abilityData;
   }
 }

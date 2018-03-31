@@ -1,21 +1,24 @@
 part of boardytale.server.model;
 
-class ServerInstanceGenerator extends model_lib.InstanceGenerator {
+class ServerInstanceGenerator extends commonLib.InstanceGenerator {
   @override
-  model_lib.Field field(String id, model_lib.World world) => new model_lib.Field(id, world);
+  commonLib.Field field(String id, commonLib.World world) => new commonLib.Field(id, world);
 
   @override
-  model_lib.Unit unit(int id) => new model_lib.Unit(id);
+  commonLib.Unit unit(int id) => new Unit(id);
 
   @override
-  model_lib.UnitType unitType() => new model_lib.UnitType();
+  commonLib.UnitType unitType() => new commonLib.UnitType();
 
   @override
-  model_lib.World world(model_lib.Tale tale) => new model_lib.World(tale);
+  commonLib.World world(commonLib.Tale tale) => new commonLib.World(tale);
 
   @override
-  model_lib.Player player() => new Player();
+  commonLib.Player player() => new Player();
 
   @override
-  model_lib.Tale tale(model_lib.Resources resources) => new ServerTale(resources);
+  commonLib.Tale tale(commonLib.Resources resources) => new ServerTale(resources);
+
+  @override
+  ServerAbility ability(Map<String, dynamic> data) => ServerAbility.createAbility(data);
 }

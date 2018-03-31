@@ -5,7 +5,7 @@ import 'package:angular_router/angular_router.dart';
 import 'editor/editor.dart';
 import 'lobby/lobby.dart';
 import 'game/game.dart';
-import 'package:boardytale_client/components/alerts.dart';
+import 'package:boardytale_client/src/components/alerts.dart';
 import 'trial/trial.dart';
 
 @Component(
@@ -19,12 +19,12 @@ import 'trial/trial.dart';
       </nav>
       <alerts></alerts>
       <router-outlet></router-outlet>''',
-    directives: const [ROUTER_DIRECTIVES,AlertsComponent],
+    directives: const [ROUTER_DIRECTIVES, AlertsComponent],
     providers: const <dynamic>[
       ROUTER_PROVIDERS,
     ],
     host: const {"style": "position:relative"},
-    styles: const [":host{display: block;}","nav{z-index: 2;position:relative;}"],
+    styles: const [":host{display: block;}", "nav{z-index: 2;position:relative;}"],
     changeDetection: ChangeDetectionStrategy.OnPush)
 @RouteConfig(const [
   const Route(path: '/lobby', name: 'Lobby', component: LobbyComponent, useAsDefault: true),

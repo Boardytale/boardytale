@@ -1,8 +1,6 @@
-import 'dart:async';
 import 'package:angular/core.dart';
-import 'package:boardytale_client/services/state_service.dart';
-import 'package:boardytale_client/world/model/model.dart';
-import 'package:boardytale_client/world/world_component.dart';
+import 'package:boardytale_client/src/services/state_service.dart';
+import 'package:boardytale_client/src/world/world_component.dart';
 
 @Component(
     selector: 'trial',

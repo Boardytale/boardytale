@@ -1,4 +1,5 @@
-import 'package:boardytale_client/world/model/model.dart';
+import 'package:boardytale_client/src/world/model/abilities/abilities.dart';
+import 'package:boardytale_client/src/world/model/model.dart';
 import 'package:boardytale_commons/model/model.dart' as model_lib;
 
 class ClientInstanceGenerator extends model_lib.InstanceGenerator {
@@ -18,4 +19,6 @@ class ClientInstanceGenerator extends model_lib.InstanceGenerator {
   model_lib.Tale tale(model_lib.Resources resources) => new ClientTale(resources);
   @override
   model_lib.Player player() => new Player();
+  @override
+  model_lib.Ability ability(Map<String, dynamic> data) =>ClientAbility.createAbility(data);
 }

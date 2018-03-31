@@ -1,5 +1,5 @@
 part of boardytale.server.model;
 
-class ServerTale extends model_lib.Tale {
-  ServerTale(model_lib.Resources resources) : super(resources);
+class ServerTale extends commonLib.Tale {
+  ServerTale(commonLib.Resources resources) : super(resources);
 }

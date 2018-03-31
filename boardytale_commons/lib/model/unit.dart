@@ -17,7 +17,7 @@ class Unit {
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
-  List<String> tags = [];
+  Set<String> tags = new Set<String>();
 
   bool get isUndead => tags.contains(UnitType.TAG_UNDEAD);
 
@@ -40,6 +40,15 @@ class Unit {
     speed = type.speed;
     range = type.range;
     attack = type.attack.toList(growable: false);
+    abilities.clear();
+    for (Ability ability in type.abilities) {
+      abilities.add(ability);
+    }
+
+    if (type.tags != null) {
+      tags = type.tags.toSet();
+    }
+
     for (Buff buff in _buffs) {
       armor += buff.armorDelta;
       speed += buff.speedDelta;
@@ -47,7 +56,17 @@ class Unit {
       for (int i = 0; i < 6; i++) {
         attack[i] += buff.attackDelta[i];
       }
+      if(buff.extraTags!=null){
+        tags.addAll(buff.extraTags);
+      }
+      if(buff.bannedTags!=null){
+        tags.removeAll(buff.bannedTags);
+      }
     }
+    limitAttributes();
+
+  }
+  void limitAttributes(){
     if (armor > 4) armor = 4;
     if (speed > 7) speed = 7;
     if (range != null && range > 7) range = 7;
@@ -154,27 +173,18 @@ class Unit {
       }
     }
 
-    abilities.clear();
-    for (Ability a in type.abilities) {
-      abilities.add(a.clone());
-    }
-
-    if (type.tags != null) {
-      tags = type.tags.toList();
-    }
-
     _recalculate();
     onTypeChanged.notify();
   }
 
-  void addAbility(Ability ability) {
-    abilities.add(ability);
-    ability.setInvoker(this);
-  }
+//  void addAbility(Ability ability) {
+//    abilities.add(ability);
+//    ability.setInvoker(this);
+//  }
 
-  void move(Field field, int steps) {
-    this.steps -= steps;
-    this.field=field;
+  void move(Track track) {
+    this.steps -= track.length;
+    this.field = track.last;
   }
 
   int harm(Alea alea) {
@@ -193,16 +203,6 @@ class Unit {
     _steps = speed;
     _actions = type.actions;
     _far = 0;
-    for (Ability a in abilities) {
-      if (a.trigger != null && a.trigger == Ability.TRIGGER_MINE_TURN_START) {
-        a.perform(null);
-      }
-    }
-    field.refresh();
-  }
-
-  Alea dice() {
-    return new Alea(attack);
   }
 
   Map toSimpleJson() {
@@ -216,48 +216,8 @@ class Unit {
     return out;
   }
 
-  Ability getAbility(Track track, bool shift, bool alt, bool ctrl) {
-    List<Ability> possibles = abilities.toList();
-    List<Ability> toRemove = [];
-    for (Ability ability in possibles) {
-      if ((actions < ability.actions) ||
-          (track.fields.length - 1 > ability.getPossiblesSteps() - far) ||
-          (far > ability.getPossiblesSteps()) ||
-          (ability.freeWayNeeded() && track.isEnemy(player))) {
-        toRemove.add(ability);
-        break;
-      }
-
-      //match target
-      if (!track.matchTarget(ability.target, this)) {
-        toRemove.add(ability);
-        break;
-      }
-    }
-    for (Ability a in toRemove) {
-      possibles.remove(a);
-    }
-
-    int used = 0;
-    if (possibles.isEmpty) {
-      return null;
-    } else if (possibles.length > 0) {
-      if (possibles.length == 2 && (shift || alt || ctrl))
-        used = 1;
-      else if (possibles.length == 3) {
-        if (ctrl)
-          used = 1;
-        else if (shift || alt) used = 2;
-      } else if (possibles.length > 3) {
-        if (ctrl)
-          used = 1;
-        else if (shift)
-          used = 2;
-        else if (alt) used = 3;
-      }
-    }
-    return possibles[used];
-  }
+  Ability getAbilityByName(String name) =>
+      abilities.firstWhere((Ability ability) => ability.name == name, orElse: () => null);
 
   void fromMap(Map<String, dynamic> m, Tale tale) {
     type = tale.resources.unitTypes[m["type"].toString()];
@@ -275,7 +235,7 @@ class Unit {
       name = __name;
     }
     dynamic __health = m["health"];
-    if (__health is int && __health!=_health) {
+    if (__health is int && __health != _health) {
       actualHealth = __health;
     }
     dynamic __player = m["player"];
@@ -283,7 +243,7 @@ class Unit {
       player = tale.players[__player];
     }
     dynamic __steps = m["steps"];
-    if (__steps is int && _steps!=__steps) {
+    if (__steps is int && _steps != __steps) {
       steps = __steps;
     }
   }
