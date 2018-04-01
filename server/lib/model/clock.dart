@@ -18,12 +18,14 @@ class Clock {
   bool get paused => timer == null;
 
   void pause() {
-    timer.cancel();
-    timer = null;
+    if (timer != null) {
+      timer.cancel();
+      timer = null;
+    }
   }
 
   void start() {
-    teamPlaying=2;
+    teamPlaying = 2;
     nextTeam();
   }
 
@@ -36,31 +38,42 @@ class Clock {
     onNextTeam.notify();
     timer = new Timer(roundDuration, nextTeam);
   }
-  List<Player> get currentPlayers{
-    if(teamPlaying==1){
+
+  List<Player> get currentPlayers {
+    if (teamPlaying == 1) {
       return _playerTeam1;
-    }else{
+    } else {
       return _playerTeam2;
     }
   }
 
   void resetMoves(int team) {
-    currentPlayers.forEach((Player player) {
-      player.roundDone = false;
+    tale.players.values.forEach((commonLib.Player player) {
+      player.isDone = false;
     });
     tale.units.forEach((int, commonLib.Unit unit) {
       if (unit.player.team == team) {
         unit.newTurn();
+      } else {
+        unit.notPlaying();
       }
     });
   }
 
   void skipFromPlayer(Player player) {
-    player.roundDone = true;
+    if (!isPlayerPlaying(player)) return;
+    print("skipForPlayer(${player.name})");
+    player.isDone = true;
 
-    bool allSkipped = currentPlayers.every((Player otherPlayer) => otherPlayer.roundDone);
+    bool allSkipped = currentPlayers.every((Player otherPlayer) => otherPlayer.isDone);
     if (allSkipped) {
       nextTeam();
+    } else {
+      tale.units.forEach((int, commonLib.Unit unit) {
+        if (unit.player == player) {
+          unit.notPlaying();
+        }
+      });
     }
   }
 

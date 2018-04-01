@@ -31,6 +31,7 @@ class GatewayService {
 
   void handleMessages(Map<String, dynamic> message) {
     print("Message ${message["type"]}");
+//    print(JSON.encode(message));
     if (!message.containsKey("type")) {
       throw ("Message do not contain \"type\"");
     }
@@ -87,5 +88,9 @@ class GatewayService {
 
   void sendCommand(Unit unit, List<String> path, commonLib.Ability ability, {Map<String, dynamic> other: const {}}) {
     _send({"type": "command", "unit": unit.id, "ability": ability.name, "path": path}..addAll(other));
+  }
+
+  void sendNextTurn() {
+    _send({"type":"nextTurn"});
   }
 }

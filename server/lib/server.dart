@@ -16,7 +16,7 @@ String pathToData = "../data";
 
 void main(List<String> arguments) {
   compileTales();
-  Game currentGame = new Game("arena");
+  Game currentGame = new Game("1vs1");
   connectionHandler.currentGame = currentGame;
 //  var authMiddleware = sAuth.authenticate(
 //      [new MyAuthenticator()],

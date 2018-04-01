@@ -20,14 +20,16 @@ class Game {
     taleData = loadTaleData(taleName);
     Map data = parseJsonMap(taleData);
     tale = TaleAssetsPack.unpack(data, new ServerInstanceGenerator());
-    RegExp isHumanRegExp = new RegExp(".*[Hh]uman.*");
+//    RegExp isHumanRegExp = new RegExp(".*[Hh]uman.*");
+    RegExp isHumanRegExp = new RegExp(".*");
     tale.players.values.forEach((commonLib.Player player) {
       if (isHumanRegExp.hasMatch(player.handler)) {
         players.add(player);
       }
     });
-    clock=new Clock(players,tale);
-    clock.onNextTeam.add((){
+    clock = new NoClock(players, tale);
+    clock.start();
+    clock.onNextTeam.add(() {
       sendStateForAll();
     });
   }
@@ -42,31 +44,51 @@ class Game {
     connection.send({"type": "tale", "tale": taleData});
     sendStateForAll();
     handleCommands(firstFreePlayer);
+    handleNextTurn(firstFreePlayer);
     return true;
   }
 
   void handleCommands(Player player) {
     player.connection.listen("command", (Map<String, dynamic> message) {
-      void cancel(String reason){
+      void cancel(String reason) {
         return player.sendCancel(reason, message);
       }
-      if(!clock.isPlayerPlaying(player)) return cancel("player is not playing");
+
+      if (!clock.isPlayerPlaying(player)) return cancel("player is not playing");
       commonLib.Unit unit = tale.units[message["unit"]];
       if (unit == null) return cancel("no unit");
-//      if (unit.player != player) return cancel("unit belongs to different player");
+      if (unit.player != player) return cancel("unit belongs to different player");
       if (!unit.isAlive) return cancel("unit is dead");
       dynamic dynamicPath = message["path"];
-      if(dynamicPath == null) return cancel("missing path");
-      if(dynamicPath is! Iterable) return cancel("malformed path");
+      if (dynamicPath == null) return cancel("missing path");
+      if (dynamicPath is! Iterable) return cancel("malformed path");
       commonLib.Track track = new commonLib.Track.fromIds(dynamicPath, tale);
-      if(!track.isConnected) return cancel("non-continuous path");
+      if (!track.isConnected) return cancel("non-continuous path");
       if (track.first != unit.field) return cancel("unit dont stand on origin");
       commonLib.Ability ability = unit.getAbilityByName(message["ability"]);
-      if(ability is! ServerAbility) return cancel(ability.className+" is not ServerAbility");
+      if (ability is! ServerAbility) return cancel(ability.className + " is not ServerAbility");
       String abilityValidation = ability.validate(unit, track);
-      if(abilityValidation!=null) return cancel(abilityValidation);
-      (ability as ServerAbility).perform(unit,track);
+      if (abilityValidation != null) return cancel(abilityValidation);
+      // PERFORM
+      if(ability.actions>0){
+        unit.actions -= ability.actions;
+        unit.steps=0;
+      }
+      String result = (ability as ServerAbility).perform(unit, track);
+      // INFORM
+      player.connection.send({"type":"message","message":"${unit.name ?? unit.type.name} perform ${ability.name} (${result})"});
       return sendStateForAll();
+    });
+  }
+
+  void handleNextTurn(Player player) {
+    player.connection.listen("nextTurn", (Map<String, dynamic> message) {
+      if (clock.isPlayerPlaying(player)) {
+        clock.skipFromPlayer(player);
+        return sendStateForAll();
+      } else {
+        return player.sendCancel("Player is not playing", message);
+      }
     });
   }
 
@@ -77,10 +99,9 @@ class Game {
   }
 
   void sendStateForAll() {
-    Map<String, dynamic> data = {"type": "state","playing":clock.teamPlaying};
+    Map<String, dynamic> data = {"type": "state", "playing": clock.teamPlaying};
     data["units"] = tale.units.values.map((commonLib.Unit unit) => unit.toSimpleJson()).toList();
     data["players"] = tale.players.values.map((commonLib.Player player) => player.toMap()).toList();
     sendToAll(data);
   }
-
 }

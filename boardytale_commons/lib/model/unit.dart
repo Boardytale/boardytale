@@ -56,17 +56,17 @@ class Unit {
       for (int i = 0; i < 6; i++) {
         attack[i] += buff.attackDelta[i];
       }
-      if(buff.extraTags!=null){
+      if (buff.extraTags != null) {
         tags.addAll(buff.extraTags);
       }
-      if(buff.bannedTags!=null){
+      if (buff.bannedTags != null) {
         tags.removeAll(buff.bannedTags);
       }
     }
     limitAttributes();
-
   }
-  void limitAttributes(){
+
+  void limitAttributes() {
     if (armor > 4) armor = 4;
     if (speed > 7) speed = 7;
     if (range != null && range > 7) range = 7;
@@ -95,6 +95,7 @@ class Unit {
       field.refresh();
     }
   }
+
   Field get field => _field;
 
   void set field(Field field) {
@@ -191,18 +192,26 @@ class Unit {
     int realDamage = 0;
     int damage = alea.getDamage();
     damage -= armor;
-    if (damage < 0) {
-      damage = 0;
+    if (damage <= 0) {
+      return 0;
     }
     realDamage = Math.min(damage, actualHealth);
-    actualHealth -= damage;
+    actualHealth -= realDamage;
     return realDamage;
   }
 
   void newTurn() {
+    if (_health == 0) {
+      return notPlaying();
+    }
     _steps = speed;
     _actions = type.actions;
     _far = 0;
+  }
+
+  void notPlaying() {
+    _steps = 0;
+    _actions = 0;
   }
 
   Map toSimpleJson() {
@@ -220,10 +229,12 @@ class Unit {
       abilities.firstWhere((Ability ability) => ability.name == name, orElse: () => null);
 
   void fromMap(Map<String, dynamic> m, Tale tale) {
-    type = tale.resources.unitTypes[m["type"].toString()];
-    _recalculate();
-    _health = type.health;
-    _steps = type.speed;
+    if (type == null || m["type"] != type.id) {
+      type = tale.resources.unitTypes[m["type"].toString()];
+//      _health = type.health;
+//      _steps = type.speed;
+      _recalculate();
+    }
 //    setType(type);
     dynamic __fieldId = m["field"];
     if (__fieldId is String) {
@@ -235,16 +246,20 @@ class Unit {
       name = __name;
     }
     dynamic __health = m["health"];
-    if (__health is int && __health != _health) {
+    if (__health is int) {
       actualHealth = __health;
+    } else {
+      actualHealth = type.health;
     }
     dynamic __player = m["player"];
     if (__player is int) {
       player = tale.players[__player];
     }
     dynamic __steps = m["steps"];
-    if (__steps is int && _steps != __steps) {
+    if (__steps is int) {
       steps = __steps;
+    } else {
+      steps = type.speed;
     }
   }
 }

@@ -5,7 +5,7 @@ part of 'lobby.dart';
     directives: const [NgFor],
     template: """
       <button *ngFor="let arrow of arrows" (click)='onClick(arrow)'>{{arrow}}</button>
-
+      <button (click)='nextTurn()'>Next turn</button>
 """,
     styles: const [
       """:host{
@@ -27,5 +27,8 @@ class ArrowDisk {
     Unit unit = state.tale.units.values.firstWhere((commonLib.Unit unit) => unit.player.id == meId, orElse: () => null);
     String target = unit.field.stepToDirection(arrow);
     gateway.sendCommand(unit,[unit.field.id, target],unit.abilities.first);
+  }
+  void nextTurn(){
+    gateway.sendNextTurn();
   }
 }

@@ -83,6 +83,11 @@ class Tale {
       }
       units[unit.id]=unit..fromMap(unitMap,this);
     }
+    List<Map<String, dynamic>> playerMapList = state["players"];
+    for (Map<String, dynamic> playerMap in playerMapList) {
+      Player player = players[playerMap["id"]];
+      player?.fromMap(playerMap);
+    }
   }
 
   Map toMap() {

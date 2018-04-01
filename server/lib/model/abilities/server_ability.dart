@@ -42,5 +42,5 @@ abstract class ServerAbility extends commonLib.Ability{
     throw "ability $abilityClass $data not implemented";
   }
 
-  void perform(Unit invoker,commonLib.Track track);
+  String perform(Unit invoker,commonLib.Track track);
 }

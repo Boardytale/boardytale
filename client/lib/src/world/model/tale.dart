@@ -10,7 +10,6 @@ class ClientTale extends commonModel.Tale {
     for (Map<String, dynamic> playerMap in playerMapList) {
       Player player = players[playerMap["id"]];
       if (player == null) continue;
-      player.connectionName = playerMap["connection"];
     }
   }
 }

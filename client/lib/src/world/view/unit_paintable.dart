@@ -40,12 +40,12 @@ class UnitPaintable extends Paintable {
   }
 
   @override
-  Future<stage_lib.Bitmap> createBitmap() async {
+  Future createBitmapInner() async {
     int resolutionLevel = view.model.resolutionLevel;
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
-    commonModel.Image primaryImage = getPrimaryImage();
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
+      commonModel.Image primaryImage = getPrimaryImage();
       data = new stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
       if (primaryImage == unit.type.bigImage) {
@@ -68,7 +68,7 @@ class UnitPaintable extends Paintable {
     bitmap = new stage_lib.Bitmap(data);
     bitmap.width = world.fieldWidth;
     bitmap.height = world.fieldHeight;
-    return bitmap;
+    return;
   }
 
   stage_lib.BitmapData getLifeBar() {
@@ -145,7 +145,7 @@ class UnitPaintable extends Paintable {
 
   String getUnitPaintedState(Unit unit) {
     return "u${unit.type.id}h${unit.actualHealth}mh${unit.type.health}s${unit
-        .steps}ms${unit.speed}a${unit.armor}r${unit.range}";
+        .steps}ms${unit.speed}a${unit.armor}r${unit.range}${(unit.player as Player).meId.substring(0,1)}";
   }
 
   commonModel.Image getPrimaryImage() {

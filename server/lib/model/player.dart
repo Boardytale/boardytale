@@ -2,7 +2,6 @@ part of boardytale.server.model;
 
 class Player extends commonLib.Player {
   Connection _connection;
-  bool roundDone=false;
 
 
   Player() {

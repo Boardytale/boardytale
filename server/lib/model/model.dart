@@ -11,5 +11,6 @@ part 'tale.dart';
 part 'instance_generator.dart';
 part 'player.dart';
 part 'clock.dart';
+part 'no_clock.dart';
 part 'track.dart';
 part 'unit.dart';

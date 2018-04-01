@@ -8,7 +8,7 @@ class ActiveFieldPaintable extends Paintable {
   }
 
   @override
-  Future<stage_lib.Bitmap> createBitmap() async {
+  Future<stage_lib.Bitmap> createBitmapInner() async {
     highlightImage = new ImageElement(src: "img/highlight.png");
     await highlightImage.onLoad.first;
     stage_lib.BitmapData data = new stage_lib.BitmapData.fromImageElement(highlightImage);
