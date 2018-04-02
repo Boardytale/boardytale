@@ -1,5 +1,6 @@
 {
-  "id": 2,
+  "id": "gold_dragon",
+  "name": "Gold Dragon",
   "race": "dragon",
   "health": 30,
   "armor": 2,
@@ -13,6 +14,5 @@
   "abilities": [
     {"class": "move"},
     {"class": "attack"}
-  ],
-  "name": "unit_dragon"
+  ]
 }

@@ -10,8 +10,8 @@ abstract class ServerAbility extends commonLib.Ability{
         return new AttackAbility()..fromMap(data);
       case "shoot":
         return new ShootAbility()..fromMap(data);
-//      case "heal":
-//        return new HealAbility()..fromMap(data);
+      case "heal":
+        return new HealAbility()..fromMap(data);
 //      case "revive":
 //        return new ReviveAbility()..fromMap(data);
 //      case "hand_heal":
@@ -43,4 +43,12 @@ abstract class ServerAbility extends commonLib.Ability{
   }
 
   String perform(Unit invoker,commonLib.Track track);
+
+  static String performAbility(ServerAbility ability,Unit unit,commonLib.Track track){
+    if(ability.actions>0){
+      unit.actions -= ability.actions;
+      unit.steps=0;
+    }
+    return ability.perform(unit, track);
+  }
 }

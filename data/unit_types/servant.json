@@ -1,5 +1,6 @@
 {
-  "id": 3,
+  "id": "pikeman2",
+  "name": "Pikeman",
   "race": "human",
   "health": 5,
   "armor": 0,
@@ -11,6 +12,5 @@
   "abilities": [
     {"class": "move"},
     {"class": "attack"}
-  ],
-  "name": "unit_servant"
+  ]
 }

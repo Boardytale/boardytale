@@ -10,7 +10,7 @@
   "imageId": "gladiatoress",
   "abilities": [
     {"class": "move"},
-    {"class": "attack"}
+    {"class": "shoot"}
   ],
   "name": "Gladiatoress Elene"
 }

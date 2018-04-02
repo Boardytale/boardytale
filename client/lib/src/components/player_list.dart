@@ -11,7 +11,7 @@ import 'package:boardytale_commons/model/model.dart' as commonLib;
     directives: const [NgFor],
     template: """
     <div class="players">
-      <div *ngFor="let player of players" [class.is-me]="player==me" [class.is-done]='player.isDone' style="color:{{player.color}}">
+      <div *ngFor="let player of players" [class.is-me]="player==me" [class.is-done]='player.isDone || player.team != state.teamPlaying' style="color:{{player.color}}">
         {{player.name}} - {{player.connectionName}}
       </div>
     </div>

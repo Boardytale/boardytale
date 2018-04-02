@@ -59,7 +59,7 @@ abstract class Paintable {
   void createBitmap() {
     if (_createBitmapOrdered) return;
     _createBitmapOrdered = true;
-    new Future.delayed(const Duration(milliseconds: 200)).then((_) {
+    new Future.delayed(const Duration(milliseconds: 30)).then((_) {
       _createBitmapOrdered = false;
       createBitmapInner();
     });

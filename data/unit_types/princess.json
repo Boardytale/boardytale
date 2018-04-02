@@ -1,5 +1,6 @@
 {
-  "id": 1,
+  "id": "princess",
+  "name": "Princess",
   "race": "human",
   "health": 1,
   "armor": 0,
@@ -9,6 +10,5 @@
   "imageId": 7,
   "abilities": [
     {"class": "move"}
-  ],
-  "name": "unit_princess"
+  ]
 }

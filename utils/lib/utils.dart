@@ -17,6 +17,8 @@ String convertToCamelCase(String name) {
   return out;
 }
 
+Null returnNull()=>null;
+
 Map<String,dynamic> parseJsonMap(String json){
   dynamic result =  JSON.decode(json);
   if(result is Map<String,dynamic>) return result;

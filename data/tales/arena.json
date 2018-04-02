@@ -19,16 +19,16 @@
     },
     {
       "id": 2,
-      "name": "Gladiatoress Elene",
+      "name": "Gladiator Zogan",
       "handler": "everyHuman",
-      "color": "green",
+      "color": "orange",
       "team": 1
     },
     {
       "id": 3,
-      "name": "Gladiator Zogan",
+      "name": "Gladiatoress Elene",
       "handler": "everyHuman",
-      "color": "orange",
+      "color": "green",
       "team": 1
     },
     {
@@ -80,6 +80,12 @@
     {
       "type": "pikeman",
       "field": "5_0",
+      "player": 5
+    },
+    {
+      "name": "The Beast",
+      "type":"gold_dragon",
+      "field":"2_2",
       "player": 5
     }
   ],

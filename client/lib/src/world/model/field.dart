@@ -33,4 +33,8 @@ class Field extends commonModel.Field {
     bottomLeft = new FieldPoint(left1, bottom);
     bottomRight = new FieldPoint(left2, bottom);
   }
+
+  Unit getFirstPlayableUnitOnField() {
+    return units.firstWhere((commonModel.Unit unit) => unit.isPlayable, orElse: returnNull);
+  }
 }

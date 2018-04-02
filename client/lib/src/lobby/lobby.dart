@@ -5,6 +5,7 @@ import 'package:boardytale_client/src/services/gateway_service.dart';
 import 'package:boardytale_client/src/services/state_service.dart';
 import 'package:boardytale_client/src/world/model/model.dart';
 import 'package:boardytale_client/src/world/world_component.dart';
+import 'package:utils/utils.dart';
 import 'package:boardytale_commons/model/model.dart' as commonLib;
 
 part 'arrow_disk.dart';

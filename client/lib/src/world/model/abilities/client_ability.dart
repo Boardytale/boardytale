@@ -10,8 +10,8 @@ abstract class ClientAbility{
         return new AttackAbility()..fromMap(data);
       case "shoot":
         return new ShootAbility()..fromMap(data);
-//      case "heal":
-//        return new HealAbility()..fromMap(data);
+      case "heal":
+        return new HealAbility()..fromMap(data);
 //      case "revive":
 //        return new ReviveAbility()..fromMap(data);
 //      case "hand_heal":

@@ -77,14 +77,6 @@ class Field {
     refresh();
   }
 
-  Alea attack(Alea alea) {
-    alea.damage = 0;
-    for (Unit unit in units) {
-      alea.damage += unit.harm(alea);
-    }
-    return alea;
-  }
-
   bool isAllyOnField(Player player) {
     if (units.isEmpty) return false;
     return units.first.player == player;

@@ -34,7 +34,7 @@ class Game {
     });
   }
   bool addConnection(Connection connection) {
-    Player firstFreePlayer = players.firstWhere((Player player) => player.connection == null, orElse: () => null);
+    Player firstFreePlayer = players.firstWhere((Player player) => player.connection == null, orElse: returnNull);
     if (firstFreePlayer == null) {
       connection.send(Messenger.error("no more space for player"));
       return false;
@@ -70,13 +70,13 @@ class Game {
       String abilityValidation = ability.validate(unit, track);
       if (abilityValidation != null) return cancel(abilityValidation);
       // PERFORM
-      if(ability.actions>0){
-        unit.actions -= ability.actions;
-        unit.steps=0;
+      String result = ServerAbility.performAbility(ability, unit, track);
+      bool playerHasPlayable = tale.nextPlayableUnit(player)!=null;
+      if(!playerHasPlayable){
+        clock.skipFromPlayer(player);
       }
-      String result = (ability as ServerAbility).perform(unit, track);
       // INFORM
-      player.connection.send({"type":"message","message":"${unit.name ?? unit.type.name} perform ${ability.name} (${result})"});
+      player.connection.send({"type":"message","message":"${unit.name} perform ${ability.name} (${result})"});
       return sendStateForAll();
     });
   }

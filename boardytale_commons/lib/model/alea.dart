@@ -14,8 +14,17 @@ class Alea {
   int getDamage() {
     int out = attack[nums.first];
     if (nums.first == 5) {
-      out += nums[1];
+      out += nums[1] + 1;
     }
     return out;
+  }
+
+  String toString() {
+    String numLast = "";
+    if (nums.first == 5) {
+      numLast = ",${nums.last+1}";
+    }
+
+    return "[${nums.first+1}$numLast] => $damage";
   }
 }

@@ -53,7 +53,7 @@ class WorldComponent implements OnDestroy {
   UnitManager unitManager;
 
   bool _moving = false;
-  UnitPaintable _draggedUnit;
+  Unit _draggedUnit;
   Point _start;
   int _startOffsetTop;
   int _startOffsetLeft;
@@ -115,7 +115,7 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-    UnitPaintable unit = unitManager.getFirstUnitPaintableOnField(field);
+    Unit unit = field.getFirstPlayableUnitOnField();
     if (unit != null) {
       _draggedUnit = unit;
     } else {
@@ -131,11 +131,13 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (_draggedUnit != null) {
       Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-      List<String> path = _draggedUnit.unit.field.getShortestPath(field);
+      List<String> path = _draggedUnit.field.getShortestPath(field);
       commonLib.Track track = new commonLib.Track.fromIds(path, state.tale);
-      commonLib.Ability ability = _draggedUnit.unit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
+      commonLib.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
-        gateway.sendCommand(_draggedUnit.unit, track.path, ability);
+        gateway.sendCommand(_draggedUnit, track.path, ability);
+      }else{
+        state.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }
 //      _draggedUnit.unit.move(track);
 //      _draggedUnit.field = field;

@@ -24,7 +24,7 @@ class ArrowDisk {
 
   void onClick(int arrow) {
     int meId = gateway.me.id;
-    Unit unit = state.tale.units.values.firstWhere((commonLib.Unit unit) => unit.player.id == meId, orElse: () => null);
+    Unit unit = state.tale.units.values.firstWhere((commonLib.Unit unit) => unit.player.id == meId, orElse: returnNull);
     String target = unit.field.stepToDirection(arrow);
     gateway.sendCommand(unit,[unit.field.id, target],unit.abilities.first);
   }

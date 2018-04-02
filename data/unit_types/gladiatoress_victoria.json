@@ -10,7 +10,8 @@
   "imageId": "gladiatoress",
   "abilities": [
     {"class": "move"},
-    {"class": "attack"}
+    {"class": "shoot"},
+    {"class": "heal", "attack": "0 1 2 3 4 5"}
   ],
   "name": "Gladiatoress Victoria"
 }

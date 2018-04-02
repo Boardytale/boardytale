@@ -1,7 +1,7 @@
 part of model;
 
 class Unit {
-  String name;
+  String _name;
   int armor = 0;
   int speed = 0;
   int range = 0;
@@ -22,6 +22,8 @@ class Unit {
   bool get isUndead => tags.contains(UnitType.TAG_UNDEAD);
 
   bool get isEthernal => tags.contains(UnitType.TAG_ETHERNAL);
+
+  String get name => _name ?? type.name;
 
   void addBuff(Buff buff) {
     _buffs.add(buff);
@@ -84,6 +86,8 @@ class Unit {
 
   Unit(this.id);
 
+  bool get isPlayable => isAlive && _actions > 0;
+
   int get actions => _actions;
 
   set actions(int val) {
@@ -141,10 +145,11 @@ class Unit {
   bool get isAlive => _health > 0;
 
   Alea heal(Alea alea) {
-    if (alea.attack != null) {
-      alea.damage = alea.attack[alea.nums[0]];
-      actualHealth += alea.damage;
-    }
+    int damage = alea.getDamage();
+    int realDamage = Math.min(damage, type.health - actualHealth);
+    if (realDamage <= 0) return alea;
+    actualHealth += realDamage;
+    alea.damage += realDamage;
     return alea;
   }
 
@@ -188,16 +193,17 @@ class Unit {
     this.field = track.last;
   }
 
-  int harm(Alea alea) {
+  Alea harm(Alea alea) {
     int realDamage = 0;
     int damage = alea.getDamage();
     damage -= armor;
     if (damage <= 0) {
-      return 0;
+      return alea;
     }
     realDamage = Math.min(damage, actualHealth);
     actualHealth -= realDamage;
-    return realDamage;
+    alea.damage += realDamage;
+    return alea;
   }
 
   void newTurn() {
@@ -226,7 +232,7 @@ class Unit {
   }
 
   Ability getAbilityByName(String name) =>
-      abilities.firstWhere((Ability ability) => ability.name == name, orElse: () => null);
+      abilities.firstWhere((Ability ability) => ability.name == name, orElse: returnNull);
 
   void fromMap(Map<String, dynamic> m, Tale tale) {
     if (type == null || m["type"] != type.id) {
@@ -243,7 +249,7 @@ class Unit {
 
     dynamic __name = m["name"];
     if (__name is String) {
-      name = __name;
+      _name = __name;
     }
     dynamic __health = m["health"];
     if (__health is int) {
@@ -260,6 +266,12 @@ class Unit {
       steps = __steps;
     } else {
       steps = type.speed;
+    }
+    dynamic __actions = m["actions"];
+    if (__actions is int) {
+      actions = __actions;
+    } else {
+      actions = type.actions;
     }
   }
 }

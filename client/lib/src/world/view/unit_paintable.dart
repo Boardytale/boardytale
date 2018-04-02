@@ -59,9 +59,14 @@ class UnitPaintable extends Paintable {
           new stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
               primaryImage.height * pixelRatio / primaryImage.multiply),
           new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
+      if(!unit.isAlive){
+        data.applyFilter(new stage_lib.ColorMatrixFilter.grayscale());
+      }
       unitGlobalCache[state] = data;
-      data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
-      data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
+      if(unit.isAlive){
+        data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
+        data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
+      }
     } else {
       data = unitGlobalCache[state];
     }
@@ -144,6 +149,9 @@ class UnitPaintable extends Paintable {
   }
 
   String getUnitPaintedState(Unit unit) {
+    if(!unit.isAlive){
+      return "u${unit.type.id}h${unit.actualHealth}";
+    }
     return "u${unit.type.id}h${unit.actualHealth}mh${unit.type.health}s${unit
         .steps}ms${unit.speed}a${unit.armor}r${unit.range}${(unit.player as Player).meId.substring(0,1)}";
   }

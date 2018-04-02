@@ -13,6 +13,7 @@ class StateService {
   Notificator onTaleLoaded = new Notificator();
   Notificator onWorldLoaded = new Notificator();
   ClientTale tale;
+  int teamPlaying = 1;
   SettingsService settings;
   ValueNotificator<Map> onAlert = new ValueNotificator<Map>();
 

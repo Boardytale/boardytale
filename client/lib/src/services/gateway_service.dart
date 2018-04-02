@@ -54,6 +54,7 @@ class GatewayService {
         updateMe();
         break;
       case "state":
+        state.teamPlaying = message["playing"];
         state.tale.update(message);
         updateMe();
         break;
@@ -72,7 +73,7 @@ class GatewayService {
       return;
     }
     me = state.tale.players.values
-        .firstWhere((player) => (player as Player).connectionName == connectionName, orElse: () => null);
+        .firstWhere((player) => (player as Player).connectionName == connectionName, orElse: returnNull);
     if (me != null) {
       state.tale.players.values.forEach((player) {
         (player as Player).isEnemy = player.team != me.team;

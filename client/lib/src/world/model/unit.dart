@@ -5,11 +5,7 @@ class Unit extends commonModel.Unit {
 
   commonModel.Ability getAbility(commonModel.Track track, bool shift, bool alt, bool ctrl) {
     List<commonModel.Ability> possibles = abilities.toList();
-    for (commonModel.Ability ability in possibles) {
-      if (ability.validate(this, track) != null) {
-        possibles.remove(ability);
-      }
-    }
+    possibles..removeWhere((commonModel.Ability ability)=>ability.validate(this, track) != null);
 
     int used = 0;
     if (possibles.isEmpty) {
@@ -30,5 +26,8 @@ class Unit extends commonModel.Unit {
       }
     }
     return possibles[used];
+  }
+  List<String> whyNoAbility(commonModel.Track track){
+    return abilities.map((commonModel.Ability ability)=>"${ability.name}: ${ability.validate(this, track)}").toList(growable: false);
   }
 }

@@ -9,6 +9,9 @@ class Track {
 
   Track.fromIds(List<String> path, Tale tale) : fields = _fieldsFromIds(path, tale);
 
+  Track.shorten(Track previous, int removeLast)
+      : fields = previous.fields.sublist(0, previous.fields.length - removeLast);
+
   static List<Field> _fieldsFromIds(List<String> path, Tale tale) {
     return path.map((String id) => tale.world.getFieldById(id)).toList();
   }
@@ -52,6 +55,7 @@ class Track {
     }
     return true;
   }
+
   bool isHandMove(Player ofPlayer) {
     if (fields.length >= 3) {
       Field toGo = fields[fields.length - 2];

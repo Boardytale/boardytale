@@ -7,3 +7,4 @@ part 'client_ability.dart';
 part 'attack.dart';
 part 'move.dart';
 part 'shoot.dart';
+part 'heal.dart';
