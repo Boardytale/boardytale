@@ -1,4 +1,13 @@
-import {ITale} from 'tale_editor/lib/tale_format';
+import {IAbility, ITale} from 'tale_editor/lib/tale_format';
+
+let specMove: IAbility =  {
+    name: 'custom_special_move',
+    effects: [],
+    favouriteControls: 'placeHolder1',
+    targetType: 'placeHolder2',
+    values: [],
+    variablesFilled: []
+};
 
 export let tale: ITale = {
     taleId: 'shit',
@@ -16,14 +25,7 @@ export let tale: ITale = {
     unitGroups: {},
     unitTypes: {},
     abilities: {
-        special_move: {
-            name: 'custom_special_move',
-            effects: [],
-            favouriteControls: 'placeHolder1',
-            targetType: 'placeHolder2',
-            values: [],
-            variablesFilled: []
-        }
+        special_move: specMove
     },
     actions: {},
     images: {},
@@ -38,3 +40,6 @@ export let tale: ITale = {
     heroes: [],
     other: {},
 };
+
+console.clear();
+console.log(JSON.stringify(tale));

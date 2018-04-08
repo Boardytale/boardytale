@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "tale json",
   "scripts": {
-    "compile": "ts-node tale/compile.ts",
+    "compile": "ts-node src/tale.ts",
     "create": "new-tale -name uganda"
   },
-  "devDependencies": {
+  "dependencies": {
+    "@types/node": "^9.6.2",
     "tale_editor": "file:../tale_editor",
-    "@types/node": "^9.6.0",
     "ts-node": "^5.0.1",
     "typescript": "^2.7.2"
   },
