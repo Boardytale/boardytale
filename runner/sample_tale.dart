@@ -6,6 +6,10 @@ import 'common.dart';
 main() {
   String projectDirectoryPath = harmonizePath();
 
+  if(!Platform.isWindows){
+    throw "Sorry Cesťo, není to udělaný pro linux";
+  }
+
   Process.start("npm.cmd",
       ["run", "compile"],
       workingDirectory: projectDirectoryPath + "/sample_tale_json")
