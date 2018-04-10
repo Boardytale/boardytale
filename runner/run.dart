@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
-void main() {
+main() async{
   String projectDirectoryPath = harmonizePath();
   print("OPEN BROWSER ON http://localhost:8080");
   Process.start(dartExecutable,
@@ -23,6 +23,9 @@ void main() {
       ["web_server.dart"],
       workingDirectory: projectDirectoryPath + "/runner")
       .then((Process process) {
+        process.stdout.listen((_){
+          // have to be listened or process will end
+        });
 //    printFromOutputStreams(process, "web_server", "green");
   });
 

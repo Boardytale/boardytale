@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:boardytale_commons/model/model.dart' as commonLib;
 import 'package:boardytale_server/model/abilities/abilities.dart';
 import 'package:boardytale_server/services/connection_handler.dart';
-import 'package:tales_compiler/tales_compiler.dart';
 import 'package:utils/utils.dart';
 
 part 'tale.dart';
