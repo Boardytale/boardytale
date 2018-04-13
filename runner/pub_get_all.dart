@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:io_utils/io_utils.dart';
 import 'common.dart';
-import 'dart:async';
 
 main() async {
   String projectDirectoryPath = harmonizePath();

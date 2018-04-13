@@ -5,5 +5,7 @@
   "height": 72,
   "top": 15,
   "left": 15,
-  "name": "sylphDefendWesnoth"
+  "name": "sylphDefendWesnoth",
+  "authorName": "Unknown",
+  "origin": "Wesnoth"
 }

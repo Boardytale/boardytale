@@ -16,7 +16,8 @@ String pathToData = "../data";
 
 void main(List<String> arguments) {
   compileTales();
-  Game currentGame = new Game("arena");
+  // TODO: transform to array with a lookup
+  Game currentGame = new Game("bandits");
 //  Game currentGame = new Game("1vs1");
   connectionHandler.currentGame = currentGame;
 //  var authMiddleware = sAuth.authenticate(
@@ -32,12 +33,15 @@ void main(List<String> arguments) {
   var handler = const shelf.Pipeline()
       .addMiddleware(exceptionResponse())
       .addMiddleware(shelf.logRequests())
+  // web socket bridge is on another port than rest of application
+  // it probably better solution, you can test new front-end on live api
       .addMiddleware(shelf_cors.createCorsHeadersMiddleware())
 //      .addMiddleware(authMiddleware)
       .addHandler(router.handler);
 
 //  route.printRoutes(router);
 
+  // TODO: refactor port number to args
   io.serve(handler, '127.0.0.1', 8086).then((server) {
     print('Serving at http://${server.address.host}:${server.port}');
   });

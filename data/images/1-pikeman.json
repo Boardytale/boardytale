@@ -5,5 +5,7 @@
   "height":84,
   "top": 5,
   "left": 30,
-  "name": "unitPikeman"
+  "name": "unitPikeman",
+  "authorName": "Milan Špaček",
+  "origin": "direct"
 }

@@ -1,6 +1,5 @@
 {
   "id": "pikeman2",
-  "name": "Pikeman",
   "race": "human",
   "health": 5,
   "armor": 0,
@@ -12,5 +11,6 @@
   "abilities": [
     {"class": "move"},
     {"class": "attack"}
-  ]
+  ],
+  "unitTypeName": "Pikeman"
 }

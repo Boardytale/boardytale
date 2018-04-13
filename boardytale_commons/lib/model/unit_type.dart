@@ -16,7 +16,7 @@ class UnitType {
   Set<String> tags = new Set();
   List<Map> _abilitiesData;
   String _imageId;
-  String _name;
+  String _unitTypeName;
   Image image;
   String bigImageId;
   Image bigImage;
@@ -30,7 +30,7 @@ class UnitType {
 
   String get id => _id;
 
-  String get name => _name;
+  String get unitTypeName => _unitTypeName;
 
   Race get race => _race;
 
@@ -100,11 +100,11 @@ class UnitType {
   void fromMap(Map data) {
     dynamic __id = data["id"];
     _id = __id.toString();
-    dynamic __name = data["name"];
+    dynamic __name = data["unitTypeName"];
     if (__name is String) {
-      _name = __name;
+      _unitTypeName = __name;
     } else {
-      _badData("name");
+      _badData("unitTypeName");
     }
     dynamic __race = data["race"];
     if (__race is String) {
@@ -191,7 +191,7 @@ class UnitType {
   Map toMap() {
     Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = _id;
-    out["name"] = _name;
+    out["unitTypeName"] = _unitTypeName;
     out["race"] = _race.id;
     out["health"] = _health;
     out["armor"] = _armor;
@@ -208,6 +208,6 @@ class UnitType {
   }
 
   void _badData(String key) {
-    throw "key $key is not ok";
+    throw "unit type $id - $key is not ok";
   }
 }

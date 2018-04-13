@@ -22,12 +22,12 @@ Null returnNull()=>null;
 Map<String,dynamic> parseJsonMap(String json){
   dynamic result =  JSON.decode(json);
   if(result is Map<String,dynamic>) return result;
-  throw new ArgumentError("json is not Map");
+  throw new ArgumentError("json is not a Map");
 }
 List<dynamic> parseJsonList(String json){
   dynamic result =  JSON.decode(json);
   if(result is List<dynamic>) return result;
-  throw new ArgumentError("json is not List");
+  throw new ArgumentError("json is not a List");
 }
 
 class Call{

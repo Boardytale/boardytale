@@ -13,5 +13,5 @@
     {"class": "shoot"},
     {"class": "heal", "attack": "0 1 2 3 4 5"}
   ],
-  "name": "Gladiatoress Victoria"
+  "unitTypeName": "Archer gladiatoress"
 }
