@@ -5,5 +5,7 @@
   "height": 76,
   "top": 10,
   "left": 29,
-  "name": "servant"
+  "name": "servant",
+  "authorName": "Milan Špaček",
+  "origin": "direct"
 }

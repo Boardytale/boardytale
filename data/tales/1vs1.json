@@ -34,12 +34,14 @@
       "type": "pikeman",
       "health": 1,
       "field": "4_3",
-      "player": 1
+      "player": 1,
+      "name": "Some pikeman"
     },
     {
       "type": "pikeman",
       "field": "5_3",
-      "player": 5
+      "player": 5,
+      "name": "Another pikeman"
     }
   ],
   "langs": {

@@ -5,7 +5,7 @@ class ServerInstanceGenerator extends commonLib.InstanceGenerator {
   commonLib.Field field(String id, commonLib.World world) => new commonLib.Field(id, world);
 
   @override
-  commonLib.Unit unit(int id) => new Unit(id);
+  commonLib.Unit unit(String id) => new Unit(id);
 
   @override
   commonLib.UnitType unitType() => new commonLib.UnitType();

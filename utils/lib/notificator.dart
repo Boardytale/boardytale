@@ -59,7 +59,7 @@ class LazyNotificator extends Notificator {
 typedef void _ValueCallback<S>(S s);
 
 class ValueNotificator<T> {
-  List<_ValueCallback> _stack = [];
+  List<_ValueCallback<T>> _stack = [];
   void register(void callback(T value)) {
     _stack.add(callback);
   }

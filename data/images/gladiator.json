@@ -5,5 +5,7 @@
   "height": 80,
   "top": 4,
   "left": 3,
-  "name": "Gladiator"
+  "name": "Gladiator",
+  "authorName": "Milan Špaček",
+  "origin": "direct"
 }

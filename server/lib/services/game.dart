@@ -10,16 +10,15 @@ import 'package:utils/utils.dart';
 class Game {
   ServerTale tale;
   String taleData;
-  String name;
+  String taleName;
   Clock clock;
-
   List<Player> players = [];
 
-  Game(String taleName) {
-    name = taleName;
+  Game(this.taleName) {
     taleData = loadTaleData(taleName);
     Map data = parseJsonMap(taleData);
     tale = TaleAssetsPack.unpack(data, new ServerInstanceGenerator());
+    // prepared for switch to AI
 //    RegExp isHumanRegExp = new RegExp(".*[Hh]uman.*");
     RegExp isHumanRegExp = new RegExp(".*");
     tale.players.values.forEach((commonLib.Player player) {
@@ -29,9 +28,7 @@ class Game {
     });
     clock = new NoClock(players, tale);
     clock.start();
-    clock.onNextTeam.add(() {
-      sendStateForAll();
-    });
+    clock.onNextTeam.add(sendStateForAll);
   }
   bool addConnection(Connection connection) {
     Player firstFreePlayer = players.firstWhere((Player player) => player.connection == null, orElse: returnNull);
@@ -48,6 +45,8 @@ class Game {
     return true;
   }
 
+
+  // TODO: refactor action recognition belongs to client-side
   void handleCommands(Player player) {
     player.connection.listen("command", (Map<String, dynamic> message) {
       void cancel(String reason) {

@@ -1,7 +1,7 @@
 part of client_model;
 
 class Unit extends commonModel.Unit {
-  Unit(int id) : super(id);
+  Unit(String id) : super(id);
 
   commonModel.Ability getAbility(commonModel.Track track, bool shift, bool alt, bool ctrl) {
     List<commonModel.Ability> possibles = abilities.toList();

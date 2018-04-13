@@ -11,5 +11,5 @@
     {"class": "move"},
     {"class": "attack"}
   ],
-  "name": "Gladiator Tom"
+  "unitTypeName": "Sword gladiator"
 }

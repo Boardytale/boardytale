@@ -12,6 +12,12 @@ class Image {
   String name;
   String type;
   String authorId;
+
+  // TODO: refactor tu author User
+  String authorName;
+
+  /// The place where the image comes from. Expected is URL or just "direct"
+  String origin;
   String parentId;
   bool published = false;
   Image parent;
@@ -70,6 +76,20 @@ class Image {
     if (__left is int) {
       left = __left;
     }
+
+    dynamic __origin = data["origin"];
+    if (__origin is String) {
+      origin = __origin;
+    } else {
+      print("Warning - image $name should have origin");
+    }
+
+    dynamic __authorName = data["authorName"];
+    if (__authorName is String) {
+      authorName = __authorName;
+    } else {
+      print("Warning - image $name should have authorName");
+    }
   }
 
   Map<String, dynamic> toMap() {
@@ -83,6 +103,8 @@ class Image {
     out["name"] = name;
     out["imageSrc"] = imageSrc;
     out["multiply"] = multiply;
+    out["authorName"] = authorName;
+    out["origin"] = origin;
     return out;
   }
 }

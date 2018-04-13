@@ -6,5 +6,7 @@
   "height": 200,
   "top": 0,
   "left": 10,
-  "name": "unitDragonBig"
+  "name": "unitDragonBig",
+  "authorName": "Unknown",
+  "origin": "Wesnoth"
 }
