@@ -16,6 +16,7 @@ class Player extends commonLib.Player {
     });
     connection.onClose.add(() {
       _connection = null;
+
     });
   }
 
