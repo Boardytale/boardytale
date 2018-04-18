@@ -1,5 +1,5 @@
 {
-  "id": "arena",
+  "id": "bandits",
   "map": {
     "width": 20,
     "height": 20,
@@ -12,30 +12,16 @@
   "players": [
     {
       "id": 1,
-      "name": "Gladiator Tom",
+      "name": "Thomas",
       "handler": "firstHuman",
       "color": "blue",
       "team": 1
     },
     {
       "id": 2,
-      "name": "Gladiator Zogan",
+      "name": "Ben",
       "handler": "everyHuman",
       "color": "orange",
-      "team": 1
-    },
-    {
-      "id": 3,
-      "name": "Gladiatoress Elene",
-      "handler": "everyHuman",
-      "color": "green",
-      "team": 1
-    },
-    {
-      "id": 4,
-      "name": "Gradiatoress Victoria",
-      "handler": "everyHuman",
-      "color": "yellow",
       "team": 1
     },
     {
@@ -66,33 +52,38 @@
     {
       "type": "gladiatoress_elene",
       "field": "2_0",
-      "player": 3,
+      "player": 1,
       "name": "Gladiatoress Elene"
     },
     {
       "type": "gladiatoress_victoria",
       "field": "3_0",
-      "player": 4,
+      "player": 2,
       "name": "Gladiatoress Victoria"
     },
     {
       "type": "pikeman",
-      "health": 0,
-      "field": "4_0",
+      "field": "6_6",
       "player": 5,
-      "name": "Bad guy"
+      "name": "The bad guy"
     },
     {
       "type": "pikeman",
-      "field": "5_0",
+      "field": "5_6",
       "player": 5,
-      "name": "Bad guy"
+      "name": "Even worse guy with spear"
     },
     {
-      "name": "The Beast",
-      "type":"gold_dragon",
-      "field":"2_2",
-      "player": 5
+      "type": "ogre_stone_thrower",
+      "field": "3_3",
+      "player": 5,
+      "name": "Grugunk"
+    },
+    {
+      "type": "goblin",
+      "field": "3_4",
+      "player": 5,
+      "name": "Pindlik"
     }
   ],
   "langs": {

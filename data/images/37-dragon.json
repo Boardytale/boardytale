@@ -5,5 +5,7 @@
   "height": 100,
   "top": 0,
   "left": 10,
-  "name": "unitDragon"
+  "name": "unitDragon",
+  "authorName": "Unknown",
+  "origin": "Wesnoth"
 }

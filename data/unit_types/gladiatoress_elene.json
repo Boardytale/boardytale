@@ -12,5 +12,5 @@
     {"class": "move"},
     {"class": "shoot"}
   ],
-  "name": "Gladiatoress Elene"
+  "unitTypeName": "Nimble gladiatoress"
 }

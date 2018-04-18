@@ -1,7 +1,7 @@
 part of boardytale.server.model;
 
 class Unit extends commonLib.Unit{
-  Unit(int id) : super(id);
+  Unit(String id) : super(id);
   void newTurn() {
     super.newTurn();
     for (ServerAbility a in abilities) {

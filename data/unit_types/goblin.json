@@ -1,15 +1,15 @@
 {
-  "id": "pikeman",
-  "race": "human",
+  "id": "goblin",
+  "race": "gultam",
   "health": 1,
   "armor": 0,
   "speed": 4,
-  "attack": "0 0 0 1 2 2",
   "cost": 1,
-  "imageId": 1,
+  "attack": "0 0 0 0 3 4",
+  "imageId": 101,
   "abilities": [
     {"class": "move"},
     {"class": "attack"}
   ],
-  "unitTypeName": "Pikeman"
+  "unitTypeName": "Goblin"
 }

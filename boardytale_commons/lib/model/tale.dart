@@ -9,7 +9,7 @@ class Tale {
   Map<int, Player> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
-  Map<int, Unit> units = {};
+  Map<String, Unit> units = {};
 
   Tale(this.resources);
 
@@ -61,27 +61,27 @@ class Tale {
       for (Map m in __units) {
         String typeId = m["type"].toString();
         if (!resources.unitTypes.containsKey(typeId)) throw "Type $typeId is not defined";
-        Unit unit = resources.generator.unit(unitId++)..fromMap(m,this);
+        Unit unit = resources.generator.unit((unitId++).toString())..fromMap(m, this);
         units[unit.id] = unit;
       }
     }
   }
 
-  void update(Map<String,dynamic> state){
-    List<Map<String,dynamic>> unitMapList=state["units"];
-    Map<int,Unit> oldUnits=units;
-    units={};
-    for(Map<String,dynamic> unitMap in unitMapList){
+  void update(Map<String, dynamic> state) {
+    List<Map<String, dynamic>> unitMapList = state["units"];
+    Map<String, Unit> oldUnits = units;
+    units = {};
+    for (Map<String, dynamic> unitMap in unitMapList) {
       Unit unit = oldUnits[unitMap["id"]];
-      if(unit==null){
-        UnitType type=resources.unitTypes[unitMap["type"]];
-        if(type==null){
+      if (unit == null) {
+        UnitType type = resources.unitTypes[unitMap["type"]];
+        if (type == null) {
           print("ERROR - missing unitType");
           continue;
         }
-        unit=resources.generator.unit(unitMap["id"]);
+        unit = resources.generator.unit(unitMap["id"]);
       }
-      units[unit.id]=unit..fromMap(unitMap,this);
+      units[unit.id] = unit..fromMap(unitMap, this);
     }
     List<Map<String, dynamic>> playerMapList = state["players"];
     for (Map<String, dynamic> playerMap in playerMapList) {
@@ -97,7 +97,7 @@ class Tale {
     out["players"] = players.values.map((g) => g.toMap()).toList();
     out["humanPlayersTeam"] = humanPlayersTeam;
     out["dialogs"] = dialogs.values.map((d) => d.toMap()).toList();
-    out["units"] = units.values.map((Unit unit)=>unit.toSimpleJson()).toList(growable: false);
+    out["units"] = units.values.map((Unit unit) => unit.toSimpleJson()).toList(growable: false);
     out["map"] = world.toMap();
     List<Map<String, dynamic>> triggers = [];
     events.forEach((k, v) {

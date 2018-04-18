@@ -1,5 +1,6 @@
 part of model;
 
+// TODO: split deserialization to unitBaseClass
 class Unit {
   String _name;
   int armor = 0;
@@ -8,12 +9,11 @@ class Unit {
   List<int> attack;
   int _health = 0;
   int _far = 0;
-  int id;
+  String id;
   int _actions = 1;
   int _steps = 1;
   UnitType type;
   Field _field;
-
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
@@ -23,7 +23,7 @@ class Unit {
 
   bool get isEthernal => tags.contains(UnitType.TAG_ETHERNAL);
 
-  String get name => _name ?? type.name;
+  String get name => _name;
 
   void addBuff(Buff buff) {
     _buffs.add(buff);
@@ -228,6 +228,7 @@ class Unit {
     out["health"] = _health;
     out["player"] = player.id;
     out["steps"] = _steps;
+    out["name"] = _name;
     return out;
   }
 
@@ -250,6 +251,8 @@ class Unit {
     dynamic __name = m["name"];
     if (__name is String) {
       _name = __name;
+    }else{
+      _badData("name", tale);
     }
     dynamic __health = m["health"];
     if (__health is int) {
@@ -273,5 +276,9 @@ class Unit {
     } else {
       actions = type.actions;
     }
+  }
+
+  void _badData(String key, Tale tale) {
+    throw "unit $id in tale ${tale.id} - $key is not ok";
   }
 }
