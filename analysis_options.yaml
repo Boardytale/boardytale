@@ -1,7 +1,11 @@
 analyzer:
+  strong-mode:
+    implicit-casts: true
+    implicit-dynamic: true
   exclude:
     - from_prev_versions/**
     - class_generator/**
+    - tales_compiler/**
 
 linter:
   rules:

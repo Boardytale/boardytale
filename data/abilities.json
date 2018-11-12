@@ -6,10 +6,9 @@
     "fields": "speed",
     "modify": 0,
     "target": [
+      "empty",
       "ally",
-      "corpse",
-      "me",
-      "woundedAlly"
+      "corpse"
     ]
   },
   {
@@ -41,7 +40,9 @@
     "strength": "attack",
     "modify": 0,
     "target": [
-      "woundedAlly"
+      "wounded-me",
+      "wounded-ally",
+      "wounded-team"
     ]
   },
   {
@@ -75,7 +76,9 @@
     ],
     "modify": 0,
     "target": [
-      "woundedAlly"
+      "wounded-me",
+      "wounded-ally",
+      "wounded-team"
     ]
   },
   {
@@ -84,7 +87,8 @@
     "imageId": "ability_boost.png",
     "strength": 2.0,
     "target": [
-      "ally"
+      "ally",
+      "team"
     ],
     "range": "range"
   },
@@ -95,10 +99,9 @@
     "toUnitType": "druid",
     "range": 4,
     "target": [
+      "empty",
       "ally",
-      "corpse",
-      "me",
-      "woundedAlly"
+      "corpse"
     ]
   },
   {
@@ -117,10 +120,10 @@
     "range": "range",
     "strength": "attack",
     "target": [
+      "empty",
       "ally",
+      "team",
       "corpse",
-      "me",
-      "woundedAlly",
       "enemy"
     ]
   },
@@ -132,7 +135,8 @@
     "range": 1,
     "alea": 0,
     "target": [
-      "field"
+      "empty",
+      "corpse"
     ]
   },
   {
@@ -153,21 +157,21 @@
         "alea": 3,
         "unit": "bone_archer",
         "targets": [
-          "not_undead_corpse"
+          "not_undead-corpse"
         ]
       },
       {
         "alea": 6,
         "unit": "skeleton",
         "targets": [
-          "not_undead_corpse"
+          "not_undead-corpse"
         ]
       },
       {
         "alea": 10,
         "unit": "wyvern",
         "targets": [
-          "not_undead_corpse"
+          "not_undead-corpse"
         ]
       }
     ]
@@ -180,11 +184,9 @@
     "from": "range",
     "toDistance": 10,
     "target": [
-      "field",
+      "empty",
       "ally",
-      "corpse",
-      "me",
-      "woundedAlly"
+      "corpse"
     ]
   },
   {

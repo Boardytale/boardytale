@@ -15,8 +15,10 @@ part 'alea.dart';
 part 'player.dart';
 part 'tale.dart';
 part 'buff.dart';
+part 'targets.dart';
 part 'settings.dart';
 part 'stage_geometry.dart';
+part 'resources.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/raise.dart";
@@ -32,13 +34,14 @@ part "abilities/hand_heal.dart";
 part "abilities/linked_move.dart";
 part "abilities/summon.dart";
 part "abilities/step_shoot.dart";
-part "abilities/fly.dart";
+part "abilities/dismiss.dart";
 part "abilities/dark_shoot.dart";
 part "abilities/light.dart";
 part 'services/unit_service.dart';
 part 'services/platform_service.dart';
 part 'services/player_service.dart';
 part 'services/game_service.dart';
+part 'services/instance_generator.dart';
 
 Settings settings;
 

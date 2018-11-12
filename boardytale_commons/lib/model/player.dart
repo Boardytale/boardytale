@@ -1,32 +1,31 @@
 part of model;
 
-class Player{
+class Player {
   int id;
   String name;
   int team;
   String handler;
-  static const List _possibleHandlers = const["firstHuman", "UI", "passive", "everyHuman"];
+  String color;
+  bool isDone = false;
+  static const List<String> _possibleHandlers = const ["firstHuman", "AI", "passive", "everyHuman"];
 
-  void fromMap(Map data) {
+  void fromMap(Map<String, dynamic> data) {
     // TODO validate here
-    id = data["id"];
-    name = data["name"];
-    team = data["team"];
+    id = data["id"] as int;
+    name = data["name"] as String;
+    team = data["team"] as int;
+    color = data["color"] ?? "gold";
+    isDone = data["done"] ?? false;
 
     dynamic __handler = data["handler"];
-    if(__handler is String && _possibleHandlers.contains(__handler)){
+    if (__handler is String && _possibleHandlers.contains(__handler)) {
       handler = __handler;
-    }else{
+    } else {
       throw "Key handler is obligatory and must be one of $_possibleHandlers";
     }
   }
 
-  Map toMap() {
-    return {
-      "id": id,
-      "name": name,
-      "team": team,
-      "handler": handler
-    };
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{"id": id, "name": name, "team": team, "handler": handler, "color": color,"done":isDone};
   }
 }

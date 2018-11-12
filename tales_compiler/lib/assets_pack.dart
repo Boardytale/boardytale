@@ -1,12 +1,12 @@
 part of tales_compiler;
 
-class TaleAssetsPack{
-  static Map pack(Tale tale){
+class TaleAssetsPack {
+  static Map pack(Tale tale, Resources allResources) {
     Map out = {};
-    Map<int, Map> imagesOut = new Map<int, Map>();
+    Map<String, Map> imagesOut = new Map<String, Map>();
     Map<String, Map> abilitiesOut = new Map<String, Map>();
     Map<String, Map> racesOut = new Map<String, Map>();
-    Map<int, Map> unitsOut = new Map<int, Map>();
+    Map<String, Map> unitsOut = new Map<String, Map>();
 
     tale.units.forEach((id, Unit unit) {
       Image image = unit.type.image;
@@ -24,45 +24,43 @@ class TaleAssetsPack{
         imagesOut[image.id] = image.toMap();
       }
 
-      for(Ability ability in unit.type.abilities){
-        if(!abilitiesOut.containsKey(ability.type.name)){
-          abilitiesOut[ability.type.name] = ability.type.toMap();
-        }
-      }
-      if(!racesOut.containsKey(unit.type.race.id)){
+//      for (Ability ability in unit.type.abilities) {
+//        if (!abilitiesOut.containsKey(ability.type.name)) {
+//          abilitiesOut[ability.type.name] = ability.type.toMap();
+//        }
+//      }
+      if (!racesOut.containsKey(unit.type.race.id)) {
         racesOut[unit.type.race.id] = unit.type.race.toMap();
       }
-      if(!unitsOut.containsKey(unit.type.id)){
+      if (!unitsOut.containsKey(unit.type.id)) {
         unitsOut[unit.type.id] = unit.type.toMap();
       }
     });
     out["tale"] = tale.toMap();
-    out["units"] = unitsOut.values.toList();
+    out["unitTypes"] = unitsOut.values.toList();
     out["abilities"] = abilitiesOut.values.toList();
     out["races"] = racesOut.values.toList();
     out["images"] = imagesOut.values.toList();
     return out;
   }
 
-  static Tale unpack(Map pack, Tale tale){
-    Map<int, UnitType> unitTypes = getUnitsFromPack(pack);
-    loadTaleFromAssets(pack["tale"], unitTypes, tale);
+  static Tale unpack(Map pack, InstanceGenerator generator) {
+    Resources resources = generator.resources();
+    resources.images = loadImages(pack["images"], generator);
+    resources.abilities = loadAbilities(pack["abilities"],generator);
+    resources.races = loadRaces(pack["races"], generator);
+    resources.unitTypes= loadUnitsTypes(pack["unitTypes"], resources);
+    Tale tale = loadTaleFromAssets(pack["tale"], resources);
+    tale.resources=resources;
     return tale;
   }
 
-  static Map<int, UnitType> getUnitsFromPack(Map pack) {
-    Map<int, Image> images = loadImagesFromPack(pack);
-    Map abilities = loadAbilities(pack["abilities"]);
-    Map races = loadRaces(pack["races"]);
-    return loadUnits(pack["units"], images, abilities, races);
-  }
-
-  static Map<int, Image> loadImagesFromPack(Map pack){
-    Map<int, Image> out = {};
-     for(Map imageData in pack["images"]){
-       Image image = new Image()..fromMap(imageData);
-       out[image.id] = image;
-     }
+  static Map<String, Image> loadImages(List<Map> imageDataList, InstanceGenerator generator) {
+    Map<String, Image> out = {};
+    for (Map imageData in imageDataList) {
+      Image image = generator.image()..fromMap(imageData);
+      out[image.id] = image;
+    }
     return out;
   }
 }

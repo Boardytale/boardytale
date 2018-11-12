@@ -25,4 +25,8 @@ doc/api/
 # Don't commit pubspec lock file 
 # (Library packages only! Remove pattern if developing an application package)
 pubspec.lock
+server/web/tales/*
+!server/web/tales/.gitkeep
 .idea/
+/tales_compiler/output/*
+!/tales_compiler/output/.gitkeep

@@ -2,28 +2,31 @@ import 'dart:io';
 import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
-main() {
+main() async{
   String projectDirectoryPath = harmonizePath();
-
+  print("OPEN BROWSER ON http://localhost:8080");
   Process.start(dartExecutable,
-      ["bin/start.dart"],
+      ["lib/server.dart"],
       workingDirectory: projectDirectoryPath + "/server")
       .then((Process process) {
-    printFromOutputStreams(process, "Aqueduct");
+    printFromOutputStreams(process, "Shelf proxy", "light_cyan");
   });
 
   Process.start(pubExecutable,
       ["serve", "--port=8085"],
     workingDirectory: projectDirectoryPath + "/client"
   ).then((Process process) {
-    printFromOutputStreams(process, "Pub serve");
+    printFromOutputStreams(process, "Pub serve", "gold");
   });
 
   Process.start(dartExecutable,
       ["web_server.dart"],
       workingDirectory: projectDirectoryPath + "/runner")
       .then((Process process) {
-    printFromOutputStreams(process, "web_server");
+        process.stdout.listen((_){
+          // have to be listened or process will end
+        });
+//    printFromOutputStreams(process, "web_server", "green");
   });
 
 }

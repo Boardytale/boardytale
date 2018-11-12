@@ -4,9 +4,10 @@ import 'package:path/path.dart' as path_lib;
 import 'package:utils/utils.dart';
 import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
+import 'package:console/console.dart';
 
 Map<String, dynamic> getFileMap(Directory dir) {
-  Map<String, dynamic> out = {};
+  Map<String, dynamic> out = <String, dynamic>{};
   for (FileSystemEntity f in dir.listSync()) {
     String key = convertToCamelCase(path_lib.basename(f.path));
     if (FileSystemEntity.isFileSync(f.path)) {
@@ -15,7 +16,7 @@ Map<String, dynamic> getFileMap(Directory dir) {
       try {
         if (ext == ".jpg" || ext == ".png" || ext == ".jpeg" || ext == ".gif") {
           String contentType = "image/${ext.replaceAll(".", "")}";
-          List byteList = file.readAsBytesSync();
+          List<int> byteList = file.readAsBytesSync();
           String header = "data:$contentType;base64,";
           String base64 = BASE64.encode(byteList);
           out[key] = "$header$base64";
@@ -32,7 +33,6 @@ Map<String, dynamic> getFileMap(Directory dir) {
   return out;
 }
 
-
 String dartExecutable = "dart${Platform.operatingSystem == 'linux'
     ? ""
     : ".exe"}";
@@ -41,8 +41,7 @@ String pubExecutable = "pub${Platform.operatingSystem == 'linux'
     ? ""
     : ".bat"}";
 
-Future<bool> waitForSignal(Process process, String signal,
-    {String printPrefix: null}) {
+Future<bool> waitForSignal(Process process, String signal, {String printPrefix: null}) {
   Stream<List<int>> stdout = process.stdout;
   Stream<List<int>> stderr = process.stderr;
   Completer<bool> completer = new Completer<bool>();
@@ -66,41 +65,79 @@ Future<bool> waitForSignal(Process process, String signal,
   return completer.future;
 }
 
-void printFromOutputStreams(Object process, [String prefix = ""]) {
-  Stream<List<int>> stdout;
-  Stream<List<int>> stderr;
+void printFromOutputStreams(Object process, String prefix, String color) {
+  Console.init();
+  int colorCode = _getColor(color).id;
   if (process is Process) {
-    stdout = process.stdout;
-    stderr = process.stderr;
-    stderr.transform(UTF8.decoder).listen((String data) {
-      print("error$prefix: $data");
+    process.stdout.transform(UTF8.decoder).listen((String data) {
+      _outToConsole(prefix, data, colorCode);
     });
-    stdout.transform(UTF8.decoder).listen((String data) {
-      print("out$prefix: $data");
+    process.stderr.transform(UTF8.decoder).listen((String data) {
+      _errToConsole(prefix, data, colorCode);
     });
   } else if (process is ProcessResult) {
     if (process.stdout is String) {
-      if (process.stdout != "")
-        print("out$prefix: ${process.stdout}");
+      _outToConsole(prefix, process.stdout, colorCode);
     } else {
-      print("out$prefix: ${new String.fromCharCodes(process.stdout as List<int>)}");
+      _outToConsole(prefix, new String.fromCharCodes(process.stdout as List<int>), colorCode);
     }
     if (process.stderr is String) {
-      if (process.stderr != "")
-        print("err$prefix: ${process.stderr}");
+      _errToConsole(prefix, process.stderr, colorCode);
     } else {
-      print("err$prefix: ${new String.fromCharCodes(process.stderr as List<int>)}");
+      _errToConsole(prefix, new String.fromCharCodes(process.stderr as List<int>), colorCode);
     }
   } else {
     throw new ArgumentError("unknown type - cannot extract stdout and stderr");
   }
 }
 
+void _errToConsole(String prefix, String data, int color) {
+  if (data == null || data.length <= 1) return;
+  Console.setBold(true);
+  Console.setTextColor(color);
+  Console.write("ERROR-$prefix: ");
+  Console.setBold(false);
+  Console.setTextColor(Color.RED.id);
+  Console.write(data);
+  Console.resetTextColor();
+}
+
+void _outToConsole(String prefix, String data, int color) {
+  if (data == null || data.length <= 1) return;
+  Console.setBold(true);
+  Console.setTextColor(color);
+  Console.write("$prefix: ");
+  Console.setBold(false);
+  Console.write(data);
+  Console.resetTextColor();
+}
+
+Color _getColor(String string) {
+  return (const {
+    "black": Color.BLACK,
+    "gray": Color.GRAY,
+    "red": Color.RED,
+    "dark_red": Color.DARK_RED,
+    "lime": Color.LIME,
+    "green": Color.GREEN,
+    "gold": Color.GOLD,
+    "yellow": Color.YELLOW,
+    "blue": Color.BLUE,
+    "dark_blue": Color.DARK_BLUE,
+    "magenta": Color.MAGENTA,
+    "light_magenta": Color.LIGHT_MAGENTA,
+    "cyan": Color.CYAN,
+    "light_cyan": Color.LIGHT_CYAN,
+    "light_gray": Color.LIGHT_GRAY,
+    "white": Color.WHITE
+  })[string];
+}
+
 String getProjectDirectoryName() {
   Directory projectDir = Directory.current;
-  int overflowProtection =0;
-  while(!isFileInFileSystemEntityList(projectDir.listSync(followLinks: false),"projectroot")){
-    if(overflowProtection++>30){
+  int overflowProtection = 0;
+  while (!isFileInFileSystemEntityList(projectDir.listSync(followLinks: false), "projectroot")) {
+    if (overflowProtection++ > 30) {
       throw new Exception("Cannot found project dir");
     }
     projectDir = projectDir.parent;
@@ -108,28 +145,30 @@ String getProjectDirectoryName() {
   return projectDir.path;
 }
 
-bool isFileInFileSystemEntityList(List<FileSystemEntity> list, String filename){
-  for(FileSystemEntity f in list){
-    if(path_lib.basename(f.path)==filename){
+bool isFileInFileSystemEntityList(List<FileSystemEntity> list, String filename) {
+  for (FileSystemEntity f in list) {
+    if (path_lib.basename(f.path) == filename) {
       return true;
     }
   }
   return false;
 }
 
-Future<bool> terminateMe(int port,[int terminateDelay = 50]) async{
+Future<bool> terminateMe(int port, [int terminateDelay = 50]) async {
   try {
     var socket = await Socket.connect('127.0.0.1', port);
     socket.write('terminate');
     // time to terminate
-    await new Future.delayed(new Duration(milliseconds: terminateDelay));
+    await new Future<dynamic>.delayed(new Duration(milliseconds: terminateDelay)).then((_) {
+      socket.close();
+    });
     return true;
   } catch (e) {
     return false;
   }
 }
 
-Future createTerminator(int port) async{
+Future createTerminator(int port) async {
   var serverSocket = await ServerSocket.bind('127.0.0.1', port);
   serverSocket.listen((Socket socket) {
     socket.transform(UTF8.decoder).listen((String message) {
@@ -140,40 +179,24 @@ Future createTerminator(int port) async{
   });
 }
 
-
-arg_lib.ArgResults parseArgs(void enhanceParser(arg_lib.ArgParser parser),
-    List<String> args) {
+arg_lib.ArgResults parseArgs(void enhanceParser(arg_lib.ArgParser parser), List<String> args) {
   arg_lib.ArgParser parser = new arg_lib.ArgParser();
   parser.addOption("loglevel",
       abbr: "l",
-      allowed: [
-        "ALL",
-        "FINEST",
-        "FINER",
-        "FINE",
-        "CONFIG",
-        "INFO",
-        "WARNING",
-        "SEVERE",
-        "SHOUT",
-        "OFF"
-      ],
+      allowed: ["ALL", "FINEST", "FINER", "FINE", "CONFIG", "INFO", "WARNING", "SEVERE", "SHOUT", "OFF"],
       defaultsTo: "INFO",
       help: "set logLevel for Logger");
   if (enhanceParser != null) enhanceParser(parser);
   return parser.parse(args);
 }
 
-
-void recursiveFolderCopySync(String path1, String path2,[List<String> forbiddenFileNames]) {
-  if(forbiddenFileNames==null){
+void recursiveFolderCopySync(String path1, String path2, [List<String> forbiddenFileNames]) {
+  if (forbiddenFileNames == null) {
     forbiddenFileNames = [];
   }
   Directory dir1 = new Directory(path1);
   if (!dir1.existsSync()) {
-    throw new Exception(
-        'Source directory "${dir1.path}" does not exist, nothing to copy'
-    );
+    throw new Exception('Source directory "${dir1.path}" does not exist, nothing to copy');
   }
   Directory dir2 = new Directory(path2);
   if (!dir2.existsSync()) {
@@ -186,7 +209,7 @@ void recursiveFolderCopySync(String path1, String path2,[List<String> forbiddenF
       File newFile = new File(newPath);
       newFile.writeAsBytesSync(element.readAsBytesSync());
     } else if (element is Directory) {
-      if(!forbiddenFileNames.contains(path_lib.basename(element.path))){
+      if (!forbiddenFileNames.contains(path_lib.basename(element.path))) {
         recursiveFolderCopySync(element.path, newPath, forbiddenFileNames);
       }
     } else {
@@ -195,9 +218,8 @@ void recursiveFolderCopySync(String path1, String path2,[List<String> forbiddenF
   });
 }
 
-
 void deleteRecursively(Directory root,
-    {Function deleteFileChecker, Function deleteDirectoryChecker}) {
+    {bool deleteFileChecker(String fileName), bool deleteDirectoryChecker(String dirName)}) {
   root.listSync().forEach((FileSystemEntity element) {
     if (element is File) {
       if (deleteFileChecker(path_lib.basename(element.path))) {
@@ -209,13 +231,22 @@ void deleteRecursively(Directory root,
         print("deleted ${element.path}");
         element.deleteSync(recursive: true);
       } else {
-        deleteRecursively(element, deleteFileChecker: deleteFileChecker,
-            deleteDirectoryChecker: deleteDirectoryChecker);
+        deleteRecursively(element,
+            deleteFileChecker: deleteFileChecker, deleteDirectoryChecker: deleteDirectoryChecker);
       }
     } else {
       throw new Exception('File is neither File nor Directory. HOW?!');
     }
   });
+}
+
+String thisPackagePath() {
+  Directory directory = Directory.current;
+  while (!directory.listSync().any((entity) => entity.path.contains("pubspec.yaml"))) {
+    directory = directory.parent;
+  }
+
+  return directory.path;
 }
 
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {

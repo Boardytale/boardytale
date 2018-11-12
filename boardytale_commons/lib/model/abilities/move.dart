@@ -1,26 +1,8 @@
 part of model;
 
-class MoveAbility extends Ability{
-  String imgData;
-
-
+class MoveAbility extends Ability {
   @override
-  void perform(Track track) {
-    // TODO: implement perform
-  }
-
+  String get reach => Ability.REACH_MOVE;
   @override
-  void show(Track track) {
-
-  }
-
-  @override
-  Ability clone() {
-    return new MoveAbility();
-  }
-
-  @override
-  void fromMap(Map ability) {
-    super.fromMap(ability);
-  }
+  int actions = 0;
 }

@@ -53,20 +53,20 @@
   ],
   "units": [
     {
-      "type": 1,
+      "type": "princess",
       "name": "Princess Anne",
       "field": "15_15",
       "player": 1
     },
     {
-      "type": 2,
+      "type": "gold_dragon",
       "name": "Dragon Mortifer",
       "field": "10_10",
       "player": 2
     },
     {
+      "type": "pikeman2",
       "name": "Servant Sencha",
-      "type": 3,
       "field": "3_0",
       "player": 3
     }

@@ -1,76 +1,83 @@
 part of model;
 
 class Track {
-  List<Field> fields;
+  final List<Field> fields;
 
   Field get last => fields.last;
 
-  Track(this.fields) {
-    if (fields == null) {
-      fields = [];
-    }
+  Track(this.fields) {}
+
+  Track.fromIds(List<String> path, Tale tale) : fields = _fieldsFromIds(path, tale);
+
+  Track.shorten(Track previous, int removeLast)
+      : fields = previous.fields.sublist(0, previous.fields.length - removeLast);
+
+  static List<Field> _fieldsFromIds(List<String> path, Tale tale) {
+    return path.map((String id) => tale.world.getFieldById(id)).toList();
   }
+
+  int get length => fields.length - 1;
 
   bool get isEmpty => fields.isEmpty;
 
-  get first => fields.first;
+  List<String> get path => fields.map((Field field) => field.id).toList(growable: false);
+
+  bool get isConnected {
+    Field previous;
+    for (Field field in fields) {
+      if (previous != null && field.distance(previous) != 1) return false;
+      previous = field;
+    }
+    return true;
+  }
+
+  Field get first => fields.first;
 
   bool isEnemy(Player ofPlayer) {
     for (Field f in fields) {
-      if (!f.units.isEmpty && f.units.first.player != ofPlayer) {
+      if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) {
         return true;
       }
     }
     return false;
   }
 
+  bool isFreeWay(Player ofPlayer) {
+    if (fields.length >= 2) {
+      Field toGo = fields[fields.length - 2];
+      if (!toGo.units.isEmpty && toGo.units.first.player.id != ofPlayer.id) return false;
+    }
+    if (fields.length >= 3) {
+      for (var i = 1; i < fields.length - 2; i++) {
+        Field f = fields[i];
+        if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) return false;
+      }
+    }
+    return true;
+  }
+
+  bool isHandMove(Player ofPlayer) {
+    if (fields.length >= 3) {
+      Field toGo = fields[fields.length - 2];
+      if (!toGo.units.isEmpty && toGo.units.first.player.id != ofPlayer.id) return false;
+    }
+    if (fields.length >= 4) {
+      for (var i = 1; i < fields.length - 2; i++) {
+        Field f = fields[i];
+        if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) return false;
+      }
+    }
+    return true;
+  }
+
   List<Field> getFieldsWithEnemy(Player ofPlayer) {
     List<Field> out = [];
     for (Field f in fields) {
-      if (!f.units.isEmpty && f.units.first.player != ofPlayer) {
+      if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) {
         out.add(f);
       }
     }
     return out;
-  }
-
-
-  bool matchTarget(List<String> target, Unit unit) {
-    List<Unit> alives = last.alivesOnField();
-    if (fields.length == 1 && target.contains(Ability.TARGET_ME)) {
-      return true;
-    }
-    if (target.contains(Ability.TARGET_FIELD)) {
-      return alives.isEmpty;
-    }
-    if (alives.isEmpty) {
-      List<Unit> deaths = last.deathsOnField();
-      if (target.contains(Ability.TARGET_CORPSE)) {
-        return !deaths.isEmpty;
-      }
-      if (target.contains(Ability.TARGET_NOT_UNDEAD_CORPSE)) {
-        return someNotUndead(deaths);
-      }
-    } else {
-      if (alives.first.player == unit.player) {
-        if (target.contains(Ability.TARGET_ALLY)) {
-          return true;
-        }
-        if (target.contains(Ability.TARGET_WOUNDED_ALLY)
-            && containsWounded(alives)) {
-          return true;
-        }
-      } else {
-        if (target.contains(Ability.TARGET_ENEMY)) {
-          return true;
-        }
-        if (target.contains(Ability.TARGET_WOUNDED_ENEMY)
-            && containsWounded(alives)) {
-          return true;
-        }
-      }
-    }
-    return true;
   }
 
   bool containsWounded(List<Unit> alives) {

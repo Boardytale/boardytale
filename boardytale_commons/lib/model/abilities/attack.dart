@@ -1,25 +1,7 @@
 part of model;
 
-
-class AttackAbility extends Ability{
-
-  @override
-  Ability clone() {
-    return new AttackAbility()..fromMap(toMap());
-  }
+class AttackAbility extends Ability {
 
   @override
-  void perform(Track track) {
-    // TODO: implement perform
-  }
-
-  @override
-  void show(Track track) {
-    // TODO: implement show
-  }
-
-  @override
-  void fromMap(Map ability) {
-    super.fromMap(ability);
-  }
+  String get reach => Ability.REACH_HAND;
 }

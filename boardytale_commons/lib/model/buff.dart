@@ -1,11 +1,14 @@
 part of model;
 
-class Buff{
-  int speedDelta =0;
+class Buff {
+  int speedDelta = 0;
   int armorDelta = 0;
   int rangeDelta = 0;
   int healthDelta = 0;
-  List<int> attackDelta = [0,0,0,0,0,0];
+  List<int> attackDelta = [0, 0, 0, 0, 0, 0];
+  Set<String> extraTags;
+  Set<String> bannedTags;
+
   /// null will never expire
   int expiration = null;
 
@@ -34,28 +37,23 @@ class Buff{
 
   List<String> doesNotStackWith = [];
 
-  Buff.fromJson(Map json){
-    if(json.containsKey("speed"))
-      speedDelta = json["speed"].toInt();
-    if(json.containsKey("armor"))
-      armorDelta = json["armor"].toInt();
-    if(json.containsKey("range"))
-      rangeDelta = json["range"].toInt();
-    if(json.containsKey("health"))
-      healthDelta = json["health"].toInt();
-    if(json.containsKey("attack"))
-      attackDelta = json["speed"];
-    if(json.containsKey("expiration"))
-      expiration = json["expiration"].toInt();
+  Buff.fromJson(Map json) {
+    if (json.containsKey("speed")) speedDelta = json["speed"] as int;
+    if (json.containsKey("armor")) armorDelta = json["armor"] as int;
+    if (json.containsKey("range")) rangeDelta = json["range"] as int;
+    if (json.containsKey("health")) healthDelta = json["health"] as int;
+    if (json.containsKey("attack")) attackDelta = json["speed"] as List<int>;
+    if (json.containsKey("expiration")) expiration = json["expiration"] as int;
+    if (json.containsKey("extraTags")) extraTags = (json["extraTags"] as List<String>).toSet();
+    if (json.containsKey("bannedTags")) bannedTags = (json["bannedTags"] as List<String>).toSet();
   }
 
-  void exchange(){
-    if(expiration!=null){
+  void exchange() {
+    if (expiration != null) {
       expiration--;
-      if(expiration<1){
+      if (expiration < 1) {
         unit.removeBuff(this);
       }
     }
   }
-
 }

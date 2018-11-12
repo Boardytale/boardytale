@@ -1,5 +1,3 @@
 part of model;
 
-abstract class GameService{
-
-}
+abstract class GameService {}

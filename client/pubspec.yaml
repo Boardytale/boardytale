@@ -24,3 +24,8 @@ transformers:
 - angular:
     entry_points:
       - web/main.dart
+web:
+  compiler:
+    debug: dartdevc
+
+

@@ -1,6 +1,7 @@
 part of model;
 
 class Unit {
+  String _name;
   int armor = 0;
   int speed = 0;
   int range = 0;
@@ -11,50 +12,70 @@ class Unit {
   int _actions = 1;
   int _steps = 1;
   UnitType type;
-  Field field;
-  String fieldId;
+  Field _field;
+
   Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
-  List<String> tags = [];
-  String name;
+  Set<String> tags = new Set<String>();
 
-  bool get isUndead=> tags.contains(UnitType.TAG_UNDEAD);
+  bool get isUndead => tags.contains(UnitType.TAG_UNDEAD);
 
-  bool get isEthernal=> tags.contains(UnitType.TAG_ETHERNAL);
+  bool get isEthernal => tags.contains(UnitType.TAG_ETHERNAL);
 
-  void addBuff(Buff buff){
+  String get name => _name ?? type.name;
+
+  void addBuff(Buff buff) {
     _buffs.add(buff);
     _recalculate();
   }
 
-  void removeBuff(Buff buff){
+  void removeBuff(Buff buff) {
     _buffs.remove(buff);
     _recalculate();
   }
 
   // called on buffs and type change
-  void _recalculate(){
+  void _recalculate() {
+    assert(type != null);
     armor = type.armor;
     speed = type.speed;
     range = type.range;
-    attack = type.attack.toList(growable:false);
-    for(Buff buff in _buffs){
+    attack = type.attack.toList(growable: false);
+    abilities.clear();
+    for (Ability ability in type.abilities) {
+      abilities.add(ability);
+    }
+
+    if (type.tags != null) {
+      tags = type.tags.toSet();
+    }
+
+    for (Buff buff in _buffs) {
       armor += buff.armorDelta;
       speed += buff.speedDelta;
-      if(range != null)range += buff.rangeDelta;
-      for(int i = 0;i < 6;i++){
+      if (range != null) range += buff.rangeDelta;
+      for (int i = 0; i < 6; i++) {
         attack[i] += buff.attackDelta[i];
       }
+      if (buff.extraTags != null) {
+        tags.addAll(buff.extraTags);
+      }
+      if (buff.bannedTags != null) {
+        tags.removeAll(buff.bannedTags);
+      }
     }
-    if(armor > 4)armor = 4;
-    if(speed > 7)speed = 7;
-    if(range != null && range > 7)range = 7;
-    for(int i = 0;i < 6;i++){
-      if(attack[i] > 9)attack[i] = 9;
-    }
+    limitAttributes();
   }
 
+  void limitAttributes() {
+    if (armor > 4) armor = 4;
+    if (speed > 7) speed = 7;
+    if (range != null && range > 7) range = 7;
+    for (int i = 0; i < 6; i++) {
+      if (attack[i] > 9) attack[i] = 9;
+    }
+  }
 
   /// called on health change with previous health state
   ValueNotificator<int> onHealthChanged = new ValueNotificator();
@@ -63,208 +84,194 @@ class Unit {
   Notificator onStepsChanged = new Notificator();
   Notificator onActionStateChanged = new Notificator();
 
-  Unit.bare();
+  Unit(this.id);
 
-  Unit(this.id, this.type){
-    _recalculate();
-    _health = type.health;
-    _steps = type.speed;
-    setType(type);
-  }
+  bool get isPlayable => isAlive && _actions > 0;
 
-  int get actions=> _actions;
+  int get actions => _actions;
 
-  set actions(int val){
-    if(val == actions)return;
+  set actions(int val) {
+    if (val == actions) return;
     _actions = val;
-    if(_actions <= 0){
+    if (_actions <= 0) {
       steps = 0;
-    }else{
+    } else {
       field.refresh();
     }
   }
 
+  Field get field => _field;
 
-  set actualHealth(int val){
-    if(val == _health)return;
+  void set field(Field field) {
+    _field?.removeUnit(this);
+    _field = field;
+    field.addUnit(this);
+    onFieldChanged.notify();
+  }
+
+  set actualHealth(int val) {
+    if (val == _health) return;
     int original = _health;
     _health = val;
-    if(_health > type.health){
+    if (_health > type.health) {
       _health = type.health;
     }
-    if(_health < -5){
+    if (_health < -5) {
       destroy();
     }
     onHealthChanged.notify(original);
     field.refresh();
   }
 
-  void destroy(){
-  }
+  void destroy() {}
 
-  get actualHealth=> _health;
+  int get actualHealth => _health;
 
-  int get far=> _far;
+  int get far => _far;
 
-  int get steps=> _steps;
+  int get steps => _steps;
 
-  set steps(int val){
-    if(val == steps)return;
+  set steps(int val) {
+    if (val == steps) return;
     _far += _steps - val;
     _steps = val;
-    if(_steps <= 0){
+    if (_steps <= 0) {
       _steps = 0;
       _actions = 0;
     }
     onStepsChanged.notify();
   }
 
-  bool get isAlive=> _health > 0;
+  bool get isAlive => _health > 0;
 
-  Alea heal(Alea alea){
-    if(alea.attack != null){
-      alea.damage = alea.attack[alea.nums[0]];
-      actualHealth += alea.damage;
-    }
+  Alea heal(Alea alea) {
+    int damage = alea.getDamage();
+    int realDamage = Math.min(damage, type.health - actualHealth);
+    if (realDamage <= 0) return alea;
+    actualHealth += realDamage;
+    alea.damage += realDamage;
     return alea;
   }
 
   /// Type change cause nullation of abilities pseudostates.
   /// change type will not cause change in race, nation or faith
-  void setType(UnitType type){
+  void setType(UnitType type) {
     // health is transformed by new maximum. If unit is alive, type change cannot kill it
     bool alive = isAlive;
     int newActualHealth = ((type.health / this.type.health) * actualHealth).floor();
     this.type = type;
-    if(alive && actualHealth == 0){
+    if (alive && actualHealth == 0) {
       newActualHealth = 1;
-    }else{
+    } else {
       actualHealth = newActualHealth;
     }
 
-    if(_steps == null){
+    if (_steps == null) {
       _steps = type.speed;
-    }else{
+    } else {
       // steps are transformed in the same way as health
       bool hasStep = steps > 0;
       int newSteps = ((type.speed / speed) * steps).floor();
-      if(newSteps == 0 && hasStep){
+      if (newSteps == 0 && hasStep) {
         steps = 1;
-      }else{
+      } else {
         steps = newSteps;
       }
     }
 
-    abilities.clear();
-    for(Ability a in type.abilities){
-      abilities.add(a.clone());
-    }
-
-    if(type.tags != null){
-      tags = type.tags.toList();
-    }
-
     _recalculate();
+    onTypeChanged.notify();
   }
 
-  void addAbility(Ability ability){
-    abilities.add(ability);
-    ability.setInvoker(this);
+//  void addAbility(Ability ability) {
+//    abilities.add(ability);
+//    ability.setInvoker(this);
+//  }
+
+  void move(Track track) {
+    this.steps -= track.length;
+    this.field = track.last;
   }
 
-  void move(Field field, int steps){
-    this.steps -= steps;
-    transport(field);
-  }
-
-  void transport(Field field){
-    this.field.removeUnit(this);
-    field.addUnit(this);
-  }
-
-  int harm(Alea alea){
+  Alea harm(Alea alea) {
     int realDamage = 0;
     int damage = alea.getDamage();
     damage -= armor;
-    if(damage < 0){
-      damage = 0;
+    if (damage <= 0) {
+      return alea;
     }
     realDamage = Math.min(damage, actualHealth);
-    actualHealth -= damage;
-    return realDamage;
+    actualHealth -= realDamage;
+    alea.damage += realDamage;
+    return alea;
   }
 
-  void newTurn(bool playerOnMove){
+  void newTurn() {
+    if (_health == 0) {
+      return notPlaying();
+    }
     _steps = speed;
     _actions = type.actions;
     _far = 0;
-    for(Ability a in abilities){
-      if(a.trigger != null && a.trigger == Ability.TRIGGER_MINE_TURN_START && playerOnMove){
-        a.perform(null);
-      }
-    }
-    field.refresh();
   }
 
-  Alea dice(){
-    return new Alea(attack);
+  void notPlaying() {
+    _steps = 0;
+    _actions = 0;
   }
 
-  Map toSimpleJson(){
-    Map out = {};
+  Map toSimpleJson() {
+    Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
     out["type"] = type.id;
-    out["field"] = field.toMap();
+    out["field"] = field.id;
+    out["health"] = _health;
     out["player"] = player.id;
+    out["steps"] = _steps;
     return out;
   }
 
+  Ability getAbilityByName(String name) =>
+      abilities.firstWhere((Ability ability) => ability.name == name, orElse: returnNull);
 
-  Ability getAbility(Track track, bool shift, bool alt, bool ctrl){
-    List<Ability> possibles = abilities.toList();
-    List<Ability> toRemove = [];
-    for(Ability ability in possibles){
-      if(
-         (actions < ability.actions) ||
-         (track.fields.length - 1 > ability.getPossiblesSteps() - far) ||
-      (far > ability.getPossiblesSteps()) ||
-         (ability.freeWayNeeded() && track.isEnemy(player))){
-        toRemove.add(ability);
-        break;
-      }
-
-      //match target
-      if(!track.matchTarget(ability.target, this)){
-        toRemove.add(ability);
-        break;
-      }
+  void fromMap(Map<String, dynamic> m, Tale tale) {
+    if (type == null || m["type"] != type.id) {
+      type = tale.resources.unitTypes[m["type"].toString()];
+//      _health = type.health;
+//      _steps = type.speed;
+      _recalculate();
     }
-    for(Ability a in toRemove){
-      possibles.remove(a);
-    }
-
-    int used = 0;
-    if(possibles.isEmpty){
-      return null;
-    }else if(possibles.length > 0){
-      if(possibles.length == 2 && (shift || alt || ctrl))used = 1;else if(possibles.length == 3){
-        if(ctrl)used = 1;else if(shift || alt)used = 2;
-      }else if(possibles.length > 3){
-        if(ctrl)used = 1;else if(shift)used = 2;else if(alt)used = 3;
-      }
-    }
-    return possibles[used];
-  }
-
-  fromMap(Map m) {
+//    setType(type);
     dynamic __fieldId = m["field"];
-    if(__fieldId is String){
-      fieldId = __fieldId;
+    if (__fieldId is String) {
+      field = tale.world.fields[__fieldId];
     }
 
     dynamic __name = m["name"];
-    if(__name is String){
-      name = __name;
+    if (__name is String) {
+      _name = __name;
+    }
+    dynamic __health = m["health"];
+    if (__health is int) {
+      actualHealth = __health;
+    } else {
+      actualHealth = type.health;
+    }
+    dynamic __player = m["player"];
+    if (__player is int) {
+      player = tale.players[__player];
+    }
+    dynamic __steps = m["steps"];
+    if (__steps is int) {
+      steps = __steps;
+    } else {
+      steps = type.speed;
+    }
+    dynamic __actions = m["actions"];
+    if (__actions is int) {
+      actions = __actions;
+    } else {
+      actions = type.actions;
     }
   }
 }

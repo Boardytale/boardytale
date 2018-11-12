@@ -7,6 +7,8 @@ environment:
 dependencies:
   utils:
     path: '../utils'
-  stagexl: any
+
+dev_dependencies:
+  test: any
 
 

@@ -1,0 +1,17 @@
+{
+  "id": "gladiatoress_victoria",
+  "race": "elf",
+  "health": 7,
+  "armor": 1,
+  "speed": 5,
+  "range": 4,
+  "attack": "0 0 2 3 3 3",
+  "cost": 10,
+  "imageId": "gladiatoress",
+  "abilities": [
+    {"class": "move"},
+    {"class": "shoot"},
+    {"class": "heal", "attack": "0 1 2 3 4 5"}
+  ],
+  "name": "Gladiatoress Victoria"
+}

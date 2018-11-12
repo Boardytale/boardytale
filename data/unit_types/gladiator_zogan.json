@@ -1,0 +1,15 @@
+{
+  "id": "gladiator_zogan",
+  "race": "human",
+  "health": 12,
+  "armor": 1,
+  "speed": 3,
+  "attack": "0 0 0 4 5 7",
+  "cost": 10,
+  "imageId": "gladiator",
+  "abilities": [
+    {"class": "move"},
+    {"class": "attack"}
+  ],
+  "name": "Gladiator Zogan"
+}
