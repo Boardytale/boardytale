@@ -1,9 +1,9 @@
 library boardytale.server;
 
 import 'dart:io';
-import 'package:boardytale_server/services/connection_handler.dart';
-import 'package:boardytale_server/services/game.dart';
-import 'package:boardytale_server/services/tale_filer.dart';
+import 'package:game_server/ring_experiment/services/connection_handler.dart';
+import 'package:game_server/ring_experiment/services/game.dart';
+import 'package:game_server/ring_experiment/services/tale_filer.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'package:shelf_route/shelf_route.dart' as route;

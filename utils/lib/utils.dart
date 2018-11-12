@@ -1,6 +1,6 @@
 library utils;
 
-import 'dart:convert';
+import 'dart:convert' as convert;
 
 part 'notificator.dart';
 
@@ -20,12 +20,12 @@ String convertToCamelCase(String name) {
 Null returnNull()=>null;
 
 Map<String,dynamic> parseJsonMap(String json){
-  dynamic result =  JSON.decode(json);
+  dynamic result =  convert.json.decode(json);
   if(result is Map<String,dynamic>) return result;
   throw new ArgumentError("json is not a Map");
 }
 List<dynamic> parseJsonList(String json){
-  dynamic result =  JSON.decode(json);
+  dynamic result =  convert.json.decode(json);
   if(result is List<dynamic>) return result;
   throw new ArgumentError("json is not a List");
 }
