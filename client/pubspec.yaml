@@ -1,8 +1,10 @@
 name: boardytale_client
 description: boardytale_client
 version: 0.0.1
+
 environment:
-  sdk: '>=1.19.0 <2.0.0'
+  sdk: 2.0.0
+
 dependencies:
   angular: any
   utils:

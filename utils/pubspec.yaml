@@ -1,5 +1,9 @@
 name: utils
 description: Independent reusable codes
+
+environment:
+  sdk: 2.0.0
+
 dependencies:
 
 
