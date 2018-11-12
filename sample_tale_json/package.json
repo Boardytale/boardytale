@@ -1,0 +1,17 @@
+{
+  "name": "sample_tale_json",
+  "version": "1.0.0",
+  "description": "tale json",
+  "scripts": {
+    "compile": "ts-node src/tale.ts",
+    "create": "new-tale -name uganda"
+  },
+  "dependencies": {
+    "@types/node": "^9.6.2",
+    "tale_editor": "file:../tale_editor",
+    "ts-node": "^5.0.1",
+    "typescript": "^2.7.2"
+  },
+  "author": "Boardytale",
+  "license": "MIT"
+}

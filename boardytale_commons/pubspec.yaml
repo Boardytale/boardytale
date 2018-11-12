@@ -1,5 +1,9 @@
 name: boardytale_commons
 description: Multiplayre webgame on hexagonal fields common library
+
+environment:
+  sdk: 2.0.0
+
 dependencies:
   utils:
     path: '../utils'
