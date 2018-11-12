@@ -2,7 +2,8 @@ import 'dart:io';
 import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
-main() async{
+main() async {
+
   String projectDirectoryPath = harmonizePath();
   print("OPEN BROWSER ON http://localhost:8080");
   Process.start(dartExecutable,

@@ -1,5 +1,5 @@
-name: boardytale_client
-description: boardytale_client
+name: runner
+description: runner
 version: 0.0.1
 
 environment:
@@ -10,4 +10,3 @@ dependencies:
     path: '../utils'
   io_utils:
     path: '../io_utils'
-  pub_serve_rewrites: any

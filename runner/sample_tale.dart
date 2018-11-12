@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
 main() {
@@ -16,7 +15,7 @@ main() {
       .then((Process process) {
         process.stdout.listen((data){
           print(new String.fromCharCodes(data));
-          print(JSON.encode(JSON.decode(new String.fromCharCodes(data))));
+          print(json.encode(json.decode(new String.fromCharCodes(data))));
         });
 //    printFromOutputStreams(process, "sample");
   });
