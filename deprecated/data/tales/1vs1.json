@@ -1,0 +1,49 @@
+{
+  "id": "1vs1",
+  "map": {
+    "width": 20,
+    "height": 20,
+    "baseTerrain": 0,
+    "fields": {
+    },
+    "startField": "5_5"
+  },
+  "humanPlayersTeam": 1,
+  "players": [
+    {
+      "id": 1,
+      "name": "Gladiator Tom",
+      "handler": "firstHuman",
+      "color": "blue",
+      "team": 1
+    },
+    {
+      "id": 5,
+      "name": "Enemies",
+      "handler": "AI",
+      "color": "red",
+      "team": 2
+    }
+  ],
+  "triggers": [
+  ],
+  "dialogs": [
+  ],
+  "units": [
+    {
+      "type": "pikeman",
+      "health": 1,
+      "field": "4_3",
+      "player": 1,
+      "name": "Some pikeman"
+    },
+    {
+      "type": "pikeman",
+      "field": "5_3",
+      "player": 5,
+      "name": "Another pikeman"
+    }
+  ],
+  "langs": {
+  }
+}

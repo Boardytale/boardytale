@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "imageSrc": "3-fire_dragon_wesnoth.png",
+  "multiply": 2,
+  "width": 160,
+  "height": 200,
+  "top": 0,
+  "left": 10,
+  "name": "unitDragonBig",
+  "authorName": "Unknown",
+  "origin": "Wesnoth"
+}

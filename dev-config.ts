@@ -1,5 +1,4 @@
 import {BoardytaleConfiguration} from './config';
-import * as fs from 'fs';
 
 export let config: BoardytaleConfiguration = {
     aiService: {
@@ -8,21 +7,29 @@ export let config: BoardytaleConfiguration = {
         route: null,
         innerRoute: '/innerApi'
     },
-    database: {
-        host: 'localhost',
-        password: 'devdb',
-        username: 'devdb',
-        port: 5432
-    },
     editorServer: {
         uri: 'http://localhost:9000',
         innerRoute: '/innerApi',
         route: '/editorApi'
     },
+    editorDatabase: {
+        host: 'boardytale.vserver.cz',
+        password: 'boardygame',
+        username: 'boardytale',
+        port: 5432,
+        databaseName: 'boardytale',
+    },
     gameServer: {
         uri: 'http://localhost:7000',
         innerRoute: '/innerApi',
         route: '/gameApi',
+    },
+    userDatabase: {
+        host: 'boardytale.vserver.cz',
+        password: 'complexPassword',
+        username: 'userdb',
+        port: 5432,
+        databaseName: 'userdb',
     },
     userService: {
         uri: 'http://localhost:6000',
@@ -41,4 +48,3 @@ export let config: BoardytaleConfiguration = {
     }
 };
 
-fs.writeFileSync('dev-config.json', JSON.stringify(config));

@@ -1,10 +1,20 @@
-import 'dart:convert';
+import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:path/path.dart' as path_lib;
 import 'package:utils/utils.dart';
 import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
 import 'package:console/console.dart';
+
+Map getConfig() {
+  while (!File('config.json').existsSync() && Directory.current != null) {
+    Directory.current = Directory.current.parent;
+  }
+  File config = File('config.json');
+  if (config.existsSync()) {
+    return convert.json.decode(config.readAsStringSync());
+  }
+}
 
 Map<String, dynamic> getFileMap(Directory dir) {
   Map<String, dynamic> out = <String, dynamic>{};
@@ -18,7 +28,7 @@ Map<String, dynamic> getFileMap(Directory dir) {
           String contentType = "image/${ext.replaceAll(".", "")}";
           List<int> byteList = file.readAsBytesSync();
           String header = "data:$contentType;base64,";
-          String base64 = BASE64.encode(byteList);
+          String base64 = convert.base64.encode(byteList);
           out[key] = "$header$base64";
         } else {
           out[key] = file.readAsStringSync();
@@ -33,26 +43,22 @@ Map<String, dynamic> getFileMap(Directory dir) {
   return out;
 }
 
-String dartExecutable = "dart${Platform.operatingSystem == 'linux'
-    ? ""
-    : ".exe"}";
+String dartExecutable = "dart${Platform.operatingSystem == 'linux' ? "" : ".exe"}";
 
-String pubExecutable = "pub${Platform.operatingSystem == 'linux'
-    ? ""
-    : ".bat"}";
+String pubExecutable = "pub${Platform.operatingSystem == 'linux' ? "" : ".bat"}";
 
 Future<bool> waitForSignal(Process process, String signal, {String printPrefix: null}) {
   Stream<List<int>> stdout = process.stdout;
   Stream<List<int>> stderr = process.stderr;
   Completer<bool> completer = new Completer<bool>();
-  stderr.transform(UTF8.decoder).listen((String data) {
+  stderr.transform(convert.utf8.decoder).listen((String data) {
     if (printPrefix != null) {
       print("error$printPrefix: $data");
     } else {
       print(data);
     }
   });
-  stdout.transform(UTF8.decoder).listen((String data) {
+  stdout.transform(convert.utf8.decoder).listen((String data) {
     if (data.contains(signal)) {
       completer.complete(true);
     }
@@ -69,10 +75,10 @@ void printFromOutputStreams(Object process, String prefix, String color) {
   Console.init();
   int colorCode = _getColor(color).id;
   if (process is Process) {
-    process.stdout.transform(UTF8.decoder).listen((String data) {
+    process.stdout.transform(convert.utf8.decoder).listen((String data) {
       _outToConsole(prefix, data, colorCode);
     });
-    process.stderr.transform(UTF8.decoder).listen((String data) {
+    process.stderr.transform(convert.utf8.decoder).listen((String data) {
       _errToConsole(prefix, data, colorCode);
     });
   } else if (process is ProcessResult) {
@@ -171,7 +177,7 @@ Future<bool> terminateMe(int port, [int terminateDelay = 50]) async {
 Future createTerminator(int port) async {
   var serverSocket = await ServerSocket.bind('127.0.0.1', port);
   serverSocket.listen((Socket socket) {
-    socket.transform(UTF8.decoder).listen((String message) {
+    socket.transform(convert.utf8.decoder).listen((String message) {
       if (message == "terminate") {
         exit(0);
       }

@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "scripts": {
     "start": "config && ts-node proxy_server/index.ts",
-    "config": "ts-node dev-config.ts"
+    "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
+    "ts2dart": "ts2dart"
   },
   "private": true,
   "devDependencies": {
@@ -17,7 +18,8 @@
     "gzipper": "^1.4.1",
     "ts-node": "~5.0.1",
     "tslint": "^5.11.0",
-    "typescript": "~2.7.2"
+    "typescript": "~2.7.2",
+    "ts2dart": "^0.9.11"
   },
   "dependencies": {
     "http-proxy-middleware": "^0.19.0"

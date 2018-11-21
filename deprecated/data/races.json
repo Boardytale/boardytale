@@ -1,0 +1,27 @@
+[
+  {
+    "name": "člověk",
+    "id": "human",
+    "color": "blue"
+  },
+  {
+    "name": "nemrtvý",
+    "id": "undead",
+    "color": "purple"
+  },
+  {
+    "name": "elf",
+    "id": "elf",
+    "color": "green"
+  },
+  {
+    "name": "gultam",
+    "id": "gultam",
+    "color": "red"
+  },
+  {
+    "name": "dragon",
+    "id": "dragon",
+    "color": "red"
+  }
+]

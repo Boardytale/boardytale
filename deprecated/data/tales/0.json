@@ -1,0 +1,91 @@
+{
+  "id": 0,
+  "map": {
+    "width": 20,
+    "height": 20,
+    "baseTerrain": 0,
+    "fields": {
+      "12_12": 1,
+      "12_11": 1,
+      "12_10": 1,
+      "12_9": 1,
+      "12_8": 1,
+      "12_7": 1
+    },
+    "startField": "5_5"
+  },
+  "humanPlayersTeam": 1,
+  "players": [
+    {
+      "id": 1,
+      "name": "Servant",
+      "handler": "firstHuman",
+      "color": "blue",
+      "team": 1
+    },
+    {
+      "id": 2,
+      "name": "Dragon",
+      "handler": "AI",
+      "color": "red",
+      "team": 2
+    },
+    {
+      "id": 3,
+      "color": "yellow",
+      "name": "Princess",
+      "handler": "passive",
+      "team": 1
+    }
+  ],
+  "triggers": [
+    {
+      "playerUnitSpottedBy": 2,
+      "dialog": "dragonSpeech"
+    }
+  ],
+  "dialogs": [
+    {
+      "name": "dragonSpeech",
+      "portraitOf": 2,
+      "next": "princessCry"
+    }
+  ],
+  "units": [
+    {
+      "type": "princess",
+      "name": "Princess Anne",
+      "field": "15_15",
+      "player": 1
+    },
+    {
+      "type": "gold_dragon",
+      "name": "Dragon Mortifer",
+      "field": "10_10",
+      "player": 2
+    },
+    {
+      "type": "pikeman2",
+      "name": "Servant Sencha",
+      "field": "3_0",
+      "player": 3
+    }
+  ],
+  "langs": {
+    "en": {
+      "name": "For the princess",
+      "description": "Princess is captured by the dragon Mortifer. The kingdom needs a hero!!",
+      "onInit": "Once upon a time .. ",
+      "onVictory": "You are victorious",
+      "emailText": "Very long introduction to tale's mysteries.",
+      "dragonSpeech": "You poor mortal. Your stupidity have no match across whole land in this world."
+    },
+    "cz": {
+      "name": "Záchrana princezny",
+      "description": "Princeznu unesl drak Mortifer. Království hledá hrdinu, jenž by princeznu zachránil.",
+      "onInit": "Bylo nebylo ..",
+      "onVictory": "Vítězství",
+      "dragonSpeech": "Ubohý smrtelníče. Tvá hloupost v této zemi nemá rovno mezi všemi. Ohněm mým se vypaříš, svou rodinu již nespatříš."
+    }
+  }
+}

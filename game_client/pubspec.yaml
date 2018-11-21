@@ -1,0 +1,26 @@
+name: game_client
+description: boardytale_client
+version: 0.0.1
+
+environment:
+  sdk: 2.0.0
+
+dependencies:
+  angular: any
+  utils:
+    path: '../utils'
+  stagexl: any
+  boardytale_commons:
+    path: '../boardytale_commons'
+  tales_compiler:
+    path: '../tales_compiler'
+
+transformers:
+- angular:
+    entry_points:
+      - web/main.dart
+web:
+  compiler:
+    debug: dartdevc
+
+

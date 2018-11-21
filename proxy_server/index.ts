@@ -32,7 +32,7 @@ if (config.gameServer.uri) {
 if (config.gameStaticDev.active) {
     let apiProxy = proxy(config.gameStaticDev.route, {target: config.gameStaticDev.proxyPass});
     app.use(apiProxy);
-    console.log(`running proxy from ${config.gameStaticDev.route} to ${config.gameStaticDev.uri}`);
+    console.log(`running proxy from ${config.gameStaticDev.route} to ${config.gameStaticDev.proxyPass}`);
 }
 
 app.use(express.static(path.resolve(__dirname, '../www')));
