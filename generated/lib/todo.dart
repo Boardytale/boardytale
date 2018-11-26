@@ -1,14 +1,32 @@
-import 'package:todo_reporter/todo_reporter.dart';
-
+import 'package:json_annotation/json_annotation.dart';
+import 'package:generate_typescript/generate_typescript.dart';
 part 'todo.g.dart';
 
-@Todo('Complete implementation of TestClass')
+@JsonSerializable()
+@GenerateTypescript()
 class TestClass {
   String pole;
   InnerClass inner;
 }
 
-@Todo('Complete implementation of TestClass')
+@JsonSerializable()
 class InnerClass {
   String innerPole;
+
+  InnerClass();
+
+  factory InnerClass.fromJson(Map<String, dynamic> json){
+    return _$InnerClassFromJson(json);
+  }
+}
+
+@JsonSerializable()
+class SpecificInnerClass extends InnerClass {
+  String specificInnerPole;
+
+  SpecificInnerClass();
+
+  SpecificInnerClass.fromJson(Map<String, dynamic> json) {
+
+  }
 }

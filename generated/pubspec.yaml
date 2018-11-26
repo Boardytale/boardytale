@@ -6,10 +6,11 @@ environment:
   sdk: '>=2.0.0 <3.0.0'
 
 dependencies:
-  todo_reporter:
-    path: ../todo_reporter/
+  generate_typescript:
+    path: ../libs/generate_typescript
 
 dev_dependencies:
   build_runner: 1.0.0
-  todo_reporter_generator:
-    path: ../todo_reporter_generator/
+  json_serializable: any
+  typescript_generator:
+    path: ../typescript_generator/
