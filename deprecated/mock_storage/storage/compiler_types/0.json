@@ -1,0 +1,12 @@
+{
+  "AiType": ["placeHolder1", "placeHolder2"],
+  "AnimationType": ["placeHolder1", "placeHolder2"],
+  "ActionType": ["placeHolder1", "placeHolder2"],
+  "EventType": ["placeHolder1", "placeHolder2"],
+  "VariableType": ["placeHolder1", "placeHolder2"],
+  "OperationType": ["placeHolder1", "placeHolder2"],
+  "AttitudeTowardsHumans ": ["placeHolder1", "placeHolder2"],
+  "FavouriteControls": ["placeHolder1", "placeHolder2"],
+  "EffectType": ["placeHolder1", "placeHolder2"],
+  "TargetType": ["placeHolder1", "placeHolder2"]
+}

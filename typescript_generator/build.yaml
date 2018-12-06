@@ -1,0 +1,15 @@
+targets:
+  $default:
+    builders:
+      generate_typescript:
+        enabled: true
+
+builders:
+  todo_reporter:
+    target: ":generate_typescript"
+    import: "package:typescript_generator/builder.dart"
+    builder_factories: ["todoReporter"]
+    build_extensions: {".dart": [".generate_typescript.g.part"]}
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]

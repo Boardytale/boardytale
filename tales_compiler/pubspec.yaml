@@ -1,5 +1,9 @@
 name: tales_compiler
 description: Utility for validate and compile assets to json files
+
+environment:
+  sdk: 2.0.0
+
 dependencies:
   io_utils:
     path: '../io_utils'

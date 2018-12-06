@@ -2,6 +2,9 @@ library model;
 
 import "dart:math" as Math;
 import 'package:utils/utils.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:generate_typescript/generate_typescript.dart';
+
 
 part 'image.dart';
 part 'user.dart';
@@ -42,6 +45,8 @@ part 'services/platform_service.dart';
 part 'services/player_service.dart';
 part 'services/game_service.dart';
 part 'services/instance_generator.dart';
+
+part 'model.g.dart';
 
 Settings settings;
 
