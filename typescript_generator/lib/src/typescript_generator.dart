@@ -32,7 +32,10 @@ class TodoReporterGenerator extends GeneratorForAnnotation<JsonSerializable> {
       case 'String': return 'string';
       case 'int': return 'number';
       case 'doble': return 'number';
+      case 'num': return 'number';
       case 'bool': return 'boolean';
+      case 'List': return 'Array<any>';
+      case 'Map': return 'any';
     }
     return type;
   }

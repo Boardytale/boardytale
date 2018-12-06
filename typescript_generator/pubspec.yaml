@@ -1,8 +1,7 @@
 name: typescript_generator
-description: A new flutter package project.
-version: 1.0.0
-author: Jorge Coca <jcocaramos@gmail.com>
-homepage: https://github.com/jorgecoca/todo_reporter.dart
+description: Generate typescritp envelope for potentially json serializable dart class
+version: 1.0.2
+author: Zdeněk Mlčoch <mlcoch.zdenek@gmail.com>
 
 environment:
   sdk: ">=2.0.0 <3.0.0"

@@ -1,6 +1,9 @@
 # boardytale
 Multiplayer game inspired by Wesnoth, built on Angular2, StageX and, Aqueduct2
 
+# change common class
+anotate
+run `pub run build_runner build`
 
 # run game
 install dart https://www.dartlang.org/tools/sdk#install
