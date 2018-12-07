@@ -2,13 +2,13 @@ name: io_utils
 description: Common file tasks
 
 environment:
-  sdk: 2.0.0
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   path: any
   args: any
   utils:
-    path: '../utils'
+    path: '../libs/utils'
   console: any
 
 

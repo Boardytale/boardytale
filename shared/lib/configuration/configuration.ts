@@ -1,8 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// TodoReporterGenerator
+// TypescriptGenerator
 // **************************************************************************
+
+export interface Uri {
+          host: string;
+port: number;
+       }
 
 export interface DatabaseConfiguration {
           username: string;
@@ -10,32 +15,33 @@ password: string;
 host: string;
 port: number;
 databaseName: string;
-
        }
 
 export interface ServerConfiguration {
-          uri: string;
-uris: Array<any>;
+          uris: Array<Uri>;
 route: string;
 innerRoute: string;
-
+pathToExecutable: string;
+executableType: ExecutableType;
        }
 
 export interface FrontEndDevelopment {
           active: boolean;
-route: string;
-proxyPass: string;
-
+host: string;
+port: number;
+target: string;
        }
 
 export interface BoardytaleConfiguration {
           gameServer: ServerConfiguration;
 editorServer: ServerConfiguration;
+userDatabase: DatabaseConfiguration;
 editorDatabase: DatabaseConfiguration;
 userService: ServerConfiguration;
-userDatabase: DatabaseConfiguration;
+heroesService: ServerConfiguration;
 aiService: ServerConfiguration;
 gameStaticDev: FrontEndDevelopment;
 editorStaticDev: FrontEndDevelopment;
-
        }
+
+export type ExecutableType = 'ts-node'|'js'|'dart'

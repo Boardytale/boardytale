@@ -1,14 +1,14 @@
 targets:
   $default:
     builders:
-      generate_typescript:
+      typescript_generator|typescript_reporter:
         enabled: true
 
 builders:
-  todo_reporter:
-    target: ":generate_typescript"
+  typescript_reporter:
+    target: ":typescript_generator"
     import: "package:typescript_generator/builder.dart"
-    builder_factories: ["todoReporter"]
+    builder_factories: ["typescriptReporter"]
     build_extensions: {".dart": [".generate_typescript.g.part"]}
     auto_apply: dependents
     build_to: source

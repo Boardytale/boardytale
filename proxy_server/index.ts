@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as proxy from 'http-proxy-middleware';
 import { config } from '../dev-config';
+import {makeAddress} from '../libs/network';
 
 let isMocked = false;
 
@@ -24,15 +25,15 @@ app.use((req, res, next) => {
     // });
     next();
 });
-if (config.gameServer.uri) {
-    let apiProxy = proxy(config.gameServer.route, {target: config.gameServer.uri});
+if (config.gameServer.route) {
+    let apiProxy = proxy(config.gameServer.route, {target: makeAddress(config.gameServer.uris[0])});
     app.use(apiProxy);
-    console.log(`running proxy from ${config.gameServer.route} to ${config.gameServer.uri}`);
+    console.log(`running proxy from ${config.gameServer.route} to ${makeAddress(config.gameServer.uris[0])}`);
 }
 if (config.gameStaticDev.active) {
-    let apiProxy = proxy(config.gameStaticDev.route, {target: config.gameStaticDev.proxyPass});
+    let apiProxy = proxy(makeAddress(config.gameStaticDev), {target: config.gameStaticDev.target});
     app.use(apiProxy);
-    console.log(`running proxy from ${config.gameStaticDev.route} to ${config.gameStaticDev.proxyPass}`);
+    console.log(`running proxy from ${makeAddress(config.gameStaticDev)} to ${config.gameStaticDev.target}`);
 }
 
 app.use(express.static(path.resolve(__dirname, '../www')));

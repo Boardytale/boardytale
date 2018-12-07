@@ -1,16 +1,21 @@
-import {BoardytaleConfiguration} from './config';
+import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
 
 export let config: BoardytaleConfiguration = {
     aiService: {
-        uri: null,
-        uris: ['http://localhost:5000'],
+        uris: [{
+            host: 'localhost',
+            port: 5000,
+        }],
         route: null,
         innerRoute: '/innerApi'
     },
     editorServer: {
-        uri: 'http://localhost:9000',
         innerRoute: '/innerApi',
-        route: '/editorApi'
+        route: '/editorApi',
+        uris: [{
+            host: 'localhost',
+            port: 9000,
+        }]
     },
     editorDatabase: {
         host: 'boardytale.vserver.cz',
@@ -20,9 +25,12 @@ export let config: BoardytaleConfiguration = {
         databaseName: 'boardytale',
     },
     gameServer: {
-        uri: 'http://localhost:7000',
         innerRoute: '/innerApi',
         route: '/gameApi',
+        uris: [{
+            host: 'localhost',
+            port: 7000,
+        }]
     },
     userDatabase: {
         host: 'boardytale.vserver.cz',
@@ -32,19 +40,34 @@ export let config: BoardytaleConfiguration = {
         databaseName: 'userdb',
     },
     userService: {
-        uri: 'http://localhost:6000',
         innerRoute: '/innerApi',
-        route: '/userApi'
+        route: '/userApi',
+        uris: [{
+            host: 'localhost',
+            port: 6000,
+        }]
     },
     editorStaticDev: {
         active: true,
-        proxyPass: '/editor',
-        route: 'http://localhost:4300'
+        target: '/editor',
+        host: 'localhost',
+        port: 4300,
     },
     gameStaticDev: {
         active: true,
-        proxyPass: '/game',
-        route: 'http://localhost:4200'
+        target: '/game',
+        host: 'localhost',
+        port: 4200,
+    },
+    heroesService: {
+        innerRoute: '/innerHeroes',
+        route: '/heroes',
+        uris: [
+            {
+                port: 10000,
+                host: 'localhost',
+            }
+        ]
     }
 };
 

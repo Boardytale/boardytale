@@ -1,7 +1,18 @@
 part of configuration;
 
 @JsonSerializable()
-@GenerateTypescript()
+@Typescript()
+class Uri {
+  String host;
+  num port;
+
+  static fromJson(Map<String, dynamic> json) {
+    return _$UriFromJson(json);
+  }
+}
+
+@JsonSerializable()
+@Typescript()
 class DatabaseConfiguration {
   String username;
   String password;
@@ -13,43 +24,40 @@ class DatabaseConfiguration {
     return _$DatabaseConfigurationFromJson(json);
   }
 }
-
 @JsonSerializable()
-@GenerateTypescript()
+@Typescript()
 class ServerConfiguration {
-  // use load balancing (uris) if uri is null
-  String uri;
-  List<String> uris;
-
-  // route is not used if there is not public api
+  List<Uri> uris;
   String route;
   String innerRoute;
+  String pathToExecutable;
+  ExecutableType executableType;
 
   static ServerConfiguration fromJson(Map<String, dynamic> json) {
     return _$ServerConfigurationFromJson(json);
   }
 }
-
 @JsonSerializable()
-@GenerateTypescript()
+@Typescript()
 class FrontEndDevelopment {
   bool active;
-  String route;
-  String proxyPass;
+  String host;
+  num port;
+  String target;
 
   static fromJson(Map<String, dynamic> json) {
     return _$FrontEndDevelopmentFromJson(json);
   }
 }
-
 @JsonSerializable()
-@GenerateTypescript()
+@Typescript()
 class BoardytaleConfiguration {
   ServerConfiguration gameServer;
   ServerConfiguration editorServer;
+  DatabaseConfiguration userDatabase;
   DatabaseConfiguration editorDatabase;
   ServerConfiguration userService;
-  DatabaseConfiguration userDatabase;
+  ServerConfiguration heroesService;
   ServerConfiguration aiService;
   FrontEndDevelopment gameStaticDev;
   FrontEndDevelopment editorStaticDev;
@@ -57,4 +65,14 @@ class BoardytaleConfiguration {
   static fromJson(Map<String, dynamic> json) {
     return _$BoardytaleConfigurationFromJson(json);
   }
+}
+
+@Typescript()
+enum ExecutableType {
+  @JsonValue('ts-node')
+  tsNode,
+  @JsonValue('js')
+  js,
+  @JsonValue('dart')
+  dart,
 }

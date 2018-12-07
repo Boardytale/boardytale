@@ -1,4 +1,4 @@
-name: generate_typescript
+name: typescript_reporter
 environment:
   sdk: ">=2.0.0 <3.0.0"
 

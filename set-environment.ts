@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {BoardytaleConfiguration} from './config';
+import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
 
 let configPath = null;
 process.argv.forEach(function (val, index, array) {

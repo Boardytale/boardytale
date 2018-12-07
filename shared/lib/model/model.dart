@@ -3,7 +3,6 @@ library model;
 import "dart:math" as Math;
 import 'package:utils/utils.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:generate_typescript/generate_typescript.dart';
 
 
 part 'image.dart';

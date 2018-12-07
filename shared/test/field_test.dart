@@ -1,4 +1,4 @@
-import 'package:boardytale_commons/model/model.dart';
+import 'package:shared/model/model.dart';
 import 'package:test/test.dart';
 
 class DistanceTest{
