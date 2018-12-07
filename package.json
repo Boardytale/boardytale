@@ -2,7 +2,7 @@
   "name": "boardytale_proxy_server",
   "version": "0.0.2",
   "scripts": {
-    "start": "ts-node start-server.ts",
+    "start": "dart runner/run.dart",
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
     "ts2dart": "ts2dart"
   },

@@ -1,13 +1,15 @@
 import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
 
 export let config: BoardytaleConfiguration = {
-    aiService: {
+    aiServer: {
         uris: [{
             host: 'localhost',
             port: 5000,
         }],
         route: null,
-        innerRoute: '/innerApi'
+        innerRoute: '/innerApi',
+        executableType: 'dart',
+        pathToExecutable: 'ai_server/bin/main.dart'
     },
     editorServer: {
         innerRoute: '/innerApi',
@@ -15,7 +17,9 @@ export let config: BoardytaleConfiguration = {
         uris: [{
             host: 'localhost',
             port: 9000,
-        }]
+        }],
+        executableType: 'dart',
+        pathToExecutable: 'editor_server/bin/main.dart'
     },
     editorDatabase: {
         host: 'boardytale.vserver.cz',
@@ -30,7 +34,9 @@ export let config: BoardytaleConfiguration = {
         uris: [{
             host: 'localhost',
             port: 7000,
-        }]
+        }],
+        executableType: 'dart',
+        pathToExecutable: 'game_server/bin/main.dart'
     },
     userDatabase: {
         host: 'boardytale.vserver.cz',
@@ -39,13 +45,15 @@ export let config: BoardytaleConfiguration = {
         port: 5432,
         databaseName: 'userdb',
     },
-    userService: {
+    userServer: {
         innerRoute: '/innerApi',
         route: '/userApi',
         uris: [{
             host: 'localhost',
             port: 6000,
-        }]
+        }],
+        executableType: 'dart',
+        pathToExecutable: 'user_server/bin/main.dart'
     },
     editorStaticDev: {
         active: true,
@@ -59,7 +67,7 @@ export let config: BoardytaleConfiguration = {
         host: 'localhost',
         port: 4200,
     },
-    heroesService: {
+    heroesServer: {
         innerRoute: '/innerHeroes',
         route: '/heroes',
         uris: [
@@ -67,7 +75,21 @@ export let config: BoardytaleConfiguration = {
                 port: 10000,
                 host: 'localhost',
             }
-        ]
-    }
+        ],
+        executableType: 'dart',
+        pathToExecutable: 'heroes_service/bin/main.dart'
+    },
+    proxyServer: {
+        innerRoute: '/',
+        route: '/',
+        uris: [
+            {
+                port: 80,
+                host: 'localhost',
+            }
+        ],
+        executableType: 'ts-node',
+        pathToExecutable: 'proxy_server/index.ts'
+    },
 };
 

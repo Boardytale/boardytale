@@ -37,9 +37,10 @@ export interface BoardytaleConfiguration {
 editorServer: ServerConfiguration;
 userDatabase: DatabaseConfiguration;
 editorDatabase: DatabaseConfiguration;
-userService: ServerConfiguration;
-heroesService: ServerConfiguration;
-aiService: ServerConfiguration;
+userServer: ServerConfiguration;
+heroesServer: ServerConfiguration;
+aiServer: ServerConfiguration;
+proxyServer: ServerConfiguration;
 gameStaticDev: FrontEndDevelopment;
 editorStaticDev: FrontEndDevelopment;
        }

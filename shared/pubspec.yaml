@@ -9,6 +9,7 @@ dependencies:
     path: '../libs/typescript_reporter'
   utils:
     path: '../libs/utils'
+  json_annotation: any
 
 dev_dependencies:
   build_runner: any

@@ -56,9 +56,10 @@ class BoardytaleConfiguration {
   ServerConfiguration editorServer;
   DatabaseConfiguration userDatabase;
   DatabaseConfiguration editorDatabase;
-  ServerConfiguration userService;
-  ServerConfiguration heroesService;
-  ServerConfiguration aiService;
+  ServerConfiguration userServer;
+  ServerConfiguration heroesServer;
+  ServerConfiguration aiServer;
+  ServerConfiguration proxyServer;
   FrontEndDevelopment gameStaticDev;
   FrontEndDevelopment editorStaticDev;
 

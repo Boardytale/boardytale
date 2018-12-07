@@ -151,20 +151,26 @@ BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
             : DatabaseConfiguration.fromJson(v as Map<String, dynamic>));
     $checkedConvert(
         json,
-        'userService',
-        (v) => val.userService = v == null
+        'userServer',
+        (v) => val.userServer = v == null
             ? null
             : ServerConfiguration.fromJson(v as Map<String, dynamic>));
     $checkedConvert(
         json,
-        'heroesService',
-        (v) => val.heroesService = v == null
+        'heroesServer',
+        (v) => val.heroesServer = v == null
             ? null
             : ServerConfiguration.fromJson(v as Map<String, dynamic>));
     $checkedConvert(
         json,
-        'aiService',
-        (v) => val.aiService = v == null
+        'aiServer',
+        (v) => val.aiServer = v == null
+            ? null
+            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
+    $checkedConvert(
+        json,
+        'proxyServer',
+        (v) => val.proxyServer = v == null
             ? null
             : ServerConfiguration.fromJson(v as Map<String, dynamic>));
     $checkedConvert(
@@ -190,9 +196,10 @@ Map<String, dynamic> _$BoardytaleConfigurationToJson(
       'editorServer': instance.editorServer,
       'userDatabase': instance.userDatabase,
       'editorDatabase': instance.editorDatabase,
-      'userService': instance.userService,
-      'heroesService': instance.heroesService,
-      'aiService': instance.aiService,
+      'userServer': instance.userServer,
+      'heroesServer': instance.heroesServer,
+      'aiServer': instance.aiServer,
+      'proxyServer': instance.proxyServer,
       'gameStaticDev': instance.gameStaticDev,
       'editorStaticDev': instance.editorStaticDev
     };
