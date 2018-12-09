@@ -9,7 +9,8 @@ export let config: BoardytaleConfiguration = {
         route: null,
         innerRoute: '/innerApi',
         executableType: 'dart',
-        pathToExecutable: 'ai_server/bin/main.dart'
+        pathToExecutable: 'ai_server/bin/main.dart',
+        pathToWorkingDirectory: 'ai_server'
     },
     editorServer: {
         innerRoute: '/innerApi',
@@ -19,7 +20,8 @@ export let config: BoardytaleConfiguration = {
             port: 9000,
         }],
         executableType: 'dart',
-        pathToExecutable: 'editor_server/bin/main.dart'
+        pathToExecutable: 'editor_server/bin/main.dart',
+        pathToWorkingDirectory: 'editor_server'
     },
     editorDatabase: {
         host: 'boardytale.vserver.cz',
@@ -36,7 +38,8 @@ export let config: BoardytaleConfiguration = {
             port: 7000,
         }],
         executableType: 'dart',
-        pathToExecutable: 'game_server/bin/main.dart'
+        pathToExecutable: 'game_server/bin/main.dart',
+        pathToWorkingDirectory: 'game_server'
     },
     userDatabase: {
         host: 'boardytale.vserver.cz',
@@ -50,10 +53,11 @@ export let config: BoardytaleConfiguration = {
         route: '/userApi',
         uris: [{
             host: 'localhost',
-            port: 6000,
+            port: 4400,
         }],
         executableType: 'dart',
-        pathToExecutable: 'user_server/bin/main.dart'
+        pathToExecutable: 'user_server/bin/main.dart',
+        pathToWorkingDirectory: 'user_server'
     },
     editorStaticDev: {
         active: true,
@@ -77,7 +81,8 @@ export let config: BoardytaleConfiguration = {
             }
         ],
         executableType: 'dart',
-        pathToExecutable: 'heroes_service/bin/main.dart'
+        pathToExecutable: 'heroes_service/bin/main.dart',
+        pathToWorkingDirectory: 'heroes_service'
     },
     proxyServer: {
         innerRoute: '/',
@@ -89,7 +94,8 @@ export let config: BoardytaleConfiguration = {
             }
         ],
         executableType: 'ts-node',
-        pathToExecutable: 'proxy_server/index.ts'
+        pathToExecutable: 'proxy_server/index.ts',
+        pathToWorkingDirectory: 'proxy_server'
     },
 };
 

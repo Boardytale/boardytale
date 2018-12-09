@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:io_utils/io_utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'common.dart';
 import 'package:shared/configuration/configuration.dart';
@@ -13,14 +14,25 @@ main() async {
   try {
     config =
         BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/config.json').readAsStringSync()));
-  }catch(e){
-    if(e is CheckedFromJsonException){
-      throw e;
+  } catch (e) {
+    if (e is CheckedFromJsonException) {
+      print(e.innerError.toString());
     }
     throw e;
   }
 
   print(config.proxyServer.uris.first.port);
+
+  print("OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
+
+  runServerByServerConfiguration(config.proxyServer);
+
+  runServerByServerConfiguration(config.userServer);
+
+//  Process.start(dartExecutable, ["lib/server.dart"], workingDirectory: projectDirectoryPath + "/server")
+//      .then((Process process) {
+//    printFromOutputStreams(process, "Shelf proxy", "light_cyan");
+//  });
 
 //  childProcess.execFile('ts-node', [
 //    'proxy_server/index.ts'
@@ -61,3 +73,26 @@ main() async {
 ////    printFromOutputStreams(process, "web_server", "green");
 //  });
 }
+
+void runServerByServerConfiguration(ServerConfiguration config) {
+  String projectDirectoryPath = harmonizePath();
+  String executable;
+  if (config.executableType == ExecutableType.dart) {
+    executable = dartExecutable;
+  }
+  if (config.executableType == ExecutableType.js) {
+    executable = 'node';
+  }
+  if (config.executableType == ExecutableType.tsNode) {
+    executable = 'ts-node';
+  }
+
+  String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
+  String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
+
+  Process.start(executable, [executableFile], workingDirectory: workingDirectory, runInShell: true)
+      .then((Process process) {
+    printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
+  });
+}
+

@@ -1,3 +1,5 @@
+library io_utils;
+
 import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:path/path.dart' as path_lib;
@@ -5,16 +7,10 @@ import 'package:utils/utils.dart';
 import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
 import 'package:console/console.dart';
+import 'package:shared/configuration/configuration.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-Map getConfig() {
-  while (!File('config.json').existsSync() && Directory.current != null) {
-    Directory.current = Directory.current.parent;
-  }
-  File config = File('config.json');
-  if (config.existsSync()) {
-    return convert.json.decode(config.readAsStringSync());
-  }
-}
+part 'get_config.dart';
 
 Map<String, dynamic> getFileMap(Directory dir) {
   Map<String, dynamic> out = <String, dynamic>{};
@@ -112,7 +108,7 @@ void _outToConsole(String prefix, String data, int color) {
   if (data == null || data.length <= 1) return;
   Console.setBold(true);
   Console.setTextColor(color);
-  Console.write("$prefix: ");
+  Console.write("\n$prefix: ");
   Console.setBold(false);
   Console.write(data);
   Console.resetTextColor();
@@ -139,7 +135,7 @@ Color _getColor(String string) {
   })[string];
 }
 
-String getProjectDirectoryName() {
+Directory getProjectDirectory() {
   Directory projectDir = Directory.current;
   int overflowProtection = 0;
   while (!isFileInFileSystemEntityList(projectDir.listSync(followLinks: false), "projectroot")) {
@@ -148,7 +144,7 @@ String getProjectDirectoryName() {
     }
     projectDir = projectDir.parent;
   }
-  return projectDir.path;
+  return projectDir;
 }
 
 bool isFileInFileSystemEntityList(List<FileSystemEntity> list, String filename) {

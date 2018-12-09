@@ -22,6 +22,7 @@ export interface ServerConfiguration {
 route: string;
 innerRoute: string;
 pathToExecutable: string;
+pathToWorkingDirectory: string;
 executableType: ExecutableType;
        }
 

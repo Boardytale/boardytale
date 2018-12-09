@@ -1,15 +1,18 @@
 import 'package:user_server/user_server.dart';
 import 'package:io_utils/io_utils.dart';
+import 'package:shared/configuration/configuration.dart';
 
 Future main() async {
-  Map config = getConfig();
+  final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
+
+  print("current directory ${Directory.current.path}");
 
   final app = Application<UserServerChannel>()
-      ..options.configurationFilePath = "config.yaml"
-      ..options.port = 8888;
+    ..options.port = boardytaleConfiguration.userServer.uris.first.port.toInt();
 
-  final count = Platform.numberOfProcessors ~/ 2;
-  await app.start(numberOfInstances: count > 0 ? count : 1);
+  await app.start(numberOfInstances: 1);
+//  final count = Platform.numberOfProcessors ~/ 2;
+//  await app.start(numberOfInstances: count > 0 ? count : 1);
 
   print("Application started on port: ${app.options.port}.");
   print("Use Ctrl-C (SIGINT) to stop running the application.");

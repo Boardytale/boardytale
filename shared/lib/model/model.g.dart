@@ -7,12 +7,9 @@ part of model;
 // **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) {
-  return $checkedNew('User', json, () {
-    final val = User();
-    $checkedConvert(json, 'id', (v) => val.id = v as String);
-    $checkedConvert(json, 'name', (v) => val.name = v as String);
-    return val;
-  });
+  return User()
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
 }
 
 Map<String, dynamic> _$UserToJson(User instance) =>

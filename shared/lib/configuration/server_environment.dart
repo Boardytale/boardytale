@@ -6,7 +6,7 @@ class Uri {
   String host;
   num port;
 
-  static fromJson(Map<String, dynamic> json) {
+  static Uri fromJson(Map<String, dynamic> json) {
     return _$UriFromJson(json);
   }
 }
@@ -17,7 +17,7 @@ class DatabaseConfiguration {
   String username;
   String password;
   String host;
-  num port;
+  int port;
   String databaseName;
 
   static fromJson(Map<String, dynamic> json) {
@@ -31,6 +31,7 @@ class ServerConfiguration {
   String route;
   String innerRoute;
   String pathToExecutable;
+  String pathToWorkingDirectory;
   ExecutableType executableType;
 
   static ServerConfiguration fromJson(Map<String, dynamic> json) {

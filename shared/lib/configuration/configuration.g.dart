@@ -7,12 +7,9 @@ part of configuration;
 // **************************************************************************
 
 Uri _$UriFromJson(Map<String, dynamic> json) {
-  return $checkedNew('Uri', json, () {
-    final val = Uri();
-    $checkedConvert(json, 'host', (v) => val.host = v as String);
-    $checkedConvert(json, 'port', (v) => val.port = v as num);
-    return val;
-  });
+  return Uri()
+    ..host = json['host'] as String
+    ..port = json['port'] as num;
 }
 
 Map<String, dynamic> _$UriToJson(Uri instance) =>
@@ -20,16 +17,12 @@ Map<String, dynamic> _$UriToJson(Uri instance) =>
 
 DatabaseConfiguration _$DatabaseConfigurationFromJson(
     Map<String, dynamic> json) {
-  return $checkedNew('DatabaseConfiguration', json, () {
-    final val = DatabaseConfiguration();
-    $checkedConvert(json, 'username', (v) => val.username = v as String);
-    $checkedConvert(json, 'password', (v) => val.password = v as String);
-    $checkedConvert(json, 'host', (v) => val.host = v as String);
-    $checkedConvert(json, 'port', (v) => val.port = v as num);
-    $checkedConvert(
-        json, 'databaseName', (v) => val.databaseName = v as String);
-    return val;
-  });
+  return DatabaseConfiguration()
+    ..username = json['username'] as String
+    ..password = json['password'] as String
+    ..host = json['host'] as String
+    ..port = json['port'] as num
+    ..databaseName = json['databaseName'] as String;
 }
 
 Map<String, dynamic> _$DatabaseConfigurationToJson(
@@ -43,26 +36,16 @@ Map<String, dynamic> _$DatabaseConfigurationToJson(
     };
 
 ServerConfiguration _$ServerConfigurationFromJson(Map<String, dynamic> json) {
-  return $checkedNew('ServerConfiguration', json, () {
-    final val = ServerConfiguration();
-    $checkedConvert(
-        json,
-        'uris',
-        (v) => val.uris = (v as List)
-            ?.map((e) =>
-                e == null ? null : Uri.fromJson(e as Map<String, dynamic>))
-            ?.toList());
-    $checkedConvert(json, 'route', (v) => val.route = v as String);
-    $checkedConvert(json, 'innerRoute', (v) => val.innerRoute = v as String);
-    $checkedConvert(
-        json, 'pathToExecutable', (v) => val.pathToExecutable = v as String);
-    $checkedConvert(
-        json,
-        'executableType',
-        (v) => val.executableType =
-            _$enumDecodeNullable(_$ExecutableTypeEnumMap, v));
-    return val;
-  });
+  return ServerConfiguration()
+    ..uris = (json['uris'] as List)
+        ?.map((e) => e == null ? null : Uri.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..route = json['route'] as String
+    ..innerRoute = json['innerRoute'] as String
+    ..pathToExecutable = json['pathToExecutable'] as String
+    ..pathToWorkingDirectory = json['pathToWorkingDirectory'] as String
+    ..executableType =
+        _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType']);
 }
 
 Map<String, dynamic> _$ServerConfigurationToJson(
@@ -72,6 +55,7 @@ Map<String, dynamic> _$ServerConfigurationToJson(
       'route': instance.route,
       'innerRoute': instance.innerRoute,
       'pathToExecutable': instance.pathToExecutable,
+      'pathToWorkingDirectory': instance.pathToWorkingDirectory,
       'executableType': _$ExecutableTypeEnumMap[instance.executableType]
     };
 
@@ -102,14 +86,11 @@ const _$ExecutableTypeEnumMap = <ExecutableType, dynamic>{
 };
 
 FrontEndDevelopment _$FrontEndDevelopmentFromJson(Map<String, dynamic> json) {
-  return $checkedNew('FrontEndDevelopment', json, () {
-    final val = FrontEndDevelopment();
-    $checkedConvert(json, 'active', (v) => val.active = v as bool);
-    $checkedConvert(json, 'host', (v) => val.host = v as String);
-    $checkedConvert(json, 'port', (v) => val.port = v as num);
-    $checkedConvert(json, 'target', (v) => val.target = v as String);
-    return val;
-  });
+  return FrontEndDevelopment()
+    ..active = json['active'] as bool
+    ..host = json['host'] as String
+    ..port = json['port'] as num
+    ..target = json['target'] as String;
 }
 
 Map<String, dynamic> _$FrontEndDevelopmentToJson(
@@ -123,70 +104,46 @@ Map<String, dynamic> _$FrontEndDevelopmentToJson(
 
 BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
     Map<String, dynamic> json) {
-  return $checkedNew('BoardytaleConfiguration', json, () {
-    final val = BoardytaleConfiguration();
-    $checkedConvert(
-        json,
-        'gameServer',
-        (v) => val.gameServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'editorServer',
-        (v) => val.editorServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'userDatabase',
-        (v) => val.userDatabase = v == null
-            ? null
-            : DatabaseConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'editorDatabase',
-        (v) => val.editorDatabase = v == null
-            ? null
-            : DatabaseConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'userServer',
-        (v) => val.userServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'heroesServer',
-        (v) => val.heroesServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'aiServer',
-        (v) => val.aiServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'proxyServer',
-        (v) => val.proxyServer = v == null
-            ? null
-            : ServerConfiguration.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'gameStaticDev',
-        (v) => val.gameStaticDev = v == null
-            ? null
-            : FrontEndDevelopment.fromJson(v as Map<String, dynamic>));
-    $checkedConvert(
-        json,
-        'editorStaticDev',
-        (v) => val.editorStaticDev = v == null
-            ? null
-            : FrontEndDevelopment.fromJson(v as Map<String, dynamic>));
-    return val;
-  });
+  return BoardytaleConfiguration()
+    ..gameServer = json['gameServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['gameServer'] as Map<String, dynamic>)
+    ..editorServer = json['editorServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['editorServer'] as Map<String, dynamic>)
+    ..userDatabase = json['userDatabase'] == null
+        ? null
+        : DatabaseConfiguration.fromJson(
+            json['userDatabase'] as Map<String, dynamic>)
+    ..editorDatabase = json['editorDatabase'] == null
+        ? null
+        : DatabaseConfiguration.fromJson(
+            json['editorDatabase'] as Map<String, dynamic>)
+    ..userServer = json['userServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['userServer'] as Map<String, dynamic>)
+    ..heroesServer = json['heroesServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['heroesServer'] as Map<String, dynamic>)
+    ..aiServer = json['aiServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(json['aiServer'] as Map<String, dynamic>)
+    ..proxyServer = json['proxyServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['proxyServer'] as Map<String, dynamic>)
+    ..gameStaticDev = json['gameStaticDev'] == null
+        ? null
+        : FrontEndDevelopment.fromJson(
+            json['gameStaticDev'] as Map<String, dynamic>)
+    ..editorStaticDev = json['editorStaticDev'] == null
+        ? null
+        : FrontEndDevelopment.fromJson(
+            json['editorStaticDev'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$BoardytaleConfigurationToJson(
