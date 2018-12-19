@@ -29,7 +29,7 @@ Map<String, Tale> loadTales(Map<String, dynamic> fileMap, Resources resources) {
   Map<String, Tale> tales = {};
   talesData.forEach((dynamic k, dynamic v) {
     Tale tale = loadTaleFromAssets(JSON.decode(v), resources);
-    tales[tale.id] = tale;
+    tales[tale.innerToken] = tale;
   });
   return tales;
 }
@@ -76,7 +76,7 @@ Map<String, UnitType> loadUnitsTypes(List<dynamic> unitTypesList, Resources reso
     if (unitType.iconId != null) {
       unitType.iconImage = resources.images[unitType.iconId];
     }
-    unitTypes[unitType.id] = unitType;
+    unitTypes[unitType.innerToken] = unitType;
     addAbilitiesToUnitType(unitType, resources);
     unitType.race = resources.races[unitType.raceId];
   }

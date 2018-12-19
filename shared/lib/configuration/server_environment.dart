@@ -42,9 +42,8 @@ class ServerConfiguration {
 @Typescript()
 class FrontEndDevelopment {
   bool active;
-  String host;
   num port;
-  String target;
+  String route;
 
   static fromJson(Map<String, dynamic> json) {
     return _$FrontEndDevelopmentFromJson(json);

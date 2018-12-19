@@ -23,7 +23,7 @@ class UserServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
     router.route("/login").link(() => UserController(context));
-    router.route("/userApi/login").link(() => UserController(context));
+    router.route("/inner/getUserByInnerToken").link(() => UserController(context));
     router.route("/*").link(() => FileController("../www/"));
     return router;
   }

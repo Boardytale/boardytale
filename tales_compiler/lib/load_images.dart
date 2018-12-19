@@ -7,7 +7,7 @@ Map<String, Image> loadImages(Map fileMap, InstanceGenerator generator) {
     Map imageData = JSON.decode(v);
     Image image = generator.image()..fromMap(imageData);
     int dataRef = imageData["dataRef"];
-    out[image.id] = image;
+    out[image.innerToken] = image;
     if (dataRef != null) {
       Map<String, String> sources = fileMap["imagesSources"];
       List<String> key = sources.keys.where((String key) => key.startsWith("${dataRef}-")).toList();

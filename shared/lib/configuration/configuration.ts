@@ -28,9 +28,8 @@ executableType: ExecutableType;
 
 export interface FrontEndDevelopment {
           active: boolean;
-host: string;
 port: number;
-target: string;
+route: string;
        }
 
 export interface BoardytaleConfiguration {

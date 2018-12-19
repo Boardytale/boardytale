@@ -21,7 +21,7 @@ DatabaseConfiguration _$DatabaseConfigurationFromJson(
     ..username = json['username'] as String
     ..password = json['password'] as String
     ..host = json['host'] as String
-    ..port = json['port'] as num
+    ..port = json['port'] as int
     ..databaseName = json['databaseName'] as String;
 }
 
@@ -88,18 +88,16 @@ const _$ExecutableTypeEnumMap = <ExecutableType, dynamic>{
 FrontEndDevelopment _$FrontEndDevelopmentFromJson(Map<String, dynamic> json) {
   return FrontEndDevelopment()
     ..active = json['active'] as bool
-    ..host = json['host'] as String
     ..port = json['port'] as num
-    ..target = json['target'] as String;
+    ..route = json['route'] as String;
 }
 
 Map<String, dynamic> _$FrontEndDevelopmentToJson(
         FrontEndDevelopment instance) =>
     <String, dynamic>{
       'active': instance.active,
-      'host': instance.host,
       'port': instance.port,
-      'target': instance.target
+      'route': instance.route
     };
 
 BoardytaleConfiguration _$BoardytaleConfigurationFromJson(

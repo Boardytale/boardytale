@@ -10,18 +10,18 @@ class TaleAssetsPack {
 
     tale.units.forEach((id, Unit unit) {
       Image image = unit.type.image;
-      if (!imagesOut.containsKey(image.id)) {
-        imagesOut[image.id] = image.toMap();
+      if (!imagesOut.containsKey(image.innerToken)) {
+        imagesOut[image.innerToken] = image.toMap();
       }
 
       image = unit.type.bigImage;
-      if (image != null && !imagesOut.containsKey(image.id)) {
-        imagesOut[image.id] = image.toMap();
+      if (image != null && !imagesOut.containsKey(image.innerToken)) {
+        imagesOut[image.innerToken] = image.toMap();
       }
 
       image = unit.type.iconImage;
-      if (image != null && !imagesOut.containsKey(image.id)) {
-        imagesOut[image.id] = image.toMap();
+      if (image != null && !imagesOut.containsKey(image.innerToken)) {
+        imagesOut[image.innerToken] = image.toMap();
       }
 
 //      for (Ability ability in unit.type.abilities) {
@@ -29,11 +29,11 @@ class TaleAssetsPack {
 //          abilitiesOut[ability.type.name] = ability.type.toMap();
 //        }
 //      }
-      if (!racesOut.containsKey(unit.type.race.id)) {
-        racesOut[unit.type.race.id] = unit.type.race.toMap();
+      if (!racesOut.containsKey(unit.type.race.innerToken)) {
+        racesOut[unit.type.race.innerToken] = unit.type.race.toMap();
       }
-      if (!unitsOut.containsKey(unit.type.id)) {
-        unitsOut[unit.type.id] = unit.type.toMap();
+      if (!unitsOut.containsKey(unit.type.innerToken)) {
+        unitsOut[unit.type.innerToken] = unit.type.toMap();
       }
     });
     out["tale"] = tale.toMap();
@@ -59,7 +59,7 @@ class TaleAssetsPack {
     Map<String, Image> out = {};
     for (Map imageData in imageDataList) {
       Image image = generator.image()..fromMap(imageData);
-      out[image.id] = image;
+      out[image.innerToken] = image;
     }
     return out;
   }

@@ -1,6 +1,5 @@
 import * as express from 'express';
 import * as path from 'path';
-import * as bodyParser from 'body-parser';
 import * as proxy from 'http-proxy-middleware';
 import {config} from '../dev-config';
 import {makeAddress} from '../libs/network';
@@ -35,6 +34,18 @@ if (config.userServer.route) {
     app.use(config.userServer.route, apiProxy);
     console.log(`running proxy from ${config.userServer.route} to ${makeAddress(config.userServer.uris[0])}`);
 }
+if (config.editorStaticDev.port) {
+    let pathRewrite = {};
+    pathRewrite[`^${config.editorStaticDev.route}`] = '/';
+    let apiProxy = proxy({
+        target: 'http://localhost:' + config.editorStaticDev.port,
+        pathRewrite,
+
+        changeOrigin: true,
+    });
+    app.use(config.editorStaticDev.route, apiProxy);
+    console.log(`running proxy from ${config.editorStaticDev.route} to ${'http://localhost:' + config.editorStaticDev.port}`);
+}
 // if (config.gameServer.route) {
 //     let apiProxy = proxy(config.gameServer.route, {target: makeAddress(config.gameServer.uris[0])});
 //     app.use(apiProxy);
@@ -47,11 +58,11 @@ if (config.userServer.route) {
 // }
 
 app.get('/', (req, res) => {
-    return res.sendFile(path.resolve(__dirname,'../www/index.html'));
+    return res.sendFile(path.resolve(__dirname, '../www/index.html'));
 });
 
 app.use(express.static(path.resolve(__dirname, '../www'), {
-    index:path.resolve(__dirname,'../www/index.html')
+    index: path.resolve(__dirname, '../www/index.html')
 }));
 
 

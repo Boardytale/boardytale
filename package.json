@@ -8,7 +8,9 @@
     "generate-shared": "cd shared && pub run build_runner build",
     "remove-duplicated-files": "remove-duplicated-files",
     "start-proxy": "nodemon --watch proxy_server --exec ts-node proxy_server/index.ts",
-    "ts-node": "ts-node"
+    "start-user-server": "dart user_server/bin/main.dart",
+    "ts-node": "ts-node",
+    "editor-serve": "cd editor_client && dart serve.dart"
   },
   "private": true,
   "devDependencies": {

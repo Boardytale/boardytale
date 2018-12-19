@@ -61,14 +61,12 @@ export let config: BoardytaleConfiguration = {
     },
     editorStaticDev: {
         active: true,
-        target: '/editor',
-        host: 'localhost',
+        route: '/editor',
         port: 4300,
     },
     gameStaticDev: {
         active: true,
-        target: '/game',
-        host: 'localhost',
+        route: '/game',
         port: 4200,
     },
     heroesServer: {
