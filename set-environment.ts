@@ -19,7 +19,13 @@ port: ${config.userDatabase.port}
 databaseName: "${config.userDatabase.databaseName}" 
     `);
 
-    // TODO: yaml to editor_server
+    fs.writeFileSync('editor_server/database.yaml', `  
+username: "${config.editorDatabase.username}"
+password: "${config.editorDatabase.password}"
+host: "${config.editorDatabase.host}"
+port: ${config.editorDatabase.port}
+databaseName: "${config.editorDatabase.databaseName}" 
+    `);
 
     // TODO: yaml to hero_server
 });

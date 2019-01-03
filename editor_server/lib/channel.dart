@@ -1,9 +1,9 @@
+import 'package:editor_server/controller/image_controller.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:shared/configuration/configuration.dart' as shared;
-import 'package:user_server/controller/user_controller.dart';
-import 'package:user_server/controller/user_inner_authentication.dart';
+import 'package:editor_server/editor_server.dart';
 
-import 'user_server.dart';
+import 'editor_server.dart';
 
 class UserServerChannel extends ApplicationChannel {
   ManagedContext context;
@@ -23,9 +23,7 @@ class UserServerChannel extends ApplicationChannel {
   @override
   Controller get entryPoint {
     final router = Router();
-    router.route("/login").link(() => UserController(context));
-    router.route("/inner/getUserByInnerToken").link(() => UserInnerAuthController(context));
-    router.route("/*").link(() => FileController("../www/"));
+    router.route("/images/[:type]").link(() => ImageController(context));
     return router;
   }
 }

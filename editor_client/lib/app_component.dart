@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:angular/angular.dart';
-import 'dart:js' as js;
 import 'package:http/http.dart' as http;
 import 'package:ng2_g_signin/ng2_g_signin.dart';
 
@@ -16,16 +15,9 @@ import 'package:ng2_g_signin/ng2_g_signin.dart';
 )
 class AppComponent {
   final http.Client _http;
-
   AppComponent(this._http) {
   }
-
   bool isSignedIn = false;
-//  String id;
-//  String name;
-//  String imageUrl;
-//  String email;
-
   void onGoogleSigninSuccess(GoogleSignInSuccess event) async {
     GoogleUser googleUser = event.googleUser;
     AuthResponse response = googleUser.getAuthResponse();

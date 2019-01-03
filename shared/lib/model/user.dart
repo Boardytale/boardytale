@@ -1,6 +1,7 @@
 part of model;
 
 @JsonSerializable(nullable: false)
+@Typescript()
 class User {
   String id;
   String name;

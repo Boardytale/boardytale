@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/model/user.dart';
-import 'package:http/http.dart' as http;
-import 'package:uuid/uuid.dart';
 
-class UserController extends ResourceController {
-  UserController(this.context);
+class UserInnerAuthController extends ResourceController {
+  UserInnerAuthController(this.context);
 
   final ManagedContext context;
 

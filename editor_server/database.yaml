@@ -1,0 +1,7 @@
+  
+username: "boardytale"
+password: "boardygame"
+host: "boardytale.vserver.cz"
+port: 5432
+databaseName: "boardytale" 
+    

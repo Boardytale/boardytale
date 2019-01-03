@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as proxy from 'http-proxy-middleware';
 import {config} from '../dev-config';
 import {makeAddress} from '../libs/network';
+import {ServerConfiguration} from '../shared/lib/configuration/configuration';
 
 let isMocked = false;
 
@@ -22,18 +23,22 @@ app.use((req, res, next) => {
     // });
     next();
 });
-if (config.userServer.route) {
-    let pathRewrite = {};
-    pathRewrite[`^${config.userServer.route}`] = '/';
+// if (config.userServer.route) {
+//     let pathRewrite = {};
+//     pathRewrite[`^${config.userServer.route}`] = '/';
+//
+//     let apiProxy = proxy({
+//         target: makeAddress(config.userServer.uris[0]),
+//         pathRewrite,
+//         changeOrigin: true,
+//     });
+//     app.use(config.userServer.route, apiProxy);
+//     console.log(`running proxy from ${config.userServer.route} to ${makeAddress(config.userServer.uris[0])}`);
+// }
 
-    let apiProxy = proxy({
-        target: makeAddress(config.userServer.uris[0]),
-        pathRewrite,
-        changeOrigin: true,
-    });
-    app.use(config.userServer.route, apiProxy);
-    console.log(`running proxy from ${config.userServer.route} to ${makeAddress(config.userServer.uris[0])}`);
-}
+runProxy(config.userServer);
+runProxy(config.editorServer);
+
 if (config.editorStaticDev.port) {
     let pathRewrite = {};
     pathRewrite[`^${config.editorStaticDev.route}`] = '/';
@@ -70,6 +75,17 @@ app.listen(config.proxyServer.uris[0].port, () => {
     console.log('Proxy server is listening to http://localhost:' + config.proxyServer.uris[0].port);
 });
 
-// app.listen(3251, () => {
-//     console.log('Proxy server is listening to http://localhost:' + config.proxyServer.uris[0].port);
-// });
+function runProxy(server: ServerConfiguration) {
+    if (server.route) {
+        let pathRewrite = {};
+        pathRewrite[`^${server.route}`] = '/';
+
+        let apiProxy = proxy({
+            target: makeAddress(server.uris[0]),
+            pathRewrite,
+            changeOrigin: true,
+        });
+        app.use(server.route, apiProxy);
+        console.log(`running proxy from ${server.route} to ${makeAddress(server.uris[0])}`);
+    }
+}

@@ -14,13 +14,13 @@ class UserController extends ResourceController {
   final ManagedContext context;
 
   @Operation.post()
-  Future<Response> login(@Bind.body() IdWrap note) async {
-    http.Response response = await http.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${note.id}');
+  Future<Response> login(@Bind.body() IdWrap idWrapper) async {
+    http.Response response = await http.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idWrapper.id}');
     Map userData = json.decode(response.body);
 
     // check if exist
     if (userData.containsKey("email") && userData["email"] is String) {
-      String innerToken = uuid.v4();
+      String innerToken = uuid.v4() + userData["email"];
       var query = Query<User>(context)..where((u) => u.email).equalTo(userData["email"] as String);
       if ((await query.fetch()).isEmpty) {
         // create new user

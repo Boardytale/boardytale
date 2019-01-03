@@ -20,7 +20,6 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
     final classElement = element as ClassElement;
 
     if (classElement.isEnum) {
-      List<String> out = [];
 
 //      out.add(classElement.toString());
 //
@@ -131,7 +130,7 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         return 'string';
       case 'int':
         return 'number';
-      case 'doble':
+      case 'double':
         return 'number';
       case 'num':
         return 'number';
