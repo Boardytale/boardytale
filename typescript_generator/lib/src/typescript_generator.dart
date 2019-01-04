@@ -140,6 +140,8 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         return 'Array<any>';
       case 'Map':
         return 'any';
+      case 'DateTime':
+        return 'string';
     }
     return type.name;
   }

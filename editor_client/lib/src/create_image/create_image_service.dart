@@ -1,7 +1,5 @@
-import 'dart:async';
 import 'package:http/http.dart' as http;
 import 'package:angular/core.dart';
-import 'package:shared/configuration/configuration.dart';
 
 @Injectable()
 class CreateImageService {
@@ -12,6 +10,6 @@ class CreateImageService {
   }
 
   void addImage(String image) {
-    this._http.post("/editorApi/images/add");
+    this._http.post("/editorApi/images", headers: {"Content-Type": "application/json"},body: image);
   }
 }

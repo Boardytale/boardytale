@@ -10,7 +10,8 @@
     "start-proxy": "nodemon --watch proxy_server --exec ts-node proxy_server/index.ts",
     "start-user-server": "dart user_server/bin/main.dart",
     "ts-node": "ts-node",
-    "editor-serve": "cd editor_client && dart serve.dart"
+    "editor-serve": "cd editor_client && dart serve.dart",
+    "generate-image-jsons": "cd shared/lib/images && ts-node generate-jsons.ts"
   },
   "private": true,
   "devDependencies": {

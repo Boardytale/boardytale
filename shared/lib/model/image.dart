@@ -1,10 +1,10 @@
 part of model;
 
+@Typescript()
 @JsonSerializable(nullable: false)
 class Image {
   String id;
   String data;
-  String imageSrc;
   double multiply = 1.0;
   int width;
   int height;
@@ -17,13 +17,11 @@ class Image {
 
   /// The place where the image comes from. Expected is URL or just "direct"
   String origin;
-  String parentId;
-  bool published = false;
   DateTime created;
   List<String> tags;
 
-  void fromJson(Map<String, dynamic> json) {
-    _$ImageFromJson(json);
+  static Image fromJson(Map<String, dynamic> json) {
+    return _$ImageFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
@@ -36,9 +34,25 @@ class Images {
 
   void fromMap(Map data) {
     data.forEach((dynamic id, dynamic image) {
-      images[id] = new Image()..fromJson(image);
+      images[id] = Image.fromJson(image);
     });
   }
 }
 
-enum ImageType { field, unitIcon, unitBase, unitHighRes, item, taleFullScreen, taleBottomScreen }
+@Typescript()
+enum ImageType {
+  @JsonValue('field')
+  field,
+  @JsonValue('unitIcon')
+  unitIcon,
+  @JsonValue('unitBase')
+  unitBase,
+  @JsonValue('unitHighRes')
+  unitHighRes,
+  @JsonValue('item')
+  item,
+  @JsonValue('taleFullScreen')
+  taleFullScreen,
+  @JsonValue('taleBottomScreen')
+  taleBottomScreen
+}

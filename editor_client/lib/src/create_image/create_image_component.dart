@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:angular/angular.dart';
-
+import 'package:angular_forms/angular_forms.dart';
 import 'create_image_service.dart';
 
 @Component(
@@ -16,6 +16,7 @@ import 'create_image_service.dart';
   directives: [
     NgFor,
     NgIf,
+    formDirectives,
   ],
   providers: [ClassProvider(CreateImageService)],
 )
@@ -29,7 +30,8 @@ class CreateImageComponent implements OnInit {
   }
 
   void add() {
-
+    print('click');
+    createImageService.addImage(newImage);
   }
 
 }

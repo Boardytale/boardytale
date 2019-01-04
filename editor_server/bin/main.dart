@@ -4,7 +4,7 @@ import 'package:shared/configuration/configuration.dart';
 
 Future main() async {
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
-  final app = Application<UserServerChannel>()
+  final app = Application<EditorServerChannel>()
     ..options.port = boardytaleConfiguration.editorServer.uris.first.port.toInt();
   await app.start(numberOfInstances: 1);
   print("Application started on port: ${app.options.port}.");

@@ -25,25 +25,28 @@ class ImageController extends ResourceController {
 
   @Operation.post()
   Future<Response> createImage(@Bind.body() ImageWrap image) async {
+    print("create image");
     final query = Query<Image>(context)
-      ..values.imageType = image.type
-      ..values.authorEmail = image.authorEmail
-      ..values.imageDataVersion = image.dataModelVersion
-      ..values.imageData = Document(image.toJson());
+      ..values.imageType = image.content.type
+      ..values.authorEmail = image.content.authorEmail
+      ..values.imageDataVersion = image.content.dataModelVersion
+      ..values.imageData = Document(image.content.toJson());
     Image created = await query.insert();
     return Response.ok(created);
   }
 }
 
-class ImageWrap extends model.Image implements Serializable {
+class ImageWrap implements Serializable {
+  model.Image content;
+
   @override
   Map<String, dynamic> asMap() {
-    return super.toJson();
+    return content.toJson();
   }
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    super.fromJson(requestBody);
+    content = model.Image.fromJson(requestBody);
   }
 
   @override

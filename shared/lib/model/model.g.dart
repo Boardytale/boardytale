@@ -10,7 +10,6 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
   return Image()
     ..id = json['id'] as String
     ..data = json['data'] as String
-    ..imageSrc = json['imageSrc'] as String
     ..multiply = (json['multiply'] as num).toDouble()
     ..width = json['width'] as int
     ..height = json['height'] as int
@@ -20,8 +19,6 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
     ..type = _$enumDecode(_$ImageTypeEnumMap, json['type'])
     ..authorEmail = json['authorEmail'] as String
     ..origin = json['origin'] as String
-    ..parentId = json['parentId'] as String
-    ..published = json['published'] as bool
     ..created = DateTime.parse(json['created'] as String)
     ..tags = (json['tags'] as List).map((e) => e as String).toList();
 }
@@ -29,7 +26,6 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
       'id': instance.id,
       'data': instance.data,
-      'imageSrc': instance.imageSrc,
       'multiply': instance.multiply,
       'width': instance.width,
       'height': instance.height,
@@ -39,8 +35,6 @@ Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
       'type': _$ImageTypeEnumMap[instance.type],
       'authorEmail': instance.authorEmail,
       'origin': instance.origin,
-      'parentId': instance.parentId,
-      'published': instance.published,
       'created': instance.created.toIso8601String(),
       'tags': instance.tags
     };

@@ -2,9 +2,9 @@
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-body{
-  color: silver;
-  border: 1px solid black;
+
+.create-image{
+  &__container{
+    border: 1px solid black;
+  }
 }
-
-

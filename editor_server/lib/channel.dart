@@ -5,13 +5,13 @@ import 'package:editor_server/editor_server.dart';
 
 import 'editor_server.dart';
 
-class UserServerChannel extends ApplicationChannel {
+class EditorServerChannel extends ApplicationChannel {
   ManagedContext context;
 
   @override
   Future prepare() async {
     final shared.BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
-    shared.DatabaseConfiguration database = boardytaleConfiguration.userDatabase;
+    shared.DatabaseConfiguration database = boardytaleConfiguration.editorDatabase;
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
     final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(

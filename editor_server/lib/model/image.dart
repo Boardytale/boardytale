@@ -1,4 +1,4 @@
-import 'package:editor_server/model/tag.dart';
+//import 'package:editor_server/model/tag.dart';
 import 'package:editor_server/editor_server.dart';
 import 'package:shared/model/model.dart';
 
@@ -21,15 +21,15 @@ class _Image {
   Document imageData;
 }
 
-class TagToImage extends ManagedObject<_TagToImage> implements _TagToImage {}
-
-class _TagToImage {
-  @Column(autoincrement: true, primaryKey: true)
-  int id;
-
-  @Relate(#id)
-  Tag tag;
-
-  @Relate(#id)
-  Image image;
-}
+//class TagToImage extends ManagedObject<_TagToImage> implements _TagToImage {}
+//
+//class _TagToImage {
+//  @Column(autoincrement: true, primaryKey: true)
+//  int id;
+//
+//  @Relate(#id)
+//  Tag tag;
+//
+//  @Relate(#id)
+//  Image image;
+//}
