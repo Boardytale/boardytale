@@ -70,3 +70,183 @@ User _$UserFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$UserToJson(User instance) =>
     <String, dynamic>{'id': instance.id, 'name': instance.name};
+
+FieldCreateEnvelope _$FieldCreateEnvelopeFromJson(Map<String, dynamic> json) {
+  return FieldCreateEnvelope()
+    ..id = json['id'] as String
+    ..terrainId = json['terrainId'] as int
+    ..x = json['x'] as int
+    ..y = json['y'] as int;
+}
+
+Map<String, dynamic> _$FieldCreateEnvelopeToJson(
+        FieldCreateEnvelope instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'terrainId': instance.terrainId,
+      'x': instance.x,
+      'y': instance.y
+    };
+
+WorldCreateEnvelope _$WorldCreateEnvelopeFromJson(Map<String, dynamic> json) {
+  return WorldCreateEnvelope()
+    ..width = json['width'] as int
+    ..height = json['height'] as int
+    ..baseTerrainId = json['baseTerrainId'] as int
+    ..fields = (json['fields'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        k,
+        e == null
+            ? null
+            : FieldCreateEnvelope.fromJson(e as Map<String, dynamic>)))
+    ..startField = json['startField'] as String;
+}
+
+Map<String, dynamic> _$WorldCreateEnvelopeToJson(
+        WorldCreateEnvelope instance) =>
+    <String, dynamic>{
+      'width': instance.width,
+      'height': instance.height,
+      'baseTerrainId': instance.baseTerrainId,
+      'fields': instance.fields,
+      'startField': instance.startField
+    };
+
+Player _$PlayerFromJson(Map<String, dynamic> json) {
+  return Player()
+    ..id = json['id'] as int
+    ..name = json['name'] as String
+    ..team = json['team'] as int
+    ..handler = json['handler'] as String
+    ..color = json['color'] as String
+    ..isDone = json['isDone'] as bool;
+}
+
+Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'team': instance.team,
+      'handler': instance.handler,
+      'color': instance.color,
+      'isDone': instance.isDone
+    };
+
+Event _$EventFromJson(Map<String, dynamic> json) {
+  return Event(json['name'] as String)
+    ..triggers = (json['triggers'] as List)
+        ?.map((e) =>
+            e == null ? null : Trigger.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$EventToJson(Event instance) =>
+    <String, dynamic>{'name': instance.name, 'triggers': instance.triggers};
+
+Trigger _$TriggerFromJson(Map<String, dynamic> json) {
+  return Trigger()
+    ..event = json['event'] == null
+        ? null
+        : Call.fromJson(json['event'] as Map<String, dynamic>)
+    ..action = json['action'] == null
+        ? null
+        : Call.fromJson(json['action'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$TriggerToJson(Trigger instance) =>
+    <String, dynamic>{'event': instance.event, 'action': instance.action};
+
+Dialog _$DialogFromJson(Map<String, dynamic> json) {
+  return Dialog()
+    ..name = json['name'] as String
+    ..image = json['image'] == null
+        ? null
+        : Call.fromJson(json['image'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$DialogToJson(Dialog instance) =>
+    <String, dynamic>{'name': instance.name, 'image': instance.image};
+
+Call _$CallFromJson(Map<String, dynamic> json) {
+  return Call()
+    ..name = json['name'] as String
+    ..arguments = json['arguments'] as List;
+}
+
+Map<String, dynamic> _$CallToJson(Call instance) =>
+    <String, dynamic>{'name': instance.name, 'arguments': instance.arguments};
+
+TaleCreateEnvelope _$TaleCreateEnvelopeFromJson(Map<String, dynamic> json) {
+  return TaleCreateEnvelope()
+    ..authorEmail = json['authorEmail'] as String
+    ..tale = json['tale'] == null
+        ? null
+        : TaleInnerEnvelope.fromJson(json['tale'] as Map<String, dynamic>)
+    ..lobby = json['lobby'] == null
+        ? null
+        : LobbyTale.fromJson(json['lobby'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$TaleCreateEnvelopeToJson(TaleCreateEnvelope instance) =>
+    <String, dynamic>{
+      'authorEmail': instance.authorEmail,
+      'tale': instance.tale,
+      'lobby': instance.lobby
+    };
+
+TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
+  return TaleInnerEnvelope()
+    ..id = json['id'] as String
+    ..langs = json['langs'] as Map<String, dynamic>
+    ..taleVersion = json['taleVersion'] as int
+    ..world = json['world'] == null
+        ? null
+        : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
+    ..players = (json['players'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            k, e == null ? null : Player.fromJson(e as Map<String, dynamic>)))
+    ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
+    ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
+    ..units = (json['units'] as Map<String, dynamic>)
+        ?.map((k, e) => MapEntry(k, e as String));
+}
+
+Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'langs': instance.langs,
+      'taleVersion': instance.taleVersion,
+      'world': instance.world,
+      'players': instance.players,
+      'events': instance.events,
+      'dialogs': instance.dialogs,
+      'units': instance.units
+    };
+
+LobbyTale _$LobbyTaleFromJson(Map<String, dynamic> json) {
+  return LobbyTale()
+    ..id = json['id'] as int
+    ..name = (json['name'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..description = (json['description'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..image = json['image'] as String;
+}
+
+Map<String, dynamic> _$LobbyTaleToJson(LobbyTale instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'description':
+          instance.description?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'image': instance.image
+    };
+
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source);
+}
+
+const _$LangEnumMap = <Lang, dynamic>{Lang.en: 'en', Lang.cz: 'cz'};

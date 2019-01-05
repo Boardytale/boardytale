@@ -1,5 +1,6 @@
 part of model;
 
+@JsonSerializable()
 class Player {
   int id;
   String name;
@@ -8,6 +9,11 @@ class Player {
   String color;
   bool isDone = false;
   static const List<String> _possibleHandlers = const ["firstHuman", "AI", "passive", "everyHuman"];
+
+
+  static Player fromJson(Map json) {
+    return _$PlayerFromJson(json);
+  }
 
   void fromMap(Map<String, dynamic> data) {
     // TODO validate here

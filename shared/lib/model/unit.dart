@@ -78,11 +78,11 @@ class Unit {
   }
 
   /// called on health change with previous health state
-  ValueNotificator<int> onHealthChanged = new ValueNotificator();
-  Notificator onFieldChanged = new Notificator();
-  Notificator onTypeChanged = new Notificator();
-  Notificator onStepsChanged = new Notificator();
-  Notificator onActionStateChanged = new Notificator();
+//  ValueNotificator<int> onHealthChanged = new ValueNotificator();
+//  Notificator onFieldChanged = new Notificator();
+//  Notificator onTypeChanged = new Notificator();
+//  Notificator onStepsChanged = new Notificator();
+//  Notificator onActionStateChanged = new Notificator();
 
   Unit(this.id);
 
@@ -106,7 +106,7 @@ class Unit {
     _field?.removeUnit(this);
     _field = field;
     field.addUnit(this);
-    onFieldChanged.notify();
+//    onFieldChanged.notify();
   }
 
   set actualHealth(int val) {
@@ -119,7 +119,7 @@ class Unit {
     if (_health < -5) {
       destroy();
     }
-    onHealthChanged.notify(original);
+//    onHealthChanged.notify(original);
     field.refresh();
   }
 
@@ -139,7 +139,7 @@ class Unit {
       _steps = 0;
       _actions = 0;
     }
-    onStepsChanged.notify();
+//    onStepsChanged.notify();
   }
 
   bool get isAlive => _health > 0;
@@ -180,7 +180,7 @@ class Unit {
     }
 
     _recalculate();
-    onTypeChanged.notify();
+//    onTypeChanged.notify();
   }
 
 //  void addAbility(Ability ability) {
@@ -233,7 +233,7 @@ class Unit {
   }
 
   Ability getAbilityByName(String name) =>
-      abilities.firstWhere((Ability ability) => ability.name == name, orElse: returnNull);
+      abilities.firstWhere((Ability ability) => ability.name == name, orElse: ()=>null);
 
   void fromMap(Map<String, dynamic> m, Tale tale) {
     if (type == null || m["type"] != type.id) {

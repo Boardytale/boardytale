@@ -2,14 +2,14 @@ part of model;
 
 class Tale {
   String id;
-  int humanPlayersTeam;
   Map langs;
+  int humanPlayersTeam;
   World world;
-  Resources resources;
-  Map<int, Player> players = {};
+  Map<String, Player> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};
+  Resources resources;
 
   Tale(this.resources);
 
@@ -25,7 +25,7 @@ class Tale {
     if (__groups is List) {
       for (Map<String, dynamic> playerData in __groups) {
         Player player = generator.player()..fromMap(playerData);
-        players[player.id] = player;
+        players[player.id.toString()] = player;
       }
     }
 
@@ -33,7 +33,7 @@ class Tale {
     dynamic __triggers = data["implicitTriggers"];
     if (__triggers is List) {
       for (Map triggerData in __triggers) {
-        allTriggers.add(generator.trigger()..fromMap(triggerData));
+        allTriggers.add(Trigger.fromJson(triggerData));
       }
     }
     events.clear();
@@ -49,7 +49,7 @@ class Tale {
     dynamic __dialogs = data["dialogs"];
     if (__dialogs is List) {
       for (Map dialogData in __dialogs) {
-        Dialog dialog = generator.dialog()..fromMap(dialogData);
+        Dialog dialog = Dialog.fromJson(dialogData);
         dialogs[dialog.name] = dialog;
       }
     }
@@ -108,20 +108,25 @@ class Tale {
   }
 }
 
+@JsonSerializable()
 class Event {
   String name;
   List<Trigger> triggers = [];
 
   Event(this.name);
+
+  static Event fromJson(Map json) {
+    return _$EventFromJson(json);
+  }
 }
 
+@JsonSerializable()
 class Trigger {
   Call event;
   Call action;
 
-  void fromMap(Map data) {
-//    event = new Call(data["event"]);
-//    action = new Call(data["action"]);
+  static Trigger fromJson(Map data) {
+    return _$TriggerFromJson(data);
   }
 
   Map<String, dynamic> toMap() {
@@ -129,16 +134,41 @@ class Trigger {
   }
 }
 
+@JsonSerializable()
 class Dialog {
   String name;
   Call image;
 
-  void fromMap(Map data) {
-    name = data["name"] as String;
-    image = new Call(data["image"] as String);
+  static Dialog fromJson(Map<String, dynamic> json) {
+    return _$DialogFromJson(json);
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{"name": name, "image": image.toString()};
+  }
+}
+
+@JsonSerializable()
+class Call {
+  String name;
+  List arguments;
+
+  Call();
+
+  Call.fromLiteral(String literal) {
+//    int argumentsStart = literal.indexOf("(");
+//    int argumentsEnd = literal.indexOf(")");
+//    name = literal.substring(0,argumentsStart);
+//    arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
+  }
+
+  static Call fromJson(Map<String, dynamic> json) {
+    return _$CallFromJson(json);
+  }
+
+  @override
+  String toString() {
+    return '';
+//     return "$name(${arguments.join(",")})";
   }
 }

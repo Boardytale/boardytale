@@ -1,7 +1,6 @@
 library model;
 
 import "dart:math" as Math;
-import 'package:utils/utils.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 
@@ -16,7 +15,10 @@ part 'field.dart';
 part 'world.dart';
 part 'alea.dart';
 part 'player.dart';
-part 'tale.dart';
+part 'tale/tale.dart';
+part 'tale/tale_create_envelope.dart';
+part 'tale/lobby_tale.dart';
+part "lang.dart";
 part 'buff.dart';
 part 'targets.dart';
 part 'settings.dart';

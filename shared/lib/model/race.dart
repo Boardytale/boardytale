@@ -4,18 +4,18 @@ class Race {
   String _id;
   String _name;
   List<UnitType> _unitTypes = new List<UnitType>();
-  Notificator onChange = new Notificator();
+//  Stream onChange;
   String get id => _id;
   String get name => _name;
   List<UnitType> get unitTypes => _unitTypes;
   set id(String val) {
     _id = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set name(String val) {
     _name = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   void fromMap(Map data) {

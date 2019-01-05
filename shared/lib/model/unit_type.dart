@@ -22,7 +22,7 @@ class UnitType {
   Image bigImage;
   String iconId;
   Image iconImage;
-  Notificator onChange = new Notificator();
+//  Notificator onChange = new Notificator();
 
   String raceId;
 
@@ -54,47 +54,47 @@ class UnitType {
 
   set id(String val) {
     _id = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set race(Race val) {
     _race = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set health(int val) {
     _health = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set armor(int val) {
     _armor = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set speed(int val) {
     _speed = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set range(int val) {
     _range = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set actions(int val) {
     _actions = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set attack(List<int> val) {
     _attack = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   set cost(int val) {
     _cost = val;
-    onChange.notify();
+//    onChange.notify();
   }
 
   void fromMap(Map data) {

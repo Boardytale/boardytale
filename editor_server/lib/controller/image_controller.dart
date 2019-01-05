@@ -24,15 +24,28 @@ class ImageController extends ResourceController {
   }
 
   @Operation.post()
-  Future<Response> createImage(@Bind.body() ImageWrap image) async {
-    print("create image");
-    final query = Query<Image>(context)
-      ..values.imageType = image.content.type
-      ..values.authorEmail = image.content.authorEmail
-      ..values.imageDataVersion = image.content.dataModelVersion
-      ..values.imageData = Document(image.content.toJson());
-    Image created = await query.insert();
-    return Response.ok(created);
+  Future<Response> createImage(@Bind.body() ImageWrap imageWrap) async {
+    model.Image image = imageWrap.content;
+    dynamic _id = image.id;
+    if (_id is String) {
+      final query = Query<Image>(context)..where((i) => i.id).equalTo(_id);
+      List<Image> existingImages = await query.fetch();
+      if (existingImages.isEmpty) {
+        final query = Query<Image>(context)
+          ..values.id = _id
+          ..values.imageType = image.type
+          ..values.authorEmail = image.authorEmail
+          ..values.imageDataVersion = image.dataModelVersion
+          ..values.imageData = Document(image.toJson());
+        Image created = await query.insert();
+        return Response.ok(created);
+      } else {
+        return Response.conflict(body: "image id is used");
+      }
+    } else {
+      return Response.badRequest(body: "image id must be specified as a String");
+    }
+
   }
 }
 

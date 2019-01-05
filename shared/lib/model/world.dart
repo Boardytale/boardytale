@@ -1,5 +1,18 @@
 part of model;
 
+@JsonSerializable()
+class WorldCreateEnvelope{
+  int width;
+  int height;
+  int baseTerrainId = 0;
+  Map<String, FieldCreateEnvelope> fields = {};
+  String startField;
+
+  static WorldCreateEnvelope fromJson(Map json) {
+    return _$WorldCreateEnvelopeFromJson(json);
+  }
+}
+
 class World {
   int width;
   int height;
