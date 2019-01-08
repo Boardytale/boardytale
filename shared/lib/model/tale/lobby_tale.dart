@@ -1,8 +1,9 @@
 part of model;
 
+@Typescript()
 @JsonSerializable()
 class LobbyTale {
-  int id;
+  String id;
   Map<Lang, String> name;
   Map<Lang, String> description;
   // 100 × 100 px  base64 jpg or png

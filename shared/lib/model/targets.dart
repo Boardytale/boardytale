@@ -97,7 +97,7 @@ class Targets {
     }
     if (!alives.isEmpty) {
       Unit firstUnit = alives.first;
-      if (firstUnit.player.id == invoker.player.id) {
+      if (firstUnit.player == invoker.player) {
         return _matchUnits(alives, ally);
       } else {
         if (firstUnit.player.team == invoker.player.team) {

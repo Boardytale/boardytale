@@ -1,37 +1,32 @@
 part of model;
 
+@Typescript()
 @JsonSerializable()
 class Player {
-  int id;
-  String name;
-  int team;
-  String handler;
+  String id;
+  Map<Lang, String> name;
+  String team;
+  PlayerHandler handler;
   String color;
-  bool isDone = false;
-  static const List<String> _possibleHandlers = const ["firstHuman", "AI", "passive", "everyHuman"];
 
 
   static Player fromJson(Map json) {
     return _$PlayerFromJson(json);
   }
 
-  void fromMap(Map<String, dynamic> data) {
-    // TODO validate here
-    id = data["id"] as int;
-    name = data["name"] as String;
-    team = data["team"] as int;
-    color = data["color"] ?? "gold";
-    isDone = data["done"] ?? false;
-
-    dynamic __handler = data["handler"];
-    if (__handler is String && _possibleHandlers.contains(__handler)) {
-      handler = __handler;
-    } else {
-      throw "Key handler is obligatory and must be one of $_possibleHandlers";
-    }
+  Map<String, dynamic> toJson() {
+    return _$PlayerToJson(this);
   }
+}
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{"id": id, "name": name, "team": team, "handler": handler, "color": color,"done":isDone};
-  }
+@Typescript()
+enum PlayerHandler {
+  @JsonValue('firstHuman')
+  firstHuman,
+  @JsonValue('ai')
+  ai,
+  @JsonValue('passive')
+  passive,
+  @JsonValue('everyHuman')
+  everyHuman,
 }

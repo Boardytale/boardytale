@@ -45,7 +45,7 @@ class Track {
   bool isFreeWay(Player ofPlayer) {
     if (fields.length >= 2) {
       Field toGo = fields[fields.length - 2];
-      if (!toGo.units.isEmpty && toGo.units.first.player.id != ofPlayer.id) return false;
+      if (!toGo.units.isEmpty && toGo.units.first.player != ofPlayer) return false;
     }
     if (fields.length >= 3) {
       for (var i = 1; i < fields.length - 2; i++) {

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
-import 'create_image_service.dart';
+import 'create_image.service.dart';
 
 @Component(
   selector: 'create-image',

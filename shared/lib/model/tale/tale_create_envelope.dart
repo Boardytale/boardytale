@@ -1,5 +1,6 @@
 part of model;
 
+@Typescript()
 @JsonSerializable()
 class TaleCreateEnvelope {
   String authorEmail;
@@ -13,10 +14,11 @@ class TaleCreateEnvelope {
   }
 }
 
+@Typescript()
 @JsonSerializable()
 class TaleInnerEnvelope{
   String id;
-  Map langs;
+  Map<Lang, Map<String, String>> langs;
   int taleVersion;
   WorldCreateEnvelope world;
   Map<String, Player> players = {};

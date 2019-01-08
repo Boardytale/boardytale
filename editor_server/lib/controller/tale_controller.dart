@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
-import 'package:editor_server/model/image.dart';
 import 'package:editor_server/model/tale.dart';
 import 'package:shared/model/model.dart' as model;
 
@@ -10,7 +9,7 @@ class TaleController extends ResourceController {
   final ManagedContext context;
 
   @Operation.get('id')
-  Future<Response> getTaleById(@Bind.path("id") int id) async {
+  Future<Response> getTaleById(@Bind.path("id") String id) async {
     if(id == null){
       return Response.badRequest(body: "$id is not an integer");
     }

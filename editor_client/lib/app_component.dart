@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:angular/angular.dart';
-import 'package:editor_client/src/create_image/create_image_component.dart';
+import 'package:editor_client/src/create_image/create_image.component.dart';
+import 'package:editor_client/src/create_tale/create_tale.component.dart';
 import 'package:http/http.dart' as http;
 import 'package:ng2_g_signin/ng2_g_signin.dart';
 
@@ -11,7 +12,8 @@ import 'package:ng2_g_signin/ng2_g_signin.dart';
                (googleSigninSuccess)="onGoogleSigninSuccess"></google-signin>
                
               <create-image></create-image>
-  ''', directives: const [GoogleSignin, CreateImageComponent])
+              <create-tale></create-tale>
+  ''', directives: const [GoogleSignin, CreateImageComponent, CreateTaleComponent])
 class AppComponent {
   final http.Client _http;
 

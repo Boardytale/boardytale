@@ -16,66 +16,10 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
       final name = element.name;
       return '// $name ${element.runtimeType}';
     }
-//
     final classElement = element as ClassElement;
-
     if (classElement.isEnum) {
-
-//      out.add(classElement.toString());
-//
-//      out.add(classElement.fields.map((field) {
-//        return field.name;
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return field.type.name;
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return field.metadata.map((annotation) {
-//          return 'annotation name' + annotation.constantValue.type.name;
-//        }).join(',');
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return 'field ' + field.metadata.map((annotation) {
-//          return 'annotation: ' + annotation.constantValue.type.typeParameters.map((p) {
-//            return 'param ' + p.name;
-//          }).join(',');
-//        }).join(',');
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return 'field ' + field.metadata.map((annotation) {
-//          return 'annotation: ' + json.encode(annotation.constantValue.toMapValue());
-//        }).join(',');
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return 'field ' + field.metadata.map((annotation) {
-//          return 'annotation computed: ' + json.encode(annotation.computeConstantValue().toString());
-//        }).join(',');
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return 'field ' + field.metadata.map((annotation) {
-//          return 'annotation computed: ' +
-//              json.encode(annotation.computeConstantValue().getField('value').toStringValue());
-//        }).join(',');
-//      }).join(','));
-//
-//      out.add(classElement.fields.map((field) {
-//        return 'field ' + field.metadata.map((annotation) {
-//          return 'annotation computed fields: ' + json.encode(annotation.computeConstantValue().type.typeParameters.map((a){
-//            return a.displayName;
-//          }).join('|'));
-//        }).join(',');
-//      }).join(','));
-
       List<FieldElement> fields = classElement.fields;
       List<String> enumValues = [];
-
-
       fields.forEach((field) {
         field.metadata.forEach((ElementAnnotation annotation) {
           if (annotation.constantValue.type.name == 'JsonValue') {
@@ -83,23 +27,11 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
           }
         });
       });
-
       return 'export type ${classElement.name} = ${enumValues.map((value)=>"'$value'").join('|')}';
     }
 
     List<String> fields = [];
     classElement.fields.forEach((field) {
-//      fields += '// field.name ${field.name} \n';
-//      fields += '// field.type ${field.type.name} \n';
-//      fields += '// field.runetype ${field.type.runtimeType} \n';
-//      DartType type = field.type;
-//      if (type is ParameterizedType) {
-//        type.typeArguments.forEach((p) {
-//          fields += '// parameter.name ${p.name} \n';
-//          fields += '// parameter.type ${p.name} \n';
-//          fields += '// parameter.runetype ${p.runtimeType} \n';
-//        });
-//      }
       fields.add('${field.name}: ${_resolveType(field.type)};');
     });
     return '''
@@ -120,6 +52,16 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         case 'List':
           return 'Array' + parameters;
         case 'Map':
+          if(type.typeArguments.length == 2){
+            String firstType = _resolveType(type.typeArguments[0]);
+            if(firstType == "any"){
+              firstType = "string";
+            }
+            if(firstType == "string"){
+              return '{[key:string]:${_resolveType(type.typeArguments[1])}}';
+            }
+            return '{[key in ${firstType}]?:${_resolveType(type.typeArguments[1])}}';
+          }
           return 'any';
       }
       return 'any';
@@ -142,6 +84,8 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         return 'any';
       case 'DateTime':
         return 'string';
+      case 'dynamic':
+        return 'any';
     }
     return type.name;
   }

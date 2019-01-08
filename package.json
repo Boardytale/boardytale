@@ -11,7 +11,7 @@
     "start-user-server": "dart user_server/bin/main.dart",
     "ts-node": "ts-node",
     "editor-serve": "cd editor_client && dart serve.dart",
-    "generate-image-jsons": "cd shared/lib/images && ts-node generate-jsons.ts"
+    "generate-data-jsons": "cd shared/lib/data && ts-node generate-jsons.ts"
   },
   "private": true,
   "devDependencies": {
@@ -32,5 +32,11 @@
   },
   "dependencies": {
     "http-proxy-middleware": "^0.19.0"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true
   }
 }

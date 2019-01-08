@@ -1,5 +1,6 @@
 part of model;
 
+@Typescript()
 @JsonSerializable()
 class FieldCreateEnvelope {
   String id;
@@ -298,4 +299,16 @@ class Field {
 //    result.add(target.id);
     return result;
   }
+}
+
+@Typescript()
+enum Terrain {
+  @JsonValue('grass')
+  grass,
+  @JsonValue('rock')
+  rock,
+  @JsonValue('water')
+  water,
+  @JsonValue('forest')
+  forest
 }
