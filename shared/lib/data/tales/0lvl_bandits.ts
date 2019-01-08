@@ -18,7 +18,7 @@ export let data: TaleCreateEnvelope = {
         id: '0lvl_bandits',
         image: '36-pikeman_soubi',
         name: {
-            en: 'Bandits camp'
+            en: 'Bandits camp',
         },
     },
     authorEmail: 'mlcoch.zdenek@gmail.com',

@@ -4,6 +4,15 @@
 // TypescriptGenerator
 // **************************************************************************
 
+export type ImageType =
+    | 'field'
+    | 'unitIcon'
+    | 'unitBase'
+    | 'unitHighRes'
+    | 'item'
+    | 'taleFullScreen'
+    | 'taleBottomScreen'
+
 export interface Image {
     id: string
     data: string
@@ -21,19 +30,12 @@ export interface Image {
     tags: Array<string>
 }
 
-export type ImageType =
-    | 'field'
-    | 'unitIcon'
-    | 'unitBase'
-    | 'unitHighRes'
-    | 'item'
-    | 'taleFullScreen'
-    | 'taleBottomScreen'
-
 export interface User {
     id: string
     name: string
 }
+
+export type Terrain = 'grass' | 'rock' | 'water' | 'forest'
 
 export interface FieldCreateEnvelope {
     id: string
@@ -41,8 +43,6 @@ export interface FieldCreateEnvelope {
     x: number
     y: number
 }
-
-export type Terrain = 'grass' | 'rock' | 'water' | 'forest'
 
 export interface WorldCreateEnvelope {
     width: number
@@ -52,6 +52,8 @@ export interface WorldCreateEnvelope {
     startField: string
 }
 
+export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman'
+
 export interface Player {
     id: string
     name: { [key in Lang]?: string }
@@ -59,8 +61,6 @@ export interface Player {
     handler: PlayerHandler
     color: string
 }
-
-export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman'
 
 export interface Event {
     name: string
