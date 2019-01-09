@@ -32,8 +32,8 @@ class Targets {
 
   static Map<String, CheckUnit> checkUnits = {
     TARGET_WOUNDED: (Unit unit) => unit.actualHealth != unit.type.health,
-    TARGET_UNDEAD: (Unit unit) => unit.tags.contains(UnitType.TAG_UNDEAD),
-    TARGET_NOT_UNDEAD: (Unit unit) => !unit.tags.contains(UnitType.TAG_UNDEAD)
+    TARGET_UNDEAD: (Unit unit) => unit.isUndead,
+    TARGET_NOT_UNDEAD: (Unit unit) => !unit.isUndead
   };
 
   void fromList(List<String> targetList) {

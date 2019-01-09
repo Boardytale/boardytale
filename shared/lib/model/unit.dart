@@ -19,9 +19,9 @@ class Unit {
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
 
-  bool get isUndead => tags.contains(UnitType.TAG_UNDEAD);
+  bool get isUndead => tags.contains(UnitTypeTag.undead);
 
-  bool get isEthernal => tags.contains(UnitType.TAG_ETHERNAL);
+  bool get isEthernal => tags.contains(UnitTypeTag.ethernal);
 
   String get name => _name;
 
@@ -37,35 +37,35 @@ class Unit {
 
   // called on buffs and type change
   void _recalculate() {
-    assert(type != null);
-    armor = type.armor;
-    speed = type.speed;
-    range = type.range;
-    attack = type.attack.toList(growable: false);
-    abilities.clear();
-    for (Ability ability in type.abilities) {
-      abilities.add(ability);
-    }
-
-    if (type.tags != null) {
-      tags = type.tags.toSet();
-    }
-
-    for (Buff buff in _buffs) {
-      armor += buff.armorDelta;
-      speed += buff.speedDelta;
-      if (range != null) range += buff.rangeDelta;
-      for (int i = 0; i < 6; i++) {
-        attack[i] += buff.attackDelta[i];
-      }
-      if (buff.extraTags != null) {
-        tags.addAll(buff.extraTags);
-      }
-      if (buff.bannedTags != null) {
-        tags.removeAll(buff.bannedTags);
-      }
-    }
-    limitAttributes();
+//    assert(type != null);
+//    armor = type.armor;
+//    speed = type.speed;
+//    range = type.range;
+//    attack = type.attack.toList(growable: false);
+//    abilities.clear();
+//    for (Ability ability in type.abilities) {
+//      abilities.add(ability);
+//    }
+//
+//    if (type.tags != null) {
+//      tags = type.tags.toSet();
+//    }
+//
+//    for (Buff buff in _buffs) {
+//      armor += buff.armorDelta;
+//      speed += buff.speedDelta;
+//      if (range != null) range += buff.rangeDelta;
+//      for (int i = 0; i < 6; i++) {
+//        attack[i] += buff.attackDelta[i];
+//      }
+//      if (buff.extraTags != null) {
+//        tags.addAll(buff.extraTags);
+//      }
+//      if (buff.bannedTags != null) {
+//        tags.removeAll(buff.bannedTags);
+//      }
+//    }
+//    limitAttributes();
   }
 
   void limitAttributes() {

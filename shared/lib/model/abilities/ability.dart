@@ -1,5 +1,12 @@
 part of model;
 
+@Typescript()
+@JsonSerializable()
+class AbilityEnvelope{
+  Ability id;
+  Map<String, dynamic> modifications;
+}
+
 abstract class Ability {
   static const TRIGGER_MINE_TURN_START = "mine_turn_start";
 
@@ -66,15 +73,17 @@ abstract class Ability {
     throw "ability $abilityClass $data not implemented";
   }
 
-  int getRange(Unit invoker){
-    if(_range!=null) return _range;
+  int getRange(Unit invoker) {
+    if (_range != null) return _range;
     return invoker.range;
   }
-  List<int> getAttack(Unit invoker){
-    if(_attack!=null) return _attack;
+
+  List<int> getAttack(Unit invoker) {
+    if (_attack != null) return _attack;
     return invoker.attack;
   }
-  Alea prepareAlea(Unit invoker)=> new Alea(getAttack(invoker));
+
+  Alea prepareAlea(Unit invoker) => new Alea(getAttack(invoker));
 
   String validate(Unit unit, Track track) {
     if (unit.actions < actions) return "too few actions";
@@ -132,4 +141,42 @@ abstract class Ability {
   Map<String, dynamic> toMap() {
     return _abilityData;
   }
+}
+
+@Typescript()
+enum Abilities {
+  @JsonValue('move')
+  move,
+  @JsonValue('attack')
+  attack,
+  @JsonValue('shoot')
+  shoot,
+  @JsonValue('heal')
+  heal,
+  @JsonValue('revive')
+  revive,
+  @JsonValue('hand_heal')
+  hand_heal,
+  @JsonValue('boost')
+  boost,
+  @JsonValue('linked_move')
+  linked_move,
+  @JsonValue('step_shoot')
+  step_shoot,
+  @JsonValue('light')
+  light,
+  @JsonValue('summon')
+  summon,
+  @JsonValue('dismiss')
+  dismiss,
+  @JsonValue('change_type')
+  change_type,
+  @JsonValue('regeneration')
+  regeneration,
+  @JsonValue('dark_shoot')
+  dark_shoot,
+  @JsonValue('teleport')
+  teleport,
+  @JsonValue('raise')
+  raise
 }
