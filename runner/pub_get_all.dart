@@ -11,14 +11,15 @@ main() async {
   };
 
   printRun(
-      Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/client"));
+      Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/editor_client"));
 
   printRun(Process.runSync(pubExecutable, ["get"],
-      workingDirectory: projectDirectoryPath + "/boardytale_commons"));
+      workingDirectory: projectDirectoryPath + "/editor_server"));
 
   printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/io_utils"));
 
-  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/server"));
+  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/shared"));
 
-  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/utils"));
+  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/typescript_generator"));
+  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/user_server"));
 }

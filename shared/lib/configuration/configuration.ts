@@ -4,6 +4,8 @@
 // TypescriptGenerator
 // **************************************************************************
 
+export type ExecutableType = 'ts-node' | 'js' | 'dart'
+
 export interface Uri {
     host: string
     port: number
@@ -44,5 +46,3 @@ export interface BoardytaleConfiguration {
     gameStaticDev: FrontEndDevelopment
     editorStaticDev: FrontEndDevelopment
 }
-
-export type ExecutableType = 'ts-node' | 'js' | 'dart'
