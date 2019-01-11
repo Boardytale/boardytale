@@ -8,6 +8,10 @@ class FieldCreateEnvelope {
   int x;
   int y;
 
+  Map toJson() {
+    return _$FieldCreateEnvelopeToJson(this);
+  }
+
   static FieldCreateEnvelope fromJson(Map json) {
     return _$FieldCreateEnvelopeFromJson(json);
   }

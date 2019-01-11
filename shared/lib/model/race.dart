@@ -5,6 +5,14 @@ part of model;
 class Race {
   Races id;
   Map<Lang,String> name;
+
+  static fromJson(Map data){
+    return _$RaceFromJson(data);
+  }
+
+  Map toJson(){
+    return _$RaceToJson(this);
+  }
 }
 
 @Typescript()

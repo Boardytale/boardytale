@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'package:analyzer/dart/element/element.dart';
 import 'package:analyzer/dart/element/type.dart';
 import 'package:build/src/builder/build_step.dart';

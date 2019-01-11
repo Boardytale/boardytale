@@ -4,7 +4,8 @@ part of model;
 @JsonSerializable()
 class UnitTypeEnvelope {
   String id;
-  String authorId;
+  String authorEmail;
+  String created;
   Races race;
   List<UnitTypeTag> tags;
   int health;
@@ -17,6 +18,14 @@ class UnitTypeEnvelope {
   List<AbilityEnvelope> abilities;
   String imageId;
   Map<Lang, String> unitTypeName;
+
+  static UnitTypeEnvelope fromJson(Map data){
+    return _$UnitTypeEnvelopeFromJson(data);
+  }
+
+  Map toJson(){
+    return _$UnitTypeEnvelopeToJson(this);
+  }
 }
 
 class UnitType {

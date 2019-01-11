@@ -3,8 +3,16 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class AbilityEnvelope{
-  Ability id;
+  Abilities id;
   Map<String, dynamic> modifications;
+
+  static AbilityEnvelope fromJson(Map json){
+    return _$AbilityEnvelopeFromJson(json);
+  }
+
+  Map toJson(){
+    return _$AbilityEnvelopeToJson(this);
+  }
 }
 
 abstract class Ability {

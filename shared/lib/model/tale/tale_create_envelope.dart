@@ -9,6 +9,10 @@ class TaleCreateEnvelope {
 
   final int taleDataVersion = 0;
 
+  Map toJson(){
+    return _$TaleCreateEnvelopeToJson(this);
+  }
+
   static TaleCreateEnvelope fromJson(Map<String, dynamic> json) {
     return _$TaleCreateEnvelopeFromJson(json);
   }

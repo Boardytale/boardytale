@@ -35,6 +35,33 @@ export interface User {
     name: string
 }
 
+export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic'
+
+export interface UnitTypeEnvelope {
+    id: string
+    authorEmail: string
+    created: string
+    race: Races
+    tags: Array<UnitTypeTag>
+    health: number
+    armor: number
+    speed: number
+    range: number
+    actions: number
+    attack: string
+    cost: number
+    abilities: Array<AbilityEnvelope>
+    imageId: string
+    unitTypeName: { [key in Lang]?: string }
+}
+
+export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal'
+
+export interface Race {
+    id: Races
+    name: { [key in Lang]?: string }
+}
+
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest'
 
 export interface FieldCreateEnvelope {
@@ -108,3 +135,27 @@ export interface LobbyTale {
 }
 
 export type Lang = 'en' | 'cz'
+
+export type Abilities =
+    | 'move'
+    | 'attack'
+    | 'shoot'
+    | 'heal'
+    | 'revive'
+    | 'hand_heal'
+    | 'boost'
+    | 'linked_move'
+    | 'step_shoot'
+    | 'light'
+    | 'summon'
+    | 'dismiss'
+    | 'change_type'
+    | 'regeneration'
+    | 'dark_shoot'
+    | 'teleport'
+    | 'raise'
+
+export interface AbilityEnvelope {
+    id: Abilities
+    modifications: { [key: string]: any }
+}

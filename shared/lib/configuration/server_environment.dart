@@ -6,6 +6,10 @@ class Uri {
   String host;
   num port;
 
+  Map toJson(){
+    return _$UriToJson(this);
+  }
+
   static Uri fromJson(Map<String, dynamic> json) {
     return _$UriFromJson(json);
   }
@@ -19,6 +23,10 @@ class DatabaseConfiguration {
   String host;
   int port;
   String databaseName;
+
+  Map toJson(){
+    return _$DatabaseConfigurationToJson(this);
+  }
 
   static fromJson(Map<String, dynamic> json) {
     return _$DatabaseConfigurationFromJson(json);
@@ -34,6 +42,10 @@ class ServerConfiguration {
   String pathToWorkingDirectory;
   ExecutableType executableType;
 
+  Map toJson(){
+    return _$ServerConfigurationToJson(this);
+  }
+
   static ServerConfiguration fromJson(Map<String, dynamic> json) {
     return _$ServerConfigurationFromJson(json);
   }
@@ -44,6 +56,10 @@ class FrontEndDevelopment {
   bool active;
   num port;
   String route;
+
+  Map toJson(){
+    return _$FrontEndDevelopmentToJson(this);
+  }
 
   static fromJson(Map<String, dynamic> json) {
     return _$FrontEndDevelopmentFromJson(json);
@@ -62,6 +78,10 @@ class BoardytaleConfiguration {
   ServerConfiguration proxyServer;
   FrontEndDevelopment gameStaticDev;
   FrontEndDevelopment editorStaticDev;
+
+  Map toJson(){
+    return _$BoardytaleConfigurationToJson(this);
+  }
 
   static fromJson(Map<String, dynamic> json) {
     return _$BoardytaleConfigurationFromJson(json);

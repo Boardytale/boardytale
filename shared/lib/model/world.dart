@@ -12,6 +12,10 @@ class WorldCreateEnvelope{
   static WorldCreateEnvelope fromJson(Map json) {
     return _$WorldCreateEnvelopeFromJson(json);
   }
+
+  Map toJson(){
+    return _$WorldCreateEnvelopeToJson(this);
+  }
 }
 
 class World {

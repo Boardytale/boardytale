@@ -1,5 +1,4 @@
 import 'package:editor_server/editor_server.dart';
-import 'package:shared/model/model.dart';
 
 class Tale extends ManagedObject<_Tale> implements _Tale {}
 

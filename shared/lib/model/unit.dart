@@ -111,7 +111,6 @@ class Unit {
 
   set actualHealth(int val) {
     if (val == _health) return;
-    int original = _health;
     _health = val;
     if (_health > type.health) {
       _health = type.health;
@@ -119,7 +118,6 @@ class Unit {
     if (_health < -5) {
       destroy();
     }
-//    onHealthChanged.notify(original);
     field.refresh();
   }
 

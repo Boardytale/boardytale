@@ -119,6 +119,10 @@ class Event {
   static Event fromJson(Map json) {
     return _$EventFromJson(json);
   }
+
+  Map toJson(){
+    return _$EventToJson(this);
+  }
 }
 
 @Typescript()
@@ -127,12 +131,13 @@ class Trigger {
   Call event;
   Call action;
 
+
   static Trigger fromJson(Map data) {
     return _$TriggerFromJson(data);
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{"event": event.toString(), "action": action.toString()};
+  Map<String, dynamic> toJson() {
+    return _$TriggerToJson(this);
   }
 }
 
@@ -146,8 +151,8 @@ class Dialog {
     return _$DialogFromJson(json);
   }
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{"name": name, "image": image.toString()};
+  Map<String, dynamic> toJson() {
+    return _$DialogToJson(this);
   }
 }
 
@@ -157,17 +162,12 @@ class Call {
   String name;
   List arguments;
 
-  Call();
-
-  Call.fromLiteral(String literal) {
-//    int argumentsStart = literal.indexOf("(");
-//    int argumentsEnd = literal.indexOf(")");
-//    name = literal.substring(0,argumentsStart);
-//    arguments = literal.substring(argumentsStart+1, argumentsEnd).split(",");
-  }
-
   static Call fromJson(Map<String, dynamic> json) {
     return _$CallFromJson(json);
+  }
+
+  Map toJson(){
+    return _$CallToJson(this);
   }
 
   @override

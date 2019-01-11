@@ -5,6 +5,14 @@ part of model;
 class User {
   String id;
   String name;
+
+  static User fromJson(Map data){
+    return _$UserFromJson(data);
+  }
+
+  Map toJson(){
+    return _$UserToJson(this);
+  }
 }
 
 class Users {
