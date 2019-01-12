@@ -18,7 +18,7 @@ class Image {
   /// The place where the image comes from. Expected is URL or just "direct"
   String origin;
   DateTime created;
-  List<String> tags;
+  List<ImageTag> tags;
 
   static Image fromJson(Map<String, dynamic> json) {
     return _$ImageFromJson(json);
@@ -56,3 +56,11 @@ enum ImageType {
   @JsonValue('taleBottomScreen')
   taleBottomScreen
 }
+
+@Typescript()
+enum ImageTag {
+  @JsonValue('grass')
+  grass,
+}
+
+

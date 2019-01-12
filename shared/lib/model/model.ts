@@ -11,132 +11,134 @@ export type ImageType =
     | 'unitHighRes'
     | 'item'
     | 'taleFullScreen'
-    | 'taleBottomScreen'
+    | 'taleBottomScreen';
+
+export type ImageTag = 'grass';
 
 export interface Image {
-    id: string
-    data: string
-    multiply: number
-    width: number
-    height: number
-    top: number
-    left: number
-    name: string
-    type: ImageType
-    authorEmail: string
-    dataModelVersion: number
-    origin: string
-    created: string
-    tags: Array<string>
+    id: string;
+    data: string;
+    multiply: number;
+    width: number;
+    height: number;
+    top: number;
+    left: number;
+    name: string;
+    type: ImageType;
+    authorEmail: string;
+    dataModelVersion: number;
+    origin: string;
+    created: string;
+    tags: Array<ImageTag>;
 }
 
 export interface User {
-    id: string
-    name: string
+    id: string;
+    name: string;
 }
 
-export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic'
+export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
-export interface UnitTypeEnvelope {
-    id: string
-    authorEmail: string
-    created: string
-    race: Races
-    tags: Array<UnitTypeTag>
-    health: number
-    armor: number
-    speed: number
-    range: number
-    actions: number
-    attack: string
-    cost: number
-    abilities: Array<AbilityEnvelope>
-    imageId: string
-    unitTypeName: { [key in Lang]?: string }
+export interface UnitTypeCreateEnvelope {
+    authorEmail: string;
+    created: string;
+    imageId: string;
+    iconId: string;
+    bigImageId: string;
 }
 
-export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal'
+export interface UnitType {
+    image: Image;
+    icon: Image;
+    bigImage: Image;
+}
+
+export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal';
 
 export interface Race {
-    id: Races
-    name: { [key in Lang]?: string }
+    id: Races;
+    name: { [key in Lang]?: string };
 }
 
-export type Terrain = 'grass' | 'rock' | 'water' | 'forest'
+export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
 export interface FieldCreateEnvelope {
-    id: string
-    terrainId: number
-    x: number
-    y: number
+    id: string;
+    terrainId: number;
+    x: number;
+    y: number;
 }
 
 export interface WorldCreateEnvelope {
-    width: number
-    height: number
-    baseTerrainId: Terrain
-    fields: { [key: string]: FieldCreateEnvelope }
-    startField: string
+    width: number;
+    height: number;
+    baseTerrainId: Terrain;
+    fields: { [key: string]: FieldCreateEnvelope };
+    startField: string;
 }
 
-export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman'
+export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman';
 
 export interface Player {
-    id: string
-    name: { [key in Lang]?: string }
-    team: string
-    handler: PlayerHandler
-    color: string
+    id: string;
+    name: { [key in Lang]?: string };
+    team: string;
+    handler: PlayerHandler;
+    color: string;
 }
 
 export interface Event {
-    name: string
-    triggers: Array<Trigger>
+    name: string;
+    triggers: Array<Trigger>;
 }
 
 export interface Trigger {
-    event: Call
-    action: Call
+    event: Call;
+    action: Call;
 }
 
 export interface Dialog {
-    name: string
-    image: Call
+    name: string;
+    image: Call;
 }
 
 export interface Call {
-    name: string
-    arguments: Array<any>
+    name: string;
+    arguments: Array<any>;
 }
 
 export interface TaleCreateEnvelope {
-    authorEmail: string
-    tale: TaleInnerEnvelope
-    lobby: LobbyTale
-    taleDataVersion: number
+    authorEmail: string;
+    tale: TaleInnerEnvelope;
+    lobby: LobbyTale;
+    taleDataVersion: number;
 }
 
 export interface TaleInnerEnvelope {
-    id: string
-    langs: { [key in Lang]?: { [key: string]: string } }
-    taleVersion: number
-    world: WorldCreateEnvelope
-    players: { [key: string]: Player }
-    events: { [key: string]: Event }
-    dialogs: { [key: string]: Dialog }
-    units: { [key: string]: string }
+    id: string;
+    langs: { [key in Lang]?: { [key: string]: string } };
+    taleVersion: number;
+    world: WorldCreateEnvelope;
+    players: { [key: string]: Player };
+    events: { [key: string]: Event };
+    dialogs: { [key: string]: Dialog };
+    units: { [key: string]: string };
 }
 
 export interface LobbyTale {
-    id: string
-    name: { [key in Lang]?: string }
-    description: { [key in Lang]?: string }
-    image: string
+    id: string;
+    name: { [key in Lang]?: string };
+    description: { [key in Lang]?: string };
+    image: string;
 }
 
-export type Lang = 'en' | 'cz'
+export type Lang = 'en' | 'cz';
 
-export type Abilities =
+export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
+
+export type TargetModificators = 'wounded' | 'notUndead' | 'undead';
+
+export type AbilityNames =
     | 'move'
     | 'attack'
     | 'shoot'
@@ -153,9 +155,20 @@ export type Abilities =
     | 'regeneration'
     | 'dark_shoot'
     | 'teleport'
-    | 'raise'
+    | 'raise';
 
-export interface AbilityEnvelope {
-    id: Abilities
-    modifications: { [key: string]: any }
+export interface Abilities {
+    move?: MoveAbility;
+    attack?: AttackAbility;
+}
+
+export interface MoveAbility {
+    steps: string;
+    reach: string;
+}
+
+export interface AttackAbility {
+    range: string;
+    attack: string;
+    reach: string;
 }

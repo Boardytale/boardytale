@@ -20,7 +20,9 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
     ..authorEmail = json['authorEmail'] as String
     ..origin = json['origin'] as String
     ..created = DateTime.parse(json['created'] as String)
-    ..tags = (json['tags'] as List).map((e) => e as String).toList();
+    ..tags = (json['tags'] as List)
+        .map((e) => _$enumDecode(_$ImageTagEnumMap, e))
+        .toList();
 }
 
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
@@ -36,7 +38,7 @@ Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
       'authorEmail': instance.authorEmail,
       'origin': instance.origin,
       'created': instance.created.toIso8601String(),
-      'tags': instance.tags
+      'tags': instance.tags.map((e) => _$ImageTagEnumMap[e]).toList()
     };
 
 T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
@@ -62,6 +64,8 @@ const _$ImageTypeEnumMap = <ImageType, dynamic>{
   ImageType.taleBottomScreen: 'taleBottomScreen'
 };
 
+const _$ImageTagEnumMap = <ImageTag, dynamic>{ImageTag.grass: 'grass'};
+
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
     ..id = json['id'] as String
@@ -71,11 +75,10 @@ User _$UserFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserToJson(User instance) =>
     <String, dynamic>{'id': instance.id, 'name': instance.name};
 
-UnitTypeEnvelope _$UnitTypeEnvelopeFromJson(Map<String, dynamic> json) {
-  return UnitTypeEnvelope()
+UnitTypeCreateEnvelope _$UnitTypeCreateEnvelopeFromJson(
+    Map<String, dynamic> json) {
+  return UnitTypeCreateEnvelope()
     ..id = json['id'] as String
-    ..authorEmail = json['authorEmail'] as String
-    ..created = json['created'] as String
     ..race = _$enumDecodeNullable(_$RacesEnumMap, json['race'])
     ..tags = (json['tags'] as List)
         ?.map((e) => _$enumDecodeNullable(_$UnitTypeTagEnumMap, e))
@@ -87,22 +90,24 @@ UnitTypeEnvelope _$UnitTypeEnvelopeFromJson(Map<String, dynamic> json) {
     ..actions = json['actions'] as int
     ..attack = json['attack'] as String
     ..cost = json['cost'] as int
-    ..abilities = (json['abilities'] as List)
-        ?.map((e) => e == null
-            ? null
-            : AbilityEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..imageId = json['imageId'] as String
+    ..abilities = json['abilities'] == null
+        ? null
+        : Abilities.fromJson(json['abilities'] as Map<String, dynamic>)
     ..unitTypeName = (json['unitTypeName'] as Map<String, dynamic>)?.map(
-        (k, e) =>
-            MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String));
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..unitTypeDataVersion = json['unitTypeDataVersion'] as int
+    ..unitTypeVersion = json['unitTypeVersion'] as int
+    ..authorEmail = json['authorEmail'] as String
+    ..created = json['created'] as String
+    ..imageId = json['imageId'] as String
+    ..iconId = json['iconId'] as String
+    ..bigImageId = json['bigImageId'] as String;
 }
 
-Map<String, dynamic> _$UnitTypeEnvelopeToJson(UnitTypeEnvelope instance) =>
+Map<String, dynamic> _$UnitTypeCreateEnvelopeToJson(
+        UnitTypeCreateEnvelope instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'authorEmail': instance.authorEmail,
-      'created': instance.created,
       'race': _$RacesEnumMap[instance.race],
       'tags': instance.tags?.map((e) => _$UnitTypeTagEnumMap[e])?.toList(),
       'health': instance.health,
@@ -113,9 +118,15 @@ Map<String, dynamic> _$UnitTypeEnvelopeToJson(UnitTypeEnvelope instance) =>
       'attack': instance.attack,
       'cost': instance.cost,
       'abilities': instance.abilities,
-      'imageId': instance.imageId,
       'unitTypeName':
-          instance.unitTypeName?.map((k, e) => MapEntry(_$LangEnumMap[k], e))
+          instance.unitTypeName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'unitTypeDataVersion': instance.unitTypeDataVersion,
+      'unitTypeVersion': instance.unitTypeVersion,
+      'authorEmail': instance.authorEmail,
+      'created': instance.created,
+      'imageId': instance.imageId,
+      'iconId': instance.iconId,
+      'bigImageId': instance.bigImageId
     };
 
 T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
@@ -140,6 +151,59 @@ const _$UnitTypeTagEnumMap = <UnitTypeTag, dynamic>{
 };
 
 const _$LangEnumMap = <Lang, dynamic>{Lang.en: 'en', Lang.cz: 'cz'};
+
+UnitType _$UnitTypeFromJson(Map<String, dynamic> json) {
+  return UnitType()
+    ..id = json['id'] as String
+    ..race = _$enumDecodeNullable(_$RacesEnumMap, json['race'])
+    ..tags = (json['tags'] as List)
+        ?.map((e) => _$enumDecodeNullable(_$UnitTypeTagEnumMap, e))
+        ?.toList()
+    ..health = json['health'] as int
+    ..armor = json['armor'] as int
+    ..speed = json['speed'] as int
+    ..range = json['range'] as int
+    ..actions = json['actions'] as int
+    ..attack = json['attack'] as String
+    ..cost = json['cost'] as int
+    ..abilities = json['abilities'] == null
+        ? null
+        : Abilities.fromJson(json['abilities'] as Map<String, dynamic>)
+    ..unitTypeName = (json['unitTypeName'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..unitTypeDataVersion = json['unitTypeDataVersion'] as int
+    ..unitTypeVersion = json['unitTypeVersion'] as int
+    ..image = json['image'] == null
+        ? null
+        : Image.fromJson(json['image'] as Map<String, dynamic>)
+    ..icon = json['icon'] == null
+        ? null
+        : Image.fromJson(json['icon'] as Map<String, dynamic>)
+    ..bigImage = json['bigImage'] == null
+        ? null
+        : Image.fromJson(json['bigImage'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UnitTypeToJson(UnitType instance) => <String, dynamic>{
+      'id': instance.id,
+      'race': _$RacesEnumMap[instance.race],
+      'tags': instance.tags?.map((e) => _$UnitTypeTagEnumMap[e])?.toList(),
+      'health': instance.health,
+      'armor': instance.armor,
+      'speed': instance.speed,
+      'range': instance.range,
+      'actions': instance.actions,
+      'attack': instance.attack,
+      'cost': instance.cost,
+      'abilities': instance.abilities,
+      'unitTypeName':
+          instance.unitTypeName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'unitTypeDataVersion': instance.unitTypeDataVersion,
+      'unitTypeVersion': instance.unitTypeVersion,
+      'image': instance.image,
+      'icon': instance.icon,
+      'bigImage': instance.bigImage
+    };
 
 Race _$RaceFromJson(Map<String, dynamic> json) {
   return Race()
@@ -340,34 +404,78 @@ Map<String, dynamic> _$LobbyTaleToJson(LobbyTale instance) => <String, dynamic>{
       'image': instance.image
     };
 
-AbilityEnvelope _$AbilityEnvelopeFromJson(Map<String, dynamic> json) {
-  return AbilityEnvelope()
-    ..id = _$enumDecodeNullable(_$AbilitiesEnumMap, json['id'])
-    ..modifications = json['modifications'] as Map<String, dynamic>;
+Abilities _$AbilitiesFromJson(Map<String, dynamic> json) {
+  return Abilities()
+    ..move = json['move'] == null
+        ? null
+        : MoveAbility.fromJson(json['move'] as Map<String, dynamic>)
+    ..attack = json['attack'] == null
+        ? null
+        : AttackAbility.fromJson(json['attack'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$AbilityEnvelopeToJson(AbilityEnvelope instance) =>
+Map<String, dynamic> _$AbilitiesToJson(Abilities instance) =>
+    <String, dynamic>{'move': instance.move, 'attack': instance.attack};
+
+MoveAbility _$MoveAbilityFromJson(Map<String, dynamic> json) {
+  return MoveAbility()
+    ..name = json['name'] as String
+    ..image = json['image'] as String
+    ..targets = (json['targets'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            _$enumDecodeNullable(_$TargetsEnumMap, k),
+            (e as List)
+                ?.map(
+                    (e) => _$enumDecodeNullable(_$TargetModificatorsEnumMap, e))
+                ?.toList()))
+    ..steps = json['steps'] as String;
+}
+
+Map<String, dynamic> _$MoveAbilityToJson(MoveAbility instance) =>
     <String, dynamic>{
-      'id': _$AbilitiesEnumMap[instance.id],
-      'modifications': instance.modifications
+      'name': instance.name,
+      'image': instance.image,
+      'targets': instance.targets?.map((k, e) => MapEntry(_$TargetsEnumMap[k],
+          e?.map((e) => _$TargetModificatorsEnumMap[e])?.toList())),
+      'steps': instance.steps
     };
 
-const _$AbilitiesEnumMap = <Abilities, dynamic>{
-  Abilities.move: 'move',
-  Abilities.attack: 'attack',
-  Abilities.shoot: 'shoot',
-  Abilities.heal: 'heal',
-  Abilities.revive: 'revive',
-  Abilities.hand_heal: 'hand_heal',
-  Abilities.boost: 'boost',
-  Abilities.linked_move: 'linked_move',
-  Abilities.step_shoot: 'step_shoot',
-  Abilities.light: 'light',
-  Abilities.summon: 'summon',
-  Abilities.dismiss: 'dismiss',
-  Abilities.change_type: 'change_type',
-  Abilities.regeneration: 'regeneration',
-  Abilities.dark_shoot: 'dark_shoot',
-  Abilities.teleport: 'teleport',
-  Abilities.raise: 'raise'
+const _$TargetModificatorsEnumMap = <TargetModificators, dynamic>{
+  TargetModificators.wounded: 'wounded',
+  TargetModificators.notUndead: 'notUndead',
+  TargetModificators.undead: 'undead'
 };
+
+const _$TargetsEnumMap = <Targets, dynamic>{
+  Targets.me: 'me',
+  Targets.own: 'own',
+  Targets.ally: 'ally',
+  Targets.enemy: 'enemy',
+  Targets.corpse: 'corpse',
+  Targets.empty: 'empty'
+};
+
+AttackAbility _$AttackAbilityFromJson(Map<String, dynamic> json) {
+  return AttackAbility()
+    ..name = json['name'] as String
+    ..image = json['image'] as String
+    ..targets = (json['targets'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            _$enumDecodeNullable(_$TargetsEnumMap, k),
+            (e as List)
+                ?.map(
+                    (e) => _$enumDecodeNullable(_$TargetModificatorsEnumMap, e))
+                ?.toList()))
+    ..range = json['range'] as String
+    ..attack = json['attack'] as String;
+}
+
+Map<String, dynamic> _$AttackAbilityToJson(AttackAbility instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'image': instance.image,
+      'targets': instance.targets?.map((k, e) => MapEntry(_$TargetsEnumMap[k],
+          e?.map((e) => _$TargetModificatorsEnumMap[e])?.toList())),
+      'range': instance.range,
+      'attack': instance.attack
+    };

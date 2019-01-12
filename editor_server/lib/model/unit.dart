@@ -1,21 +1,24 @@
 import 'package:editor_server/editor_server.dart';
 
-class Tale extends ManagedObject<_Tale> implements _Tale {}
+class UnitType extends ManagedObject<_UnitType> implements _UnitType {}
 
-class _Tale {
+class _UnitType {
   @Column(primaryKey: true)
   String id;
 
   @Column()
   String authorEmail;
 
+  @Column(defaultValue: 'false')
+  bool compiled;
+
   @Column(defaultValue: '0')
-  int taleDataVersion;
+  int unitTypeDataVersion;
 
   /// used as a cache invalidate control mechanism. It is possible to recompile tale checking for changes.
   @Column(defaultValue: '0')
-  int unitVersion;
+  int unitTypeVersion;
 
   @Column()
-  Document unitData;
+  Document unitTypeData;
 }

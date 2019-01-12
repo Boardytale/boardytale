@@ -1,4 +1,4 @@
-import { Player, TaleCreateEnvelope } from '../../model/model'
+import { Player, TaleCreateEnvelope } from '../../model/model';
 
 const bandits: Player = {
     color: 'red',
@@ -8,7 +8,7 @@ const bandits: Player = {
         en: 'Bandits',
     },
     team: 'bandits',
-}
+};
 
 export let data: TaleCreateEnvelope = {
     lobby: {
@@ -43,4 +43,4 @@ export let data: TaleCreateEnvelope = {
             startField: '2_2',
         },
     },
-}
+};

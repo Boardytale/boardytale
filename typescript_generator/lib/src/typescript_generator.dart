@@ -30,8 +30,14 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
     }
 
     List<String> fields = [];
-    classElement.fields.forEach((field) {
-      fields.add('${field.name}: ${_resolveType(field.type)};');
+    classElement.fields.forEach((FieldElement field) {
+      bool isOptional = false;
+      field.metadata.forEach((annotation){
+        if(annotation.toString().contains("TypescriptOptional")){
+          isOptional = true;
+        }
+      });
+      fields.add('${field.name}${isOptional?"?":""}: ${_resolveType(field.type)};');
     });
     return '''
        export interface ${classElement.name} {
