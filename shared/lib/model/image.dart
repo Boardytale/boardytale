@@ -3,17 +3,17 @@ part of model;
 @Typescript()
 @JsonSerializable(nullable: false)
 class Image {
-  String id;
+  String name;
   String data;
   double multiply = 1.0;
   int width;
   int height;
   int top = 0; // option to possible make smaller images
   int left = 0;
-  String name;
   ImageType type;
   String authorEmail;
-  final int dataModelVersion = 0;
+  int imageVersion = 0;
+  int dataModelVersion = 0;
 
   /// The place where the image comes from. Expected is URL or just "direct"
   String origin;

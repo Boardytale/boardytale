@@ -15,61 +15,82 @@ export type ImageType =
 
 export type ImageTag = 'grass';
 
-export interface Image {
-    id: string;
+export interface Image extends Object {
+    name: string;
     data: string;
     multiply: number;
     width: number;
     height: number;
     top: number;
     left: number;
-    name: string;
     type: ImageType;
     authorEmail: string;
+    imageVersion: number;
     dataModelVersion: number;
     origin: string;
     created: string;
     tags: Array<ImageTag>;
 }
 
-export interface User {
+export interface User extends Object {
     id: string;
     name: string;
 }
 
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
-export interface UnitTypeCreateEnvelope {
-    authorEmail: string;
-    created: string;
-    imageId: string;
-    iconId: string;
-    bigImageId: string;
+export interface UnitTypeCommons extends Object {
+    name: string;
+    race: Races;
+    tags: Array<UnitTypeTag>;
+    health: number;
+    armor: number;
+    speed: number;
+    range: number;
+    actions: number;
+    attack: string;
+    cost: number;
+    langName: { [key in Lang]?: string };
+    unitTypeDataVersion: number;
+    unitTypeVersion: number;
 }
 
-export interface UnitType {
+export interface UnitTypeCreateEnvelope extends UnitTypeCommons {
+    abilities: AbilitiesEnvelope;
+    authorEmail: string;
+    created: string;
+    imageName: string;
+    iconName: string;
+    bigImageName: string;
+}
+
+export interface UnitTypeCompiled extends UnitTypeCommons {
+    abilities: AbilitiesEnvelope;
+    authorEmail: string;
     image: Image;
     icon: Image;
     bigImage: Image;
 }
 
+export interface UnitType extends UnitTypeCommons {}
+
 export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal';
 
-export interface Race {
+export interface Race extends Object {
     id: Races;
     name: { [key in Lang]?: string };
 }
 
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
-export interface FieldCreateEnvelope {
+export interface FieldCreateEnvelope extends Object {
     id: string;
     terrainId: number;
     x: number;
     y: number;
 }
 
-export interface WorldCreateEnvelope {
+export interface WorldCreateEnvelope extends Object {
     width: number;
     height: number;
     baseTerrainId: Terrain;
@@ -79,7 +100,7 @@ export interface WorldCreateEnvelope {
 
 export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman';
 
-export interface Player {
+export interface Player extends Object {
     id: string;
     name: { [key in Lang]?: string };
     team: string;
@@ -87,35 +108,40 @@ export interface Player {
     color: string;
 }
 
-export interface Event {
+export interface Event extends Object {
     name: string;
     triggers: Array<Trigger>;
 }
 
-export interface Trigger {
+export interface Trigger extends Object {
     event: Call;
     action: Call;
 }
 
-export interface Dialog {
+export interface Dialog extends Object {
     name: string;
     image: Call;
 }
 
-export interface Call {
+export interface Call extends Object {
     name: string;
     arguments: Array<any>;
 }
 
-export interface TaleCreateEnvelope {
+export interface TaleCreateEnvelope extends Object {
     authorEmail: string;
     tale: TaleInnerEnvelope;
     lobby: LobbyTale;
-    taleDataVersion: number;
 }
 
-export interface TaleInnerEnvelope {
-    id: string;
+export interface TaleCompiled extends Object {
+    authorEmail: string;
+    tale: TaleInnerCompiled;
+    lobby: LobbyTale;
+}
+
+export interface TaleInnerEnvelope extends Object {
+    name: string;
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
     world: WorldCreateEnvelope;
@@ -125,11 +151,28 @@ export interface TaleInnerEnvelope {
     units: { [key: string]: string };
 }
 
-export interface LobbyTale {
+export interface TaleInnerCompiled extends Object {
+    name: string;
+    langs: { [key in Lang]?: { [key: string]: string } };
+    taleVersion: number;
+    world: WorldCreateEnvelope;
+    players: { [key: string]: Player };
+    events: { [key: string]: Event };
+    dialogs: { [key: string]: Dialog };
+    units: { [key: string]: string };
+    assets: TaleCompiledAssets;
+}
+
+export interface TaleCompiledAssets extends Object {
+    images: { [key: string]: Image };
+    unitTypes: { [key: string]: UnitTypeCompiled };
+}
+
+export interface LobbyTale extends Object {
     id: string;
     name: { [key in Lang]?: string };
     description: { [key in Lang]?: string };
-    image: string;
+    image: Image;
 }
 
 export type Lang = 'en' | 'cz';
@@ -157,18 +200,27 @@ export type AbilityNames =
     | 'teleport'
     | 'raise';
 
-export interface Abilities {
-    move?: MoveAbility;
-    attack?: AttackAbility;
+export interface AbilitiesEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    move?: MoveAbilityEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    attack?: AttackAbilityEnvelope;
 }
 
-export interface MoveAbility {
-    steps: string;
-    reach: string;
+export interface Ability extends Object {
+    name: string;
+    image: string;
+    targets: { [key in Targets]?: Array<TargetModificators> };
 }
 
-export interface AttackAbility {
-    range: string;
-    attack: string;
-    reach: string;
+export interface MoveAbilityEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    steps?: string;
+}
+
+export interface AttackAbilityEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    range?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    attack?: string;
 }

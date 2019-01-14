@@ -221,7 +221,6 @@ class Unit {
   Map toSimpleJson() {
     Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
-    out["type"] = type.id;
     out["field"] = field.id;
     out["health"] = _health;
     out["player"] = player.id;
@@ -234,46 +233,46 @@ class Unit {
       abilities.firstWhere((Ability ability) => ability.name == name, orElse: ()=>null);
 
   void fromMap(Map<String, dynamic> m, Tale tale) {
-    if (type == null || m["type"] != type.id) {
-      type = tale.resources.unitTypes[m["type"].toString()];
-//      _health = type.health;
-//      _steps = type.speed;
-      _recalculate();
-    }
-//    setType(type);
-    dynamic __fieldId = m["field"];
-    if (__fieldId is String) {
-      field = tale.world.fields[__fieldId];
-    }
-
-    dynamic __name = m["name"];
-    if (__name is String) {
-      _name = __name;
-    }else{
-      _badData("name", tale);
-    }
-    dynamic __health = m["health"];
-    if (__health is int) {
-      actualHealth = __health;
-    } else {
-      actualHealth = type.health;
-    }
-    dynamic __player = m["player"];
-    if (__player is int) {
-      player = tale.players[__player];
-    }
-    dynamic __steps = m["steps"];
-    if (__steps is int) {
-      steps = __steps;
-    } else {
-      steps = type.speed;
-    }
-    dynamic __actions = m["actions"];
-    if (__actions is int) {
-      actions = __actions;
-    } else {
-      actions = type.actions;
-    }
+//    if (type == null || m["type"] != type.id) {
+//      type = tale.resources.unitTypes[m["type"].toString()];
+////      _health = type.health;
+////      _steps = type.speed;
+//      _recalculate();
+//    }
+////    setType(type);
+//    dynamic __fieldId = m["field"];
+//    if (__fieldId is String) {
+//      field = tale.world.fields[__fieldId];
+//    }
+//
+//    dynamic __name = m["name"];
+//    if (__name is String) {
+//      _name = __name;
+//    }else{
+//      _badData("name", tale);
+//    }
+//    dynamic __health = m["health"];
+//    if (__health is int) {
+//      actualHealth = __health;
+//    } else {
+//      actualHealth = type.health;
+//    }
+//    dynamic __player = m["player"];
+//    if (__player is int) {
+//      player = tale.players[__player];
+//    }
+//    dynamic __steps = m["steps"];
+//    if (__steps is int) {
+//      steps = __steps;
+//    } else {
+//      steps = type.speed;
+//    }
+//    dynamic __actions = m["actions"];
+//    if (__actions is int) {
+//      actions = __actions;
+//    } else {
+//      actions = type.actions;
+//    }
   }
 
   void _badData(String key, Tale tale) {

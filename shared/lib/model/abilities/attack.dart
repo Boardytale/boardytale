@@ -2,7 +2,7 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class AttackAbility extends Ability {
+class AttackAbilityEnvelope {
 
   /**
    *  use null to use invoker range
@@ -11,6 +11,7 @@ class AttackAbility extends Ability {
    *  use "0" for face-to-face units
    *  any range above 7 will be set to 7
     */
+  @TypescriptOptional()
   String range;
 
   /**
@@ -19,17 +20,15 @@ class AttackAbility extends Ability {
    *  example: "0 0 1 +1 +2 -1"
    *  every value above 9 will be 9
    */
+  @TypescriptOptional()
   String attack;
 
-  @override
-  String get reach => Ability.REACH_HAND;
-
   Map<String, dynamic> toJson(){
-    return _$AttackAbilityToJson(this);
+    return _$AttackAbilityEnvelopeToJson(this);
   }
 
-  static AttackAbility fromJson(Map<String, dynamic> json){
-    return _$AttackAbilityFromJson(json);
+  static AttackAbilityEnvelope fromJson(Map<String, dynamic> json){
+    return _$AttackAbilityEnvelopeFromJson(json);
   }
 
 }

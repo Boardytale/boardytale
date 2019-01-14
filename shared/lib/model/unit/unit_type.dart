@@ -1,7 +1,8 @@
 part of model;
 
+@Typescript()
 abstract class UnitTypeCommons {
-  String id;
+  String name;
   Races race;
   List<UnitTypeTag> tags;
   int health;
@@ -11,8 +12,7 @@ abstract class UnitTypeCommons {
   int actions;
   String attack;
   int cost;
-  Abilities abilities;
-  Map<Lang, String> unitTypeName;
+  Map<Lang, String> langName;
   int unitTypeDataVersion = 0;
   int unitTypeVersion = 0;
 }
@@ -20,11 +20,12 @@ abstract class UnitTypeCommons {
 @Typescript()
 @JsonSerializable()
 class UnitTypeCreateEnvelope extends UnitTypeCommons {
+  AbilitiesEnvelope abilities;
   String authorEmail;
   String created;
-  String imageId;
-  String iconId;
-  String bigImageId;
+  String imageName;
+  String iconName;
+  String bigImageName;
 
   static UnitTypeCreateEnvelope fromJson(Map data) {
     return _$UnitTypeCreateEnvelopeFromJson(data);
@@ -37,10 +38,25 @@ class UnitTypeCreateEnvelope extends UnitTypeCommons {
 
 @Typescript()
 @JsonSerializable()
-class UnitType extends UnitTypeCommons {
+class UnitTypeCompiled extends UnitTypeCommons {
+  AbilitiesEnvelope abilities;
+  String authorEmail;
   Image image;
   Image icon;
   Image bigImage;
+
+  static UnitTypeCompiled fromJson(Map data) {
+    return _$UnitTypeCompiledFromJson(data);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$UnitTypeCompiledToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class UnitType extends UnitTypeCommons {
 
   static UnitType fromJson(Map data) {
     return _$UnitTypeFromJson(data);

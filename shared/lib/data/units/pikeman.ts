@@ -1,33 +1,29 @@
-import { UnitTypeEnvelope } from '../../model/model';
+import { UnitTypeCreateEnvelope } from '../../model/model';
 
-export let data: UnitTypeEnvelope = {
+export let data: UnitTypeCreateEnvelope = {
     authorEmail: 'mlcoch.zdenek@gmail.com',
-    id: 'map_tile_grass',
+    name: 'pikeman',
     created: '2011-10-05T14:48:00.000Z',
-    abilities: [
-        {
-            id: 'move',
-            modifications: {},
-        },
-        {
-            id: 'attack',
-            modifications: {},
-        },
-    ],
+    abilities: {
+        attack: {},
+        move: {},
+    },
     actions: 1,
     armor: 0,
     attack: '0 0 0 1 2 2',
     cost: 100,
     health: 1,
-    imageId: 'pikeman',
+    imageName: 'pikeman',
     race: 'human',
     range: 0,
     speed: 4,
     tags: [],
-    unitTypeName: {
+    langName: {
         en: 'pikeman',
         cz: 'kopiník',
     },
-    bigImageId: null,
-    iconId: 'pikemanIcon',
+    bigImageName: null,
+    iconName: 'pikemanIcon',
+    unitTypeDataVersion: 0,
+    unitTypeVersion: 0,
 };

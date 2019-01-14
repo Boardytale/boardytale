@@ -7,7 +7,7 @@ class LobbyTale {
   Map<Lang, String> name;
   Map<Lang, String> description;
   // 100 × 100 px  base64 jpg or png
-  String image;
+  Image image;
 
   static LobbyTale fromJson(Map json) {
     return _$LobbyTaleFromJson(json);

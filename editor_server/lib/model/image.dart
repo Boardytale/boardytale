@@ -5,8 +5,11 @@ import 'package:shared/model/model.dart';
 class Image extends ManagedObject<_Image> implements _Image {}
 
 class _Image {
-  @Column(primaryKey: true)
-  String id;
+  @primaryKey
+  int id;
+
+  @Column()
+  String name;
 
   @Column()
   String authorEmail;
@@ -23,6 +26,8 @@ class _Image {
 
   @Column()
   Document imageData;
+
+  ManagedSet<TagToImage> tags;
 }
 
 class TagToImage extends ManagedObject<_TagToImage> implements _TagToImage {}
@@ -31,9 +36,9 @@ class _TagToImage {
   @Column(autoincrement: true, primaryKey: true)
   int id;
 
-  @Relate(#id)
+  @Relate(#images)
   Tag tag;
 
-  @Relate(#id)
+  @Relate(#tags)
   Image image;
 }

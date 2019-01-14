@@ -2,19 +2,19 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class Abilities {
+class AbilitiesEnvelope {
   @TypescriptOptional()
-  MoveAbility move;
+  MoveAbilityEnvelope move;
 
   @TypescriptOptional()
-  AttackAbility attack;
+  AttackAbilityEnvelope attack;
 
-  static Abilities fromJson(Map json){
-    return _$AbilitiesFromJson(json);
+  static AbilitiesEnvelope fromJson(Map json){
+    return _$AbilitiesEnvelopeFromJson(json);
   }
 
   Map toJson(){
-    return _$AbilitiesToJson(this);
+    return _$AbilitiesEnvelopeToJson(this);
   }
 }
 
@@ -44,6 +44,7 @@ enum TargetModificators {
   undead,
 }
 
+@Typescript()
 abstract class Ability {
   String name;
   String image;
@@ -53,6 +54,8 @@ abstract class Ability {
   static const REACH_HAND = "reachHand";
   static const REACH_ARROW = "reachArrow";
   static const REACH_CONJURATION = "reachConjuration";
+  @TypescriptSkip()
+  @TypescriptOptional()
   String get reach;
 }
 

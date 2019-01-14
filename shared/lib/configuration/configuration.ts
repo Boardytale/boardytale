@@ -6,12 +6,12 @@
 
 export type ExecutableType = 'ts-node' | 'js' | 'dart';
 
-export interface Uri {
+export interface Uri extends Object {
     host: string;
     port: number;
 }
 
-export interface DatabaseConfiguration {
+export interface DatabaseConfiguration extends Object {
     username: string;
     password: string;
     host: string;
@@ -19,7 +19,7 @@ export interface DatabaseConfiguration {
     databaseName: string;
 }
 
-export interface ServerConfiguration {
+export interface ServerConfiguration extends Object {
     uris: Array<Uri>;
     route: string;
     innerRoute: string;
@@ -28,13 +28,13 @@ export interface ServerConfiguration {
     executableType: ExecutableType;
 }
 
-export interface FrontEndDevelopment {
+export interface FrontEndDevelopment extends Object {
     active: boolean;
     port: number;
     route: string;
 }
 
-export interface BoardytaleConfiguration {
+export interface BoardytaleConfiguration extends Object {
     gameServer: ServerConfiguration;
     editorServer: ServerConfiguration;
     userDatabase: DatabaseConfiguration;

@@ -15,10 +15,13 @@ class ImageController extends ResourceController {
     if (_type is model.ImageType) {
       imageType = _type;
     } else {
-      return Response.badRequest(
-          body: {'error': 'image type not sent or not supported see ImageType for more details'});
+      return Response.badRequest(body: {
+        'error':
+            'image type not sent or not supported see ImageType for more details'
+      });
     }
-    var query = Query<Image>(context)..where((u) => u.imageType).equalTo(imageType);
+    var query = Query<Image>(context)
+      ..where((u) => u.imageType).equalTo(imageType);
     List<Image> result = await query.fetch();
     return Response.ok(result);
   }
@@ -26,26 +29,24 @@ class ImageController extends ResourceController {
   @Operation.post()
   Future<Response> createImage(@Bind.body() ImageWrap imageWrap) async {
     model.Image image = imageWrap.content;
-    dynamic _id = image.id;
-    if (_id is String) {
-      final query = Query<Image>(context)..where((i) => i.id).equalTo(_id);
-      List<Image> existingImages = await query.fetch();
-      if (existingImages.isEmpty) {
-        final query = Query<Image>(context)
-          ..values.id = _id
-          ..values.imageType = image.type
-          ..values.authorEmail = image.authorEmail
-          ..values.imageDataVersion = image.dataModelVersion
-          ..values.imageData = Document(image.toJson());
-        Image created = await query.insert();
-        return Response.ok(created);
-      } else {
-        return Response.conflict(body: "image id is used");
-      }
+    final query = Query<Image>(context)
+      ..where((i) {
+        return i.name;
+      }).equalTo(image.name);
+    List<Image> existingImages = await query.fetch();
+    if (existingImages.isEmpty) {
+      final query = Query<Image>(context)
+        ..values.name = image.name
+        ..values.imageType = image.type
+        ..values.authorEmail = image.authorEmail
+        ..values.imageDataVersion = image.dataModelVersion
+        ..values.imageVersion = image.imageVersion
+        ..values.imageData = Document(image.toJson());
+      Image created = await query.insert();
+      return Response.ok(created);
     } else {
-      return Response.badRequest(body: "image id must be specified as a String");
+      return Response.conflict(body: "image name is alredy used");
     }
-
   }
 }
 

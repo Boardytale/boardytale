@@ -6,7 +6,9 @@ environment:
 
 dependencies:
   path: any
+  http: any
   args: any
+  aqueduct: ^3.0.0
   shared:
     path: '../shared'
   utils:

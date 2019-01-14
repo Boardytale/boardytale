@@ -3,6 +3,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/image.dart';
 import 'package:editor_server/model/unit.dart';
 import 'package:shared/model/model.dart' as model;
+import 'package:io_utils/aqueduct/id_wrap.dart';
 
 class UnitController extends ResourceController {
   UnitController(this.context);
@@ -10,12 +11,12 @@ class UnitController extends ResourceController {
   final ManagedContext context;
 
   @Operation.get('id')
-  Future<Response> getUnitById(@Bind.path("id") String id) async {
-    if (id == null) {
+  Future<Response> getUnitByName(@Bind.path("id") String name) async {
+    if (name == null) {
       return Response.badRequest(body: "id is not provided");
     }
     var query = Query<UnitType>(context)
-      ..where((u) => u.id).equalTo(id)
+      ..where((u) => u.name).equalTo(name)
       ..where((u) => u.compiled).equalTo(true);
     List<UnitType> result = await query.fetch();
     return Response.ok(result);
@@ -23,25 +24,35 @@ class UnitController extends ResourceController {
 
   @Operation.post()
   Future<Response> createUnit(@Bind.body() UnitWrap unitWrap) async {
-    model.UnitTypeCreateEnvelope content = unitWrap.content;
     final query = Query<UnitType>(context)
-      ..values.id = content.id
-      ..values.authorEmail = content.authorEmail
-      ..values.unitTypeDataVersion = content.unitTypeDataVersion
-      ..values.unitTypeVersion = content.unitTypeVersion
-      ..values.unitTypeData = Document(content.toJson());
-    UnitType created = await query.insert();
-    return Response.ok(created);
+      ..where((i) {
+        return i.name;
+      }).equalTo(unitWrap.content.name);
+    List<UnitType> existingImages = await query.fetch();
+    if (existingImages.isEmpty) {
+      model.UnitTypeCreateEnvelope content = unitWrap.content;
+      final query = Query<UnitType>(context)
+        ..values.name = content.name
+        ..values.authorEmail = content.authorEmail
+        ..values.unitTypeDataVersion = content.unitTypeDataVersion
+        ..values.unitTypeVersion = content.unitTypeVersion
+        ..values.unitTypeData = Document(content.toJson());
+      UnitType created = await query.insert();
+      return Response.ok(created);
+    } else {
+      return Response.conflict(body: "unit name is alredy used");
+    }
   }
 
-  @Operation.post('compile')
-  Future<Response> compileUnit(@Bind.body() String id) async {
+  @Operation.post('operation')
+  Future<Response> compileUnit(@Bind.body() IdWrap idWrap) async {
+    print("compile unit");
     var notCompiledQuery = Query<UnitType>(context)
-      ..where((u) => u.id).equalTo(id)
+      ..where((u) => u.name).equalTo(idWrap.id)
       ..where((u) => u.compiled).equalTo(false);
 
     var compiledQuery = Query<UnitType>(context)
-      ..where((u) => u.id).equalTo(id)
+      ..where((u) => u.name).equalTo(idWrap.id)
       ..where((u) => u.compiled).equalTo(true);
 
     UnitType unitTypeData = (await notCompiledQuery.fetch()).first;
@@ -55,7 +66,7 @@ class UnitController extends ResourceController {
     model.Image bigImage;
 
     var query = Query<Image>(context)
-      ..where((u) => u.id).equalTo(unitTypeEnvelope.imageId);
+      ..where((u) => u.name).equalTo(unitTypeEnvelope.imageName);
     List<Image> result = await query.fetch();
     if (result.isNotEmpty) {
       image = model.Image.fromJson(
@@ -63,7 +74,7 @@ class UnitController extends ResourceController {
     }
 
     query = Query<Image>(context)
-      ..where((u) => u.id).equalTo(unitTypeEnvelope.iconId);
+      ..where((u) => u.name).equalTo(unitTypeEnvelope.iconName);
     result = await query.fetch();
     if (result.isNotEmpty) {
       icon = model.Image.fromJson(
@@ -71,21 +82,23 @@ class UnitController extends ResourceController {
     }
 
     query = Query<Image>(context)
-      ..where((u) => u.id).equalTo(unitTypeEnvelope.bigImageId);
+      ..where((u) => u.name).equalTo(unitTypeEnvelope.bigImageName);
     result = await query.fetch();
     if (result.isNotEmpty) {
       bigImage = model.Image.fromJson(
           result.first.imageData.data as Map<String, dynamic>);
     }
 
-    model.UnitType unitType =
-        model.UnitType.fromJson(unitTypeData.unitTypeData.data as Map);
+    model.UnitTypeCompiled unitType =
+        model.UnitTypeCompiled.fromJson(unitTypeData.unitTypeData.data as Map);
     unitType
       ..image = image
       ..bigImage = bigImage
       ..icon = icon;
     compiledQuery.values
-      ..id = '${id}Compiled'
+      ..compiled = true
+      ..authorEmail = unitType.authorEmail
+      ..name = '${idWrap.id}Compiled'
       ..unitTypeData = Document(unitType.toJson());
 
     UnitType created;

@@ -2,9 +2,7 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class MoveAbility extends Ability {
-  @override
-  String get reach => Ability.REACH_MOVE;
+class MoveAbilityEnvelope {
 
   /**
    *  use null to inherit invoker speed
@@ -12,13 +10,14 @@ class MoveAbility extends Ability {
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
+  @TypescriptOptional()
   String steps;
 
   Map<String, dynamic> toJson(){
-    return _$MoveAbilityToJson(this);
+    return _$MoveAbilityEnvelopeToJson(this);
   }
 
-  static MoveAbility fromJson(Map<String, dynamic> json){
-    return _$MoveAbilityFromJson(json);
+  static MoveAbilityEnvelope fromJson(Map<String, dynamic> json){
+    return _$MoveAbilityEnvelopeFromJson(json);
   }
 }

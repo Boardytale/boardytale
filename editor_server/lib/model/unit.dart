@@ -3,8 +3,11 @@ import 'package:editor_server/editor_server.dart';
 class UnitType extends ManagedObject<_UnitType> implements _UnitType {}
 
 class _UnitType {
-  @Column(primaryKey: true)
-  String id;
+  @primaryKey
+  int id;
+
+  @Column()
+  String name;
 
   @Column()
   String authorEmail;

@@ -5,12 +5,12 @@ import 'package:build/src/builder/build_step.dart';
 import 'package:source_gen/source_gen.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 
-class EnumField {
-}
+class EnumField {}
 
 class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
   @override
-  FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
+  FutureOr<String> generateForAnnotatedElement(
+      Element element, ConstantReader annotation, BuildStep buildStep) {
     if (element is! ClassElement) {
       final name = element.name;
       return '// $name ${element.runtimeType}';
@@ -22,25 +22,45 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
       fields.forEach((field) {
         field.metadata.forEach((ElementAnnotation annotation) {
           if (annotation.constantValue.type.name == 'JsonValue') {
-             enumValues.add(annotation.computeConstantValue().getField('value').toStringValue());
+            enumValues.add(annotation
+                .computeConstantValue()
+                .getField('value')
+                .toStringValue());
           }
         });
       });
-      return 'export type ${classElement.name} = ${enumValues.map((value)=>"'$value'").join('|')}';
+      return 'export type ${classElement.name} = ${enumValues.map((value) => "'$value'").join('|')}';
     }
 
     List<String> fields = [];
     classElement.fields.forEach((FieldElement field) {
+
+//      fields.add("// isFinal ${field.isFinal}");
+//      fields.add("// isConst ${field.isConst}");
+//      fields.add("// isSynthetic ${field.isSynthetic}");
+
+      if(field.isFinal || field.isConst || field.isSynthetic){
+        return;
+      }
       bool isOptional = false;
-      field.metadata.forEach((annotation){
-        if(annotation.toString().contains("TypescriptOptional")){
+      for (var annotation in field.metadata) {
+        fields.add("// annotation ${annotation}");
+        if (annotation.toString().contains("TypescriptOptional")) {
           isOptional = true;
         }
-      });
-      fields.add('${field.name}${isOptional?"?":""}: ${_resolveType(field.type)};');
+        if (annotation.toString().contains("TypescriptSkip")) {
+          fields.add("// skipped ${annotation}");
+          return;
+        }
+      }
+
+
+      fields.add(
+          '${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');
     });
+
     return '''
-       export interface ${classElement.name} {
+       export interface ${classElement.name}${classElement.allSupertypes.isNotEmpty ? " extends ${classElement.allSupertypes.first.name}" : ""} {
           ${fields.join('\n')}
        }
     ''';
@@ -57,12 +77,12 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         case 'List':
           return 'Array' + parameters;
         case 'Map':
-          if(type.typeArguments.length == 2){
+          if (type.typeArguments.length == 2) {
             String firstType = _resolveType(type.typeArguments[0]);
-            if(firstType == "any"){
+            if (firstType == "any") {
               firstType = "string";
             }
-            if(firstType == "string"){
+            if (firstType == "string") {
               return '{[key:string]:${_resolveType(type.typeArguments[1])}}';
             }
             return '{[key in ${firstType}]?:${_resolveType(type.typeArguments[1])}}';

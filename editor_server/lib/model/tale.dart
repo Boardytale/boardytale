@@ -3,11 +3,17 @@ import 'package:editor_server/editor_server.dart';
 class Tale extends ManagedObject<_Tale> implements _Tale {}
 
 class _Tale {
-  @Column(primaryKey: true)
+  @primaryKey
   String id;
 
   @Column()
+  String name;
+
+  @Column()
   String authorEmail;
+
+  @Column(defaultValue: 'false')
+  bool compiled;
 
   @Column()
   Document lobbyTale;

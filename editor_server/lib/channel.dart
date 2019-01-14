@@ -1,5 +1,6 @@
 import 'package:editor_server/controller/image_controller.dart';
 import 'package:editor_server/controller/tale_controller.dart';
+import 'package:editor_server/controller/unit_controller.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:shared/configuration/configuration.dart' as shared;
 import 'package:editor_server/editor_server.dart';
@@ -25,7 +26,8 @@ class EditorServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
     router.route("/images/[:type]").link(() => ImageController(context));
-    router.route("/tales/[:id]").link(() => TaleController(context));
+    router.route("/tales/[:operation]").link(() => TaleController(context));
+    router.route("/units/[:operation]").link(() => UnitController(context));
     return router;
   }
 }

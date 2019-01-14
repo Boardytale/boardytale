@@ -5,13 +5,14 @@
     "start-dev": "npm run set-config-dev && dart runner/run.dart",
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
     "ts2dart": "ts2dart",
-    "generate-shared": "cd shared && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\"",
+    "generate-shared": "cd shared && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\" && npm run generate-data-jsons",
     "remove-duplicated-files": "remove-duplicated-files",
     "start-proxy": "nodemon --watch proxy_server --exec ts-node proxy_server/index.ts",
     "start-user-server": "dart user_server/bin/main.dart",
     "ts-node": "ts-node",
     "editor-serve": "cd editor_client && dart serve.dart",
-    "generate-data-jsons": "cd shared/lib/data && ts-node generate-jsons.ts"
+    "generate-data-jsons": "cd shared/lib/data && ts-node generate-jsons.ts",
+    "initial-data-to-database": "dart io_utils/bin/fill_database.dart"
   },
   "private": true,
   "devDependencies": {

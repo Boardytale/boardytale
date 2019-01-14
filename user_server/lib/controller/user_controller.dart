@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:io_utils/aqueduct/id_wrap.dart';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/model/user.dart';
 import 'package:http/http.dart' as http;
@@ -44,26 +45,5 @@ class UserController extends ResourceController {
     } else {
       return Response.serverError(body: "Unable to contact Authorization server");
     }
-  }
-}
-
-class IdWrap implements Serializable {
-  String id;
-
-  @override
-  Map<String, dynamic> asMap() {
-    return {"id": id};
-    // TODO: implement asMap
-  }
-
-  @override
-  void readFromMap(Map<String, dynamic> requestBody) {
-    id = requestBody["id"] as String;
-  }
-
-  @override
-  APISchemaObject documentSchema(APIDocumentContext context) {
-    // TODO: implement documentSchema
-    return null;
   }
 }
