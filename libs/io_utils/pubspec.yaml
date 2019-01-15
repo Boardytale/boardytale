@@ -10,9 +10,9 @@ dependencies:
   args: any
   aqueduct: ^3.0.0
   shared:
-    path: '../shared'
+    path: '../../shared'
   utils:
-    path: '../libs/utils'
+    path: '../utils'
   console: any
 
 

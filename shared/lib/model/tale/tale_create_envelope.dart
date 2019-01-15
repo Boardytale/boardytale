@@ -40,8 +40,10 @@ class TaleCompiled {
 @JsonSerializable()
 class TaleInnerEnvelope {
   String name;
+  Map<Lang, String> langName;
   Map<Lang, Map<String, String>> langs;
   int taleVersion;
+
   WorldCreateEnvelope world;
   Map<String, Player> players = {};
   Map<String, Event> events = {};
@@ -62,6 +64,7 @@ class TaleInnerEnvelope {
 class TaleInnerCompiled {
   String name;
   Map<Lang, Map<String, String>> langs;
+  Map<Lang, String> langName;
   int taleVersion;
   WorldCreateEnvelope world;
   Map<String, Player> players = {};
@@ -71,6 +74,12 @@ class TaleInnerCompiled {
   TaleCompiledAssets assets;
 
   static TaleInnerCompiled fromJson(Map json) {
+    Map<String, dynamic> langsFix = {};
+    Map _l = json["langs"];
+    _l.keys.forEach((key){
+      langsFix[key] = _l[key];
+    });
+    json["langs"] = langsFix;
     return _$TaleInnerCompiledFromJson(json);
   }
 

@@ -11,4 +11,4 @@ dependencies:
   utils:
     path: '../libs/utils'
   io_utils:
-    path: '../io_utils'
+    path: '../libs/io_utils'

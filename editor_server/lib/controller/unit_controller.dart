@@ -52,7 +52,7 @@ class UnitController extends ResourceController {
       ..where((u) => u.compiled).equalTo(false);
 
     var compiledQuery = Query<UnitType>(context)
-      ..where((u) => u.name).equalTo(idWrap.id)
+      ..where((u) => u.name).equalTo('${idWrap.id}Compiled')
       ..where((u) => u.compiled).equalTo(true);
 
     UnitType unitTypeData = (await notCompiledQuery.fetch()).first;

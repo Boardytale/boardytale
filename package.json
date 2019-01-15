@@ -12,7 +12,7 @@
     "ts-node": "ts-node",
     "editor-serve": "cd editor_client && dart serve.dart",
     "generate-data-jsons": "cd shared/lib/data && ts-node generate-jsons.ts",
-    "initial-data-to-database": "dart io_utils/bin/fill_database.dart"
+    "initial-data-to-database": "dart libs/io_utils/bin/fill_database.dart"
   },
   "private": true,
   "devDependencies": {

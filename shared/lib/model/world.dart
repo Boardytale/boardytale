@@ -9,9 +9,13 @@ class WorldCreateEnvelope{
   Map<String, FieldCreateEnvelope> fields = {};
   String startField;
 
-  static WorldCreateEnvelope fromJson(Map json) {
-    return _$WorldCreateEnvelopeFromJson(json);
-  }
+  WorldCreateEnvelope();
+
+  factory WorldCreateEnvelope.fromJson(Map<String, dynamic> json) => _$WorldCreateEnvelopeFromJson(json);
+
+//  static WorldCreateEnvelope fromJson(Map json) {
+//    return _$WorldCreateEnvelopeFromJson(json);
+//  }
 
   Map toJson(){
     return _$WorldCreateEnvelopeToJson(this);

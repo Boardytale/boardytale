@@ -35,6 +35,7 @@ export let data: TaleCreateEnvelope = {
         },
         name: {
             en: 'Bandits camp',
+            cz: 'Tábor banditů',
         },
     },
     authorEmail: 'mlcoch.zdenek@gmail.com',
@@ -45,6 +46,10 @@ export let data: TaleCreateEnvelope = {
         langs: { en: {} },
         players: {
             bandits: bandits,
+        },
+        langName: {
+          en: 'Bandits camp',
+          cz: 'Tábor banditů',
         },
         taleVersion: 0,
         units: {

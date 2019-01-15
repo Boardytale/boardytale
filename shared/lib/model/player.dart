@@ -11,6 +11,7 @@ class Player {
 
 
   static Player fromJson(Map json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$PlayerFromJson(json);
   }
 

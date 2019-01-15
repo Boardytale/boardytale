@@ -142,6 +142,7 @@ export interface TaleCompiled extends Object {
 
 export interface TaleInnerEnvelope extends Object {
     name: string;
+    langName: { [key in Lang]?: string };
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
     world: WorldCreateEnvelope;
@@ -154,6 +155,7 @@ export interface TaleInnerEnvelope extends Object {
 export interface TaleInnerCompiled extends Object {
     name: string;
     langs: { [key in Lang]?: { [key: string]: string } };
+    langName: { [key in Lang]?: string };
     taleVersion: number;
     world: WorldCreateEnvelope;
     players: { [key: string]: Player };

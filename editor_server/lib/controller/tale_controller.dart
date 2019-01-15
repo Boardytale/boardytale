@@ -52,7 +52,7 @@ class TaleController extends ResourceController {
       ..where((u) => u.compiled).equalTo(false);
 
     var compiledQuery = Query<Tale>(context)
-      ..where((u) => u.name).equalTo(idWrap.id)
+      ..where((u) => u.name).equalTo("${idWrap.id}Compiled")
       ..where((u) => u.compiled).equalTo(true);
 
     Tale taleData = (await notCompiledQuery.fetch()).first;
@@ -98,7 +98,9 @@ class TaleController extends ResourceController {
       ..compiled = true
       ..authorEmail = taleCompiled.authorEmail
       ..name = '${idWrap.id}Compiled'
-      ..taleData = Document(taleCompiled.toJson());
+      ..taleData = Document(taleCompiled.toJson())
+      ..lobbyTale = taleData.lobbyTale
+    ;
 
     Tale created;
     var compiled = await compiledQuery.fetch();

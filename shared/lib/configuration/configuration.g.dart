@@ -51,7 +51,7 @@ ServerConfiguration _$ServerConfigurationFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ServerConfigurationToJson(
         ServerConfiguration instance) =>
     <String, dynamic>{
-      'uris': instance.uris,
+      'uris': instance.uris?.map((e) => e?.toJson())?.toList(),
       'route': instance.route,
       'innerRoute': instance.innerRoute,
       'pathToExecutable': instance.pathToExecutable,
@@ -147,14 +147,14 @@ BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
 Map<String, dynamic> _$BoardytaleConfigurationToJson(
         BoardytaleConfiguration instance) =>
     <String, dynamic>{
-      'gameServer': instance.gameServer,
-      'editorServer': instance.editorServer,
-      'userDatabase': instance.userDatabase,
-      'editorDatabase': instance.editorDatabase,
-      'userServer': instance.userServer,
-      'heroesServer': instance.heroesServer,
-      'aiServer': instance.aiServer,
-      'proxyServer': instance.proxyServer,
-      'gameStaticDev': instance.gameStaticDev,
-      'editorStaticDev': instance.editorStaticDev
+      'gameServer': instance.gameServer?.toJson(),
+      'editorServer': instance.editorServer?.toJson(),
+      'userDatabase': instance.userDatabase?.toJson(),
+      'editorDatabase': instance.editorDatabase?.toJson(),
+      'userServer': instance.userServer?.toJson(),
+      'heroesServer': instance.heroesServer?.toJson(),
+      'aiServer': instance.aiServer?.toJson(),
+      'proxyServer': instance.proxyServer?.toJson(),
+      'gameStaticDev': instance.gameStaticDev?.toJson(),
+      'editorStaticDev': instance.editorStaticDev?.toJson()
     };
