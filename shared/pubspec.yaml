@@ -16,6 +16,6 @@ dev_dependencies:
   test: any
   json_serializable: any
   typescript_generator:
-    path: ../typescript_generator/
+    path: ../libs/typescript_generator/
 
 

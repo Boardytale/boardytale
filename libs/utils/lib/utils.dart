@@ -33,7 +33,7 @@ class Call {
   }
 }
 
-Map<String, dynamic> retypeMapInJsonToStringDynamic(
+void retypeMapInJsonToStringDynamic(
     Map originalJson, List<String> keys) {
   keys.forEach((mainKey) {
     dynamic __innerMap = originalJson[mainKey];

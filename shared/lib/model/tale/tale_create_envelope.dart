@@ -74,12 +74,7 @@ class TaleInnerCompiled {
   TaleCompiledAssets assets;
 
   static TaleInnerCompiled fromJson(Map json) {
-    Map<String, dynamic> langsFix = {};
-    Map _l = json["langs"];
-    _l.keys.forEach((key){
-      langsFix[key] = _l[key];
-    });
-    json["langs"] = langsFix;
+    utils.retypeMapInJsonToStringDynamic(json, ["langs", "langName"]);
     return _$TaleInnerCompiledFromJson(json);
   }
 

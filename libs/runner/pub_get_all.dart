@@ -16,7 +16,7 @@ main() async {
   printRun(Process.runSync(pubExecutable, ["get"],
       workingDirectory: projectDirectoryPath + "/editor_server"));
 
-  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/io_utils"));
+  printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/libs/io_utils"));
 
   printRun(Process.runSync(pubExecutable, ["get"], workingDirectory: projectDirectoryPath + "/shared"));
 

@@ -275,7 +275,7 @@ class Unit {
 //    }
   }
 
-  void _badData(String key, Tale tale) {
-    throw "unit $id in tale ${tale.id} - $key is not ok";
-  }
+//  void _badData(String key, Tale tale) {
+//    throw "unit $id in tale ${tale.id} - $key is not ok";
+//  }
 }

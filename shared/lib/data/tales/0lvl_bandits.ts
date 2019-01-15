@@ -48,8 +48,8 @@ export let data: TaleCreateEnvelope = {
             bandits: bandits,
         },
         langName: {
-          en: 'Bandits camp',
-          cz: 'Tábor banditů',
+            en: 'Bandits camp',
+            cz: 'Tábor banditů',
         },
         taleVersion: 0,
         units: {

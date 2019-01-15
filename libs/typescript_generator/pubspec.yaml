@@ -10,7 +10,7 @@ dependencies:
   build: '>=0.12.0 <2.0.0'
   source_gen: any
   typescript_reporter:
-    path: ../libs/typescript_reporter
+    path: ../typescript_reporter
 
   
 dev_dependencies:
