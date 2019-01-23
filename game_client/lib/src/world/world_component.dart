@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:boardytale_client/src/services/gateway_service.dart';
-import 'package:boardytale_client/src/services/settings_service.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
-import 'package:boardytale_client/src/world/model/model.dart';
-import 'package:boardytale_client/src/world/view/world_view.dart';
-import 'package:boardytale_commons/model/model.dart' as commonLib;
+import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/settings_service.dart';
+import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/world/model/model.dart';
+import 'package:game_client/src/world/view/world_view.dart';
+import 'package:shared/model/model.dart' as commonLib;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -33,7 +33,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
       }
     """
     ],
-    directives: const [COMMON_DIRECTIVES],
+    directives: const [coreDirectives],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";
@@ -60,19 +60,19 @@ class WorldComponent implements OnDestroy {
 
   WorldComponent(this.changeDetector, this.settings, this.state, this.gateway) {
     onResizeSubscription = window.onResize.listen(detectChanges);
-    state.onWorldLoaded.add(this.modelLoaded);
+    state.onWorldLoaded.listen(modelLoaded);
   }
 
   ClientWorld get world => state.tale.world;
 
   @ViewChild("world")
-  set worldElementRef(ElementRef element) {
-    worldElement = element.nativeElement as CanvasElement;
+  set worldElementRef(Element element) {
+    worldElement = element as CanvasElement;
   }
 
   @ViewChild("objects")
-  set objectsElementRef(ElementRef element) {
-    mapObjectsElement = element.nativeElement as CanvasElement;
+  set objectsElementRef(Element element) {
+    mapObjectsElement = element as CanvasElement;
   }
 
   void detectChanges([dynamic _]) {
@@ -82,7 +82,7 @@ class WorldComponent implements OnDestroy {
     changeDetector.detectChanges();
   }
 
-  void modelLoaded() {
+  void modelLoaded([_]) {
     worldStage = new stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,

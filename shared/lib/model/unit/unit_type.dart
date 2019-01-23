@@ -57,7 +57,9 @@ class UnitTypeCompiled extends UnitTypeCommons {
 @Typescript()
 @JsonSerializable()
 class UnitType extends UnitTypeCommons {
-
+  Image bigImage;
+  Image image;
+  Image icon;
   static UnitType fromJson(Map data) {
     return _$UnitTypeFromJson(data);
   }

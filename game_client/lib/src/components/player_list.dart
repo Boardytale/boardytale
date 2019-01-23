@@ -1,10 +1,10 @@
 import 'package:angular/core.dart';
 import 'package:angular/di.dart';
 import 'package:angular/src/common/directives.dart';
-import 'package:boardytale_client/src/services/gateway_service.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
-import 'package:boardytale_client/src/world/model/model.dart';
-import 'package:boardytale_commons/model/model.dart' as commonLib;
+import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/world/model/model.dart';
+import 'package:shared/model/model.dart' as commonLib;
 
 @Component(
     selector: "player-list",
@@ -39,7 +39,7 @@ class PlayerListComponent {
   Player me;
 
   PlayerListComponent(this.changeDetector, this.state, this.gateway) {
-    gateway.onMessage.add(updateOnMessage);
+    gateway.onMessage.listen(updateOnMessage);
   }
   void updateOnMessage(Map<String, dynamic> message) {
     String type = message["type"];

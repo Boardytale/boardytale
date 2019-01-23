@@ -1,17 +1,17 @@
 part of boardytale.client.abilities;
 
-abstract class ClientAbility{
-  static commonLib.Ability createAbility(Map<String, dynamic> data) {
-    String abilityClass = data["class"] as String;
-    switch (abilityClass) {
-      case "move":
-        return new MoveAbility()..fromMap(data);
-      case "attack":
-        return new AttackAbility()..fromMap(data);
-      case "shoot":
-        return new ShootAbility()..fromMap(data);
-      case "heal":
-        return new HealAbility()..fromMap(data);
+class ClientAbility extends commonLib.Ability{
+//  static commonLib.Ability createAbility(Map<String, dynamic> data) {
+//    String abilityClass = data["class"] as String;
+//    switch (abilityClass) {
+//      case "move":
+//        return new MoveAbility()..fromMap(data);
+//      case "attack":
+//        return new AttackAbility()..fromMap(data);
+//      case "shoot":
+//        return new ShootAbility()..fromMap(data);
+//      case "heal":
+//        return new HealAbility()..fromMap(data);
 //      case "revive":
 //        return new ReviveAbility()..fromMap(data);
 //      case "hand_heal":
@@ -38,11 +38,22 @@ abstract class ClientAbility{
 //        return new RegenerationAbility()..fromMap(data);
 //      case "change_type":
 //        return new ChangeTypeAbility()..fromMap(data);
-    }
-    throw "ability $abilityClass $data not implemented";
-  }
-  
-  Map<String,dynamic> toMap();
+//    }
+//    throw "ability $abilityClass $data not implemented";
+//  }
 
-  void show(commonLib.Unit invoker,commonLib.Track track);
+  void show(commonLib.Unit invoker,commonLib.Track track){
+
+  }
+
+  String get reach => "not set";
+  commonLib.Unit invoker;
+
+  bool validate(commonLib.Unit invoker, commonLib.Track track){
+    throw "not implemented";
+  }
+
+  void setInvoker(commonLib.Unit invoker){
+    this.invoker = invoker;
+  }
 }

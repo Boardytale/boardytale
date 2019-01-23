@@ -15,12 +15,12 @@ class UnitPaintable extends Paintable {
     height = world.fieldHeight.toInt();
     width = world.fieldWidth.toInt();
     createBitmap();
-    view.model.onResolutionLevelChanged.add(createBitmap);
-    unit.onFieldChanged.add(() {
+    view.model.onResolutionLevelChanged.listen(createBitmap);
+    unit.onFieldChanged.listen((_) {
       this.field = unit.field;
     });
-    unit.onHealthChanged.add((_) => createBitmap());
-    unit.onStepsChanged.add(() => createBitmap());
+    unit.onHealthChanged.listen(createBitmap);
+    unit.onStepsChanged.listen(createBitmap);
   }
 
   ClientWorld get world => view.model;
@@ -52,7 +52,7 @@ class UnitPaintable extends Paintable {
         imageElement = await getBigImageData();
       } else {
         imageElement = new ImageElement(src: primaryImage.data);
-        await new Future.delayed(Duration.ZERO);
+        await new Future.delayed(Duration.zero);
       }
       data.drawPixels(
           new stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
@@ -150,17 +150,17 @@ class UnitPaintable extends Paintable {
 
   String getUnitPaintedState(Unit unit) {
     if(!unit.isAlive){
-      return "u${unit.type.id}h${unit.actualHealth}";
+      return "u${unit.type.name}h${unit.actualHealth}";
     }
-    return "u${unit.type.id}h${unit.actualHealth}mh${unit.type.health}s${unit
+    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit
         .steps}ms${unit.speed}a${unit.armor}r${unit.range}${(unit.player as Player).meId.substring(0,1)}";
   }
 
   commonModel.Image getPrimaryImage() {
     int resolutionLevel = view.model.resolutionLevel;
     if (resolutionLevel == 0) {
-      if (unit.type.iconImage != null) {
-        return unit.type.iconImage;
+      if (unit.type.icon != null) {
+        return unit.type.icon;
       } else {
         return unit.type.image;
       }
@@ -177,7 +177,7 @@ class UnitPaintable extends Paintable {
     Completer<ImageElement> completer = new Completer<ImageElement>();
     ImageElement imageElement;
     if (unit.type.bigImage != null) {
-      imageElement = new ImageElement(src: "img/big_units/" + unit.type.bigImage.imageSrc);
+      imageElement = new ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
     } else {
       imageElement = new ImageElement(src: unit.type.image.data);
     }

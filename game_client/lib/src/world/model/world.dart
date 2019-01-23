@@ -3,11 +3,12 @@ part of client_model;
 class ClientWorld extends commonModel.World {
   StateService state;
   SettingsService settings;
-  @override
-  ClientTale tale; // ignore: strong_mode_invalid_method_override
-  Map<String, Field> fields = {};
-  Notificator onDimensionsChanged = new Notificator();
-  Notificator onResolutionLevelChanged = new Notificator();
+  covariant ClientTale tale;
+  covariant Map<String, Field> fields = {};
+  StreamController _onDimensionsChanged = StreamController();
+  Stream get onDimensionsChanged => _onDimensionsChanged.stream;
+  StreamController _onResolutionLevelChanged = StreamController();
+  Stream get onResolutionLevelChanged => _onResolutionLevelChanged.stream;
   int userTopOffset = 0;
   int userLeftOffset = 0;
   double _zoom = 1.0;
@@ -36,10 +37,11 @@ class ClientWorld extends commonModel.World {
   set resolutionLevel(int value) {
     if (_resolutionLevel == value) return;
     _resolutionLevel = value;
-    onResolutionLevelChanged.notify();
+    _onResolutionLevelChanged.add(null);
   }
 
   ClientWorld(this.tale) : super(tale);
+
   void init(StateService state, SettingsService settings) {
     this.state = state;
     this.settings = settings;
@@ -47,7 +49,7 @@ class ClientWorld extends commonModel.World {
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = new HexaBorders(this);
     recalculate();
-    state.onWorldLoaded.notify();
+    state.worldIsLoaded();
   }
 
   void recalculate() {
@@ -55,7 +57,7 @@ class ClientWorld extends commonModel.World {
     fieldHeight = fieldWidth * widthHeightRatio;
     fields.forEach((k, v) => v.recalculate());
     defaultHex.recalculate();
-    onDimensionsChanged.notify();
+    _onDimensionsChanged.add(null);
   }
 
   Field getFieldByMouseOffset(num nx, num ny) {
@@ -80,7 +82,8 @@ class ClientWorld extends commonModel.World {
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(verticalSegment - 1, horizontalSegment);
+            return _getMainFieldBySegments(
+                verticalSegment - 1, horizontalSegment);
           }
         } else {
           // left bottom
@@ -88,7 +91,8 @@ class ClientWorld extends commonModel.World {
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(verticalSegment - 1, horizontalSegment);
+            return _getMainFieldBySegments(
+                verticalSegment - 1, horizontalSegment);
           }
         }
       } else {
@@ -99,14 +103,16 @@ class ClientWorld extends commonModel.World {
           if (deltaTop / deltaLeft < sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(verticalSegment + 1, horizontalSegment);
+            return _getMainFieldBySegments(
+                verticalSegment + 1, horizontalSegment);
           }
         } else {
           // right bottom
           if (deltaTop / deltaLeft > sqrt(3)) {
             return main;
           } else {
-            return _getMainFieldBySegments(verticalSegment + 1, horizontalSegment);
+            return _getMainFieldBySegments(
+                verticalSegment + 1, horizontalSegment);
           }
         }
       }

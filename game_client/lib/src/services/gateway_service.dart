@@ -1,12 +1,13 @@
 library boardytale.client.gateway;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
-import 'package:boardytale_client/src/world/model/model.dart';
-import 'package:boardytale_commons/model/model.dart' as commonLib;
+import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/world/model/model.dart';
+import 'package:shared/model/model.dart' as commonLib;
 import 'package:utils/utils.dart';
 
 @Injectable()
@@ -15,18 +16,23 @@ class GatewayService {
   String connectionName;
   Player me;
   final StateService state;
-  Notificator onChange = new Notificator();
-  ValueNotificator<Map<String, dynamic>> onMessage = new ValueNotificator<Map<String, dynamic>>();
+
+  Stream get onChange => _onChange.stream;
+  StreamController _onChange = new StreamController();
+
+  Stream<Map<String, dynamic>> get onMessage => _onMessage.stream;
+  StreamController<Map<String, dynamic>> _onMessage =
+      new StreamController<Map<String, dynamic>>();
 
   GatewayService(this.state) {
     _socket = new WebSocket('ws://127.0.0.1:8086/ws');
     _socket.onMessage.listen((MessageEvent e) {
-      Map<String, dynamic> message = JSON.decode(e.data.toString());
+      Map<String, dynamic> message = json.decode(e.data.toString());
       handleMessages(message);
     });
-//    socket.onOpen.listen((_) {
-    //      socket.send(JSON.encode({"type": "ping", "message": "ahoj"}));
-//    });
+    _socket.onOpen.listen((_) {
+      _socket.send(json.encode({"type": "ping", "message": "ahoj"}));
+    });
   }
 
   void handleMessages(Map<String, dynamic> message) {
@@ -35,36 +41,36 @@ class GatewayService {
     if (!message.containsKey("type")) {
       throw ("Message do not contain \"type\"");
     }
-    switch (message["type"]) {
-      case "error":
-        state.alertError(message["message"]);
-        break;
-      case "message":
-        state.alertNote(message["message"]);
-        break;
-      case "connection":
-        connectionName = message["name"];
-        updateMe();
-        break;
-      case "cancel":
-        state.alertWarning(message["reason"]);
-        break;
-      case "tale":
-        state.loadTaleFromData(message["tale"]);
-        updateMe();
-        break;
-      case "state":
-        state.teamPlaying = message["playing"];
-        state.tale.update(message);
-        updateMe();
-        break;
-      case "ping":
-        state.alertNote(message["message"]);
-        break;
-      default:
-        throw new UnimplementedError("Type ${message["type"]} unimplemented");
-    }
-    onMessage.notify(message);
+//    switch (message["type"]) {
+//      case "error":
+//        state.alertError(message["message"]);
+//        break;
+//      case "message":
+//        state.alertNote(message["message"]);
+//        break;
+//      case "connection":
+//        connectionName = message["name"];
+//        updateMe();
+//        break;
+//      case "cancel":
+//        state.alertWarning(message["reason"]);
+//        break;
+//      case "tale":
+//        state.loadTaleFromData(message["tale"]);
+//        updateMe();
+//        break;
+//      case "state":
+//        state.teamPlaying = message["playing"];
+//        state.tale.update(message);
+//        updateMe();
+//        break;
+//      case "ping":
+//        state.alertNote(message["message"]);
+//        break;
+//      default:
+//        throw new UnimplementedError("Type ${message["type"]} unimplemented");
+//    }
+    _onMessage.add(message);
   }
 
   void updateMe() {
@@ -72,8 +78,9 @@ class GatewayService {
       me = null;
       return;
     }
-    me = state.tale.players.values
-        .firstWhere((player) => (player as Player).connectionName == connectionName, orElse: returnNull);
+    me = state.tale.players.values.firstWhere(
+        (player) => (player as Player).connectionName == connectionName,
+        orElse: returnNull);
     if (me != null) {
       state.tale.players.values.forEach((player) {
         (player as Player).isEnemy = player.team != me.team;
@@ -84,14 +91,20 @@ class GatewayService {
   }
 
   void _send(Map<String, dynamic> message) {
-    _socket.send(JSON.encode(message));
+    _socket.send(json.encode(message));
   }
 
-  void sendCommand(Unit unit, List<String> path, commonLib.Ability ability, {Map<String, dynamic> other: const {}}) {
-    _send({"type": "command", "unit": unit.id, "ability": ability.name, "path": path}..addAll(other));
+  void sendCommand(Unit unit, List<String> path, commonLib.Ability ability,
+      {Map<String, dynamic> other: const {}}) {
+    _send({
+      "type": "command",
+      "unit": unit.id,
+      "ability": ability.name,
+      "path": path
+    }..addAll(other));
   }
 
   void sendNextTurn() {
-    _send({"type":"nextTurn"});
+    _send({"type": "nextTurn"});
   }
 }

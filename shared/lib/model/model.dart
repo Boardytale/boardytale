@@ -1,6 +1,7 @@
 library model;
 
 import "dart:math" as Math;
+import 'dart:async';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 import 'package:utils/utils.dart' as utils;

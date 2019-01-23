@@ -1,4 +1,5 @@
 import 'package:editor_server/controller/image_controller.dart';
+import 'package:editor_server/controller/lobby_data_controller.dart';
 import 'package:editor_server/controller/tale_controller.dart';
 import 'package:editor_server/controller/unit_controller.dart';
 import 'package:io_utils/io_utils.dart';
@@ -28,6 +29,7 @@ class EditorServerChannel extends ApplicationChannel {
     router.route("/images/[:type]").link(() => ImageController(context));
     router.route("/tales/[:operation]").link(() => TaleController(context));
     router.route("/units/[:operation]").link(() => UnitController(context));
+    router.route("/lobbyList").link(() => LobbyDataController(context));
     return router;
   }
 }

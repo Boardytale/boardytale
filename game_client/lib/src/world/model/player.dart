@@ -2,13 +2,15 @@ part of client_model;
 
 class Player extends commonModel.Player {
   String connectionName;
-  bool isMe=false;
-  bool isEnemy=false;
+  bool isMe = false;
+  bool isEnemy = false;
+  bool isDone = false;
 
-  String get meId =>isMe?"me":isEnemy?"enemy":"team";
+  String get meId => isMe ? "me" : isEnemy ? "enemy" : "team";
 
-  void fromMap(Map<String, dynamic> data) {
-    super.fromMap(data);
-    connectionName = data["connection"];
+  Player fromMap(Map<String, dynamic> data) {
+    Player newPlayer = commonModel.Player.fromJson(data);
+    newPlayer.connectionName = data["connection"];
+    return newPlayer;
   }
 }

@@ -6,4 +6,8 @@ class HealAbility extends commonLib.HealAbility implements ClientAbility {
   void show(commonLib.Unit invoker,commonLib.Track track) {
     // TODO: implement perform
   }
+
+  bool validate(commonLib.Unit invoker,commonLib.Track track){
+    throw "not implemented";
+  }
 }

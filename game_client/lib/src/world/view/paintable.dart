@@ -16,7 +16,7 @@ abstract class Paintable {
   bool _createBitmapOrdered = false;
 
   Paintable(this.view, this._field, this.stage) {
-    view.model.onDimensionsChanged.add(_transformBitmap);
+    view.model.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;
@@ -56,7 +56,7 @@ abstract class Paintable {
     }
   }
 
-  void createBitmap() {
+  void createBitmap([_]) {
     if (_createBitmapOrdered) return;
     _createBitmapOrdered = true;
     new Future.delayed(const Duration(milliseconds: 30)).then((_) {
@@ -68,7 +68,7 @@ abstract class Paintable {
   Future createBitmapInner();
 
   // scale bitmap according to map
-  void _transformBitmap() {
+  void _transformBitmap([_]) {
     if (bitmap == null || field == null) return;
     bitmap.x = _field.offset.x + (leftOffset * view.model.zoom);
     bitmap.y = _field.offset.y + (topOffset * view.model.zoom);

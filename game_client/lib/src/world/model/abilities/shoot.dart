@@ -6,4 +6,11 @@ class ShootAbility extends commonLib.ShootAbility implements ClientAbility {
   void show(commonLib.Unit invoker,commonLib.Track track) {
     // TODO: implement perform
   }
+
+  @override
+  bool validate(commonLib.Unit invoker, commonLib.Track track) {
+    // TODO: implement validate
+    return null;
+  }
+
 }

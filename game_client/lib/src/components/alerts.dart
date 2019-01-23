@@ -1,6 +1,6 @@
 import 'package:angular/core.dart';
 import 'package:angular/src/common/directives.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
+import 'package:game_client/src/services/state_service.dart';
 
 @Component(
     selector: "alerts",
@@ -8,7 +8,6 @@ import 'package:boardytale_client/src/services/state_service.dart';
     template: """
 <div *ngFor="let alert of alerts" class='alert {{alert["type"]}}'>{{alert["text"]}}</div>
 """,
-    host: const {"class": "alerts"},
     styles: const [
       """
   :host{
@@ -40,12 +39,12 @@ class AlertsComponent {
   List<Map> alerts = [];
 
   AlertsComponent(this.changeDetector, this.state) {
-    state.onAlert.add((Map alert) {
-      if (alerts.length > 4) {
-        alerts.removeAt(0);
-      }
-      alerts.add(alert);
-      changeDetector.detectChanges();
-    });
+//    state.onAlert.add((Map alert) {
+//      if (alerts.length > 4) {
+//        alerts.removeAt(0);
+//      }
+//      alerts.add(alert);
+//      changeDetector.detectChanges();
+//    });
   }
 }

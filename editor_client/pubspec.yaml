@@ -13,6 +13,8 @@ dependencies:
   js: any
   ng2_g_signin:
     git: https://github.com/Boardytale/ng2_g_signin
+  shared:
+    path: ../shared
 
 dev_dependencies:
   angular_test: ^2.1.0
@@ -20,8 +22,6 @@ dev_dependencies:
   build_test: ^0.10.3
   build_web_compilers: ^0.4.4
   test: ^1.5.1
-  shared:
-    path: ../shared
+  sass: ^1.15.2
   io_utils:
     path: ../libs/io_utils
-  sass: ^1.15.2

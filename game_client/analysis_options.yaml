@@ -1,10 +1,9 @@
 analyzer:
-  strong-mode: true
+  exclude: [build/**]
+  errors:
+    uri_has_not_been_generated: ignore
   plugins:
-    angular:
-      enabled: true
-#   exclude:
-#     - path/to/excluded/files/**
+    - angular
 
 # Lint rules and documentation, see http://dart-lang.github.io/linter/lints
 linter:
@@ -14,5 +13,7 @@ linter:
     - iterable_contains_unrelated_type
     - list_remove_unrelated_type
     - test_types_in_equals
+    - unnecessary_const
+    - unnecessary_new
     - unrelated_type_equality_checks
     - valid_regexps

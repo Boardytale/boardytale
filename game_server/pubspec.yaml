@@ -4,12 +4,12 @@ version: 0.0.1
 author: Zdeněk Mlčoch <mlcoch.zdenek@gmail.com>
 
 environment:
-  sdk: 2.0.0
+  sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
   aqueduct: ^3.0.0
-  http: any
-  tales_compiler:
-    path: '../tales_compiler'
-  boardytale_commons:
-    path: '../boardytale_commons'
+  uuid: any
+  shared:
+    path: ../shared
+  io_utils:
+    path: ../libs/io_utils

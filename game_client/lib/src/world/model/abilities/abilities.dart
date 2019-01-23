@@ -1,7 +1,7 @@
 library boardytale.client.abilities;
 
 
-import 'package:boardytale_commons/model/model.dart' as commonLib;
+import 'package:shared/model/model.dart' as commonLib;
 
 part 'client_ability.dart';
 part 'attack.dart';

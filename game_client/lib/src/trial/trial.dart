@@ -1,6 +1,6 @@
 import 'package:angular/core.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
-import 'package:boardytale_client/src/world/world_component.dart';
+import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/world/world_component.dart';
 
 @Component(
     selector: 'trial',
@@ -13,8 +13,8 @@ import 'package:boardytale_client/src/world/world_component.dart';
 class TrialComponent {
   final StateService state;
   TrialComponent(this.state) {
-    this.state.onTaleLoaded.add(taleLoaded);
-    this.state.loadTale("0");
+//    this.state.onTaleLoaded.add(taleLoaded);
+//    this.state.loadTale("0");
   }
 
   void taleLoaded() {

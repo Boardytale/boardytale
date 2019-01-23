@@ -19,6 +19,23 @@ class Unit {
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
 
+  /// called on health change with previous health state
+  StreamController<int> _onHealthChanged = StreamController<int>();
+  StreamController _onFieldChanged = StreamController();
+  StreamController _onTypeChanged = StreamController();
+  StreamController _onStepsChanged = StreamController();
+//  StreamController _onActionStateChanged = StreamController();
+
+  Stream<int> get onHealthChanged => _onHealthChanged.stream;
+
+  Stream get onFieldChanged => _onFieldChanged.stream;
+
+  Stream get onTypeChanged => _onTypeChanged.stream;
+
+  Stream get onStepsChanged => _onStepsChanged.stream;
+
+//  Stream get onActionStateChanged => _onActionStateChanged.stream;
+
   bool get isUndead => tags.contains(UnitTypeTag.undead);
 
   bool get isEthernal => tags.contains(UnitTypeTag.ethernal);
@@ -77,13 +94,6 @@ class Unit {
     }
   }
 
-  /// called on health change with previous health state
-//  ValueNotificator<int> onHealthChanged = new ValueNotificator();
-//  Notificator onFieldChanged = new Notificator();
-//  Notificator onTypeChanged = new Notificator();
-//  Notificator onStepsChanged = new Notificator();
-//  Notificator onActionStateChanged = new Notificator();
-
   Unit(this.id);
 
   bool get isPlayable => isAlive && _actions > 0;
@@ -106,7 +116,7 @@ class Unit {
     _field?.removeUnit(this);
     _field = field;
     field.addUnit(this);
-//    onFieldChanged.notify();
+    _onFieldChanged.add(_field);
   }
 
   set actualHealth(int val) {
@@ -119,6 +129,7 @@ class Unit {
       destroy();
     }
     field.refresh();
+    _onHealthChanged.add(_health);
   }
 
   void destroy() {}
@@ -137,7 +148,7 @@ class Unit {
       _steps = 0;
       _actions = 0;
     }
-//    onStepsChanged.notify();
+    _onStepsChanged.add(_steps);
   }
 
   bool get isAlive => _health > 0;
@@ -156,7 +167,8 @@ class Unit {
   void setType(UnitType type) {
     // health is transformed by new maximum. If unit is alive, type change cannot kill it
     bool alive = isAlive;
-    int newActualHealth = ((type.health / this.type.health) * actualHealth).floor();
+    int newActualHealth =
+        ((type.health / this.type.health) * actualHealth).floor();
     this.type = type;
     if (alive && actualHealth == 0) {
       newActualHealth = 1;
@@ -178,13 +190,13 @@ class Unit {
     }
 
     _recalculate();
-//    onTypeChanged.notify();
+    _onTypeChanged.add(null);
   }
 
-//  void addAbility(Ability ability) {
-//    abilities.add(ability);
-//    ability.setInvoker(this);
-//  }
+  void addAbility(Ability ability) {
+    abilities.add(ability);
+    ability.setInvoker(this);
+  }
 
   void move(Track track) {
     this.steps -= track.length;
@@ -230,52 +242,6 @@ class Unit {
   }
 
   Ability getAbilityByName(String name) =>
-      abilities.firstWhere((Ability ability) => ability.name == name, orElse: ()=>null);
-
-  void fromMap(Map<String, dynamic> m, Tale tale) {
-//    if (type == null || m["type"] != type.id) {
-//      type = tale.resources.unitTypes[m["type"].toString()];
-////      _health = type.health;
-////      _steps = type.speed;
-//      _recalculate();
-//    }
-////    setType(type);
-//    dynamic __fieldId = m["field"];
-//    if (__fieldId is String) {
-//      field = tale.world.fields[__fieldId];
-//    }
-//
-//    dynamic __name = m["name"];
-//    if (__name is String) {
-//      _name = __name;
-//    }else{
-//      _badData("name", tale);
-//    }
-//    dynamic __health = m["health"];
-//    if (__health is int) {
-//      actualHealth = __health;
-//    } else {
-//      actualHealth = type.health;
-//    }
-//    dynamic __player = m["player"];
-//    if (__player is int) {
-//      player = tale.players[__player];
-//    }
-//    dynamic __steps = m["steps"];
-//    if (__steps is int) {
-//      steps = __steps;
-//    } else {
-//      steps = type.speed;
-//    }
-//    dynamic __actions = m["actions"];
-//    if (__actions is int) {
-//      actions = __actions;
-//    } else {
-//      actions = type.actions;
-//    }
-  }
-
-//  void _badData(String key, Tale tale) {
-//    throw "unit $id in tale ${tale.id} - $key is not ok";
-//  }
+      abilities.firstWhere((Ability ability) => ability.name == name,
+          orElse: () => null);
 }
