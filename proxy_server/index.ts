@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as proxy from 'http-proxy-middleware';
 import {config} from '../dev-config';
 import {makeAddress} from '../libs/network';
-import {ServerConfiguration} from '../shared/lib/configuration/configuration';
+import {FrontEndDevelopment, ServerConfiguration} from '../shared/lib/configuration/configuration';
 
 let isMocked = false;
 
@@ -23,44 +23,13 @@ app.use((req, res, next) => {
     // });
     next();
 });
-// if (config.userServer.route) {
-//     let pathRewrite = {};
-//     pathRewrite[`^${config.userServer.route}`] = '/';
-//
-//     let apiProxy = proxy({
-//         target: makeAddress(config.userServer.uris[0]),
-//         pathRewrite,
-//         changeOrigin: true,
-//     });
-//     app.use(config.userServer.route, apiProxy);
-//     console.log(`running proxy from ${config.userServer.route} to ${makeAddress(config.userServer.uris[0])}`);
-// }
 
 runProxy(config.userServer);
 runProxy(config.editorServer);
+let wsProxy = proxyWebsocket(config.gameServer);
 
-if (config.editorStaticDev.port) {
-    let pathRewrite = {};
-    pathRewrite[`^${config.editorStaticDev.route}`] = '/';
-    let apiProxy = proxy({
-        target: 'http://localhost:' + config.editorStaticDev.port,
-        pathRewrite,
-
-        changeOrigin: true,
-    });
-    app.use(config.editorStaticDev.route, apiProxy);
-    console.log(`running proxy from ${config.editorStaticDev.route} to ${'http://localhost:' + config.editorStaticDev.port}`);
-}
-// if (config.gameServer.route) {
-//     let apiProxy = proxy(config.gameServer.route, {target: makeAddress(config.gameServer.uris[0])});
-//     app.use(apiProxy);
-//     console.log(`running proxy from ${config.gameServer.route} to ${makeAddress(config.gameServer.uris[0])}`);
-// }
-// if (config.gameStaticDev.active) {
-//     let apiProxy = proxy(makeAddress(config.gameStaticDev), {target: config.gameStaticDev.target});
-//     app.use(apiProxy);
-//     console.log(`running proxy from ${makeAddress(config.gameStaticDev)} to ${config.gameStaticDev.target}`);
-// }
+proxyStaticDev(config.editorStaticDev);
+proxyStaticDev(config.gameStaticDev);
 
 app.get('/', (req, res) => {
     return res.sendFile(path.resolve(__dirname, '../www/index.html'));
@@ -71,9 +40,25 @@ app.use(express.static(path.resolve(__dirname, '../www'), {
 }));
 
 
-app.listen(config.proxyServer.uris[0].port, () => {
+var server = app.listen(config.proxyServer.uris[0].port, () => {
     console.log('Proxy server is listening to http://localhost:' + config.proxyServer.uris[0].port);
 });
+
+server.on('upgrade', wsProxy.upgrade);
+
+function proxyStaticDev(settings: FrontEndDevelopment) {
+    if (settings.port) {
+        let pathRewrite = {};
+        pathRewrite[`^${settings.route}`] = '/';
+        let apiProxy = proxy({
+            target: 'http://localhost:' + settings.port,
+            pathRewrite,
+            changeOrigin: true,
+        });
+        app.use(settings.route, apiProxy);
+        console.log(`running proxy from ${settings.route} to ${'http://localhost:' + settings.port}`);
+    }
+}
 
 function runProxy(server: ServerConfiguration) {
     if (server.route) {
@@ -83,9 +68,28 @@ function runProxy(server: ServerConfiguration) {
         let apiProxy = proxy({
             target: makeAddress(server.uris[0]),
             pathRewrite,
-            changeOrigin: true,
+            changeOrigin: true
         });
         app.use(server.route, apiProxy);
         console.log(`running proxy from ${server.route} to ${makeAddress(server.uris[0])}`);
     }
+}
+
+function proxyWebsocket(server: ServerConfiguration) {
+    var apiProxy;
+    if (server.route) {
+        // let apiProxy = proxy('ws://' + server.uris[0].host + ':' + server.uris[0].port + '/');
+        let pathRewrite = {};
+        pathRewrite[`^${server.route}`] = '/';
+        apiProxy = proxy({
+            target: makeAddress(server.uris[0]),
+            pathRewrite,
+            changeOrigin: true,
+            ws: true, // enable websocket proxy
+            logLevel: 'debug'
+        });
+        app.use(server.route, apiProxy);
+        console.log(`running proxy from ${server.route} to ${makeAddress(server.uris[0])}`);
+    }
+    return apiProxy;
 }

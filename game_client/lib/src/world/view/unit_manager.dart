@@ -10,9 +10,9 @@ class UnitManager {
 
   UnitManager(this.stage, this.view, this.settings) {
     tale = view.model.tale;
-    activeField = new ActiveFieldPaintable(view, null, stage);
+    activeField = ActiveFieldPaintable(view, null, stage);
     tale.units.forEach((id, unit) {
-      paintables.add(new UnitPaintable(unit, stage, view, unit.field, settings));
+      paintables.add(UnitPaintable(unit, stage, view, unit.field, settings));
     });
   }
 

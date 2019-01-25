@@ -2,12 +2,12 @@ part of 'lobby.dart';
 
 @Component(
     selector: "arrow-disk",
-    directives: const [NgFor],
+    directives: [NgFor],
     template: """
       <button *ngFor="let arrow of arrows" (click)='onClick(arrow)'>{{arrow}}</button>
       <button (click)='nextTurn()'>Next turn</button>
 """,
-    styles: const [
+    styles: [
       """:host{
   position:fixed;
   right:0;

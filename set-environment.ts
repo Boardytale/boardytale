@@ -27,5 +27,13 @@ port: ${config.editorDatabase.port}
 databaseName: "${config.editorDatabase.databaseName}" 
     `);
 
-    // TODO: yaml to hero_server
+    fs.writeFileSync('game_client/lib/project_settings.dart', `
+library project_settings;
+
+class ProjectSettings {
+  static String gameApiRoute = "${config.gameServer.route}";
+  static String gameApiPort = "${config.gameServer.uris[0].port}";
+}  
+    `);
+
 });

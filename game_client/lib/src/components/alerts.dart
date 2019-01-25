@@ -4,11 +4,11 @@ import 'package:game_client/src/services/state_service.dart';
 
 @Component(
     selector: "alerts",
-    directives: const [NgFor],
+    directives: [NgFor],
     template: """
 <div *ngFor="let alert of alerts" class='alert {{alert["type"]}}'>{{alert["text"]}}</div>
 """,
-    styles: const [
+    styles: [
       """
   :host{
     position: fixed;

@@ -6,6 +6,8 @@ import 'dart:async';
 Future main() async {
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
+  print("running on ${boardytaleConfiguration.gameStaticDev.port}");
+
   Process.start("webdev", ["serve", "web:${boardytaleConfiguration.gameStaticDev.port}"], runInShell: true)
       .then((Process process) {
     printFromOutputStreams(process, "editor serve", "light_cyan");

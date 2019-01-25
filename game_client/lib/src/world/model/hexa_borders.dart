@@ -11,7 +11,7 @@ class HexaBorders {
 
   HexaBorders(this.world);
 
-  stageLib.Rectangle<num> get rectangle => new stageLib.Rectangle<num>(0.0, 0.0, world.fieldWidth, world.fieldHeight);
+  stageLib.Rectangle<num> get rectangle => stageLib.Rectangle<num>(0.0, 0.0, world.fieldWidth, world.fieldHeight);
 
   void recalculate() {
     double fieldWidth = world.fieldWidth;
@@ -19,12 +19,12 @@ class HexaBorders {
     double halfHeight = fieldHeight / 2;
     double quarterWidth = fieldWidth / 4;
     double left2 = quarterWidth * 3;
-    topLeft = new FieldPoint(quarterWidth, 0.0);
-    topRight = new FieldPoint(left2, 0.0);
-    right = new FieldPoint(fieldWidth, halfHeight);
-    left = new FieldPoint(0.0, halfHeight);
-    bottomLeft = new FieldPoint(quarterWidth, fieldHeight);
-    bottomRight = new FieldPoint(left2, fieldHeight);
+    topLeft = FieldPoint(quarterWidth, 0.0);
+    topRight = FieldPoint(left2, 0.0);
+    right = FieldPoint(fieldWidth, halfHeight);
+    left = FieldPoint(0.0, halfHeight);
+    bottomLeft = FieldPoint(quarterWidth, fieldHeight);
+    bottomRight = FieldPoint(left2, fieldHeight);
   }
 }
 

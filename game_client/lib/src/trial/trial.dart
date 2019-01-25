@@ -8,8 +8,8 @@ import 'package:game_client/src/world/world_component.dart';
       <h1 style="position: absolute">trial</h1>
      <world></world>
       ''',
-    directives: const [WorldComponent],
-    styles: const [":host{display: block;}"])
+    directives: [WorldComponent],
+    styles: [":host{display: block;}"])
 class TrialComponent {
   final StateService state;
   TrialComponent(this.state) {

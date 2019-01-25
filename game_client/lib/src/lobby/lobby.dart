@@ -12,14 +12,14 @@ part 'arrow_disk.dart';
 
 @Component(
     selector: 'lobby',
-    directives: const [WorldComponent,PlayerListComponent, ArrowDisk, NgFor],
+    directives: [WorldComponent,PlayerListComponent, ArrowDisk, NgFor],
     template: '''
       <h1>lobby</h1>
       <player-list></player-list>
       <arrow-disk></arrow-disk>
       <world></world>
       ''',
-    styles: const [
+    styles: [
       """
         :host{
           color: white;

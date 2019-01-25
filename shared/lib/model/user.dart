@@ -5,8 +5,15 @@ part of model;
 class User {
   String id;
   String name;
+  String email;
+  String innerToken;
 
   static User fromJson(Map data){
+    return _$UserFromJson(data);
+  }
+
+  static User fromGoogleJson(Map data){
+    data["id"] = data["id"].toString();
     return _$UserFromJson(data);
   }
 

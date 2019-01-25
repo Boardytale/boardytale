@@ -8,7 +8,7 @@ import 'package:shared/model/model.dart' as commonLib;
 
 @Component(
     selector: "player-list",
-    directives: const [NgFor],
+    directives: [NgFor],
     template: """
     <div class="players">
       <div *ngFor="let player of players" [class.is-me]="player==me" [class.is-done]='player.isDone || player.team != state.teamPlaying' style="color:{{player.color}}">
@@ -16,7 +16,7 @@ import 'package:shared/model/model.dart' as commonLib;
       </div>
     </div>
 """,
-    styles: const [
+    styles: [
       """
         .is-me{
           font-weight: bold;

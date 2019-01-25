@@ -25,9 +25,9 @@ class WorldView {
 
   WorldView(this.worldStage, this.model) {
     Map<int, ImageElement> resources = {};
-    ImageElement grassImage = new ImageElement(src: "img/8-trav.png");
+    ImageElement grassImage =  ImageElement(src: "img/8-trav.png");
     resources[0] = grassImage;
-    ImageElement rockImage = new ImageElement(src: "img/rock.png");
+    ImageElement rockImage =  ImageElement(src: "img/rock.png");
     resources[1] = rockImage;
     Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
       _imageLoaded = true;
@@ -35,13 +35,13 @@ class WorldView {
       init();
     });
     model.fields.forEach((key, Field field) {
-      fields[key] = new ViewField(field);
+      fields[key] =  ViewField(field);
     });
   }
 
   void createBitmapsByTerrain(Map<int, ImageElement> resources) {
     HexaBorders defaultHex = model.defaultHex;
-    var path = new stage_lib.Shape();
+    var path =  stage_lib.Shape();
     stage_lib.Graphics graphics = path.graphics;
     graphics
       ..beginPath()
@@ -57,25 +57,25 @@ class WorldView {
     resources.forEach((int k, ImageElement v) {
       v.width = defaultHex.rectangle.width.toInt() + 1;
       v.height = defaultHex.rectangle.height.toInt() + 1;
-      stage_lib.BitmapData data = new stage_lib.BitmapData.fromImageElement(v);
+      stage_lib.BitmapData data =  stage_lib.BitmapData.fromImageElement(v);
       data.draw(path);
-      fieldBitmaps[k] = new stage_lib.Bitmap(data);
+      fieldBitmaps[k] =  stage_lib.Bitmap(data);
     });
   }
 
   void init() {
-    Stopwatch stopwatch = new Stopwatch();
+    Stopwatch stopwatch =  Stopwatch();
     stopwatch.start();
     fields.forEach((key, ViewField field) {
       if (field.terrain == null) {
-        stage_lib.Bitmap terrain = new stage_lib.Bitmap(fieldBitmaps[field.original.terrainId].bitmapData.clone());
+        stage_lib.Bitmap terrain =  stage_lib.Bitmap(fieldBitmaps[field.original.terrainId].bitmapData.clone());
         if (field.label == null) {
-          var textField = new stage_lib.TextField(
-              field.original.id, new stage_lib.TextFormat('Spicy Rice', 24, stage_lib.Color.Black));
-          stage_lib.BitmapData labelBitmap = new stage_lib.BitmapData(60, 30, stage_lib.Color.Transparent);
+          var textField =  stage_lib.TextField(
+              field.original.id,  stage_lib.TextFormat('Spicy Rice', 24, stage_lib.Color.Black));
+          stage_lib.BitmapData labelBitmap =  stage_lib.BitmapData(60, 30, stage_lib.Color.Transparent);
           labelBitmap.draw(textField);
           terrain.bitmapData
-              .drawPixels(labelBitmap, new stage_lib.Rectangle(0, 0, 60, 30), new stage_lib.Point(20, 20));
+              .drawPixels(labelBitmap,  stage_lib.Rectangle(0, 0, 60, 30),  stage_lib.Point(20, 20));
         }
         worldStage.addChild(terrain);
         field.terrain = terrain;

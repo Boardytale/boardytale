@@ -71,11 +71,17 @@ const _$ImageTagEnumMap = <ImageTag, dynamic>{ImageTag.grass: 'grass'};
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
     ..id = json['id'] as String
-    ..name = json['name'] as String;
+    ..name = json['name'] as String
+    ..email = json['email'] as String
+    ..innerToken = json['innerToken'] as String;
 }
 
-Map<String, dynamic> _$UserToJson(User instance) =>
-    <String, dynamic>{'id': instance.id, 'name': instance.name};
+Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'email': instance.email,
+      'innerToken': instance.innerToken
+    };
 
 UnitTypeCreateEnvelope _$UnitTypeCreateEnvelopeFromJson(
     Map<String, dynamic> json) {
@@ -227,7 +233,16 @@ UnitType _$UnitTypeFromJson(Map<String, dynamic> json) {
     ..langName = (json['langName'] as Map<String, dynamic>)?.map(
         (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
     ..unitTypeDataVersion = json['unitTypeDataVersion'] as int
-    ..unitTypeVersion = json['unitTypeVersion'] as int;
+    ..unitTypeVersion = json['unitTypeVersion'] as int
+    ..bigImage = json['bigImage'] == null
+        ? null
+        : Image.fromJson(json['bigImage'] as Map<String, dynamic>)
+    ..image = json['image'] == null
+        ? null
+        : Image.fromJson(json['image'] as Map<String, dynamic>)
+    ..icon = json['icon'] == null
+        ? null
+        : Image.fromJson(json['icon'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$UnitTypeToJson(UnitType instance) => <String, dynamic>{
@@ -244,7 +259,10 @@ Map<String, dynamic> _$UnitTypeToJson(UnitType instance) => <String, dynamic>{
       'langName':
           instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'unitTypeDataVersion': instance.unitTypeDataVersion,
-      'unitTypeVersion': instance.unitTypeVersion
+      'unitTypeVersion': instance.unitTypeVersion,
+      'bigImage': instance.bigImage?.toJson(),
+      'image': instance.image?.toJson(),
+      'icon': instance.icon?.toJson()
     };
 
 Race _$RaceFromJson(Map<String, dynamic> json) {
@@ -532,6 +550,53 @@ Map<String, dynamic> _$LobbyTaleToJson(LobbyTale instance) => <String, dynamic>{
       'description':
           instance.description?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'image': instance.image?.toJson()
+    };
+
+ToClientMessage _$ToClientMessageFromJson(Map<String, dynamic> json) {
+  return ToClientMessage()
+    ..message = _$enumDecodeNullable(_$OnClientActionEnumMap, json['message'])
+    ..content = json['content'] as String;
+}
+
+Map<String, dynamic> _$ToClientMessageToJson(ToClientMessage instance) =>
+    <String, dynamic>{
+      'message': _$OnClientActionEnumMap[instance.message],
+      'content': instance.content
+    };
+
+const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
+  OnClientAction.setNavigationState: 'setNavigationState',
+  OnClientAction.refreshLobbyList: 'refreshLobbyList'
+};
+
+SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
+  return SetNavigationState()
+    ..newState =
+        _$enumDecodeNullable(_$GameNavigationStateEnumMap, json['newState']);
+}
+
+Map<String, dynamic> _$SetNavigationStateToJson(SetNavigationState instance) =>
+    <String, dynamic>{
+      'newState': _$GameNavigationStateEnumMap[instance.newState]
+    };
+
+const _$GameNavigationStateEnumMap = <GameNavigationState, dynamic>{
+  GameNavigationState.findLobby: 'findLobby',
+  GameNavigationState.createGame: 'createGame',
+  GameNavigationState.inGame: 'inGame'
+};
+
+RefreshLobbyList _$RefreshLobbyListFromJson(Map<String, dynamic> json) {
+  return RefreshLobbyList()
+    ..lobbies = (json['lobbies'] as List)
+        ?.map((e) =>
+            e == null ? null : LobbyTale.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$RefreshLobbyListToJson(RefreshLobbyList instance) =>
+    <String, dynamic>{
+      'lobbies': instance.lobbies?.map((e) => e?.toJson())?.toList()
     };
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {

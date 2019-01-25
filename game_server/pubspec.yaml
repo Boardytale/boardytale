@@ -7,8 +7,9 @@ environment:
   sdk: ">=2.0.0 <3.0.0"
 
 dependencies:
-  aqueduct: ^3.0.0
   uuid: any
+  shelf: any
+  shelf_web_socket: any
   shared:
     path: ../shared
   io_utils:

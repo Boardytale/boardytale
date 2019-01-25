@@ -14,7 +14,7 @@ export let data: UnitTypeCreateEnvelope = {
     cost: 100,
     health: 1,
     imageName: 'pikeman',
-    race: "human",
+    race: 'human',
     range: 0,
     speed: 4,
     tags: [],

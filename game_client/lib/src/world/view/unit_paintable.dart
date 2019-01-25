@@ -36,7 +36,7 @@ class UnitPaintable extends Paintable {
   double get rectHeight => world.defaultFieldHeight * pixelRatio;
 
   stage_lib.Rectangle get rectangle {
-    return new stage_lib.Rectangle(0, 0, rectWidth, rectHeight);
+    return  stage_lib.Rectangle(0, 0, rectWidth, rectHeight);
   }
 
   @override
@@ -46,31 +46,31 @@ class UnitPaintable extends Paintable {
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
       commonModel.Image primaryImage = getPrimaryImage();
-      data = new stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
+      data =  stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
       if (primaryImage == unit.type.bigImage) {
         imageElement = await getBigImageData();
       } else {
-        imageElement = new ImageElement(src: primaryImage.data);
-        await new Future.delayed(Duration.zero);
+        imageElement =  ImageElement(src: primaryImage.data);
+        await  Future.delayed(Duration.zero);
       }
       data.drawPixels(
-          new stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
-          new stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
+           stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
+           stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
               primaryImage.height * pixelRatio / primaryImage.multiply),
-          new stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
+           stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
       if(!unit.isAlive){
-        data.applyFilter(new stage_lib.ColorMatrixFilter.grayscale());
+        data.applyFilter( stage_lib.ColorMatrixFilter.grayscale());
       }
       unitGlobalCache[state] = data;
       if(unit.isAlive){
-        data.drawPixels(getLifeBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, 0));
-        data.drawPixels(getStepsBar(), getLifeBarRect(), new stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
+        data.drawPixels(getLifeBar(), getLifeBarRect(),  stage_lib.Point(rectWidth / 4, 0));
+        data.drawPixels(getStepsBar(), getLifeBarRect(),  stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
       }
     } else {
       data = unitGlobalCache[state];
     }
-    bitmap = new stage_lib.Bitmap(data);
+    bitmap =  stage_lib.Bitmap(data);
     bitmap.width = world.fieldWidth;
     bitmap.height = world.fieldHeight;
     return;
@@ -87,11 +87,11 @@ class UnitPaintable extends Paintable {
       return lifeGlobalCache[description];
     } else {
       double width = rectWidth / 2;
-      stage_lib.BitmapData data = new stage_lib.BitmapData(width, lifeBarHeight);
+      stage_lib.BitmapData data =  stage_lib.BitmapData(width, lifeBarHeight);
       data.fillRect(getLifeBarRect(), stage_lib.Color.Black);
       double bitWidth = (width - (unit.type.health + 1) * bitSpace) / unit.type.health;
       for (int i = 0; i < unit.type.health; i++) {
-        stage_lib.Rectangle bitRectangle = new stage_lib.Rectangle(
+        stage_lib.Rectangle bitRectangle =  stage_lib.Rectangle(
             i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.actualHealth) {
           data.fillRect(bitRectangle, stage_lib.Color.Green);
@@ -126,11 +126,11 @@ class UnitPaintable extends Paintable {
       return stepsGlobalCache[description];
     } else {
       double width = rectWidth / 2;
-      stage_lib.BitmapData data = new stage_lib.BitmapData(width, lifeBarHeight);
+      stage_lib.BitmapData data =  stage_lib.BitmapData(width, lifeBarHeight);
       data.fillRect(getLifeBarRect(), stage_lib.Color.Black);
       double bitWidth = (width - (unit.speed + 1) * bitSpace) / unit.speed;
       for (int i = 0; i < unit.speed; i++) {
-        stage_lib.Rectangle bitRectangle = new stage_lib.Rectangle(
+        stage_lib.Rectangle bitRectangle =  stage_lib.Rectangle(
             i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.steps) {
           data.fillRect(bitRectangle, activeStepColors[player.meId]);
@@ -145,7 +145,7 @@ class UnitPaintable extends Paintable {
 
   stage_lib.Rectangle getLifeBarRect() {
     double width = view.model.fieldWidth / 2;
-    return new stage_lib.Rectangle(0, 0, width, lifeBarHeight * pixelRatio);
+    return  stage_lib.Rectangle(0, 0, width, lifeBarHeight * pixelRatio);
   }
 
   String getUnitPaintedState(Unit unit) {
@@ -174,12 +174,12 @@ class UnitPaintable extends Paintable {
   }
 
   Future<ImageElement> getBigImageData() {
-    Completer<ImageElement> completer = new Completer<ImageElement>();
+    Completer<ImageElement> completer =  Completer<ImageElement>();
     ImageElement imageElement;
     if (unit.type.bigImage != null) {
-      imageElement = new ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
+      imageElement =  ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
     } else {
-      imageElement = new ImageElement(src: unit.type.image.data);
+      imageElement =  ImageElement(src: unit.type.image.data);
     }
     imageElement.onLoad.listen((_) {
       completer.complete(imageElement);

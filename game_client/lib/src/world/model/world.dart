@@ -47,7 +47,7 @@ class ClientWorld extends commonModel.World {
     this.settings = settings;
     commonModel.setSettings(settings);
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
-    defaultHex = new HexaBorders(this);
+    defaultHex = HexaBorders(this);
     recalculate();
     state.worldIsLoaded();
   }

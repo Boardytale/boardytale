@@ -24,7 +24,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 
         ></div>
       ''',
-    styles: const [
+    styles: [
       """
       :host{
         display: block;
@@ -33,7 +33,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
       }
     """
     ],
-    directives: const [coreDirectives],
+    directives: [coreDirectives],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";
@@ -83,30 +83,30 @@ class WorldComponent implements OnDestroy {
   }
 
   void modelLoaded([_]) {
-    worldStage = new stage_lib.Stage(worldElement,
+    worldStage =  stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,
-        options: new stage_lib.StageOptions()
+        options:  stage_lib.StageOptions()
           ..antialias = true
           ..backgroundColor = stage_lib.Color.Transparent);
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
-    view = new WorldView(worldStage, world);
+    view =  WorldView(worldStage, world);
 
-    unitStage = new stage_lib.Stage(mapObjectsElement,
+    unitStage =  stage_lib.Stage(mapObjectsElement,
         width: window.innerWidth,
         height: window.innerHeight,
-        options: new stage_lib.StageOptions()
+        options:  stage_lib.StageOptions()
           ..antialias = true
           ..backgroundColor = 0
           ..transparent = true);
     unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     unitStage.align = stage_lib.StageAlign.TOP_LEFT;
-    unitManager = new UnitManager(unitStage, view, settings);
+    unitManager =  UnitManager(unitStage, view, settings);
 
-//    view = new WorldViewService(worldStage, world, unitStage, settings);
+//    view =  WorldViewService(worldStage, world, unitStage, settings);
 
-    var renderLoop = new stage_lib.RenderLoop();
+    var renderLoop =  stage_lib.RenderLoop();
     renderLoop.addStage(unitStage);
     detectChanges();
   }
@@ -132,7 +132,7 @@ class WorldComponent implements OnDestroy {
     if (_draggedUnit != null) {
       Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       List<String> path = _draggedUnit.field.getShortestPath(field);
-      commonLib.Track track = new commonLib.Track.fromIds(path, state.tale);
+      commonLib.Track track =  commonLib.Track.fromIds(path, state.tale);
       commonLib.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
         gateway.sendCommand(_draggedUnit, track.path, ability);

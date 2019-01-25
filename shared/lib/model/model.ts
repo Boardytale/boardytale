@@ -35,6 +35,8 @@ export interface Image extends Object {
 export interface User extends Object {
     id: string;
     name: string;
+    email: string;
+    innerToken: string;
 }
 
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
@@ -72,7 +74,11 @@ export interface UnitTypeCompiled extends UnitTypeCommons {
     bigImage: Image;
 }
 
-export interface UnitType extends UnitTypeCommons {}
+export interface UnitType extends UnitTypeCommons {
+    bigImage: Image;
+    image: Image;
+    icon: Image;
+}
 
 export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal';
 
@@ -179,6 +185,10 @@ export interface LobbyTale extends Object {
 
 export type Lang = 'en' | 'cz';
 
+export type GameNavigationState = 'findLobby' | 'createGame' | 'inGame';
+
+export type OnClientAction = 'setNavigationState' | 'refreshLobbyList';
+
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 
 export type TargetModificators = 'wounded' | 'notUndead' | 'undead';
@@ -213,6 +223,7 @@ export interface Ability extends Object {
     name: string;
     image: string;
     targets: { [key in Targets]?: Array<TargetModificators> };
+    invoker: Unit;
 }
 
 export interface MoveAbilityEnvelope extends Object {

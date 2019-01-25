@@ -25,6 +25,8 @@ part 'package:shared/model/abilities/targets.dart';
 part 'settings.dart';
 part 'stage_geometry.dart';
 part 'resources.dart';
+part 'game/state.dart';
+part 'game/messages.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/raise.dart";

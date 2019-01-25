@@ -2,7 +2,7 @@
   "name": "boardytale_proxy_server",
   "version": "0.0.2",
   "scripts": {
-    "start-dev": "npm run set-config-dev && dart runner/run.dart",
+    "start-dev": "npm run set-config-dev && dart libs/runner/run.dart",
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
     "ts2dart": "ts2dart",
     "generate-shared": "cd shared && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\" && npm run generate-data-jsons",
@@ -17,7 +17,7 @@
   "private": true,
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
-    "@types/express": "^4.16.0",
+    "@types/express": "^4.16.1",
     "@types/node": "~8.9.4",
     "@types/prettier": "^1.13.2",
     "@types/request": "^2.47.1",
@@ -26,13 +26,14 @@
     "express": "^4.16.3",
     "gzipper": "^1.4.1",
     "nodemon": "^1.18.7",
-    "prettier": "^1.15.3",
+    "prettier": "^1.16.1",
     "ts-node": "~5.0.1",
-    "tslint": "^5.11.0",
+    "tslint": "^5.12.1",
     "typescript": "~2.7.2"
   },
   "dependencies": {
-    "http-proxy-middleware": "^0.19.0"
+    "bootstrap": "^4.2.1",
+    "http-proxy-middleware": "^0.19.1"
   },
   "prettier": {
     "trailingComma": "es5",

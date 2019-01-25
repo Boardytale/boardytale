@@ -9,6 +9,7 @@ import 'package:game_client/src/services/state_service.dart';
 import 'package:game_client/src/world/model/model.dart';
 import 'package:shared/model/model.dart' as commonLib;
 import 'package:utils/utils.dart';
+import '../../project_settings.dart';
 
 @Injectable()
 class GatewayService {
@@ -18,14 +19,22 @@ class GatewayService {
   final StateService state;
 
   Stream get onChange => _onChange.stream;
-  StreamController _onChange = new StreamController();
+  StreamController _onChange = StreamController();
 
   Stream<Map<String, dynamic>> get onMessage => _onMessage.stream;
   StreamController<Map<String, dynamic>> _onMessage =
-      new StreamController<Map<String, dynamic>>();
+      StreamController<Map<String, dynamic>>();
 
   GatewayService(this.state) {
-    _socket = new WebSocket('ws://127.0.0.1:8086/ws');
+    var loc = window.location;
+    String newUri;
+    if (loc.protocol == "https:") {
+      newUri = "wss:";
+    } else {
+      newUri = "ws:";
+    }
+    newUri += "//" + loc.host;
+    _socket = WebSocket('ws://localhost:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
       Map<String, dynamic> message = json.decode(e.data.toString());
       handleMessages(message);
