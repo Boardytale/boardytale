@@ -583,7 +583,8 @@ Map<String, dynamic> _$SetNavigationStateToJson(SetNavigationState instance) =>
 const _$GameNavigationStateEnumMap = <GameNavigationState, dynamic>{
   GameNavigationState.findLobby: 'findLobby',
   GameNavigationState.createGame: 'createGame',
-  GameNavigationState.inGame: 'inGame'
+  GameNavigationState.inGame: 'inGame',
+  GameNavigationState.loading: 'loading'
 };
 
 RefreshLobbyList _$RefreshLobbyListFromJson(Map<String, dynamic> json) {
@@ -598,6 +599,41 @@ Map<String, dynamic> _$RefreshLobbyListToJson(RefreshLobbyList instance) =>
     <String, dynamic>{
       'lobbies': instance.lobbies?.map((e) => e?.toJson())?.toList()
     };
+
+ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
+  return ToGameServerMessage()
+    ..message = _$enumDecodeNullable(_$OnServerActionEnumMap, json['message'])
+    ..content = json['content'] as String;
+}
+
+Map<String, dynamic> _$ToGameServerMessageToJson(
+        ToGameServerMessage instance) =>
+    <String, dynamic>{
+      'message': _$OnServerActionEnumMap[instance.message],
+      'content': instance.content
+    };
+
+const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
+  OnServerAction.goToState: 'goToState',
+  OnServerAction.init: 'init'
+};
+
+GoToState _$GoToStateFromJson(Map<String, dynamic> json) {
+  return GoToState()
+    ..newState =
+        _$enumDecodeNullable(_$GameNavigationStateEnumMap, json['newState']);
+}
+
+Map<String, dynamic> _$GoToStateToJson(GoToState instance) => <String, dynamic>{
+      'newState': _$GameNavigationStateEnumMap[instance.newState]
+    };
+
+InitMessage _$InitMessageFromJson(Map<String, dynamic> json) {
+  return InitMessage()..someContent = json['someContent'] as String;
+}
+
+Map<String, dynamic> _$InitMessageToJson(InitMessage instance) =>
+    <String, dynamic>{'someContent': instance.someContent};
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()

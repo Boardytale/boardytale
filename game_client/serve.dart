@@ -10,7 +10,7 @@ Future main() async {
 
   Process.start("webdev", ["serve", "web:${boardytaleConfiguration.gameStaticDev.port}"], runInShell: true)
       .then((Process process) {
-    printFromOutputStreams(process, "editor serve", "light_cyan");
+    printFromOutputStreams(process, "game serve", "light_cyan");
   });
 
 }

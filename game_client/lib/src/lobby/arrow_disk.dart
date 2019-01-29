@@ -23,12 +23,12 @@ class ArrowDisk {
   ArrowDisk(this.state, this.gateway);
 
   void onClick(int arrow) {
-    String meId = gateway.me.id;
-    Unit unit = state.tale.units.values.firstWhere((commonLib.Unit unit) => unit.player.id == meId, orElse: returnNull);
-    String target = unit.field.stepToDirection(arrow);
-    gateway.sendCommand(unit,[unit.field.id, target],unit.abilities.first);
+//    String meId = gateway.me.id;
+//    Unit unit = state.tale.units.values.firstWhere((commonLib.Unit unit) => unit.player.id == meId, orElse: returnNull);
+//    String target = unit.field.stepToDirection(arrow);
+//    gateway.sendCommand(unit,[unit.field.id, target],unit.abilities.first);
   }
   void nextTurn(){
-    gateway.sendNextTurn();
+//    gateway.sendNextTurn();
   }
 }

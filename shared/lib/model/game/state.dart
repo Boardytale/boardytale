@@ -8,4 +8,6 @@ enum GameNavigationState {
   createGame,
   @JsonValue('inGame')
   inGame,
+  @JsonValue('loading')
+  loading,
 }

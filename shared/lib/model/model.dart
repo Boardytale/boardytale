@@ -2,6 +2,7 @@ library model;
 
 import "dart:math" as Math;
 import 'dart:async';
+import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 import 'package:utils/utils.dart' as utils;
@@ -26,7 +27,8 @@ part 'settings.dart';
 part 'stage_geometry.dart';
 part 'resources.dart';
 part 'game/state.dart';
-part 'game/messages.dart';
+part 'game/to_client_messages.dart';
+part 'game/to_game_server_messages.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/raise.dart";

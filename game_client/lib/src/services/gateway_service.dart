@@ -1,31 +1,29 @@
 library boardytale.client.gateway;
 
-import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
-import 'package:game_client/src/services/state_service.dart';
-import 'package:game_client/src/world/model/model.dart';
-import 'package:shared/model/model.dart' as commonLib;
-import 'package:utils/utils.dart';
+import 'package:shared/model/model.dart' as shared;
 import '../../project_settings.dart';
 
 @Injectable()
 class GatewayService {
   WebSocket _socket;
-  String connectionName;
-  Player me;
-  final StateService state;
+//  String connectionName;
+//  Player me;
 
-  Stream get onChange => _onChange.stream;
-  StreamController _onChange = StreamController();
+  Map<shared.OnClientAction, void Function(shared.ToClientMessage message)>
+      handlers = {};
 
-  Stream<Map<String, dynamic>> get onMessage => _onMessage.stream;
-  StreamController<Map<String, dynamic>> _onMessage =
-      StreamController<Map<String, dynamic>>();
+//  Stream get onChange => _onChange.stream;
+//  StreamController _onChange = StreamController();
 
-  GatewayService(this.state) {
+//  Stream<Map<String, dynamic>> get onMessage => _onMessage.stream;
+//  StreamController<Map<String, dynamic>> _onMessage =
+//      StreamController<Map<String, dynamic>>();
+
+  GatewayService() {
     var loc = window.location;
     String newUri;
     if (loc.protocol == "https:") {
@@ -34,22 +32,33 @@ class GatewayService {
       newUri = "ws:";
     }
     newUri += "//" + loc.host;
-    _socket = WebSocket('ws://localhost:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
+    _socket = WebSocket(
+        '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
       Map<String, dynamic> message = json.decode(e.data.toString());
-      handleMessages(message);
+      handleMessages(shared.ToClientMessage.fromJson(message));
     });
     _socket.onOpen.listen((_) {
-      _socket.send(json.encode({"type": "ping", "message": "ahoj"}));
+      sendMessage(shared.ToGameServerMessage.init());
     });
   }
 
-  void handleMessages(Map<String, dynamic> message) {
-    print("Message ${message["type"]}");
-//    print(JSON.encode(message));
-    if (!message.containsKey("type")) {
-      throw ("Message do not contain \"type\"");
+  void sendMessage(shared.ToGameServerMessage message) {
+    _socket.send(json.encode(message.toJson()));
+  }
+
+  void handleMessages(shared.ToClientMessage message) {
+    if (handlers.containsKey(message.message)) {
+      handlers[message.message](message);
+    } else {
+      throw "missing handler for ${jsonEncode(message.toJson())}";
     }
+
+//    print("Message ${message["type"]}");
+////    print(JSON.encode(message));
+//    if (!message.containsKey("type")) {
+//      throw ("Message do not contain \"type\"");
+//    }
 //    switch (message["type"]) {
 //      case "error":
 //        state.alertError(message["message"]);
@@ -79,41 +88,38 @@ class GatewayService {
 //      default:
 //        throw new UnimplementedError("Type ${message["type"]} unimplemented");
 //    }
-    _onMessage.add(message);
+//    _onMessage.add(message);
   }
 
-  void updateMe() {
-    if (connectionName == null || state.tale == null) {
-      me = null;
-      return;
-    }
-    me = state.tale.players.values.firstWhere(
-        (player) => (player as Player).connectionName == connectionName,
-        orElse: returnNull);
-    if (me != null) {
-      state.tale.players.values.forEach((player) {
-        (player as Player).isEnemy = player.team != me.team;
-        (player as Player).isMe = false;
-      });
-      me.isMe = true;
-    }
-  }
+//  void updateMe() {
+////    if (connectionName == null || state.tale == null) {
+////      me = null;
+////      return;
+////    }
+////    me = state.tale.players.values.firstWhere(
+////        (player) => (player as Player).connectionName == connectionName,
+////        orElse: returnNull);
+////    if (me != null) {
+////      state.tale.players.values.forEach((player) {
+////        (player as Player).isEnemy = player.team != me.team;
+////        (player as Player).isMe = false;
+////      });
+////      me.isMe = true;
+////    }
+//  }
 
-  void _send(Map<String, dynamic> message) {
-    _socket.send(json.encode(message));
-  }
-
-  void sendCommand(Unit unit, List<String> path, commonLib.Ability ability,
-      {Map<String, dynamic> other: const {}}) {
-    _send({
-      "type": "command",
-      "unit": unit.id,
-      "ability": ability.name,
-      "path": path
-    }..addAll(other));
-  }
-
-  void sendNextTurn() {
-    _send({"type": "nextTurn"});
-  }
+//
+//  void sendCommand(Unit unit, List<String> path, shared.Ability ability,
+//      {Map<String, dynamic> other: const {}}) {
+//    _send({
+//      "type": "command",
+//      "unit": unit.id,
+//      "ability": ability.name,
+//      "path": path
+//    }..addAll(other));
+//  }
+//
+//  void sendNextTurn() {
+//    _send({"type": "nextTurn"});
+//  }
 }

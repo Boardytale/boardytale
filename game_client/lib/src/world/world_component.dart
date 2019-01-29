@@ -135,7 +135,7 @@ class WorldComponent implements OnDestroy {
       commonLib.Track track =  commonLib.Track.fromIds(path, state.tale);
       commonLib.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
-        gateway.sendCommand(_draggedUnit, track.path, ability);
+//        gateway.sendCommand(_draggedUnit, track.path, ability);
       }else{
         state.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }

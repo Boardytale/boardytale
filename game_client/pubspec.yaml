@@ -10,6 +10,7 @@ dependencies:
   angular_components: ^0.10.1
   stagexl: ^1.4.0+2
   js: any
+  rxdart: ^0.20.0
   ng2_g_signin:
     git: https://github.com/Boardytale/ng2_g_signin
   shared:

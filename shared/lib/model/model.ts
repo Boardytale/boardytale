@@ -185,9 +185,15 @@ export interface LobbyTale extends Object {
 
 export type Lang = 'en' | 'cz';
 
-export type GameNavigationState = 'findLobby' | 'createGame' | 'inGame';
+export type GameNavigationState =
+    | 'findLobby'
+    | 'createGame'
+    | 'inGame'
+    | 'loading';
 
 export type OnClientAction = 'setNavigationState' | 'refreshLobbyList';
+
+export type OnServerAction = 'goToState' | 'init';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

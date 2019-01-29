@@ -39,12 +39,12 @@ class PlayerListComponent {
   Player me;
 
   PlayerListComponent(this.changeDetector, this.state, this.gateway) {
-    gateway.onMessage.listen(updateOnMessage);
+//    gateway.onMessage.listen(updateOnMessage);
   }
   void updateOnMessage(Map<String, dynamic> message) {
     String type = message["type"];
     if (type == "tale" || type == "connection" || type == "state") {
-      me = gateway.me;
+//      me = gateway.me;
       changeDetector.detectChanges();
     }
   }
