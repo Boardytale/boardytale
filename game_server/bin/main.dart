@@ -8,12 +8,12 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 main() async {
-  final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
-  final port = boardytaleConfiguration.gameServer.uris.first.port.toInt();
+  final BoardytaleConfiguration config = getConfiguration();
+  final port = config.gameServer.uris.first.port.toInt();
 
-  ServerGateway gateway = ServerGateway();
 
   var handler = webSocketHandler((WebSocketChannel webSocket) {
+    ServerGateway gateway = ServerGateway(config);
     gateway.webSocket = webSocket;
     webSocket.stream.listen((data) {
       try {

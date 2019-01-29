@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/model/user.dart';
+import 'package:io_utils/aqueduct/wraps.dart';
 
 class UserInnerAuthController extends ResourceController {
   UserInnerAuthController(this.context);
@@ -16,26 +17,5 @@ class UserInnerAuthController extends ResourceController {
     } else {
      return Response.ok(users.first.asMap());
     }
-  }
-}
-
-class InnerTokenWrap implements Serializable {
-  String innerToken;
-
-  @override
-  Map<String, dynamic> asMap() {
-    return {"innerToken": innerToken};
-    // TODO: implement asMap
-  }
-
-  @override
-  void readFromMap(Map<String, dynamic> requestBody) {
-    innerToken = requestBody["innerToken"] as String;
-  }
-
-  @override
-  APISchemaObject documentSchema(APIDocumentContext context) {
-    // TODO: implement documentSchema
-    return null;
   }
 }

@@ -3,7 +3,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/image.dart';
 import 'package:editor_server/model/unit.dart';
 import 'package:shared/model/model.dart' as model;
-import 'package:io_utils/aqueduct/id_wrap.dart';
+import 'package:io_utils/aqueduct/wraps.dart';
 
 class UnitController extends ResourceController {
   UnitController(this.context);

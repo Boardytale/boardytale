@@ -53,6 +53,7 @@ class UserBarComponent {
     state.loggedUser =
         model.User.fromGoogleJson(json.decode(loginResponse.body));
     state.isUserSignedIn = true;
+    gatewayService.initMessages(state.loggedUser.innerToken);
   }
 
   void signOut() {

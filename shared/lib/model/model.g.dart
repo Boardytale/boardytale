@@ -70,14 +70,12 @@ const _$ImageTagEnumMap = <ImageTag, dynamic>{ImageTag.grass: 'grass'};
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
-    ..id = json['id'] as String
     ..name = json['name'] as String
     ..email = json['email'] as String
     ..innerToken = json['innerToken'] as String;
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'email': instance.email,
       'innerToken': instance.innerToken
@@ -600,6 +598,19 @@ Map<String, dynamic> _$RefreshLobbyListToJson(RefreshLobbyList instance) =>
       'lobbies': instance.lobbies?.map((e) => e?.toJson())?.toList()
     };
 
+GetGamesToCreate _$GetGamesToCreateFromJson(Map<String, dynamic> json) {
+  return GetGamesToCreate()
+    ..lobbies = (json['lobbies'] as List)
+        ?.map((e) =>
+            e == null ? null : LobbyTale.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$GetGamesToCreateToJson(GetGamesToCreate instance) =>
+    <String, dynamic>{
+      'lobbies': instance.lobbies?.map((e) => e?.toJson())?.toList()
+    };
+
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
   return ToGameServerMessage()
     ..message = _$enumDecodeNullable(_$OnServerActionEnumMap, json['message'])
@@ -629,11 +640,11 @@ Map<String, dynamic> _$GoToStateToJson(GoToState instance) => <String, dynamic>{
     };
 
 InitMessage _$InitMessageFromJson(Map<String, dynamic> json) {
-  return InitMessage()..someContent = json['someContent'] as String;
+  return InitMessage()..innerToken = json['innerToken'] as String;
 }
 
 Map<String, dynamic> _$InitMessageToJson(InitMessage instance) =>
-    <String, dynamic>{'someContent': instance.someContent};
+    <String, dynamic>{'innerToken': instance.innerToken};
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()

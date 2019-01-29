@@ -10,18 +10,9 @@ import '../../project_settings.dart';
 @Injectable()
 class GatewayService {
   WebSocket _socket;
-//  String connectionName;
-//  Player me;
-
+  bool _opened = false;
   Map<shared.OnClientAction, void Function(shared.ToClientMessage message)>
       handlers = {};
-
-//  Stream get onChange => _onChange.stream;
-//  StreamController _onChange = StreamController();
-
-//  Stream<Map<String, dynamic>> get onMessage => _onMessage.stream;
-//  StreamController<Map<String, dynamic>> _onMessage =
-//      StreamController<Map<String, dynamic>>();
 
   GatewayService() {
     var loc = window.location;
@@ -39,11 +30,16 @@ class GatewayService {
       handleMessages(shared.ToClientMessage.fromJson(message));
     });
     _socket.onOpen.listen((_) {
-      sendMessage(shared.ToGameServerMessage.init());
+      _opened = true;
     });
   }
 
+  void initMessages(String innerToken) {
+    sendMessage(shared.ToGameServerMessage.init(innerToken));
+  }
+
   void sendMessage(shared.ToGameServerMessage message) {
+    // TODO: queue until initied and opened
     _socket.send(json.encode(message.toJson()));
   }
 

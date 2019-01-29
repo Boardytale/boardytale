@@ -29,7 +29,7 @@ class EditorServerChannel extends ApplicationChannel {
     router.route("/images/[:type]").link(() => ImageController(context));
     router.route("/tales/[:operation]").link(() => TaleController(context));
     router.route("/units/[:operation]").link(() => UnitController(context));
-    router.route("/lobbyList").link(() => LobbyDataController(context));
+    router.route("/inner/lobbyList").link(() => LobbyDataController(context));
     return router;
   }
 }

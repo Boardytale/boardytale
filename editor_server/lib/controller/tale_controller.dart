@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/tale.dart';
 import 'package:editor_server/model/unit.dart';
-import 'package:io_utils/aqueduct/id_wrap.dart';
+import 'package:io_utils/aqueduct/wraps.dart';
 import 'package:shared/model/model.dart' as model;
 
 class TaleController extends ResourceController {

@@ -14,3 +14,4 @@ dependencies:
     path: ../shared
   io_utils:
     path: ../libs/io_utils
+  rxdart: ^0.20.0

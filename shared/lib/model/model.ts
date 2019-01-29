@@ -33,7 +33,6 @@ export interface Image extends Object {
 }
 
 export interface User extends Object {
-    id: string;
     name: string;
     email: string;
     innerToken: string;
