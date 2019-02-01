@@ -190,7 +190,10 @@ export type GameNavigationState =
     | 'inGame'
     | 'loading';
 
-export type OnClientAction = 'setNavigationState' | 'refreshLobbyList';
+export type OnClientAction =
+    | 'setNavigationState'
+    | 'refreshLobbyList'
+    | 'getGamesToCreate';
 
 export type OnServerAction = 'goToState' | 'init';
 

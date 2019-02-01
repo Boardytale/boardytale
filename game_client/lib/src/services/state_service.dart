@@ -1,6 +1,8 @@
 library state_service;
 
 import 'dart:async';
+import 'package:game_client/src/services/create_game_service.dart';
+import 'package:game_client/src/services/lobby_service.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/model/model.dart';
@@ -17,15 +19,12 @@ class StateService {
     GameNavigationState.loading: ClientGameState()
       ..name = GameNavigationState.loading
       ..showCreateGameButton = false,
-
     GameNavigationState.createGame: ClientGameState()
-    ..name = GameNavigationState.createGame
+      ..name = GameNavigationState.createGame
       ..showCreateGameButton = false,
-
     GameNavigationState.findLobby: ClientGameState()
       ..name = GameNavigationState.findLobby
       ..showCreateGameButton = true,
-
     GameNavigationState.inGame: ClientGameState()
       ..name = GameNavigationState.inGame
       ..showCreateGameButton = false,
@@ -42,9 +41,15 @@ class StateService {
   Stream<Map> get onAlert => _onAlert.stream;
   final GatewayService gatewayService;
 
-  BehaviorSubject<ClientGameState> onNavigationStateChanged = BehaviorSubject<ClientGameState>();
+  BehaviorSubject<ClientGameState> onNavigationStateChanged =
+      BehaviorSubject<ClientGameState>();
 
-  StateService(this.settings, this.gatewayService){
+  // for initialize lobbies handler
+  LobbyService lobbyService;
+  CreateGameService createGameService;
+
+  StateService(this.settings, this.gatewayService, this.lobbyService,
+      this.createGameService) {
     onNavigationStateChanged.add(states[GameNavigationState.loading]);
     this.gatewayService.handlers[OnClientAction.setNavigationState] = setState;
   }
@@ -53,7 +58,7 @@ class StateService {
     this._onWorldLoaded.add(null);
   }
 
-  void setState(ToClientMessage message){
+  void setState(ToClientMessage message) {
     this.currentStateName = message.navigationStateMessage.newState;
     onNavigationStateChanged.add(states[currentStateName]);
   }
@@ -81,7 +86,7 @@ class StateService {
     _onAlert.add({"text": text, "type": "note"});
   }
 
-  void goToState(GameNavigationState newState){
+  void goToState(GameNavigationState newState) {
     gatewayService.sendMessage(ToGameServerMessage.fromGoToState(newState));
   }
 }

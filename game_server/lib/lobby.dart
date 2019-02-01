@@ -5,7 +5,7 @@ class LobbyRoom {
 
   LobbyRoom(this.gateway) {
     lobbyList.onLobbiesChanged.listen((lobbies){
-      gateway.sendMessage(shared.ToClientMessage.refreshLobbyList(lobbies));
+      gateway.sendMessage(shared.ToClientMessage.fromRefreshLobbyList(lobbies));
     });
   }
 }

@@ -2,6 +2,7 @@ import 'package:angular/core.dart';
 import 'package:angular/src/common/directives.dart';
 import 'package:game_client/src/components/player_list.dart';
 import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/services/state_service.dart';
 import 'package:game_client/src/world/model/model.dart';
 import 'package:game_client/src/world/world_component.dart';
@@ -27,4 +28,10 @@ part 'arrow_disk.dart';
       """
     ])
 class LobbyComponent {
+
+  LobbyService lobbyService;
+
+  LobbyComponent(this.lobbyService){
+
+  }
 }

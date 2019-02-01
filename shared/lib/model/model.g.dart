@@ -564,7 +564,8 @@ Map<String, dynamic> _$ToClientMessageToJson(ToClientMessage instance) =>
 
 const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.setNavigationState: 'setNavigationState',
-  OnClientAction.refreshLobbyList: 'refreshLobbyList'
+  OnClientAction.refreshLobbyList: 'refreshLobbyList',
+  OnClientAction.getGamesToCreate: 'getGamesToCreate'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -600,7 +601,7 @@ Map<String, dynamic> _$RefreshLobbyListToJson(RefreshLobbyList instance) =>
 
 GetGamesToCreate _$GetGamesToCreateFromJson(Map<String, dynamic> json) {
   return GetGamesToCreate()
-    ..lobbies = (json['lobbies'] as List)
+    ..games = (json['games'] as List)
         ?.map((e) =>
             e == null ? null : LobbyTale.fromJson(e as Map<String, dynamic>))
         ?.toList();
@@ -608,7 +609,7 @@ GetGamesToCreate _$GetGamesToCreateFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$GetGamesToCreateToJson(GetGamesToCreate instance) =>
     <String, dynamic>{
-      'lobbies': instance.lobbies?.map((e) => e?.toJson())?.toList()
+      'games': instance.games?.map((e) => e?.toJson())?.toList()
     };
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {

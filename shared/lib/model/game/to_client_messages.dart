@@ -7,10 +7,10 @@ class ToClientMessage {
 
   ToClientMessage();
 
-  RefreshLobbyList get refreshLobbyList =>
+  RefreshLobbyList get refreshLobbyListMessage =>
       RefreshLobbyList.fromJson(json.decode(content));
 
-  factory ToClientMessage.refreshLobbyList(List<LobbyTale> lobbyList) {
+  factory ToClientMessage.fromRefreshLobbyList(List<LobbyTale> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.refreshLobbyList
       ..content =
@@ -34,7 +34,7 @@ class ToClientMessage {
     return ToClientMessage()
       ..message = OnClientAction.getGamesToCreate
       ..content =
-          json.encode((GetGamesToCreate()..lobbies = lobbyList).toJson());
+          json.encode((GetGamesToCreate()..games = lobbyList).toJson());
   }
 
   static ToClientMessage fromJson(Map<String, dynamic> json) =>
@@ -83,7 +83,7 @@ class RefreshLobbyList extends MessageContent {
 
 @JsonSerializable()
 class GetGamesToCreate extends MessageContent {
-  List<LobbyTale> lobbies;
+  List<LobbyTale> games;
 
   static GetGamesToCreate fromJson(Map<String, dynamic> json) =>
       _$GetGamesToCreateFromJson(json);
