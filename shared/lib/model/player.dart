@@ -1,22 +1,56 @@
 part of model;
 
-@Typescript()
-@JsonSerializable()
-class Player {
+class PlayerBase {
   String id;
   Map<Lang, String> name;
+  Image portrait;
+}
+
+
+
+@Typescript()
+@JsonSerializable()
+class LobbyPlayer extends PlayerBase {
+  bool lobbyMaster;
+
+  static LobbyPlayer fromJson(Map json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
+    return _$LobbyPlayerFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$LobbyPlayerToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class TalePlayer extends PlayerBase {
   String team;
   PlayerHandler handler;
   String color;
 
-
-  static Player fromJson(Map json) {
+  static TalePlayer fromJson(Map json) {
     utils.retypeMapInJsonToStringDynamic(json, ["name"]);
-    return _$PlayerFromJson(json);
+    return _$TalePlayerFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$PlayerToJson(this);
+    return _$TalePlayerToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class GamePlayer extends TalePlayer {
+
+  static GamePlayer fromJson(Map json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
+    return _$GamePlayerFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$GamePlayerToJson(this);
   }
 }
 

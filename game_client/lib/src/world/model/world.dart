@@ -1,6 +1,6 @@
 part of client_model;
 
-class ClientWorld extends commonModel.World {
+class ClientWorld extends shared.World {
   StateService state;
   SettingsService settings;
   covariant ClientTale tale;
@@ -45,7 +45,7 @@ class ClientWorld extends commonModel.World {
   void init(StateService state, SettingsService settings) {
     this.state = state;
     this.settings = settings;
-    commonModel.setSettings(settings);
+    shared.setSettings(settings);
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = HexaBorders(this);
     recalculate();

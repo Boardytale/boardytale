@@ -3,29 +3,29 @@ part of model;
 abstract class InstanceGenerator {
   Unit unit(String id);
   Tale tale(Resources resources);
-  Race race() => new Race();
-  Image image() => new Image();
+  Race race() => Race();
+  Image image() => Image();
 //  Ability ability(Map<String, dynamic> data);
   UnitType unitType();
   Field field(String id, World world);
   World world(Tale tale);
-  Player player() => new Player();
-  Trigger trigger() => new Trigger();
-  Dialog dialog() => new Dialog();
-  Resources resources() => new Resources(this);
+  LobbyPlayer player() => LobbyPlayer();
+  Trigger trigger() => Trigger();
+  Dialog dialog() => Dialog();
+  Resources resources() => Resources(this);
 }
 
 class CommonInstanceGenerator extends InstanceGenerator {
   @override
-  Field field(String id, World world) => new Field(id, world);
+  Field field(String id, World world) => Field(id, world);
   @override
-  Unit unit(String id) => new Unit(id);
+  Unit unit(String id) => Unit(id);
   @override
-  UnitType unitType() => new UnitType();
+  UnitType unitType() => UnitType();
   @override
-  World world(Tale tale) => new World(tale);
+  World world(Tale tale) => World(tale);
   @override
-  Tale tale(Resources resources) => new Tale(resources);
+  Tale tale(Resources resources) => Tale(resources);
 //  @override
 //  Ability ability(Map<String, dynamic> data) => Ability.createAbility(data);
 }

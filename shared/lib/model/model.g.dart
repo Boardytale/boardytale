@@ -323,19 +323,43 @@ const _$TerrainEnumMap = <Terrain, dynamic>{
   Terrain.forest: 'forest'
 };
 
-Player _$PlayerFromJson(Map<String, dynamic> json) {
-  return Player()
+LobbyPlayer _$LobbyPlayerFromJson(Map<String, dynamic> json) {
+  return LobbyPlayer()
     ..id = json['id'] as String
     ..name = (json['name'] as Map<String, dynamic>)?.map(
         (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..portrait = json['portrait'] == null
+        ? null
+        : Image.fromJson(json['portrait'] as Map<String, dynamic>)
+    ..lobbyMaster = json['lobbyMaster'] as bool;
+}
+
+Map<String, dynamic> _$LobbyPlayerToJson(LobbyPlayer instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'portrait': instance.portrait?.toJson(),
+      'lobbyMaster': instance.lobbyMaster
+    };
+
+TalePlayer _$TalePlayerFromJson(Map<String, dynamic> json) {
+  return TalePlayer()
+    ..id = json['id'] as String
+    ..name = (json['name'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..portrait = json['portrait'] == null
+        ? null
+        : Image.fromJson(json['portrait'] as Map<String, dynamic>)
     ..team = json['team'] as String
     ..handler = _$enumDecodeNullable(_$PlayerHandlerEnumMap, json['handler'])
     ..color = json['color'] as String;
 }
 
-Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
+Map<String, dynamic> _$TalePlayerToJson(TalePlayer instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'portrait': instance.portrait?.toJson(),
       'team': instance.team,
       'handler': _$PlayerHandlerEnumMap[instance.handler],
       'color': instance.color
@@ -347,6 +371,29 @@ const _$PlayerHandlerEnumMap = <PlayerHandler, dynamic>{
   PlayerHandler.passive: 'passive',
   PlayerHandler.everyHuman: 'everyHuman'
 };
+
+GamePlayer _$GamePlayerFromJson(Map<String, dynamic> json) {
+  return GamePlayer()
+    ..id = json['id'] as String
+    ..name = (json['name'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..portrait = json['portrait'] == null
+        ? null
+        : Image.fromJson(json['portrait'] as Map<String, dynamic>)
+    ..team = json['team'] as String
+    ..handler = _$enumDecodeNullable(_$PlayerHandlerEnumMap, json['handler'])
+    ..color = json['color'] as String;
+}
+
+Map<String, dynamic> _$GamePlayerToJson(GamePlayer instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'portrait': instance.portrait?.toJson(),
+      'team': instance.team,
+      'handler': _$PlayerHandlerEnumMap[instance.handler],
+      'color': instance.color
+    };
 
 Event _$EventFromJson(Map<String, dynamic> json) {
   return Event(json['name'] as String)
@@ -445,8 +492,8 @@ TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
         ? null
         : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
     ..players = (json['players'] as Map<String, dynamic>)?.map((k, e) =>
-        MapEntry(
-            k, e == null ? null : Player.fromJson(e as Map<String, dynamic>)))
+        MapEntry(k,
+            e == null ? null : TalePlayer.fromJson(e as Map<String, dynamic>)))
     ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
     ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) =>
@@ -483,8 +530,8 @@ TaleInnerCompiled _$TaleInnerCompiledFromJson(Map<String, dynamic> json) {
         ? null
         : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
     ..players = (json['players'] as Map<String, dynamic>)?.map((k, e) =>
-        MapEntry(
-            k, e == null ? null : Player.fromJson(e as Map<String, dynamic>)))
+        MapEntry(k,
+            e == null ? null : TalePlayer.fromJson(e as Map<String, dynamic>)))
     ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
     ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) =>

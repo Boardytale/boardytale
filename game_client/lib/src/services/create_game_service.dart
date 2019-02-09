@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:rxdart/rxdart.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';

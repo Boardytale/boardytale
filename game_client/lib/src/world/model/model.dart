@@ -4,7 +4,7 @@ import 'dart:math';
 import 'dart:async';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/services/state_service.dart';
-import 'package:shared/model/model.dart' as commonModel;
+import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stageLib;
 import 'package:utils/utils.dart';
 

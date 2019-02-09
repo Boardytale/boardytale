@@ -49,12 +49,12 @@ class PlayerListComponent {
     }
   }
 
-  List<Player> get players {
+  List<commonLib.LobbyPlayer> get players {
     if (state.tale == null) return const [];
-    List<Player> players = [];
-    for (commonLib.Player player in state.tale.players.values) {
-      players.add(player);
-    }
+    List<commonLib.LobbyPlayer> players = [];
+//    for (commonLib.LobbyPlayer player in state.tale.players.values) {
+//      players.add(player);
+//    }
     return players;
   }
 }

@@ -1,6 +1,6 @@
 part of client_model;
 
-class Field extends commonModel.Field {
+class Field extends shared.Field {
   FieldPoint offset;
   FieldPoint topLeft;
   FieldPoint topRight;
@@ -35,6 +35,6 @@ class Field extends commonModel.Field {
   }
 
   Unit getFirstPlayableUnitOnField() {
-    return units.firstWhere((commonModel.Unit unit) => unit.isPlayable, orElse: returnNull);
+    return units.firstWhere((shared.Unit unit) => unit.isPlayable, orElse: returnNull);
   }
 }

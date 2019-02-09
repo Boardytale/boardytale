@@ -45,7 +45,7 @@ class TaleInnerEnvelope {
   int taleVersion;
 
   WorldCreateEnvelope world;
-  Map<String, Player> players = {};
+  Map<String, TalePlayer> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, String> units = {};
@@ -67,7 +67,7 @@ class TaleInnerCompiled {
   Map<Lang, String> langName;
   int taleVersion;
   WorldCreateEnvelope world;
-  Map<String, Player> players = {};
+  Map<String, TalePlayer> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, String> units = {};

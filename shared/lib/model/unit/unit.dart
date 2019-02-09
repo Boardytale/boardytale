@@ -14,7 +14,7 @@ class Unit {
   int _steps = 1;
   UnitType type;
   Field _field;
-  Player player;
+  GamePlayer player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();

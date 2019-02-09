@@ -18,4 +18,14 @@ class LobbyTale {
   }
 }
 
+class OpenedLobby extends LobbyTale{
+  List<LobbyPlayer> players = [];
 
+  static OpenedLobby fromJson(Map json) {
+    return _$LobbyTaleFromJson(json);
+  }
+
+  Map<String, dynamic> toJson(){
+    return _$LobbyTaleToJson(this);
+  }
+}

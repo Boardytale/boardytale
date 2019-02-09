@@ -1,6 +1,6 @@
 part of client_model;
 
-class Player extends commonModel.Player {
+class Player extends shared.GamePlayer {
   String connectionName;
   bool isMe = false;
   bool isEnemy = false;
@@ -9,7 +9,7 @@ class Player extends commonModel.Player {
   String get meId => isMe ? "me" : isEnemy ? "enemy" : "team";
 
   Player fromMap(Map<String, dynamic> data) {
-    Player newPlayer = commonModel.Player.fromJson(data);
+    Player newPlayer = shared.GamePlayer.fromJson(data);
     newPlayer.connectionName = data["connection"];
     return newPlayer;
   }

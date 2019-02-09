@@ -105,13 +105,17 @@ export interface WorldCreateEnvelope extends Object {
 
 export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman';
 
-export interface Player extends Object {
-    id: string;
-    name: { [key in Lang]?: string };
+export interface LobbyPlayer extends PlayerBase {
+    lobbyMaster: boolean;
+}
+
+export interface TalePlayer extends PlayerBase {
     team: string;
     handler: PlayerHandler;
     color: string;
 }
+
+export interface GamePlayer extends TalePlayer {}
 
 export interface Event extends Object {
     name: string;
@@ -151,7 +155,7 @@ export interface TaleInnerEnvelope extends Object {
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    players: { [key: string]: Player };
+    players: { [key: string]: TalePlayer };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: string };
@@ -163,7 +167,7 @@ export interface TaleInnerCompiled extends Object {
     langName: { [key in Lang]?: string };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    players: { [key: string]: Player };
+    players: { [key: string]: TalePlayer };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: string };

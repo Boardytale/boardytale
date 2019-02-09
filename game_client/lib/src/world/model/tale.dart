@@ -1,7 +1,7 @@
 part of client_model;
 
-class ClientTale extends commonModel.Tale {
-  ClientTale(commonModel.Resources resources) : super(resources);
+class ClientTale extends shared.Tale {
+  ClientTale(shared.Resources resources) : super(resources);
 
 //  @override
 //  void update(Map<String, dynamic> state) {

@@ -4,20 +4,21 @@ import 'package:game_client/src/services/state_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 
-@Component(
-  selector: 'my-app',
-  template: '''
+@Component(selector: 'my-app', template: '''
   <div class="main-wrapper">
     <user-bar class="navbar navbar-expand-lg navbar-light bg-light"></user-bar>
   </div>
   <create-game
-    *ngIf="state.onNavigationStateChanged.value.name == GameNavigationState."
+    *ngIf="showCreateGame"
   ></create-game>
-  ''',
-  directives: [UserBarComponent, CreateGameComponent, NgIf]
-)
+  
+  ''', directives: [UserBarComponent, CreateGameComponent, NgIf])
 class AppComponent {
   StateService state;
+
+  bool get showCreateGame =>
+      state.onNavigationStateChanged.value.name ==
+      GameNavigationState.createGame;
 
   AppComponent(this.state);
 }

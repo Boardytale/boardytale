@@ -33,7 +33,7 @@ class Track {
 
   Field get first => fields.first;
 
-  bool isEnemy(Player ofPlayer) {
+  bool isEnemy(GamePlayer ofPlayer) {
     for (Field f in fields) {
       if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) {
         return true;
@@ -42,7 +42,7 @@ class Track {
     return false;
   }
 
-  bool isFreeWay(Player ofPlayer) {
+  bool isFreeWay(GamePlayer ofPlayer) {
     if (fields.length >= 2) {
       Field toGo = fields[fields.length - 2];
       if (!toGo.units.isEmpty && toGo.units.first.player != ofPlayer) return false;
@@ -56,7 +56,7 @@ class Track {
     return true;
   }
 
-  bool isHandMove(Player ofPlayer) {
+  bool isHandMove(GamePlayer ofPlayer) {
     if (fields.length >= 3) {
       Field toGo = fields[fields.length - 2];
       if (!toGo.units.isEmpty && toGo.units.first.player.id != ofPlayer.id) return false;
@@ -70,7 +70,7 @@ class Track {
     return true;
   }
 
-  List<Field> getFieldsWithEnemy(Player ofPlayer) {
+  List<Field> getFieldsWithEnemy(GamePlayer ofPlayer) {
     List<Field> out = [];
     for (Field f in fields) {
       if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) {
