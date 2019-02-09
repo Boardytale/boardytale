@@ -16,11 +16,13 @@ class ServerGateway {
     if (message.message == shared.OnServerAction.goToState) {
       shared.GameNavigationState newState = message.goToStateMessage.newState;
       if (newState == shared.GameNavigationState.createGame) {
+        sendMessage(shared.ToClientMessage.fromSetNavigationState(
+            shared.GameNavigationState.createGame));
         sendGamesToCreate();
+      } else {
+        sendMessage(shared.ToClientMessage.fromSetNavigationState(
+            message.goToStateMessage.newState));
       }
-//      shared.ToClientMessage.fromSetNavigationState(
-//          message.goToState.newState).;
-//      sendMessage();
     } else if (message.message == shared.OnServerAction.init) {
       handleInit(message);
     } else {
@@ -41,9 +43,10 @@ class ServerGateway {
         body: jsonEncode((InnerTokenWrap()
               ..innerToken = message.initMessage.innerToken)
             .asMap()));
-    player = ServerPlayer()
-      ..email = shared.User.fromJson(jsonDecode(response.body)).email;
+    shared.User user = shared.User.fromJson(jsonDecode(response.body));
+    player = ServerPlayer()..email = user.email;
     print(player.email);
+    sendMessage(shared.ToClientMessage.fromCurrentUser(user));
     sendMessage(shared.ToClientMessage.fromSetNavigationState(
         shared.GameNavigationState.findLobby));
     lobbyRoom = new LobbyRoom(this);

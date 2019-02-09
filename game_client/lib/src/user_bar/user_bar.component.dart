@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html' as html;
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -12,18 +13,18 @@ import 'package:shared/model/model.dart';
     selector: 'user-bar',
     template: '''
       <google-signin 
-      *ngIf="!isSignedIn"
+      *ngIf="showSignInButton"
       clientId="499749973436-s5enn1mvt99c8vbjdlcm390l3a5ugna0.apps.googleusercontent.com" width="240"
                theme="dark" longTitle="true" fetchBasicProfile="true"
                (googleSigninSuccess)="onGoogleSigninSuccess"></google-signin>
        <span
-       *ngIf="isSignedIn"
+       *ngIf="state.currentUser.value != null"
        >
-       Logged user: {{state?.loggedUser?.email}}
+       Logged user: {{state.currentUser.value?.email}}
        </span>
        
        <button
-       *ngIf="state.onNavigationStateChanged.value.showCreateGameButton"
+       *ngIf="state.navigationState.value.showCreateGameButton"
        (click)="goToCreate()"
        >
          Create game
@@ -37,11 +38,17 @@ class UserBarComponent {
   final StateService state;
   final GatewayService gatewayService;
 
-  bool get isSignedIn => state.isUserSignedIn;
+  bool showSignInButton = false;
   final ChangeDetectorRef _cdRef;
 
   UserBarComponent(this._http, this.state, this.gatewayService, this._cdRef) {
-    state.onNavigationStateChanged.listen((_) => _cdRef.markForCheck());
+    if (html.window.localStorage.containsKey("innerToken")) {
+      gatewayService.initMessages(html.window.localStorage["innerToken"]);
+    } else {
+      showSignInButton = true;
+    }
+    state.navigationState.listen((_) => _cdRef.markForCheck());
+    state.currentUser.listen((_) => _cdRef.markForCheck());
   }
 
   void onGoogleSigninSuccess(GoogleSignInSuccess event) async {
@@ -50,15 +57,16 @@ class UserBarComponent {
     http.Response loginResponse = await _http.post("/userApi/login",
         headers: {"Content-Type": "application/json"},
         body: json.encode({"id": response.id_token}));
-    state.loggedUser =
+    User currentUser =
         model.User.fromGoogleJson(json.decode(loginResponse.body));
-    state.isUserSignedIn = true;
-    gatewayService.initMessages(state.loggedUser.innerToken);
+    state.currentUser.add(currentUser);
+    html.window.localStorage["innerToken"] = currentUser.innerToken;
+    gatewayService.initMessages(currentUser.innerToken);
   }
 
   void signOut() {
     getAuthInstance().signOut();
-    state.isUserSignedIn = false;
+    state.currentUser.add(null);
   }
 
   void goToCreate() {

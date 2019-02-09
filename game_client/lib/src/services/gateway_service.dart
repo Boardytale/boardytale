@@ -11,6 +11,7 @@ import '../../project_settings.dart';
 class GatewayService {
   WebSocket _socket;
   bool _opened = false;
+  List<shared.ToGameServerMessage> _beforeOpenBuffer = [];
   Map<shared.OnClientAction, void Function(shared.ToClientMessage message)>
       handlers = {};
 
@@ -26,11 +27,14 @@ class GatewayService {
     _socket = WebSocket(
         '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
+      print("got message");
       Map<String, dynamic> message = json.decode(e.data.toString());
       handleMessages(shared.ToClientMessage.fromJson(message));
     });
     _socket.onOpen.listen((_) {
       _opened = true;
+      _beforeOpenBuffer.forEach((message)=>sendMessage(message));
+      _beforeOpenBuffer.clear();
     });
   }
 
@@ -39,12 +43,16 @@ class GatewayService {
   }
 
   void sendMessage(shared.ToGameServerMessage message) {
-    // TODO: queue until initied and opened
-    _socket.send(json.encode(message.toJson()));
+    if (!_opened) {
+      _beforeOpenBuffer.add(message);
+    } else {
+      _socket.send(json.encode(message.toJson()));
+    }
   }
 
   void handleMessages(shared.ToClientMessage message) {
     if (handlers.containsKey(message.message)) {
+      print("handle message ${message.message}");
       handlers[message.message](message);
     } else {
       throw "missing handler for ${jsonEncode(message.toJson())}";

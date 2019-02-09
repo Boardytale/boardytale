@@ -197,7 +197,8 @@ export type GameNavigationState =
 export type OnClientAction =
     | 'setNavigationState'
     | 'refreshLobbyList'
-    | 'getGamesToCreate';
+    | 'getGamesToCreate'
+    | 'setCurrentUser';
 
 export type OnServerAction = 'goToState' | 'init';
 

@@ -29,7 +29,7 @@ main() async {
 
   runServerByServerConfiguration(config.userServer);
 
-//  runServerByServerConfiguration(config.editorServer);
+  runServerByServerConfiguration(config.editorServer);
 
 //  Process.start(dartExecutable, ["lib/server.dart"], workingDirectory: projectDirectoryPath + "/server")
 //      .then((Process process) {

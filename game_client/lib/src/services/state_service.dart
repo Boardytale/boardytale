@@ -13,8 +13,7 @@ import 'package:shared/model/model.dart';
 
 @Injectable()
 class StateService {
-  bool isUserSignedIn = false;
-  User loggedUser;
+  BehaviorSubject<User> currentUser = BehaviorSubject<User>(seedValue: null);
   Map<GameNavigationState, ClientGameState> states = {
     GameNavigationState.loading: ClientGameState()
       ..name = GameNavigationState.loading
@@ -29,7 +28,6 @@ class StateService {
       ..name = GameNavigationState.inGame
       ..showCreateGameButton = false,
   };
-  GameNavigationState currentStateName = GameNavigationState.loading;
 
   Stream get onWorldLoaded => _onWorldLoaded.stream;
   StreamController _onWorldLoaded = StreamController();
@@ -41,7 +39,7 @@ class StateService {
   Stream<Map> get onAlert => _onAlert.stream;
   final GatewayService gatewayService;
 
-  BehaviorSubject<ClientGameState> onNavigationStateChanged =
+  BehaviorSubject<ClientGameState> navigationState =
       BehaviorSubject<ClientGameState>();
 
   // for initialize lobbies handler
@@ -50,8 +48,9 @@ class StateService {
 
   StateService(this.settings, this.gatewayService, this.lobbyService,
       this.createGameService) {
-    onNavigationStateChanged.add(states[GameNavigationState.loading]);
+    navigationState.add(states[GameNavigationState.loading]);
     this.gatewayService.handlers[OnClientAction.setNavigationState] = setState;
+    this.gatewayService.handlers[OnClientAction.setCurrentUser] = setUser;
   }
 
   void worldIsLoaded() {
@@ -59,8 +58,11 @@ class StateService {
   }
 
   void setState(ToClientMessage message) {
-    this.currentStateName = message.navigationStateMessage.newState;
-    onNavigationStateChanged.add(states[currentStateName]);
+    navigationState.add(states[message.navigationStateMessage.newState]);
+  }
+
+  void setUser(ToClientMessage message) {
+    currentUser.add(message.getCurrentUser.user);
   }
 
 //  void loadTale(String taleId) {

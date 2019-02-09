@@ -7,6 +7,8 @@ class ToClientMessage {
 
   ToClientMessage();
 
+  // ---
+
   RefreshLobbyList get refreshLobbyListMessage =>
       RefreshLobbyList.fromJson(json.decode(content));
 
@@ -16,6 +18,8 @@ class ToClientMessage {
       ..content =
           json.encode((RefreshLobbyList()..lobbies = lobbyList).toJson());
   }
+
+  // ---
 
   SetNavigationState get navigationStateMessage =>
       SetNavigationState.fromJson(json.decode(content));
@@ -27,6 +31,8 @@ class ToClientMessage {
           json.encode((SetNavigationState()..newState = newState).toJson());
   }
 
+  // ---
+
   GetGamesToCreate get getGamesToCreateMessage =>
       GetGamesToCreate.fromJson(json.decode(content));
 
@@ -35,6 +41,18 @@ class ToClientMessage {
       ..message = OnClientAction.getGamesToCreate
       ..content =
           json.encode((GetGamesToCreate()..games = lobbyList).toJson());
+  }
+
+  // ---
+
+  SetCurrentUser get getCurrentUser =>
+      SetCurrentUser.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromCurrentUser(User user) {
+    return ToClientMessage()
+      ..message = OnClientAction.setCurrentUser
+      ..content =
+      json.encode((SetCurrentUser()..user = user).toJson());
   }
 
   static ToClientMessage fromJson(Map<String, dynamic> json) =>
@@ -53,6 +71,8 @@ enum OnClientAction {
   refreshLobbyList,
   @JsonValue('getGamesToCreate')
   getGamesToCreate,
+  @JsonValue('setCurrentUser')
+  setCurrentUser,
 }
 
 abstract class MessageContent {}
@@ -90,5 +110,17 @@ class GetGamesToCreate extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$GetGamesToCreateToJson(this);
+  }
+}
+
+@JsonSerializable()
+class SetCurrentUser extends MessageContent {
+  User user;
+
+  static SetCurrentUser fromJson(Map<String, dynamic> json) =>
+      _$SetCurrentUserFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$SetCurrentUserToJson(this);
   }
 }
