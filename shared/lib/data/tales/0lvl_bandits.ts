@@ -1,6 +1,6 @@
-import { Player, TaleCreateEnvelope } from '../../model/model';
+import { TalePlayer, TaleCreateEnvelope } from '../../model/model';
 
-const bandits: Player = {
+const bandits: TalePlayer = {
     color: 'red',
     handler: 'ai',
     id: 'bandits',
@@ -45,7 +45,7 @@ export let data: TaleCreateEnvelope = {
         name: '0lvl_bandits',
         langs: { en: {} },
         players: {
-            bandits: bandits,
+            bandits,
         },
         langName: {
             en: 'Bandits camp',

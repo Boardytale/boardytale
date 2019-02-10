@@ -323,6 +323,23 @@ const _$TerrainEnumMap = <Terrain, dynamic>{
   Terrain.forest: 'forest'
 };
 
+PlayerBase _$PlayerBaseFromJson(Map<String, dynamic> json) {
+  return PlayerBase()
+    ..id = json['id'] as String
+    ..name = (json['name'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..portrait = json['portrait'] == null
+        ? null
+        : Image.fromJson(json['portrait'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$PlayerBaseToJson(PlayerBase instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'portrait': instance.portrait?.toJson()
+    };
+
 LobbyPlayer _$LobbyPlayerFromJson(Map<String, dynamic> json) {
   return LobbyPlayer()
     ..id = json['id'] as String

@@ -1,6 +1,6 @@
 part of model;
 
-// TODO: split deserialization to unitBaseClass
+@Typescript()
 class Unit {
   String _name;
   int armor = 0;

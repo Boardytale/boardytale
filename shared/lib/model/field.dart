@@ -17,6 +17,7 @@ class FieldCreateEnvelope {
   }
 }
 
+@Typescript()
 class Field {
   List<Unit> units = [];
   String id;

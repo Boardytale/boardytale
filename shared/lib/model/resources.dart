@@ -1,5 +1,6 @@
 part of model;
 
+@Typescript()
 class Resources{
   Map<String,UnitType> unitTypes={};
   Map<String,Race> races={};

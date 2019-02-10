@@ -1,12 +1,12 @@
 part of model;
 
+@Typescript()
+@JsonSerializable()
 class PlayerBase {
   String id;
   Map<Lang, String> name;
   Image portrait;
 }
-
-
 
 @Typescript()
 @JsonSerializable()

@@ -24,6 +24,7 @@ class _Image {
   @Column(defaultValue: '0')
   int imageVersion;
 
+  /// match to class model.Image
   @Column()
   Document imageData;
 

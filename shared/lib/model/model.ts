@@ -38,6 +38,29 @@ export interface User extends Object {
     innerToken: string;
 }
 
+export interface Unit extends Object {
+    _name: string;
+    armor: number;
+    speed: number;
+    range: number;
+    attack: Array<number>;
+    _health: number;
+    _far: number;
+    id: string;
+    _actions: number;
+    _steps: number;
+    type: UnitType;
+    _field: Field;
+    player: GamePlayer;
+    abilities: Array<Ability>;
+    _buffs: Array<Buff>;
+    tags: any;
+    _onHealthChanged: any;
+    _onFieldChanged: any;
+    _onTypeChanged: any;
+    _onStepsChanged: any;
+}
+
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {
@@ -95,6 +118,15 @@ export interface FieldCreateEnvelope extends Object {
     y: number;
 }
 
+export interface Field extends Object {
+    units: Array<Unit>;
+    id: string;
+    world: World;
+    terrainId: number;
+    x: number;
+    y: number;
+}
+
 export interface WorldCreateEnvelope extends Object {
     width: number;
     height: number;
@@ -103,7 +135,22 @@ export interface WorldCreateEnvelope extends Object {
     startField: string;
 }
 
+export interface World extends Object {
+    width: number;
+    height: number;
+    baseTerrainId: Terrain;
+    fields: { [key: string]: Field };
+    startField: Field;
+    tale: Tale;
+}
+
 export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman';
+
+export interface PlayerBase extends Object {
+    id: string;
+    name: { [key in Lang]?: string };
+    portrait: Image;
+}
 
 export interface LobbyPlayer extends PlayerBase {
     lobbyMaster: boolean;
@@ -116,6 +163,18 @@ export interface TalePlayer extends PlayerBase {
 }
 
 export interface GamePlayer extends TalePlayer {}
+
+export interface Tale extends Object {
+    id: string;
+    langs: { [key: string]: any };
+    humanPlayersTeam: number;
+    world: World;
+    players: { [key: string]: TalePlayer };
+    events: { [key: string]: Event };
+    dialogs: { [key: string]: Dialog };
+    units: { [key: string]: Unit };
+    resources: Resources;
+}
 
 export interface Event extends Object {
     name: string;
@@ -187,6 +246,28 @@ export interface LobbyTale extends Object {
 }
 
 export type Lang = 'en' | 'cz';
+
+export interface Buff extends Object {
+    speedDelta: number;
+    armorDelta: number;
+    rangeDelta: number;
+    healthDelta: number;
+    attackDelta: Array<number>;
+    extraTags: any;
+    bannedTags: any;
+    expiration: number;
+    buffType: string;
+    stackStrength: number;
+    unit: Unit;
+    doesNotStackWith: Array<string>;
+}
+
+export interface Resources extends Object {
+    unitTypes: { [key: string]: UnitType };
+    races: { [key: string]: Race };
+    images: { [key: string]: Image };
+    abilities: { [key: string]: { [key: string]: any } };
+}
 
 export type GameNavigationState =
     | 'findLobby'

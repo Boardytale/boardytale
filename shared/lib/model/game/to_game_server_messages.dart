@@ -14,21 +14,25 @@ class ToGameServerMessage {
   static ToGameServerMessage fromJson(Map<String, dynamic> json) =>
       _$ToGameServerMessageFromJson(json);
 
+  // ---
+
+  GoToState get goToStateMessage => GoToState.fromJson(json.decode(content));
+
   factory ToGameServerMessage.fromGoToState(GameNavigationState newState) {
     return ToGameServerMessage()
       ..message = OnServerAction.goToState
       ..content = json.encode((GoToState()..newState = newState).toJson());
   }
 
+  // ---
+
+  InitMessage get initMessage => InitMessage.fromJson(json.decode(content));
+
   factory ToGameServerMessage.init(String innerToken) {
     return ToGameServerMessage()
       ..content = jsonEncode((InitMessage()..innerToken = innerToken).toJson())
       ..message = OnServerAction.init;
   }
-
-  GoToState get goToStateMessage => GoToState.fromJson(json.decode(content));
-
-  InitMessage get initMessage => InitMessage.fromJson(json.decode(content));
 }
 
 @Typescript()

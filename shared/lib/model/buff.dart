@@ -1,5 +1,6 @@
 part of model;
 
+@Typescript()
 class Buff {
   int speedDelta = 0;
   int armorDelta = 0;
