@@ -10,14 +10,20 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 main() async {
   final BoardytaleConfiguration config = getConfiguration();
   final port = config.gameServer.uris.first.port.toInt();
-
+  int connectionId = 0;
+  ServerGateway gateway = initServer(config);
 
   var handler = webSocketHandler((WebSocketChannel webSocket) {
-    ServerGateway gateway = ServerGateway(config);
-    gateway.webSocket = webSocket;
+    Connection connection = Connection();
+    connection.webSocket = webSocket;
+    connection.id = connectionId++;
+
     webSocket.stream.listen((data) {
       try {
-        gateway.incomingMessage(shared.ToGameServerMessage.fromJson(jsonDecode(data)));
+        gateway.incomingMessage(MessageWithConnection()
+          ..message = shared.ToGameServerMessage.fromJson(jsonDecode(data))
+          ..connection = connection
+        );
       } catch (e) {
         webSocket.sink
             .add("message is not instance of ToGameServerMessage ${data}");

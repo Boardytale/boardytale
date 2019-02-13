@@ -144,25 +144,23 @@ export interface World extends Object {
     tale: Tale;
 }
 
-export type PlayerHandler = 'firstHuman' | 'ai' | 'passive' | 'everyHuman';
-
 export interface PlayerBase extends Object {
-    id: string;
-    name: { [key in Lang]?: string };
     portrait: Image;
 }
 
 export interface LobbyPlayer extends PlayerBase {
     lobbyMaster: boolean;
+    name: string;
 }
 
 export interface TalePlayer extends PlayerBase {
     team: string;
-    handler: PlayerHandler;
     color: string;
 }
 
-export interface GamePlayer extends TalePlayer {}
+export interface GamePlayer extends TalePlayer {
+    id: string;
+}
 
 export interface Tale extends Object {
     id: string;
@@ -214,7 +212,7 @@ export interface TaleInnerEnvelope extends Object {
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    players: { [key: string]: TalePlayer };
+    aiGroups: { [key: string]: AiGroup };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: string };
@@ -226,7 +224,7 @@ export interface TaleInnerCompiled extends Object {
     langName: { [key in Lang]?: string };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    players: { [key: string]: TalePlayer };
+    aiGroups: { [key: string]: AiGroup };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: string };
@@ -238,11 +236,23 @@ export interface TaleCompiledAssets extends Object {
     unitTypes: { [key: string]: UnitTypeCompiled };
 }
 
+export interface AiGroup extends Object {
+    id: string;
+    name: { [key in Lang]?: string };
+    team: string;
+    color: string;
+}
+
 export interface LobbyTale extends Object {
     id: string;
     name: { [key in Lang]?: string };
     description: { [key in Lang]?: string };
     image: Image;
+}
+
+export interface OpenedLobby extends LobbyTale {
+    lobbyName: string;
+    players: Array<LobbyPlayer>;
 }
 
 export type Lang = 'en' | 'cz';
@@ -273,15 +283,17 @@ export type GameNavigationState =
     | 'findLobby'
     | 'createGame'
     | 'inGame'
-    | 'loading';
+    | 'loading'
+    | 'inLobby';
 
 export type OnClientAction =
     | 'setNavigationState'
     | 'refreshLobbyList'
     | 'getGamesToCreate'
-    | 'setCurrentUser';
+    | 'setCurrentUser'
+    | 'openedLobbyData';
 
-export type OnServerAction = 'goToState' | 'init';
+export type OnServerAction = 'goToState' | 'init' | 'createLobby';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

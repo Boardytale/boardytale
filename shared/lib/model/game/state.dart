@@ -10,4 +10,6 @@ enum GameNavigationState {
   inGame,
   @JsonValue('loading')
   loading,
+  @JsonValue('inLobby')
+  inLobby,
 }

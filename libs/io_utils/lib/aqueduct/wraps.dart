@@ -1,4 +1,5 @@
 import 'package:aqueduct/aqueduct.dart';
+import 'dart:convert';
 
 class IdWrap implements Serializable {
   String id;
@@ -18,6 +19,10 @@ class IdWrap implements Serializable {
   APISchemaObject documentSchema(APIDocumentContext context) {
     // TODO: implement documentSchema
     return null;
+  }
+
+  static String packId(String id){
+    return json.encode((IdWrap()..id = id).asMap());
   }
 }
 

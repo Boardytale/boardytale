@@ -3,18 +3,26 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class PlayerBase {
-  String id;
-  Map<Lang, String> name;
+//  String id;
+//  Map<Lang, String> name;
   Image portrait;
+
+  static PlayerBase fromJson(Map json) {
+    return _$PlayerBaseFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$PlayerBaseToJson(this);
+  }
 }
 
 @Typescript()
 @JsonSerializable()
 class LobbyPlayer extends PlayerBase {
   bool lobbyMaster;
+  String name;
 
   static LobbyPlayer fromJson(Map json) {
-    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$LobbyPlayerFromJson(json);
   }
 
@@ -27,11 +35,10 @@ class LobbyPlayer extends PlayerBase {
 @JsonSerializable()
 class TalePlayer extends PlayerBase {
   String team;
-  PlayerHandler handler;
+//  PlayerHandler handler;
   String color;
 
   static TalePlayer fromJson(Map json) {
-    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$TalePlayerFromJson(json);
   }
 
@@ -43,9 +50,8 @@ class TalePlayer extends PlayerBase {
 @Typescript()
 @JsonSerializable()
 class GamePlayer extends TalePlayer {
-
+  String id;
   static GamePlayer fromJson(Map json) {
-    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$GamePlayerFromJson(json);
   }
 
@@ -54,14 +60,14 @@ class GamePlayer extends TalePlayer {
   }
 }
 
-@Typescript()
-enum PlayerHandler {
-  @JsonValue('firstHuman')
-  firstHuman,
-  @JsonValue('ai')
-  ai,
-  @JsonValue('passive')
-  passive,
-  @JsonValue('everyHuman')
-  everyHuman,
-}
+//@Typescript()
+//enum PlayerHandler {
+//  @JsonValue('firstHuman')
+//  firstHuman,
+//  @JsonValue('ai')
+//  ai,
+//  @JsonValue('passive')
+//  passive,
+//  @JsonValue('everyHuman')
+//  everyHuman,
+//}

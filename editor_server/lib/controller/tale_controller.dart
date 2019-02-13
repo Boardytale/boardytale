@@ -65,6 +65,7 @@ class TaleController extends ResourceController {
     taleCompiled.authorEmail = taleData.authorEmail;
     taleCompiled.tale =
         model.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
+    taleCompiled.lobby = model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
 
     model.TaleInnerCompiled innerCompiled = taleCompiled.tale;
     innerCompiled.assets = model.TaleCompiledAssets();

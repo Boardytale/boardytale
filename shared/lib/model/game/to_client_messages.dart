@@ -7,6 +7,13 @@ class ToClientMessage {
 
   ToClientMessage();
 
+  static ToClientMessage fromJson(Map<String, dynamic> json) =>
+      _$ToClientMessageFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ToClientMessageToJson(this);
+  }
+
   // ---
 
   RefreshLobbyList get refreshLobbyListMessage =>
@@ -39,8 +46,7 @@ class ToClientMessage {
   factory ToClientMessage.fromGamesToCreateMessage(List<LobbyTale> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.getGamesToCreate
-      ..content =
-          json.encode((GetGamesToCreate()..games = lobbyList).toJson());
+      ..content = json.encode((GetGamesToCreate()..games = lobbyList).toJson());
   }
 
   // ---
@@ -51,15 +57,18 @@ class ToClientMessage {
   factory ToClientMessage.fromCurrentUser(User user) {
     return ToClientMessage()
       ..message = OnClientAction.setCurrentUser
-      ..content =
-      json.encode((SetCurrentUser()..user = user).toJson());
+      ..content = json.encode((SetCurrentUser()..user = user).toJson());
   }
 
-  static ToClientMessage fromJson(Map<String, dynamic> json) =>
-      _$ToClientMessageFromJson(json);
+  // ---
 
-  Map<String, dynamic> toJson() {
-    return _$ToClientMessageToJson(this);
+  OpenedLobbyData get getOpenedLobbyData =>
+      OpenedLobbyData.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromOpenedLobby(OpenedLobby lobby) {
+    return ToClientMessage()
+      ..message = OnClientAction.openedLobbyData
+      ..content = json.encode((OpenedLobbyData()..lobby = lobby).toJson());
   }
 }
 
@@ -73,6 +82,8 @@ enum OnClientAction {
   getGamesToCreate,
   @JsonValue('setCurrentUser')
   setCurrentUser,
+  @JsonValue('openedLobbyData')
+  openedLobbyData,
 }
 
 abstract class MessageContent {}
@@ -122,5 +133,17 @@ class SetCurrentUser extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$SetCurrentUserToJson(this);
+  }
+}
+
+@JsonSerializable()
+class OpenedLobbyData extends MessageContent {
+  OpenedLobby lobby;
+
+  static OpenedLobbyData fromJson(Map<String, dynamic> json) =>
+      _$OpenedLobbyDataFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$OpenedLobbyDataToJson(this);
   }
 }

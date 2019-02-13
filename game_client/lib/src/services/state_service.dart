@@ -27,6 +27,9 @@ class StateService {
     GameNavigationState.inGame: ClientGameState()
       ..name = GameNavigationState.inGame
       ..showCreateGameButton = false,
+    GameNavigationState.inLobby: ClientGameState()
+      ..name = GameNavigationState.inLobby
+      ..showCreateGameButton = false,
   };
 
   Stream get onWorldLoaded => _onWorldLoaded.stream;

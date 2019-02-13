@@ -20,7 +20,7 @@ export let config: BoardytaleConfiguration = {
             port: 9000,
         }],
         executableType: 'dart',
-        pathToExecutable: 'editor_server/bin/main.dart',
+        pathToExecutable: 'editor_server/bin/editor_server_start.dart',
         pathToWorkingDirectory: 'editor_server'
     },
     editorDatabase: {
@@ -38,7 +38,7 @@ export let config: BoardytaleConfiguration = {
             port: 7000,
         }],
         executableType: 'dart',
-        pathToExecutable: 'game_server/bin/main.dart',
+        pathToExecutable: 'game_server/bin/game_server_start.dart',
         pathToWorkingDirectory: 'game_server'
     },
     userDatabase: {

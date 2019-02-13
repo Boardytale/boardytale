@@ -1,54 +1,31 @@
 part of game_server;
 
 class ServerGateway {
-  WebSocketChannel webSocket;
-  ServerPlayer player;
-  LobbyRoom lobbyRoom;
-  final BoardytaleConfiguration config;
-
-  ServerGateway(this.config);
-
-  void sendMessage(shared.ToClientMessage message) {
-    webSocket.sink.add(json.encode(message.toJson()));
+  void sendMessage(shared.ToClientMessage message, ServerPlayer player) {
+    player.connection.webSocket.sink.add(json.encode(message.toJson()));
   }
 
-  void incomingMessage(shared.ToGameServerMessage message) async {
-    if (message.message == shared.OnServerAction.goToState) {
-      shared.GameNavigationState newState = message.goToStateMessage.newState;
-      if (newState == shared.GameNavigationState.createGame) {
-        sendMessage(shared.ToClientMessage.fromSetNavigationState(
-            shared.GameNavigationState.createGame));
-        sendGamesToCreate();
-      } else {
-        sendMessage(shared.ToClientMessage.fromSetNavigationState(
-            message.goToStateMessage.newState));
-      }
-    } else if (message.message == shared.OnServerAction.init) {
-      handleInit(message);
-    } else {
-      webSocket.sink.add("sent ${jsonEncode(message.toJson())} not recognized");
+  // TODO: refactor to handlers
+  void incomingMessage(MessageWithConnection messageWithConnection) async {
+    if (messageWithConnection.message.message == shared.OnServerAction.init) {
+      initGameController.handle(messageWithConnection);
+      return;
     }
-  }
 
-  void sendGamesToCreate() async {
-    sendMessage(shared.ToClientMessage.fromGamesToCreateMessage(
-        await GamesToCreate.getGamesToCreate(config)));
-  }
-
-  void handleInit(shared.ToGameServerMessage message) async {
-    http.Response response = await http.post(
-        makeAddressFromUri(config.userServer.uris.first) +
-            "inner/getUserByInnerToken",
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode((InnerTokenWrap()
-              ..innerToken = message.initMessage.innerToken)
-            .asMap()));
-    shared.User user = shared.User.fromJson(jsonDecode(response.body));
-    player = ServerPlayer()..email = user.email;
-    print(player.email);
-    sendMessage(shared.ToClientMessage.fromCurrentUser(user));
-    sendMessage(shared.ToClientMessage.fromSetNavigationState(
-        shared.GameNavigationState.findLobby));
-    lobbyRoom = new LobbyRoom(this);
+    if (messageWithConnection.player != null) {
+      if (messageWithConnection.message.message ==
+          shared.OnServerAction.goToState) {
+        navigationController.handle(messageWithConnection);
+      } else if(messageWithConnection.message.message ==
+          shared.OnServerAction.createLobby){
+         createLobbyController.handle(messageWithConnection);
+      } else {
+        messageWithConnection.connection.webSocket.sink.add(
+            "sent ${jsonEncode(messageWithConnection.message.toJson())} not recognized");
+      }
+    } else {
+      //TODO: reconnect message
+      messageWithConnection.connection.webSocket.sink.add("player not found - make init first");
+    }
   }
 }

@@ -33,6 +33,20 @@ class ToGameServerMessage {
       ..content = jsonEncode((InitMessage()..innerToken = innerToken).toJson())
       ..message = OnServerAction.init;
   }
+
+  // ---
+
+  CreateLobby get createLobbyMessage =>
+      CreateLobby.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.createLobby(String taleName, String roomName) {
+    return ToGameServerMessage()
+      ..content = jsonEncode((CreateLobby()
+            ..taleName = taleName
+            ..name = roomName)
+          .toJson())
+      ..message = OnServerAction.createLobby;
+  }
 }
 
 @Typescript()
@@ -41,6 +55,8 @@ enum OnServerAction {
   goToState,
   @JsonValue('init')
   init,
+  @JsonValue('createLobby')
+  createLobby,
 }
 
 @JsonSerializable()
@@ -64,5 +80,18 @@ class InitMessage extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$InitMessageToJson(this);
+  }
+}
+
+@JsonSerializable()
+class CreateLobby extends MessageContent {
+  String taleName;
+  String name;
+
+  static CreateLobby fromJson(Map<String, dynamic> json) =>
+      _$CreateLobbyFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$CreateLobbyToJson(this);
   }
 }

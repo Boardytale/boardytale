@@ -12,10 +12,8 @@ part 'arrow_disk.dart';
     selector: 'lobby',
     directives: [WorldComponent,PlayerListComponent, ArrowDisk, NgFor],
     template: '''
-      <h1>lobby</h1>
+      <h1>lobby {{lobbyService.openedLobby.value?.name}}</h1>
       <player-list></player-list>
-      <arrow-disk></arrow-disk>
-      <world></world>
       ''',
     styles: [
       """
@@ -25,10 +23,11 @@ part 'arrow_disk.dart';
       """
     ])
 class LobbyComponent {
+  final ChangeDetectorRef changeDetector;
 
   LobbyService lobbyService;
 
-  LobbyComponent(this.lobbyService){
-
+  LobbyComponent(this.lobbyService, this.changeDetector){
+    lobbyService.openedLobby.listen((onData) => changeDetector.markForCheck());
   }
 }

@@ -1,8 +1,7 @@
 part of game_server;
 
-class GamesToCreate {
-  static Future<List<shared.LobbyTale>> getGamesToCreate(
-      BoardytaleConfiguration config) async {
+class CreateGameService {
+  Future<List<shared.LobbyTale>> getGamesToCreate() async {
     String uri = makeAddressFromUri(config.editorServer.uris.first) + "inner/lobbyList";
     print(uri);
     http.Response response = await http.get(uri,headers: {"Content-Type": "application/json"});

@@ -62,6 +62,7 @@ class UserBarComponent {
     state.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
+    showSignInButton = false;
   }
 
   void signOut() {

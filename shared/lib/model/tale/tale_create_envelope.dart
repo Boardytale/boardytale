@@ -45,7 +45,7 @@ class TaleInnerEnvelope {
   int taleVersion;
 
   WorldCreateEnvelope world;
-  Map<String, TalePlayer> players = {};
+  Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, String> units = {};
@@ -67,7 +67,7 @@ class TaleInnerCompiled {
   Map<Lang, String> langName;
   int taleVersion;
   WorldCreateEnvelope world;
-  Map<String, TalePlayer> players = {};
+  Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, String> units = {};
@@ -96,5 +96,21 @@ class TaleCompiledAssets {
 
   Map<String, dynamic> toJson() {
     return _$TaleCompiledAssetsToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class AiGroup {
+  String id;
+  Map<Lang, String> name;
+  String team;
+  String color;
+  static AiGroup fromJson(Map json) {
+    return _$AiGroupFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$AiGroupToJson(this);
   }
 }

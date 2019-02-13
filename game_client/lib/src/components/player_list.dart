@@ -4,7 +4,6 @@ import 'package:angular/src/common/directives.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/state_service.dart';
 import 'package:game_client/src/world/model/model.dart';
-import 'package:shared/model/model.dart' as commonLib;
 
 @Component(
     selector: "player-list",
@@ -12,7 +11,7 @@ import 'package:shared/model/model.dart' as commonLib;
     template: """
     <div class="players">
       <div *ngFor="let player of players" [class.is-me]="player==me" [class.is-done]='player.isDone || player.team != state.teamPlaying' style="color:{{player.color}}">
-        {{player.name}} - {{player.connectionName}}
+        {{player.name}}
       </div>
     </div>
 """,
@@ -49,9 +48,9 @@ class PlayerListComponent {
     }
   }
 
-  List<commonLib.LobbyPlayer> get players {
+  List<Player> get players {
     if (state.tale == null) return const [];
-    List<commonLib.LobbyPlayer> players = [];
+    List<Player> players = [];
 //    for (commonLib.LobbyPlayer player in state.tale.players.values) {
 //      players.add(player);
 //    }

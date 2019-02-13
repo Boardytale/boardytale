@@ -1,8 +1,7 @@
-import { TalePlayer, TaleCreateEnvelope } from '../../model/model';
+import { TaleCreateEnvelope, AiGroup } from '../../model/model';
 
-const bandits: TalePlayer = {
+const bandits: AiGroup = {
     color: 'red',
-    handler: 'ai',
     id: 'bandits',
     name: {
         en: 'Bandits',
@@ -44,7 +43,7 @@ export let data: TaleCreateEnvelope = {
         events: {},
         name: '0lvl_bandits',
         langs: { en: {} },
-        players: {
+        aiGroups: {
             bandits,
         },
         langName: {

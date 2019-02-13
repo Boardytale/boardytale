@@ -15,5 +15,5 @@ export let data: Image = {
     type: 'field',
     origin: 'author',
     tags: ['grass'],
-    imageVersion: 0
+    imageVersion: 0,
 };

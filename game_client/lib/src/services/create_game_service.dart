@@ -7,7 +7,7 @@ import 'package:shared/model/model.dart';
 class CreateGameService {
   final GatewayService gatewayService;
 
-  BehaviorSubject<List<LobbyTale>> onStateChanged =
+  BehaviorSubject<List<LobbyTale>> talesToCreate =
       BehaviorSubject<List<LobbyTale>>();
 
   CreateGameService(this.gatewayService) {
@@ -15,6 +15,6 @@ class CreateGameService {
   }
 
   void setState(ToClientMessage message) {
-    onStateChanged.add(message.getGamesToCreateMessage.games);
+    talesToCreate.add(message.getGamesToCreateMessage.games);
   }
 }

@@ -10,7 +10,9 @@ class LobbyDataController extends ResourceController {
   @Operation.get()
   Future<Response> getLobbyList() async {
     var query = Query<Tale>(context)
-      ..returningProperties((tale) => [tale.id, tale.lobbyTale]);
+      ..returningProperties((tale) => [tale.id, tale.lobbyTale])
+      ..where((tale)=>tale.compiled).equalTo(true)
+    ;
     List<Tale> result = await query.fetch();
     List lobbyTales = result.map((tale) => tale.lobbyTale.data).toList();
     return Response.ok(lobbyTales);

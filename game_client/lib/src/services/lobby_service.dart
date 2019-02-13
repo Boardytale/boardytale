@@ -6,13 +6,19 @@ import 'package:shared/model/model.dart';
 @Injectable()
 class LobbyService {
   final GatewayService gatewayService;
-  BehaviorSubject<List<LobbyTale>> onLobbyStateChanged = BehaviorSubject<List<LobbyTale>>(seedValue: []);
+  BehaviorSubject<List<LobbyTale>> lobbies = BehaviorSubject<List<LobbyTale>>(seedValue: []);
+  BehaviorSubject<OpenedLobby> openedLobby = BehaviorSubject<OpenedLobby>();
 
   LobbyService(this.gatewayService){
     this.gatewayService.handlers[OnClientAction.refreshLobbyList] = setState;
+    this.gatewayService.handlers[OnClientAction.openedLobbyData] = enteredToLobby;
   }
 
   void setState(ToClientMessage message){
-    onLobbyStateChanged.add(message.refreshLobbyListMessage.lobbies);
+    lobbies.add(message.refreshLobbyListMessage.lobbies);
+  }
+
+  void enteredToLobby(ToClientMessage message){
+    openedLobby.add(message.getOpenedLobbyData.lobby);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:editor_server/controller/compiled_tale_controller.dart';
 import 'package:editor_server/controller/image_controller.dart';
 import 'package:editor_server/controller/lobby_data_controller.dart';
 import 'package:editor_server/controller/tale_controller.dart';
@@ -30,6 +31,7 @@ class EditorServerChannel extends ApplicationChannel {
     router.route("/tales/[:operation]").link(() => TaleController(context));
     router.route("/units/[:operation]").link(() => UnitController(context));
     router.route("/inner/lobbyList").link(() => LobbyDataController(context));
+    router.route("/inner/taleByName").link(() => CompiledTaleController(context));
     return router;
   }
 }
