@@ -103,9 +103,9 @@ class UnitController extends ResourceController {
 
     UnitType created;
     var compiled = await compiledQuery.fetch();
-    if(compiled.isNotEmpty){
+    if (compiled.isNotEmpty) {
       created = (await compiledQuery.update()).first;
-    }else{
+    } else {
       created = await compiledQuery.insert();
     }
     return Response.ok(created);

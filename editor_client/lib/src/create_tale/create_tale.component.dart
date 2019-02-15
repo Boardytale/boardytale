@@ -25,13 +25,11 @@ class CreateTaleComponent implements OnInit {
   CreateTaleComponent(this._http);
 
   @override
-  Future<Null> ngOnInit() async {
-  }
+  Future<Null> ngOnInit() async {}
 
   void add() {
     print('click');
-    this._http.post("/editorApi/tales", headers: {"Content-Type": "application/json"},body: newTale);
-
+    this._http.post("/editorApi/tales",
+        headers: {"Content-Type": "application/json"}, body: newTale);
   }
-
 }

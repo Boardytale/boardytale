@@ -10,9 +10,6 @@ class Tale {
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};
-  Resources resources;
-
-  Tale(this.resources);
 
 //  void update(Map<String, dynamic> state) {
 //    List<Map<String, dynamic>> unitMapList = state["units"];
@@ -50,7 +47,7 @@ class Event {
     return _$EventFromJson(json);
   }
 
-  Map toJson(){
+  Map toJson() {
     return _$EventToJson(this);
   }
 }
@@ -60,7 +57,6 @@ class Event {
 class Trigger {
   Call event;
   Call action;
-
 
   static Trigger fromJson(Map data) {
     return _$TriggerFromJson(data);
@@ -96,7 +92,7 @@ class Call {
     return _$CallFromJson(json);
   }
 
-  Map toJson(){
+  Map toJson() {
     return _$CallToJson(this);
   }
 

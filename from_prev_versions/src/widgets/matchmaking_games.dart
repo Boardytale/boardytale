@@ -1,23 +1,23 @@
 part of deskovka_client;
 
-class MatchmakingGamesWidget extends Widget{
+class MatchmakingGamesWidget extends Widget {
   String path = "matchmaking/games";
   MatchmakingWidget matchmaking;
-  List get games=>gf.matchmaking.games;
-  MatchmakingGamesWidget(this.matchmaking):super(){
+  List get games => gf.matchmaking.games;
+  MatchmakingGamesWidget(this.matchmaking) : super() {
     matchmaking.matchmaking.onGamesChanged.add(requestRepaint);
   }
 
   @override
-  void destroy(){
+  void destroy() {
     // TODO: implement destroy
   }
 
   @override
-  Map out(){
+  Map out() {
     Map out = {};
     List gameList = [];
-    for(Map game in games){
+    for (Map game in games) {
       Map newGame = {};
       newGame["gold"] = game["gold"];
       newGame["lang"] = widgetLang;
@@ -31,19 +31,20 @@ class MatchmakingGamesWidget extends Widget{
   }
 
   @override
-  void setChildrenTargets(){
+  void setChildrenTargets() {
     // do nothing
   }
 
   @override
-  void tideFunctionality(){
-    for(Map game in games){
-      if(matchmaking.selected == null){
+  void tideFunctionality() {
+    for (Map game in games) {
+      if (matchmaking.selected == null) {
         matchmaking.selected = races.values.first;
       }
       Element gameDiv = target.querySelector("#game_${game["id"]}");
-      gameDiv.onClick.listen((_){
-        gf.send(ACTION_ENTER_GAME, {"gameId": game["id"], "race": matchmaking.selected.id});
+      gameDiv.onClick.listen((_) {
+        gf.send(ACTION_ENTER_GAME,
+            {"gameId": game["id"], "race": matchmaking.selected.id});
       });
     }
   }

@@ -7,16 +7,16 @@ class User {
   String email;
   String innerToken;
 
-  static User fromJson(Map data){
+  static User fromJson(Map data) {
     return _$UserFromJson(data);
   }
 
-  static User fromGoogleJson(Map data){
+  static User fromGoogleJson(Map data) {
     data["id"] = data["id"].toString();
     return _$UserFromJson(data);
   }
 
-  Map toJson(){
+  Map toJson() {
     return _$UserToJson(this);
   }
 }

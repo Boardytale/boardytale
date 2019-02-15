@@ -51,6 +51,8 @@ class TalePlayer extends PlayerBase {
 @JsonSerializable()
 class GamePlayer extends TalePlayer {
   String id;
+  String name;
+
   static GamePlayer fromJson(Map json) {
     return _$GamePlayerFromJson(json);
   }

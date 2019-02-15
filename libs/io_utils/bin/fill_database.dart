@@ -11,41 +11,42 @@ main() async {
   await createImages();
   await createUnits();
   await createTale();
-
 }
 
-createUnits() async{
+createUnits() async {
   List<FileSystemEntity> entities =
-  Directory(getProjectDirectory().path + "/shared/lib/data/units")
-      .listSync(recursive: true);
+      Directory(getProjectDirectory().path + "/shared/lib/data/units")
+          .listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
     if (entity is File) {
       if (path.extension(entity.path) == ".json") {
         String url = makeAddressFromUri(
-            boardytaleConfiguration.editorServer.uris.first) +
+                boardytaleConfiguration.editorServer.uris.first) +
             "units";
         print("uploading unit" + entity.path + " to url: $url");
         http.Response response = await http.post(url,
             headers: {"Content-Type": "application/json"},
             body: entity.readAsStringSync());
-        print("uploaded unit ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        print(
+            "uploaded unit ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
 
         response = await http.post(url + "/compile",
             headers: {"Content-Type": "application/json"},
             body: json.encode({
-              "id": model.UnitTypeCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).name
+              "id": model.UnitTypeCreateEnvelope.fromJson(
+                      json.decode(entity.readAsStringSync()))
+                  .name
             }));
-        print("compiled unit: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
-
-
+        print(
+            "compiled unit: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
       }
     }
   }
 }
 
-createImages() async{
+createImages() async {
   List<FileSystemEntity> entities =
       Directory(getProjectDirectory().path + "/shared/lib/data/unit_images")
           .listSync(recursive: true);
@@ -61,41 +62,43 @@ createImages() async{
         http.Response response = await http.post(url,
             headers: {"Content-Type": "application/json"},
             body: entity.readAsStringSync());
-        print("uploaded image ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        print(
+            "uploaded image ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
       }
     }
   }
 }
 
-
-createTale() async{
+createTale() async {
   List<FileSystemEntity> entities =
-  Directory(getProjectDirectory().path + "/shared/lib/data/tales")
-      .listSync(recursive: true);
+      Directory(getProjectDirectory().path + "/shared/lib/data/tales")
+          .listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
     if (entity is File) {
       if (path.extension(entity.path) == ".json") {
         String url = makeAddressFromUri(
-            boardytaleConfiguration.editorServer.uris.first) +
+                boardytaleConfiguration.editorServer.uris.first) +
             "tales";
         print("uploading tale" + entity.path + " to url: $url");
         http.Response response = await http.post(url,
             headers: {"Content-Type": "application/json"},
             body: entity.readAsStringSync());
-        print("uploaded tale ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        print(
+            "uploaded tale ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
 
         response = await http.post(url + "/compile",
             headers: {"Content-Type": "application/json"},
             body: json.encode({
-              "id": model.TaleCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).tale.name
+              "id": model.TaleCreateEnvelope.fromJson(
+                      json.decode(entity.readAsStringSync()))
+                  .tale
+                  .name
             }));
-        print("compiled tale: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
-
-
+        print(
+            "compiled tale: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
       }
     }
   }
 }
-

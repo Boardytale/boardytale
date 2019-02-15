@@ -83,7 +83,6 @@ class TaleInnerCompiled {
   }
 }
 
-
 @Typescript()
 @JsonSerializable()
 class TaleCompiledAssets {

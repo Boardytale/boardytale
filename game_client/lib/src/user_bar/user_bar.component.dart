@@ -3,7 +3,7 @@ import 'dart:html' as html;
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';
-import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/services/app_service.dart';
 import 'package:ng2_g_signin/ng2_g_signin.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared/model/model.dart' as model;
@@ -35,7 +35,7 @@ import 'package:shared/model/model.dart';
     changeDetection: ChangeDetectionStrategy.OnPush)
 class UserBarComponent {
   final http.Client _http;
-  final StateService state;
+  final AppService state;
   final GatewayService gatewayService;
 
   bool showSignInButton = false;

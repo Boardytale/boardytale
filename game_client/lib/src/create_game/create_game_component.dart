@@ -34,8 +34,10 @@ class CreateGameComponent {
     this.settingsService,
     this.gateway,
   ) {
-    createGameService.talesToCreate
-        .listen((_) => changeDetector.markForCheck());
+    createGameService.talesToCreate.listen((data) {
+      selectedTaleId = data.first.id;
+      changeDetector.markForCheck();
+    });
   }
 
   void createLobby() {

@@ -8,7 +8,10 @@ class Alea {
   List<int> nums = [];
 
   Alea(this.attack) {
-    nums = [(random.nextDouble() * 6).floor(), (random.nextDouble() * 6).floor()];
+    nums = [
+      (random.nextDouble() * 6).floor(),
+      (random.nextDouble() * 6).floor()
+    ];
   }
 
   int getDamage() {
@@ -22,9 +25,9 @@ class Alea {
   String toString() {
     String numLast = "";
     if (nums.first == 5) {
-      numLast = ",${nums.last+1}";
+      numLast = ",${nums.last + 1}";
     }
 
-    return "[${nums.first+1}$numLast] => $damage";
+    return "[${nums.first + 1}$numLast] => $damage";
   }
 }

@@ -1,9 +1,8 @@
 library game_client_model;
 
-import 'package:shared/model/model.dart';
-
+import 'package:shared/model/model.dart' as shared;
 
 class ClientGameState {
-  GameNavigationState name;
+  shared.GameNavigationState name;
   bool showCreateGameButton;
 }

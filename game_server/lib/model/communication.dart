@@ -11,5 +11,3 @@ class Connection {
   WebSocketChannel webSocket;
   ServerPlayer player;
 }
-
-

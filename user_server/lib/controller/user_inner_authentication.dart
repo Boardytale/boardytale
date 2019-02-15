@@ -9,13 +9,15 @@ class UserInnerAuthController extends ResourceController {
   final ManagedContext context;
 
   @Operation.post()
-  Future<Response> getUserByInnerToken(@Bind.body() InnerTokenWrap innerTokenWrap) async {
-    var query = Query<User>(context)..where((u) => u.innerToken).equalTo(innerTokenWrap.innerToken);
+  Future<Response> getUserByInnerToken(
+      @Bind.body() InnerTokenWrap innerTokenWrap) async {
+    var query = Query<User>(context)
+      ..where((u) => u.innerToken).equalTo(innerTokenWrap.innerToken);
     List<User> users = await query.fetch();
     if (users.isEmpty) {
       return Response.notFound();
     } else {
-     return Response.ok(users.first.asMap());
+      return Response.ok(users.first.asMap());
     }
   }
 }

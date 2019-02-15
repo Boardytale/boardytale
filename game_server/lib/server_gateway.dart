@@ -1,6 +1,9 @@
 part of game_server;
 
 class ServerGateway {
+  Map<shared.OnServerAction, void Function(MessageWithConnection message)>
+      handlers = {};
+
   void sendMessage(shared.ToClientMessage message, ServerPlayer player) {
     player.connection.webSocket.sink.add(json.encode(message.toJson()));
   }
@@ -8,24 +11,21 @@ class ServerGateway {
   // TODO: refactor to handlers
   void incomingMessage(MessageWithConnection messageWithConnection) async {
     if (messageWithConnection.message.message == shared.OnServerAction.init) {
-      initGameController.handle(messageWithConnection);
+      handlers[shared.OnServerAction.init](messageWithConnection);
       return;
     }
 
     if (messageWithConnection.player != null) {
-      if (messageWithConnection.message.message ==
-          shared.OnServerAction.goToState) {
-        navigationController.handle(messageWithConnection);
-      } else if(messageWithConnection.message.message ==
-          shared.OnServerAction.createLobby){
-         createLobbyController.handle(messageWithConnection);
+      if(handlers.containsKey(messageWithConnection.message.message)){
+        handlers[messageWithConnection.message.message](messageWithConnection);
       } else {
         messageWithConnection.connection.webSocket.sink.add(
-            "sent ${jsonEncode(messageWithConnection.message.toJson())} not recognized");
+            "missing handler for ${messageWithConnection.message.message}");
       }
     } else {
       //TODO: reconnect message
-      messageWithConnection.connection.webSocket.sink.add("player not found - make init first");
+      messageWithConnection.connection.webSocket.sink
+          .add("player not found - make init first");
     }
   }
 }

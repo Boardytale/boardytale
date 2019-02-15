@@ -10,12 +10,21 @@ class UserServerChannel extends ApplicationChannel {
 
   @override
   Future prepare() async {
-    final shared.BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
-    shared.DatabaseConfiguration database = boardytaleConfiguration.userDatabase;
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        database.username, database.password, database.host, database.port, database.databaseName);
+    final shared.BoardytaleConfiguration boardytaleConfiguration =
+        getConfiguration();
+    shared.DatabaseConfiguration database =
+        boardytaleConfiguration.userDatabase;
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    final ManagedDataModel dataModel =
+        ManagedDataModel.fromCurrentMirrorSystem();
+    final PostgreSQLPersistentStore psc =
+        PostgreSQLPersistentStore.fromConnectionInfo(
+            database.username,
+            database.password,
+            database.host,
+            database.port,
+            database.databaseName);
 
     context = ManagedContext(dataModel, psc);
   }
@@ -24,7 +33,9 @@ class UserServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
     router.route("/login").link(() => UserController(context));
-    router.route("/inner/getUserByInnerToken").link(() => UserInnerAuthController(context));
+    router
+        .route("/inner/getUserByInnerToken")
+        .link(() => UserInnerAuthController(context));
     router.route("/*").link(() => FileController("../www/"));
     return router;
   }

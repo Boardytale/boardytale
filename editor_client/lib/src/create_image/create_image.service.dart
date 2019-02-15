@@ -5,11 +5,10 @@ import 'package:angular/core.dart';
 class CreateImageService {
   final http.Client _http;
 
-  CreateImageService(this._http){
-
-  }
+  CreateImageService(this._http) {}
 
   void addImage(String image) {
-    this._http.post("/editorApi/images", headers: {"Content-Type": "application/json"},body: image);
+    this._http.post("/editorApi/images",
+        headers: {"Content-Type": "application/json"}, body: image);
   }
 }

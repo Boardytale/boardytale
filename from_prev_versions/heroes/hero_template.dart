@@ -1,20 +1,20 @@
 part of heroes;
 
-String arrayTemplate (List list, [String wrap]){
+String arrayTemplate(List list, [String wrap]) {
   StringBuffer sb = new StringBuffer();
-  if(wrap==null){
-    list.forEach((item){
+  if (wrap == null) {
+    list.forEach((item) {
       sb.write(item);
     });
-  }else{
-    list.forEach((item){
+  } else {
+    list.forEach((item) {
       sb.write(wrap.replaceAll("{{.}}", item));
     });
   }
   return sb.toString();
 }
 
-String templateHero(Hero hero){
+String templateHero(Hero hero) {
   return '''
     <div class="heroWidgetTabs">
     <ul>
@@ -24,7 +24,7 @@ String templateHero(Hero hero){
         <li id="heroWidgetSpeed">Rychlost</li>
         <li id="heroWidgetAttack">Útok</li>
         <li id="heroWidgetArmor">Zbroj</li>
-        ${/*<li id="heroWidgetOthers">Ostatní</li>*/""}
+        ${/*<li id="heroWidgetOthers">Ostatní</li>*/ ""}
     </ul>
 </div>
 <hr class="clearer" />
@@ -33,28 +33,28 @@ String templateHero(Hero hero){
     <div class="sourceAbilities">
         <div class="physicalAbilities sloupec">
             Síla: ${hero.calculated.strength}
-                <button class="addSource str" ${hero.data.canPhysical?"":"disabled"}>+</button>
-                <button class="reduceSource str" ${hero.data.floatStrength>0?"":"disabled"}>-</button><br>
+                <button class="addSource str" ${hero.data.canPhysical ? "" : "disabled"}>+</button>
+                <button class="reduceSource str" ${hero.data.floatStrength > 0 ? "" : "disabled"}>-</button><br>
             Obratnost: ${hero.calculated.agility} 
-                <button class="addSource agil" ${hero.data.canPhysical?"":"disabled"}>+</button>
-                <button class="reduceSource agil" ${hero.data.floatAgility>0?"":"disabled"}>-</button> <br>
+                <button class="addSource agil" ${hero.data.canPhysical ? "" : "disabled"}>+</button>
+                <button class="reduceSource agil" ${hero.data.floatAgility > 0 ? "" : "disabled"}>-</button> <br>
             Inteligence: ${hero.calculated.intelligence} 
-                <button class="addSource int" ${hero.data.canPhysical?"":"disabled"}>+</button>
-                <button class="reduceSource int" ${hero.data.floatIntelligence>0?"":"disabled"}>-</button> <br>
+                <button class="addSource int" ${hero.data.canPhysical ? "" : "disabled"}>+</button>
+                <button class="reduceSource int" ${hero.data.floatIntelligence > 0 ? "" : "disabled"}>-</button> <br>
         </div>
         <div class="mysticalAbilities sloupec">
             Přesnost: ${hero.data.precision}
-            <button class="addSource precision" ${hero.data.canMystical?"":"disabled"}>+</button>
-            <button class="addSource precision ten" ${hero.data.canTenMystical?"":"disabled"}>+10</button>
-            <button class="reduceSource precision" ${hero.data.floatPrecision>0?"":"disabled"}>-</button> <br>
+            <button class="addSource precision" ${hero.data.canMystical ? "" : "disabled"}>+</button>
+            <button class="addSource precision ten" ${hero.data.canTenMystical ? "" : "disabled"}>+10</button>
+            <button class="reduceSource precision" ${hero.data.floatPrecision > 0 ? "" : "disabled"}>-</button> <br>
             Energie: ${hero.data.energy}
-            <button class="addSource energy" ${hero.data.canMystical?"":"disabled"}>+</button>
-            <button class="addSource energy ten" ${hero.data.canTenMystical?"":"disabled"}>+10</button>
-            <button class="reduceSource energy"  ${hero.data.floatEnergy>0?"":"disabled"}>-</button> <br>
+            <button class="addSource energy" ${hero.data.canMystical ? "" : "disabled"}>+</button>
+            <button class="addSource energy ten" ${hero.data.canTenMystical ? "" : "disabled"}>+10</button>
+            <button class="reduceSource energy"  ${hero.data.floatEnergy > 0 ? "" : "disabled"}>-</button> <br>
             Temnota: ${hero.data.darkness}
-            <button class="addSource darkness" ${hero.data.canMystical?"":"disabled"}>+</button>
-            <button class="addSource darkness ten"  ${hero.data.canTenMystical?"":"disabled"}>+10</button>
-            <button class="reduceSource darkness"  ${hero.data.floatDarkness>0?"":"disabled"}>-</button> <br>
+            <button class="addSource darkness" ${hero.data.canMystical ? "" : "disabled"}>+</button>
+            <button class="addSource darkness ten"  ${hero.data.canTenMystical ? "" : "disabled"}>+10</button>
+            <button class="reduceSource darkness"  ${hero.data.floatDarkness > 0 ? "" : "disabled"}>-</button> <br>
         </div>
     </div>
     <hr class="clearer" />

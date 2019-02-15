@@ -1,13 +1,11 @@
 import 'dart:io';
 
 String harmonizePath() {
-  if(Platform.isWindows){
-    if (slashesInPath(Directory.current.path)
-        .split("/")
-        .last == "runner") {
+  if (Platform.isWindows) {
+    if (slashesInPath(Directory.current.path).split("/").last == "runner") {
       return new Directory("../").path;
     }
-  }else{
+  } else {
     if (slashesInPath(Directory.current.path).split("/").last == "runner") {
       return new Directory("../").path;
     }
@@ -15,6 +13,6 @@ String harmonizePath() {
   return Directory.current.path;
 }
 
-String slashesInPath(String path){
+String slashesInPath(String path) {
   return path.replaceAll('\\', '/');
 }

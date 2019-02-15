@@ -1,22 +1,20 @@
 part of 'lobby.dart';
 
-@Component(
-    selector: "arrow-disk",
-    directives: [NgFor],
-    template: """
+@Component(selector: "arrow-disk", directives: [
+  NgFor
+], template: """
       <button *ngFor="let arrow of arrows" (click)='onClick(arrow)'>{{arrow}}</button>
       <button (click)='nextTurn()'>Next turn</button>
-""",
-    styles: [
-      """:host{
+""", styles: [
+  """:host{
   position:fixed;
   right:0;
   bottom:0;
   z-index: 2;
   }"""
-    ])
+])
 class ArrowDisk {
-  final StateService state;
+  final AppService state;
   final List<int> arrows = const [0, 1, 2, 3, 4, 5];
   final GatewayService gateway;
 
@@ -28,7 +26,7 @@ class ArrowDisk {
 //    String target = unit.field.stepToDirection(arrow);
 //    gateway.sendCommand(unit,[unit.field.id, target],unit.abilities.first);
   }
-  void nextTurn(){
+  void nextTurn() {
 //    gateway.sendNextTurn();
   }
 }

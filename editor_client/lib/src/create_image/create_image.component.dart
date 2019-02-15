@@ -26,12 +26,10 @@ class CreateImageComponent implements OnInit {
   CreateImageComponent(this.createImageService);
 
   @override
-  Future<Null> ngOnInit() async {
-  }
+  Future<Null> ngOnInit() async {}
 
   void add() {
     print('click');
     createImageService.addImage(newImage);
   }
-
 }

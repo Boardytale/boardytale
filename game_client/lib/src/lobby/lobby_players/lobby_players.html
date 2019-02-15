@@ -1,0 +1,12 @@
+<div class="lobby-players">
+  <div
+      *ngFor="let player of players"
+      class="lobby-player">
+    {{player.name}}
+    <span
+        *ngIf="player.lobbyMaster"
+        class="lobby-player__master">
+            lobby master
+        </span>
+  </div>
+</div>

@@ -3,7 +3,6 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class MoveAbilityEnvelope {
-
   /**
    *  use null to inherit invoker speed
    *  use "+1" "-1" to modify invoker steps
@@ -13,11 +12,11 @@ class MoveAbilityEnvelope {
   @TypescriptOptional()
   String steps;
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return _$MoveAbilityEnvelopeToJson(this);
   }
 
-  static MoveAbilityEnvelope fromJson(Map<String, dynamic> json){
+  static MoveAbilityEnvelope fromJson(Map<String, dynamic> json) {
     return _$MoveAbilityEnvelopeFromJson(json);
   }
 }

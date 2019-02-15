@@ -12,8 +12,8 @@ main() async {
   BoardytaleConfiguration config;
 
   try {
-    config =
-        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/config.json').readAsStringSync()));
+    config = BoardytaleConfiguration.fromJson(json.decode(
+        File(projectDirectoryPath + '/config.json').readAsStringSync()));
   } catch (e) {
     if (e is CheckedFromJsonException) {
       print(e.innerError.toString());
@@ -23,7 +23,8 @@ main() async {
 
   print(config.proxyServer.uris.first.port);
 
-  print("OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
+  print(
+      "OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
 
   runServerByServerConfiguration(config.proxyServer);
 
@@ -89,12 +90,14 @@ void runServerByServerConfiguration(ServerConfiguration config) {
     executable = 'ts-node';
   }
 
-  String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
-  String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
+  String executableFile =
+      slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
+  String workingDirectory =
+      slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
 
-  Process.start(executable, [executableFile], workingDirectory: workingDirectory, runInShell: true)
+  Process.start(executable, [executableFile],
+          workingDirectory: workingDirectory, runInShell: true)
       .then((Process process) {
     printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
   });
 }
-

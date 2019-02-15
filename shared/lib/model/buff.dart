@@ -45,8 +45,10 @@ class Buff {
     if (json.containsKey("health")) healthDelta = json["health"] as int;
     if (json.containsKey("attack")) attackDelta = json["speed"] as List<int>;
     if (json.containsKey("expiration")) expiration = json["expiration"] as int;
-    if (json.containsKey("extraTags")) extraTags = (json["extraTags"] as List<String>).toSet();
-    if (json.containsKey("bannedTags")) bannedTags = (json["bannedTags"] as List<String>).toSet();
+    if (json.containsKey("extraTags"))
+      extraTags = (json["extraTags"] as List<String>).toSet();
+    if (json.containsKey("bannedTags"))
+      bannedTags = (json["bannedTags"] as List<String>).toSet();
   }
 
   void exchange() {

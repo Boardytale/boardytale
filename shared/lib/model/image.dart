@@ -62,5 +62,3 @@ enum ImageTag {
   @JsonValue('grass')
   grass,
 }
-
-

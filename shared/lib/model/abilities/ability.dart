@@ -9,11 +9,11 @@ class AbilitiesEnvelope {
   @TypescriptOptional()
   AttackAbilityEnvelope attack;
 
-  static AbilitiesEnvelope fromJson(Map json){
+  static AbilitiesEnvelope fromJson(Map json) {
     return _$AbilitiesEnvelopeFromJson(json);
   }
 
-  Map toJson(){
+  Map toJson() {
     return _$AbilitiesEnvelopeToJson(this);
   }
 }
@@ -59,11 +59,11 @@ abstract class Ability {
   String get reach;
   Unit invoker;
 
-  bool validate(Unit invoker, Track track){
+  bool validate(Unit invoker, Track track) {
     throw "not implemented";
   }
 
-  void setInvoker(Unit invoker){
+  void setInvoker(Unit invoker) {
     this.invoker = invoker;
   }
 }

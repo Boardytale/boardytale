@@ -4,21 +4,20 @@ class MatchmakingPlayersWidget extends Widget {
   String path = "matchmaking/players";
   MatchmakingWidget matchmaking;
 
-  MatchmakingPlayersWidget(this.matchmaking):super(){
+  MatchmakingPlayersWidget(this.matchmaking) : super() {
     gf.matchmaking.onPlayersChanged.add(requestRepaint);
   }
 
-
   @override
-  void destroy(){
+  void destroy() {
     // do nothing
   }
 
   @override
-  Map out(){
+  Map out() {
     Map out = {};
     List players = [];
-    for(Map p in gf.matchmaking.players){
+    for (Map p in gf.matchmaking.players) {
       players.add(p);
     }
     out["players"] = players;
@@ -27,14 +26,12 @@ class MatchmakingPlayersWidget extends Widget {
   }
 
   @override
-  void setChildrenTargets(){
+  void setChildrenTargets() {
     // do nothing
   }
 
   @override
-  void tideFunctionality(){
+  void tideFunctionality() {
     // TODO: implement tideFunctionality
   }
-
-
 }

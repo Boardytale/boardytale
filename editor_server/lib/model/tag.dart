@@ -12,5 +12,3 @@ class _Tag {
 
   ManagedSet<TagToImage> images;
 }
-
-

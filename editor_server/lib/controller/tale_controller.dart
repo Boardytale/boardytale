@@ -22,7 +22,6 @@ class TaleController extends ResourceController {
 
   @Operation.post()
   Future<Response> createTale(@Bind.body() TaleWrap taleWrap) async {
-
     final query = Query<Tale>(context)
       ..where((i) {
         return i.name;
@@ -39,7 +38,7 @@ class TaleController extends ResourceController {
         ..values.taleData = Document(tale.toJson());
       Tale created = await query.insert();
       return Response.ok(created);
-    }else {
+    } else {
       return Response.conflict(body: "tale name is alredy used");
     }
   }
@@ -65,7 +64,8 @@ class TaleController extends ResourceController {
     taleCompiled.authorEmail = taleData.authorEmail;
     taleCompiled.tale =
         model.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
-    taleCompiled.lobby = model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
+    taleCompiled.lobby =
+        model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
 
     model.TaleInnerCompiled innerCompiled = taleCompiled.tale;
     innerCompiled.assets = model.TaleCompiledAssets();
@@ -81,15 +81,17 @@ class TaleController extends ResourceController {
         // compiled unit ready
         assets.unitTypes[unitName] = model.UnitTypeCompiled.fromJson(
             result.first.unitTypeData.data as Map<String, dynamic>);
-      }else{
+      } else {
         // check if not compiled ready
         var query = Query<UnitType>(context)
           ..where((u) => u.name).equalTo(unitName);
         List<UnitType> result = await query.fetch();
         if (result.isNotEmpty) {
           // compile
-          return Response.serverError(body: "unit compilation during tale compilation is not impelemnted yet");
-        }else{
+          return Response.serverError(
+              body:
+                  "unit compilation during tale compilation is not impelemnted yet");
+        } else {
           return Response.badRequest(body: "Unit ${unitName} does not exist");
         }
       }
@@ -100,14 +102,13 @@ class TaleController extends ResourceController {
       ..authorEmail = taleCompiled.authorEmail
       ..name = '${idWrap.id}Compiled'
       ..taleData = Document(taleCompiled.toJson())
-      ..lobbyTale = taleData.lobbyTale
-    ;
+      ..lobbyTale = taleData.lobbyTale;
 
     Tale created;
     var compiled = await compiledQuery.fetch();
-    if(compiled.isNotEmpty){
+    if (compiled.isNotEmpty) {
       created = (await compiledQuery.update()).first;
-    }else{
+    } else {
       created = await compiledQuery.insert();
     }
     return Response.ok(created);

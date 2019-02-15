@@ -2,7 +2,7 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class WorldCreateEnvelope{
+class WorldCreateEnvelope {
   int width;
   int height;
   Terrain baseTerrainId = Terrain.grass;
@@ -11,13 +11,14 @@ class WorldCreateEnvelope{
 
   WorldCreateEnvelope();
 
-  factory WorldCreateEnvelope.fromJson(Map<String, dynamic> json) => _$WorldCreateEnvelopeFromJson(json);
+  factory WorldCreateEnvelope.fromJson(Map<String, dynamic> json) =>
+      _$WorldCreateEnvelopeFromJson(json);
 
 //  static WorldCreateEnvelope fromJson(Map json) {
 //    return _$WorldCreateEnvelopeFromJson(json);
 //  }
 
-  Map toJson(){
+  Map toJson() {
     return _$WorldCreateEnvelopeToJson(this);
   }
 }
@@ -33,7 +34,7 @@ class World {
 
   World(this.tale);
 
-  Field operator[](String fieldId)=>fields[fieldId];
+  Field operator [](String fieldId) => fields[fieldId];
 
 //  void fromMap(Map data, InstanceGenerator generator) {
 //    width = data["width"] as int;
@@ -89,5 +90,5 @@ class World {
 //    return out;
 //  }
 
-  getFieldById(String id)=>fields[id];
+  getFieldById(String id) => fields[id];
 }

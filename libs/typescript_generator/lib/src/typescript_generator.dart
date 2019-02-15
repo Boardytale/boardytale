@@ -34,12 +34,11 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
 
     List<String> fields = [];
     classElement.fields.forEach((FieldElement field) {
-
 //      fields.add("// isFinal ${field.isFinal}");
 //      fields.add("// isConst ${field.isConst}");
 //      fields.add("// isSynthetic ${field.isSynthetic}");
 
-      if(field.isFinal || field.isConst || field.isSynthetic){
+      if (field.isFinal || field.isConst || field.isSynthetic) {
         return;
       }
       bool isOptional = false;
@@ -53,7 +52,6 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
           return;
         }
       }
-
 
       fields.add(
           '${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');

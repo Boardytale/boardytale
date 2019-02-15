@@ -1,15 +1,13 @@
 import 'package:angular/core.dart';
 import 'package:angular/src/common/directives.dart';
-import 'package:game_client/src/services/state_service.dart';
+import 'package:game_client/src/services/app_service.dart';
 
-@Component(
-    selector: "alerts",
-    directives: [NgFor],
-    template: """
+@Component(selector: "alerts", directives: [
+  NgFor
+], template: """
 <div *ngFor="let alert of alerts" class='alert {{alert["type"]}}'>{{alert["text"]}}</div>
-""",
-    styles: [
-      """
+""", styles: [
+  """
   :host{
     position: fixed;
     left:0;
@@ -32,10 +30,10 @@ import 'package:game_client/src/services/state_service.dart';
     color: blue;
   }
   """
-    ])
+])
 class AlertsComponent {
   final ChangeDetectorRef changeDetector;
-  final StateService state;
+  final AppService state;
   List<Map> alerts = [];
 
   AlertsComponent(this.changeDetector, this.state) {

@@ -372,7 +372,8 @@ GamePlayer _$GamePlayerFromJson(Map<String, dynamic> json) {
         : Image.fromJson(json['portrait'] as Map<String, dynamic>)
     ..team = json['team'] as String
     ..color = json['color'] as String
-    ..id = json['id'] as String;
+    ..id = json['id'] as String
+    ..name = json['name'] as String;
 }
 
 Map<String, dynamic> _$GamePlayerToJson(GamePlayer instance) =>
@@ -380,7 +381,8 @@ Map<String, dynamic> _$GamePlayerToJson(GamePlayer instance) =>
       'portrait': instance.portrait?.toJson(),
       'team': instance.team,
       'color': instance.color,
-      'id': instance.id
+      'id': instance.id,
+      'name': instance.name
     };
 
 Event _$EventFromJson(Map<String, dynamic> json) {
@@ -629,6 +631,32 @@ Map<String, dynamic> _$OpenedLobbyToJson(OpenedLobby instance) =>
       'players': instance.players?.map((e) => e?.toJson())?.toList()
     };
 
+ClientTaleData _$ClientTaleDataFromJson(Map<String, dynamic> json) {
+  return ClientTaleData()
+    ..name = json['name'] as String
+    ..langs = (json['langs'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        _$enumDecodeNullable(_$LangEnumMap, k),
+        (e as Map<String, dynamic>)?.map((k, e) => MapEntry(k, e as String))))
+    ..langName = (json['langName'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..world = json['world'] == null
+        ? null
+        : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
+    ..assets = json['assets'] == null
+        ? null
+        : TaleCompiledAssets.fromJson(json['assets'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'langs': instance.langs?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'langName':
+          instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'world': instance.world?.toJson(),
+      'assets': instance.assets?.toJson()
+    };
+
 ToClientMessage _$ToClientMessageFromJson(Map<String, dynamic> json) {
   return ToClientMessage()
     ..message = _$enumDecodeNullable(_$OnClientActionEnumMap, json['message'])
@@ -646,7 +674,9 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.refreshLobbyList: 'refreshLobbyList',
   OnClientAction.getGamesToCreate: 'getGamesToCreate',
   OnClientAction.setCurrentUser: 'setCurrentUser',
-  OnClientAction.openedLobbyData: 'openedLobbyData'
+  OnClientAction.openedLobbyData: 'openedLobbyData',
+  OnClientAction.taleData: 'taleData',
+  OnClientAction.taleStateUpdate: 'taleStateUpdate'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -672,7 +702,7 @@ RefreshLobbyList _$RefreshLobbyListFromJson(Map<String, dynamic> json) {
   return RefreshLobbyList()
     ..lobbies = (json['lobbies'] as List)
         ?.map((e) =>
-            e == null ? null : LobbyTale.fromJson(e as Map<String, dynamic>))
+            e == null ? null : OpenedLobby.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -714,6 +744,26 @@ OpenedLobbyData _$OpenedLobbyDataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$OpenedLobbyDataToJson(OpenedLobbyData instance) =>
     <String, dynamic>{'lobby': instance.lobby?.toJson()};
 
+TaleData _$TaleDataFromJson(Map<String, dynamic> json) {
+  return TaleData()
+    ..data = json['data'] == null
+        ? null
+        : ClientTaleData.fromJson(json['data'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$TaleDataToJson(TaleData instance) =>
+    <String, dynamic>{'data': instance.data?.toJson()};
+
+TaleStateUpdate _$TaleStateUpdateFromJson(Map<String, dynamic> json) {
+  return TaleStateUpdate()
+    ..lobby = json['lobby'] == null
+        ? null
+        : OpenedLobby.fromJson(json['lobby'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$TaleStateUpdateToJson(TaleStateUpdate instance) =>
+    <String, dynamic>{'lobby': instance.lobby?.toJson()};
+
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
   return ToGameServerMessage()
     ..message = _$enumDecodeNullable(_$OnServerActionEnumMap, json['message'])
@@ -730,7 +780,10 @@ Map<String, dynamic> _$ToGameServerMessageToJson(
 const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
   OnServerAction.goToState: 'goToState',
   OnServerAction.init: 'init',
-  OnServerAction.createLobby: 'createLobby'
+  OnServerAction.createLobby: 'createLobby',
+  OnServerAction.enterLobby: 'enterLobby',
+  OnServerAction.enterGame: 'enterGame',
+  OnServerAction.playerGameAction: 'playerGameAction'
 };
 
 GoToState _$GoToStateFromJson(Map<String, dynamic> json) {
@@ -758,6 +811,27 @@ CreateLobby _$CreateLobbyFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CreateLobbyToJson(CreateLobby instance) =>
     <String, dynamic>{'taleName': instance.taleName, 'name': instance.name};
+
+EnterLobby _$EnterLobbyFromJson(Map<String, dynamic> json) {
+  return EnterLobby()..lobbyId = json['lobbyId'] as String;
+}
+
+Map<String, dynamic> _$EnterLobbyToJson(EnterLobby instance) =>
+    <String, dynamic>{'lobbyId': instance.lobbyId};
+
+EnterGame _$EnterGameFromJson(Map<String, dynamic> json) {
+  return EnterGame()..lobbyId = json['lobbyId'] as String;
+}
+
+Map<String, dynamic> _$EnterGameToJson(EnterGame instance) =>
+    <String, dynamic>{'lobbyId': instance.lobbyId};
+
+PlayerGameAction _$PlayerGameActionFromJson(Map<String, dynamic> json) {
+  return PlayerGameAction()..lobbyId = json['lobbyId'] as String;
+}
+
+Map<String, dynamic> _$PlayerGameActionToJson(PlayerGameAction instance) =>
+    <String, dynamic>{'lobbyId': instance.lobbyId};
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()

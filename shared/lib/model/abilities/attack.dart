@@ -3,7 +3,6 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class AttackAbilityEnvelope {
-
   /**
    *  use null to use invoker range
    *  use "+1" "-1" to change invoker original
@@ -23,12 +22,11 @@ class AttackAbilityEnvelope {
   @TypescriptOptional()
   String attack;
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return _$AttackAbilityEnvelopeToJson(this);
   }
 
-  static AttackAbilityEnvelope fromJson(Map<String, dynamic> json){
+  static AttackAbilityEnvelope fromJson(Map<String, dynamic> json) {
     return _$AttackAbilityEnvelopeFromJson(json);
   }
-
 }

@@ -6,7 +6,7 @@ class Uri {
   String host;
   num port;
 
-  Map toJson(){
+  Map toJson() {
     return _$UriToJson(this);
   }
 
@@ -24,7 +24,7 @@ class DatabaseConfiguration {
   int port;
   String databaseName;
 
-  Map toJson(){
+  Map toJson() {
     return _$DatabaseConfigurationToJson(this);
   }
 
@@ -32,6 +32,7 @@ class DatabaseConfiguration {
     return _$DatabaseConfigurationFromJson(json);
   }
 }
+
 @JsonSerializable()
 @Typescript()
 class ServerConfiguration {
@@ -42,7 +43,7 @@ class ServerConfiguration {
   String pathToWorkingDirectory;
   ExecutableType executableType;
 
-  Map toJson(){
+  Map toJson() {
     return _$ServerConfigurationToJson(this);
   }
 
@@ -50,6 +51,7 @@ class ServerConfiguration {
     return _$ServerConfigurationFromJson(json);
   }
 }
+
 @JsonSerializable()
 @Typescript()
 class FrontEndDevelopment {
@@ -57,7 +59,7 @@ class FrontEndDevelopment {
   num port;
   String route;
 
-  Map toJson(){
+  Map toJson() {
     return _$FrontEndDevelopmentToJson(this);
   }
 
@@ -65,6 +67,7 @@ class FrontEndDevelopment {
     return _$FrontEndDevelopmentFromJson(json);
   }
 }
+
 @JsonSerializable()
 @Typescript()
 class BoardytaleConfiguration {
@@ -79,7 +82,7 @@ class BoardytaleConfiguration {
   FrontEndDevelopment gameStaticDev;
   FrontEndDevelopment editorStaticDev;
 
-  Map toJson(){
+  Map toJson() {
     return _$BoardytaleConfigurationToJson(this);
   }
 

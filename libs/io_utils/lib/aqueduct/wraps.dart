@@ -21,7 +21,7 @@ class IdWrap implements Serializable {
     return null;
   }
 
-  static String packId(String id){
+  static String packId(String id) {
     return json.encode((IdWrap()..id = id).asMap());
   }
 }

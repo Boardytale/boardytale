@@ -160,6 +160,7 @@ export interface TalePlayer extends PlayerBase {
 
 export interface GamePlayer extends TalePlayer {
     id: string;
+    name: string;
 }
 
 export interface Tale extends Object {
@@ -291,9 +292,17 @@ export type OnClientAction =
     | 'refreshLobbyList'
     | 'getGamesToCreate'
     | 'setCurrentUser'
-    | 'openedLobbyData';
+    | 'openedLobbyData'
+    | 'taleData'
+    | 'taleStateUpdate';
 
-export type OnServerAction = 'goToState' | 'init' | 'createLobby';
+export type OnServerAction =
+    | 'goToState'
+    | 'init'
+    | 'createLobby'
+    | 'enterLobby'
+    | 'enterGame'
+    | 'playerGameAction';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

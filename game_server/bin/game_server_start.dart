@@ -22,15 +22,13 @@ main() async {
       try {
         gateway.incomingMessage(MessageWithConnection()
           ..message = shared.ToGameServerMessage.fromJson(jsonDecode(data))
-          ..connection = connection
-        );
+          ..connection = connection);
       } catch (e) {
         webSocket.sink
             .add("message is not instance of ToGameServerMessage ${data}");
         print(e);
         return;
       }
-
     });
   });
 

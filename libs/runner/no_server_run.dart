@@ -12,18 +12,15 @@ void main() {
 //    printFromOutputStreams(process, "Shelf proxy", "light_cyan");
 //  });
 
-  Process.start(pubExecutable,
-      ["serve", "--port=8085"],
-      workingDirectory: projectDirectoryPath + "/client"
-  ).then((Process process) {
+  Process.start(pubExecutable, ["serve", "--port=8085"],
+          workingDirectory: projectDirectoryPath + "/client")
+      .then((Process process) {
     printFromOutputStreams(process, "Pub serve", "gold");
   });
 
-  Process.start(dartExecutable,
-      ["web_server.dart"],
-      workingDirectory: projectDirectoryPath + "/runner")
+  Process.start(dartExecutable, ["web_server.dart"],
+          workingDirectory: projectDirectoryPath + "/runner")
       .then((Process process) {
     printFromOutputStreams(process, "web_server", "green");
   });
-
 }

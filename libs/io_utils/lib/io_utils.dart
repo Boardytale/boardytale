@@ -279,7 +279,12 @@ String thisPackagePath() {
 }
 
 String makeAddressFromUri(Uri uri, {bool secured: false}) {
-  return (secured ? 'https' : 'http') + '://' + uri.host + ':' + uri.port.toString() + '/';
+  return (secured ? 'https' : 'http') +
+      '://' +
+      uri.host +
+      ':' +
+      uri.port.toString() +
+      '/';
 }
 
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {

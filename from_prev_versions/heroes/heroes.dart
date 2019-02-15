@@ -23,4 +23,3 @@ void main() {
 //    heroes._selected = hero;
 //    hero.recalc();
 }
-

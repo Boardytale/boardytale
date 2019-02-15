@@ -47,6 +47,44 @@ class ToGameServerMessage {
           .toJson())
       ..message = OnServerAction.createLobby;
   }
+
+  // ---
+
+  EnterLobby get enterLobbyMessage =>
+      EnterLobby.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.enterLobby(String lobbyId) {
+    return ToGameServerMessage()
+      ..content = jsonEncode((EnterLobby()
+            ..lobbyId = lobbyId)
+          .toJson())
+      ..message = OnServerAction.enterLobby;
+  }
+
+  // ---
+
+  EnterGame get enterGameMessage =>
+      EnterGame.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.enterGame(String lobbyId) {
+    return ToGameServerMessage()
+      ..content = jsonEncode((EnterGame()
+            ..lobbyId = lobbyId)
+          .toJson())
+      ..message = OnServerAction.enterGame;
+  }
+  // ---
+
+  PlayerGameAction get playerGameActionMessage =>
+      PlayerGameAction.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.playerGameAction(String lobbyId) {
+    return ToGameServerMessage()
+      ..content = jsonEncode((PlayerGameAction()
+            ..lobbyId = lobbyId)
+          .toJson())
+      ..message = OnServerAction.playerGameAction;
+  }
 }
 
 @Typescript()
@@ -57,6 +95,12 @@ enum OnServerAction {
   init,
   @JsonValue('createLobby')
   createLobby,
+  @JsonValue('enterLobby')
+  enterLobby,
+  @JsonValue('enterGame')
+  enterGame,
+  @JsonValue('playerGameAction')
+  playerGameAction,
 }
 
 @JsonSerializable()
@@ -93,5 +137,38 @@ class CreateLobby extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$CreateLobbyToJson(this);
+  }
+}
+
+@JsonSerializable()
+class EnterLobby extends MessageContent {
+  String lobbyId;
+  static EnterLobby fromJson(Map<String, dynamic> json) =>
+      _$EnterLobbyFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$EnterLobbyToJson(this);
+  }
+}
+
+@JsonSerializable()
+class EnterGame extends MessageContent {
+  String lobbyId;
+  static EnterGame fromJson(Map<String, dynamic> json) =>
+      _$EnterGameFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$EnterGameToJson(this);
+  }
+}
+
+@JsonSerializable()
+class PlayerGameAction extends MessageContent {
+  String lobbyId;
+  static PlayerGameAction fromJson(Map<String, dynamic> json) =>
+      _$PlayerGameActionFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$PlayerGameActionToJson(this);
   }
 }

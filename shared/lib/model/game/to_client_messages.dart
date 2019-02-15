@@ -19,7 +19,7 @@ class ToClientMessage {
   RefreshLobbyList get refreshLobbyListMessage =>
       RefreshLobbyList.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromRefreshLobbyList(List<LobbyTale> lobbyList) {
+  factory ToClientMessage.fromLobbyList(List<OpenedLobby> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.refreshLobbyList
       ..content =
@@ -70,6 +70,28 @@ class ToClientMessage {
       ..message = OnClientAction.openedLobbyData
       ..content = json.encode((OpenedLobbyData()..lobby = lobby).toJson());
   }
+
+  // ---
+
+  TaleData get getTaleDataMessage =>
+      TaleData.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromTaleData(ClientTaleData data) {
+    return ToClientMessage()
+      ..message = OnClientAction.taleData
+      ..content = json.encode((TaleData()..data = data).toJson());
+  }
+
+  // ---
+
+  TaleStateUpdate get getTaleStateUpdate =>
+      TaleStateUpdate.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromTaleStateUpdate(OpenedLobby lobby) {
+    return ToClientMessage()
+      ..message = OnClientAction.taleStateUpdate
+      ..content = json.encode((TaleStateUpdate()..lobby = lobby).toJson());
+  }
 }
 
 @Typescript()
@@ -84,6 +106,10 @@ enum OnClientAction {
   setCurrentUser,
   @JsonValue('openedLobbyData')
   openedLobbyData,
+  @JsonValue('taleData')
+  taleData,
+  @JsonValue('taleStateUpdate')
+  taleStateUpdate,
 }
 
 abstract class MessageContent {}
@@ -102,7 +128,7 @@ class SetNavigationState extends MessageContent {
 
 @JsonSerializable()
 class RefreshLobbyList extends MessageContent {
-  List<LobbyTale> lobbies;
+  List<OpenedLobby> lobbies;
 
   static RefreshLobbyList fromJson(Map<String, dynamic> json) =>
       _$RefreshLobbyListFromJson(json);
@@ -145,5 +171,29 @@ class OpenedLobbyData extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$OpenedLobbyDataToJson(this);
+  }
+}
+
+@JsonSerializable()
+class TaleData extends MessageContent {
+  ClientTaleData data;
+
+  static TaleData fromJson(Map<String, dynamic> json) =>
+      _$TaleDataFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$TaleDataToJson(this);
+  }
+}
+
+@JsonSerializable()
+class TaleStateUpdate extends MessageContent {
+  OpenedLobby lobby;
+
+  static TaleStateUpdate fromJson(Map<String, dynamic> json) =>
+      _$TaleStateUpdateFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$TaleStateUpdateToJson(this);
   }
 }

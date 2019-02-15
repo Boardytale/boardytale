@@ -14,12 +14,21 @@ class EditorServerChannel extends ApplicationChannel {
 
   @override
   Future prepare() async {
-    final shared.BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
-    shared.DatabaseConfiguration database = boardytaleConfiguration.editorDatabase;
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        database.username, database.password, database.host, database.port, database.databaseName);
+    final shared.BoardytaleConfiguration boardytaleConfiguration =
+        getConfiguration();
+    shared.DatabaseConfiguration database =
+        boardytaleConfiguration.editorDatabase;
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    final ManagedDataModel dataModel =
+        ManagedDataModel.fromCurrentMirrorSystem();
+    final PostgreSQLPersistentStore psc =
+        PostgreSQLPersistentStore.fromConnectionInfo(
+            database.username,
+            database.password,
+            database.host,
+            database.port,
+            database.databaseName);
 
     context = ManagedContext(dataModel, psc);
   }
@@ -31,7 +40,9 @@ class EditorServerChannel extends ApplicationChannel {
     router.route("/tales/[:operation]").link(() => TaleController(context));
     router.route("/units/[:operation]").link(() => UnitController(context));
     router.route("/inner/lobbyList").link(() => LobbyDataController(context));
-    router.route("/inner/taleByName").link(() => CompiledTaleController(context));
+    router
+        .route("/inner/taleByName")
+        .link(() => CompiledTaleController(context));
     return router;
   }
 }

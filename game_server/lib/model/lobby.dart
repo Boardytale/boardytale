@@ -1,19 +1,32 @@
 part of game_server;
 
 class LobbyRoom {
-  BehaviorSubject<shared.OpenedLobby> openedLobby =
-      BehaviorSubject<shared.OpenedLobby>();
-  List<ServerPlayer> connectedPlayers = [];
+  shared.TaleCompiled compiledTale;
+  String get id => openedLobby.id;
+  shared.OpenedLobby openedLobby;
+  // by email
+  Map<String, ServerPlayer> connectedPlayers = {};
 
   LobbyRoom() {
-    openedLobby.listen((onData) {
-      connectedPlayers.forEach((player) {
-        gateway.sendMessage(
-            shared.ToClientMessage.fromOpenedLobby(onData), player);
-      });
-    });
+//    openedLobby.listen((onData) {
+//      connectedPlayers.forEach((player) {
+//        gateway.sendMessage(
+//            shared.ToClientMessage.fromOpenedLobby(onData), player);
+//      });
+//    });
   }
 
+  void sendUpdateToPlayer(ServerPlayer player) {
+    gateway.sendMessage(
+        shared.ToClientMessage.fromOpenedLobby(openedLobby), player);
+  }
+
+  void sendUpdateToAllPlayers() {
+    connectedPlayers.values.forEach((player){
+      gateway.sendMessage(
+          shared.ToClientMessage.fromOpenedLobby(openedLobby), player);
+    });
+  }
 }
 
 final LobbyList lobbyList = new LobbyList._private();

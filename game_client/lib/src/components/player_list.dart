@@ -2,21 +2,21 @@ import 'package:angular/core.dart';
 import 'package:angular/di.dart';
 import 'package:angular/src/common/directives.dart';
 import 'package:game_client/src/services/gateway_service.dart';
-import 'package:game_client/src/services/state_service.dart';
-import 'package:game_client/src/world/model/model.dart';
+import 'package:game_client/src/services/app_service.dart';
+import 'package:game_client/src/game/model/model.dart';
 
-@Component(
-    selector: "player-list",
-    directives: [NgFor],
-    template: """
+@Component(selector: "player-list", directives: [
+  NgFor
+], template: """
     <div class="players">
-      <div *ngFor="let player of players" [class.is-me]="player==me" [class.is-done]='player.isDone || player.team != state.teamPlaying' style="color:{{player.color}}">
+      <div 
+      *ngFor="let player of players" 
+      [class.is-me]="player==me" [class.is-done]='player.isDone' style="color:{{player.color}}">
         {{player.name}}
       </div>
     </div>
-""",
-    styles: [
-      """
+""", styles: [
+  """
         .is-me{
           font-weight: bold;
         }
@@ -30,9 +30,9 @@ import 'package:game_client/src/world/model/model.dart';
           text-decoration: line-through;
         }
         """
-    ])
+])
 class PlayerListComponent {
-  final StateService state;
+  final AppService state;
   final GatewayService gateway;
   final ChangeDetectorRef changeDetector;
   Player me;
@@ -49,7 +49,7 @@ class PlayerListComponent {
   }
 
   List<Player> get players {
-    if (state.tale == null) return const [];
+//    if (state.tale == null) return const [];
     List<Player> players = [];
 //    for (commonLib.LobbyPlayer player in state.tale.players.values) {
 //      players.add(player);
