@@ -4,7 +4,7 @@ part of model;
 @JsonSerializable()
 class FieldCreateEnvelope {
   String id;
-  int terrainId;
+  Terrain terrain;
   int x;
   int y;
 
@@ -22,13 +22,19 @@ class Field {
   List<Unit> units = [];
   String id;
   World world;
-  int terrainId;
+  Terrain terrain;
   int x;
   int y;
 
   bool get hasUnit => !units.isEmpty;
 
   Field(this.id, this.world) {
+    List<String> xy = id.split("_");
+    x = int.parse(xy[0]);
+    y = int.parse(xy[1]);
+  }
+
+  Field.anotherConstructor(this.id, this.world) {
     List<String> xy = id.split("_");
     x = int.parse(xy[0]);
     y = int.parse(xy[1]);
@@ -120,12 +126,8 @@ class Field {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> out = <String, dynamic>{};
     out["id"] = id;
-    out["terrain"] = terrainId;
+    out["terrain"] = terrain;
     return out;
-  }
-
-  void fromMap(Map<String, dynamic> map) {
-    terrainId = map["terrain"] as int;
   }
 
   int distance(Field field) {

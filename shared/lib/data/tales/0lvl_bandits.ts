@@ -44,7 +44,7 @@ export let data: TaleCreateEnvelope = {
         name: '0lvl_bandits',
         langs: { en: {} },
         aiGroups: {
-            bandits,
+            bandits: bandits,
         },
         langName: {
             en: 'Bandits camp',
@@ -55,11 +55,11 @@ export let data: TaleCreateEnvelope = {
             '0_0': 'pikeman',
         },
         world: {
-            baseTerrainId: 'grass',
+            baseTerrain: 'grass',
             fields: {},
             height: 30,
             width: 30,
-            startField: '2_2',
+            startFieldId: '2_2',
         },
     },
 };

@@ -8,7 +8,7 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(this.unit, stage_lib.Stage stage, WorldView view, Field field,
+  UnitPaintable(this.unit, stage_lib.Stage stage, WorldView view, ClientField field,
       this.settings)
       : super(view, field, stage) {
     leftOffset = 0;
@@ -46,7 +46,7 @@ class UnitPaintable extends Paintable {
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
-      commonModel.Image primaryImage = getPrimaryImage();
+      shared.Image primaryImage = getPrimaryImage();
       data = stage_lib.BitmapData(
           rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
@@ -174,7 +174,7 @@ class UnitPaintable extends Paintable {
     return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${(unit.player as Player).meId.substring(0, 1)}";
   }
 
-  commonModel.Image getPrimaryImage() {
+  shared.Image getPrimaryImage() {
     int resolutionLevel = view.model.resolutionLevel;
     if (resolutionLevel == 0) {
       if (unit.type.icon != null) {

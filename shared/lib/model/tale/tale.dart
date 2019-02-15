@@ -2,8 +2,9 @@ part of model;
 
 @Typescript()
 class Tale {
-  String id;
-  Map langs;
+  String name;
+  Map<Lang, Map<String, String>> langs;
+  Map<Lang, String> langName;
   int humanPlayersTeam;
   World world;
   Map<String, TalePlayer> players = {};

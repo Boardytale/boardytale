@@ -1,12 +1,16 @@
 part of client_model;
 
 class ClientTale extends shared.Tale {
+  SettingsService settings;
+
   ClientTale() : super();
 
-  static ClientTale fromClientTaleData(shared.ClientTaleData clientTaleData) {
-    ClientTale out = ClientTale();
-
-    return out;
+  ClientTale.fromClientTaleData(
+      shared.ClientTaleData clientTaleData, this.settings) {
+    name = clientTaleData.name;
+    langName = clientTaleData.langName;
+    name = clientTaleData.name;
+    world = ClientWorld.fromCreateEnvelope(this, clientTaleData.world, settings);
   }
 
 //  @override

@@ -16,13 +16,13 @@ class UnitManager {
     });
   }
 
-  void setActiveField(Field field) {
+  void setActiveField(ClientField field) {
     activeField.field = field;
   }
 
   void repaintActiveField() {}
 
-  UnitPaintable getFirstUnitPaintableOnField(commonModel.Field field) {
+  UnitPaintable getFirstUnitPaintableOnField(shared.Field field) {
     for (Paintable paintable in paintables) {
       if (paintable is! UnitPaintable) continue;
       if (paintable.field != field) continue;

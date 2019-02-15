@@ -1,9 +1,9 @@
 part of game_server;
 
-class TaleService{
+class GameService{
   Map<String, ServerTale> tales = {};
 
-  TaleService(){
+  GameService(){
     gateway.handlers[shared.OnServerAction.enterGame] = handleEnterGame;
     gateway.handlers[shared.OnServerAction.playerGameAction] = handlePlayerAction;
   }

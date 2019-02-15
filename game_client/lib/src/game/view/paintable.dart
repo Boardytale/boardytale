@@ -4,7 +4,7 @@ part of world_view;
 /// if active added to stage or waiting for image data
 /// scaled according to map
 abstract class Paintable {
-  Field _field;
+  ClientField _field;
   stage_lib.Bitmap _bitmap;
   String _state = "default";
   WorldView view;
@@ -36,9 +36,9 @@ abstract class Paintable {
     _resolveState();
   }
 
-  Field get field => _field;
+  ClientField get field => _field;
 
-  set field(Field value) {
+  set field(ClientField value) {
     _field = value;
     _resolveState();
   }

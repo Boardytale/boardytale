@@ -113,7 +113,7 @@ export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
 export interface FieldCreateEnvelope extends Object {
     id: string;
-    terrainId: number;
+    terrain: Terrain;
     x: number;
     y: number;
 }
@@ -122,7 +122,7 @@ export interface Field extends Object {
     units: Array<Unit>;
     id: string;
     world: World;
-    terrainId: number;
+    terrain: Terrain;
     x: number;
     y: number;
 }
@@ -130,15 +130,15 @@ export interface Field extends Object {
 export interface WorldCreateEnvelope extends Object {
     width: number;
     height: number;
-    baseTerrainId: Terrain;
+    baseTerrain: Terrain;
     fields: { [key: string]: FieldCreateEnvelope };
-    startField: string;
+    startFieldId: string;
 }
 
 export interface World extends Object {
     width: number;
     height: number;
-    baseTerrainId: Terrain;
+    baseTerrain: Terrain;
     fields: { [key: string]: Field };
     startField: Field;
     tale: Tale;
@@ -164,15 +164,15 @@ export interface GamePlayer extends TalePlayer {
 }
 
 export interface Tale extends Object {
-    id: string;
-    langs: { [key: string]: any };
+    name: string;
+    langs: { [key in Lang]?: { [key: string]: string } };
+    langName: { [key in Lang]?: string };
     humanPlayersTeam: number;
     world: World;
     players: { [key: string]: TalePlayer };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: Unit };
-    resources: Resources;
 }
 
 export interface Event extends Object {
@@ -271,13 +271,6 @@ export interface Buff extends Object {
     stackStrength: number;
     unit: Unit;
     doesNotStackWith: Array<string>;
-}
-
-export interface Resources extends Object {
-    unitTypes: { [key: string]: UnitType };
-    races: { [key: string]: Race };
-    images: { [key: string]: Image };
-    abilities: { [key: string]: { [key: string]: any } };
 }
 
 export type GameNavigationState =

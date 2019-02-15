@@ -1,6 +1,6 @@
 part of client_model;
 
-class Field extends shared.Field {
+class ClientField extends shared.Field {
   FieldPoint offset;
   FieldPoint topLeft;
   FieldPoint topRight;
@@ -9,7 +9,7 @@ class Field extends shared.Field {
   FieldPoint bottomLeft;
   FieldPoint bottomRight;
 
-  Field(String id, ClientWorld world) : super(id, world);
+  ClientField(String id, ClientWorld world) : super(id, world);
 
   ClientWorld get clientWorld => world as ClientWorld;
 

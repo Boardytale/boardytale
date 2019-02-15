@@ -88,6 +88,7 @@ createTale() async {
         print(
             "uploaded tale ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
 
+        print("compile tale ${url + "/compile"}");
         response = await http.post(url + "/compile",
             headers: {"Content-Type": "application/json"},
             body: json.encode({

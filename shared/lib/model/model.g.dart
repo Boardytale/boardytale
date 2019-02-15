@@ -278,7 +278,7 @@ Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
 FieldCreateEnvelope _$FieldCreateEnvelopeFromJson(Map<String, dynamic> json) {
   return FieldCreateEnvelope()
     ..id = json['id'] as String
-    ..terrainId = json['terrainId'] as int
+    ..terrain = _$enumDecodeNullable(_$TerrainEnumMap, json['terrain'])
     ..x = json['x'] as int
     ..y = json['y'] as int;
 }
@@ -287,33 +287,9 @@ Map<String, dynamic> _$FieldCreateEnvelopeToJson(
         FieldCreateEnvelope instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'terrainId': instance.terrainId,
+      'terrain': _$TerrainEnumMap[instance.terrain],
       'x': instance.x,
       'y': instance.y
-    };
-
-WorldCreateEnvelope _$WorldCreateEnvelopeFromJson(Map<String, dynamic> json) {
-  return WorldCreateEnvelope()
-    ..width = json['width'] as int
-    ..height = json['height'] as int
-    ..baseTerrainId =
-        _$enumDecodeNullable(_$TerrainEnumMap, json['baseTerrainId'])
-    ..fields = (json['fields'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
-        k,
-        e == null
-            ? null
-            : FieldCreateEnvelope.fromJson(e as Map<String, dynamic>)))
-    ..startField = json['startField'] as String;
-}
-
-Map<String, dynamic> _$WorldCreateEnvelopeToJson(
-        WorldCreateEnvelope instance) =>
-    <String, dynamic>{
-      'width': instance.width,
-      'height': instance.height,
-      'baseTerrainId': _$TerrainEnumMap[instance.baseTerrainId],
-      'fields': instance.fields?.map((k, e) => MapEntry(k, e?.toJson())),
-      'startField': instance.startField
     };
 
 const _$TerrainEnumMap = <Terrain, dynamic>{
@@ -322,6 +298,29 @@ const _$TerrainEnumMap = <Terrain, dynamic>{
   Terrain.water: 'water',
   Terrain.forest: 'forest'
 };
+
+WorldCreateEnvelope _$WorldCreateEnvelopeFromJson(Map<String, dynamic> json) {
+  return WorldCreateEnvelope()
+    ..width = json['width'] as int
+    ..height = json['height'] as int
+    ..baseTerrain = _$enumDecodeNullable(_$TerrainEnumMap, json['baseTerrain'])
+    ..fields = (json['fields'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        k,
+        e == null
+            ? null
+            : FieldCreateEnvelope.fromJson(e as Map<String, dynamic>)))
+    ..startFieldId = json['startFieldId'] as String;
+}
+
+Map<String, dynamic> _$WorldCreateEnvelopeToJson(
+        WorldCreateEnvelope instance) =>
+    <String, dynamic>{
+      'width': instance.width,
+      'height': instance.height,
+      'baseTerrain': _$TerrainEnumMap[instance.baseTerrain],
+      'fields': instance.fields?.map((k, e) => MapEntry(k, e?.toJson())),
+      'startFieldId': instance.startFieldId
+    };
 
 PlayerBase _$PlayerBaseFromJson(Map<String, dynamic> json) {
   return PlayerBase()

@@ -12,6 +12,10 @@ class ServerTale {
     });
   }
 
+  void sendInitTaleDataToPlayer(ServerPlayer player){
+      gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
+  }
+
   void handlePlayerAction(MessageWithConnection message){
 
   }

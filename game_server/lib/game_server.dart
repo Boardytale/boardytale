@@ -30,7 +30,7 @@ part 'package:game_server/services/navigation_service.dart';
 
 part 'package:game_server/services/init_service.dart';
 
-part 'package:game_server/services/tale_service.dart';
+part 'package:game_server/services/game_service.dart';
 
 BoardytaleConfiguration config;
 
@@ -40,7 +40,7 @@ final CreateGameService createGameService = CreateGameService();
 final ServerGateway gateway = ServerGateway();
 final InitGameService initService = InitGameService();
 final NavigationService navigationService = NavigationService();
-final TaleService taleService = TaleService();
+final GameService gameService = GameService();
 
 ServerGateway initServer(BoardytaleConfiguration configInput) {
   config = configInput;
@@ -50,6 +50,6 @@ ServerGateway initServer(BoardytaleConfiguration configInput) {
   createGameService;
   initService;
   navigationService;
-  taleService;
+  gameService;
   return gateway;
 }

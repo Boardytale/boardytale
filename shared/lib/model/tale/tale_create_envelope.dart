@@ -105,7 +105,8 @@ class AiGroup {
   Map<Lang, String> name;
   String team;
   String color;
-  static AiGroup fromJson(Map json) {
+  static AiGroup fromJson(Map<String, dynamic> json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$AiGroupFromJson(json);
   }
 

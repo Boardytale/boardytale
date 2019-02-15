@@ -5,18 +5,14 @@ part of model;
 class WorldCreateEnvelope {
   int width;
   int height;
-  Terrain baseTerrainId = Terrain.grass;
+  Terrain baseTerrain = Terrain.grass;
   Map<String, FieldCreateEnvelope> fields = {};
-  String startField;
+  String startFieldId;
 
   WorldCreateEnvelope();
 
   factory WorldCreateEnvelope.fromJson(Map<String, dynamic> json) =>
       _$WorldCreateEnvelopeFromJson(json);
-
-//  static WorldCreateEnvelope fromJson(Map json) {
-//    return _$WorldCreateEnvelopeFromJson(json);
-//  }
 
   Map toJson() {
     return _$WorldCreateEnvelopeToJson(this);
@@ -27,7 +23,7 @@ class WorldCreateEnvelope {
 class World {
   int width;
   int height;
-  Terrain baseTerrainId = Terrain.grass;
+  Terrain baseTerrain = Terrain.grass;
   Map<String, Field> fields = {};
   Field startField;
   Tale tale;
@@ -36,59 +32,34 @@ class World {
 
   Field operator [](String fieldId) => fields[fieldId];
 
-//  void fromMap(Map data, InstanceGenerator generator) {
-//    width = data["width"] as int;
-//    height = data["height"] as int;
-////    baseTerrainId = data["baseTerrain"] as int;
-//    Map<String, dynamic> fieldsData = data["fields"] as Map<String, dynamic>;
-//    Map<String, Map<String, dynamic>> indexedFieldsData = <String, Map<String, dynamic>>{};
-//    if (fieldsData != null) {
-//      fieldsData.forEach((String k, dynamic v) {
-//        if (v is int) {
-//          indexedFieldsData[k] = <String, int>{"terrain": v};
-//        }
-//        if (v is Map<String, dynamic>) {
-//          indexedFieldsData[k] = v;
-//        }
-//      });
-//    }
-//    fields.clear();
-//    for (int x = 0; x < width; x++) {
-//      for (int y = 0; y < height; y++) {
-//        String key = "${x}_$y";
-//        Field field = generator.field(key, this);
-//        if (indexedFieldsData.containsKey(key)) {
-//          field.fromMap(indexedFieldsData[key]);
-//        } else {
-//          field.terrainId = baseTerrainId;
-//        }
-//        fields[key] = field;
-//      }
-//    }
-//
-//    dynamic __startField = data["startField"];
-//    if (__startField is String) {
-//      startField = fields[__startField];
-//    } else {
-//      throw "Start field must be set";
-//    }
-//  }
-//
-//  Map toMap() {
-//    Map<String, dynamic> out = <String, dynamic>{};
-//    out["width"] = width;
-//    out["height"] = height;
-//    out["baseTerrain"] = baseTerrainId;
-//    out["startField"] = startField.id;
-//    Map<String, int> fieldsData = {};
-//    fields.forEach((k, v) {
-//      if (v.terrainId != baseTerrainId) {
-//        fieldsData[k] = v.terrainId;
-//      }
-//    });
-//    out["fields"] = fieldsData;
-//    return out;
-//  }
+  World.fromEnvelope(this.tale, WorldCreateEnvelope envelope) {
+    width = envelope.width;
+    height = envelope.height;
+    dynamic __startFieldId = envelope.startFieldId;
+    if (__startFieldId is String) {
+      startField = fields[__startFieldId];
+    } else {
+      throw "Start field must be set";
+    }
+  }
+
+  Map<String, FieldCreateEnvelope> createFieldsData(WorldCreateEnvelope envelope){
+    Map<String, FieldCreateEnvelope> fieldsData = envelope.fields;
+    Map<String, FieldCreateEnvelope> indexedFieldsData = {};
+    if (fieldsData != null) {
+      fieldsData.forEach((String k, FieldCreateEnvelope v) {
+        if (v is int) {
+          indexedFieldsData[k] = v;
+        }
+        if (v is Map<String, dynamic>) {
+          indexedFieldsData[k] = FieldCreateEnvelope()
+            ..terrain = envelope.baseTerrain
+          ;
+        }
+      });
+    }
+    return fieldsData;
+  }
 
   getFieldById(String id) => fields[id];
 }

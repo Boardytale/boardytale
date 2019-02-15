@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:html';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/game/model/model.dart';
-import 'package:shared/model/model.dart' as commonModel;
+import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 part 'unit_manager.dart';
@@ -20,26 +20,26 @@ class WorldView {
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
-  Map<int, stage_lib.Bitmap> fieldBitmaps = {};
+  Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
 
   WorldView(this.worldStage, this.model) {
-    Map<int, ImageElement> resources = {};
+    Map<shared.Terrain, ImageElement> resources = {};
     ImageElement grassImage = ImageElement(src: "img/8-trav.png");
-    resources[0] = grassImage;
+    resources[shared.Terrain.grass] = grassImage;
     ImageElement rockImage = ImageElement(src: "img/rock.png");
-    resources[1] = rockImage;
+    resources[shared.Terrain.rock] = rockImage;
     Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
       _imageLoaded = true;
       createBitmapsByTerrain(resources);
       init();
     });
-    model.fields.forEach((key, Field field) {
+    model.fields.forEach((key, ClientField field) {
       fields[key] = ViewField(field);
     });
   }
 
-  void createBitmapsByTerrain(Map<int, ImageElement> resources) {
+  void createBitmapsByTerrain(Map<shared.Terrain, ImageElement> resources) {
     HexaBorders defaultHex = model.defaultHex;
     var path = stage_lib.Shape();
     stage_lib.Graphics graphics = path.graphics;
@@ -54,7 +54,7 @@ class WorldView {
       ..closePath()
       ..strokeColor(0xff1E350D, 1.8);
 
-    resources.forEach((int k, ImageElement v) {
+    resources.forEach((shared.Terrain k, ImageElement v) {
       v.width = defaultHex.rectangle.width.toInt() + 1;
       v.height = defaultHex.rectangle.height.toInt() + 1;
       stage_lib.BitmapData data = stage_lib.BitmapData.fromImageElement(v);
@@ -69,7 +69,7 @@ class WorldView {
     fields.forEach((key, ViewField field) {
       if (field.terrain == null) {
         stage_lib.Bitmap terrain = stage_lib.Bitmap(
-            fieldBitmaps[field.original.terrainId].bitmapData.clone());
+            fieldBitmaps[field.original.terrain].bitmapData.clone());
         if (field.label == null) {
           var textField = stage_lib.TextField(field.original.id,
               stage_lib.TextFormat('Spicy Rice', 24, stage_lib.Color.Black));
@@ -101,7 +101,7 @@ class WorldView {
 }
 
 class ViewField {
-  Field original;
+  ClientField original;
   stage_lib.Bitmap terrain;
   stage_lib.TextField label;
 

@@ -7,6 +7,7 @@ import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
+import 'dart:html';
 
 @Component(
     selector: 'my-app',
@@ -57,5 +58,12 @@ class AppComponent {
 
   AppComponent(this.state, this.changeDetector) {
     state.navigationState.listen((_) => changeDetector.markForCheck());
+
+    window.onResize.listen(resizeBody);
+  }
+
+  void resizeBody([_]){
+    document.body.style.width = "${window.innerWidth}px";
+    document.body.style.height = "${window.innerHeight}px";
   }
 }

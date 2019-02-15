@@ -32,7 +32,7 @@ class NavigationService {
     }
 
     if(newState == shared.GameNavigationState.inGame){
-
+      player.tale.sendInitTaleDataToPlayer(player);
     }
   }
 }

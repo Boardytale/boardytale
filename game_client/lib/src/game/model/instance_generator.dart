@@ -3,16 +3,13 @@ import 'package:shared/model/model.dart' as shared;
 
 class ClientInstanceGenerator extends shared.InstanceGenerator {
   @override
-  shared.Field field(String id, shared.World world) => Field(id, world);
+  shared.Field field(String id, shared.World world) => ClientField(id, world);
 
   @override
   shared.Unit unit(String id) => Unit(id);
 
   @override
   shared.UnitType unitType() => shared.UnitType();
-
-  @override
-  shared.World world(shared.Tale tale) => ClientWorld(tale);
 
   @override
   shared.Tale tale() => ClientTale();

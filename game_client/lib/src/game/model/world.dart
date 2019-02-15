@@ -1,10 +1,9 @@
 part of client_model;
 
 class ClientWorld extends shared.World {
-  AppService state;
   SettingsService settings;
   covariant ClientTale tale;
-  covariant Map<String, Field> fields = {};
+  covariant Map<String, ClientField> fields = {};
   StreamController _onDimensionsChanged = StreamController();
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
   StreamController _onResolutionLevelChanged = StreamController();
@@ -40,12 +39,18 @@ class ClientWorld extends shared.World {
     _onResolutionLevelChanged.add(null);
   }
 
-  ClientWorld(this.tale) : super(tale);
+  ClientWorld.fromCreateEnvelope(this.tale, shared.WorldCreateEnvelope envelope, this.settings) : super.fromEnvelope(tale, envelope){
 
-  void init(AppService state, SettingsService settings) {
-    this.state = state;
-    this.settings = settings;
-    shared.setSettings(settings);
+    fields.clear();
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        String key = "${x}_$y";
+        ClientField field = ClientField(key, this);
+        field.terrain = baseTerrain;
+        fields[key] = field;
+      }
+    }
+
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = HexaBorders(this);
     recalculate();
@@ -59,8 +64,7 @@ class ClientWorld extends shared.World {
     _onDimensionsChanged.add(null);
   }
 
-  Field getFieldByMouseOffset(num nx, num ny) {
-    // TODO: make segmentation over three axis ... Šmoďo, až se k tomu jednou dostaneš, předělej to
+  ClientField getFieldByMouseOffset(num nx, num ny) {
     int x = nx.toInt();
     int y = ny.toInt();
     double qWidth = fieldWidth / 4;
@@ -71,7 +75,7 @@ class ClientWorld extends shared.World {
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
     if (verticalSegment % 3 == 0) {
       // resolving field by corner
-      Field main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
+      ClientField main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
       if (verticalSegment % 6 == 0) {
         double deltaLeft = x - main.left.x;
@@ -121,7 +125,7 @@ class ClientWorld extends shared.World {
     }
   }
 
-  Field _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
+  ClientField _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
     if (verticalSegment < 0 || horizontalSegment < 0) return null;

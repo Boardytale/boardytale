@@ -9,8 +9,8 @@ import 'package:utils/utils.dart' as utils;
 
 part 'image.dart';
 part 'user.dart';
-part 'package:shared/model/unit/unit.dart';
-part 'package:shared/model/unit/unit_type.dart';
+part 'unit/unit.dart';
+part 'unit/unit_type.dart';
 part 'race.dart';
 part 'track.dart';
 part 'field.dart';
@@ -23,8 +23,7 @@ part 'tale/lobby_tale.dart';
 part 'tale/client_tale_data.dart';
 part "lang.dart";
 part 'buff.dart';
-part 'package:shared/model/abilities/targets.dart';
-part 'settings.dart';
+part 'abilities/targets.dart';
 part 'stage_geometry.dart';
 part 'game/state.dart';
 part 'game/to_client_messages.dart';
@@ -47,14 +46,6 @@ part "abilities/step_shoot.dart";
 part "abilities/dismiss.dart";
 part "abilities/dark_shoot.dart";
 part "abilities/light.dart";
-part 'services/unit_service.dart';
-part 'services/player_service.dart';
 part 'services/instance_generator.dart';
 
 part 'model.g.dart';
-
-Settings settings;
-
-void setSettings(Settings input) {
-  settings = input;
-}

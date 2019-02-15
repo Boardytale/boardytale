@@ -44,7 +44,7 @@ class WorldComponent implements OnDestroy {
   stage_lib.Stage worldStage;
   stage_lib.Stage unitStage;
   AppService state;
-  GameService taleService;
+  GameService gameService;
   WorldView view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
@@ -60,13 +60,12 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
 
-  WorldComponent(this.changeDetector, this.settings, this.state, this.gateway, this.taleService) {
+  WorldComponent(this.changeDetector, this.settings, this.state, this.gateway, this.gameService) {
     onResizeSubscription = window.onResize.listen(detectChanges);
-    taleService.onWorldLoaded.listen(modelLoaded);
+    gameService.onWorldLoaded.listen(modelLoaded);
   }
 
   ClientWorld world;
-//  => taleService.clientTaleData.value.world;
 
   @ViewChild("world")
   set worldElementRef(Element element) {
@@ -85,7 +84,8 @@ class WorldComponent implements OnDestroy {
     changeDetector.detectChanges();
   }
 
-  void modelLoaded([_]) {
+  void modelLoaded(ClientWorld input) {
+    world = input;
     worldStage = stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,
@@ -106,9 +106,6 @@ class WorldComponent implements OnDestroy {
     unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     unitStage.align = stage_lib.StageAlign.TOP_LEFT;
     unitManager = UnitManager(unitStage, view, settings);
-
-//    view =  WorldViewService(worldStage, world, unitStage, settings);
-
     var renderLoop = stage_lib.RenderLoop();
     renderLoop.addStage(unitStage);
     detectChanges();
@@ -117,7 +114,7 @@ class WorldComponent implements OnDestroy {
   void onMouseDown(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+    ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
     Unit unit = field.getFirstPlayableUnitOnField();
     if (unit != null) {
       _draggedUnit = unit;
@@ -133,7 +130,7 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (_draggedUnit != null) {
-      Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       List<String> path = _draggedUnit.field.getShortestPath(field);
       commonLib.Track track = commonLib.Track.fromIds(path, null);
       commonLib.Ability ability = _draggedUnit.getAbility(
@@ -155,7 +152,7 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      Field field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       unitManager.setActiveField(field);
       return;
     }
