@@ -9,6 +9,7 @@ import 'package:shared/model/model.dart' as shared;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:shared/configuration/configuration.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:stagexl/src/ui/color.dart';
 
 part 'server_gateway.dart';
 
@@ -32,6 +33,8 @@ part 'package:game_server/services/init_service.dart';
 
 part 'package:game_server/services/game_service.dart';
 
+part 'package:game_server/services/intention_service.dart';
+
 BoardytaleConfiguration config;
 
 final PlayerService playerService = PlayerService();
@@ -41,6 +44,7 @@ final ServerGateway gateway = ServerGateway();
 final InitGameService initService = InitGameService();
 final NavigationService navigationService = NavigationService();
 final GameService gameService = GameService();
+final IntentionService intentionService = IntentionService();
 
 ServerGateway initServer(BoardytaleConfiguration configInput) {
   config = configInput;
@@ -51,5 +55,6 @@ ServerGateway initServer(BoardytaleConfiguration configInput) {
   initService;
   navigationService;
   gameService;
+  intentionService;
   return gateway;
 }

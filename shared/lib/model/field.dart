@@ -104,7 +104,7 @@ class Field {
     refresh();
   }
 
-  bool isAllyOnField(GamePlayer player) {
+  bool isAllyOnField(Player player) {
     if (units.isEmpty) return false;
     return units.first.player == player;
   }

@@ -2,11 +2,12 @@ part of world_view;
 
 class UnitManager {
   stage_lib.Stage stage;
-  WorldView view;
-  ClientTale tale;
+  WorldViewService view;
+  ClientTaleService tale;
   SettingsService settings;
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
+  List<UserIntentionPaintable> intentions = [];
 
   UnitManager(this.stage, this.view, this.settings) {
     tale = view.model.tale;
@@ -29,5 +30,14 @@ class UnitManager {
       return (paintable as UnitPaintable);
     }
     return null;
+  }
+
+  void addIntention(ClientField field, int color) {
+    var test = (test)=>test.color == color;
+    intentions.where(test).forEach((paintable){
+      paintable.destroy();
+    });
+    intentions.removeWhere(test);
+    intentions.add(UserIntentionPaintable(view, field, stage, color));
   }
 }

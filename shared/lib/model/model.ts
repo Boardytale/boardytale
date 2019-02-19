@@ -51,7 +51,7 @@ export interface Unit extends Object {
     _steps: number;
     type: UnitType;
     _field: Field;
-    player: GamePlayer;
+    player: Player;
     abilities: Array<Ability>;
     _buffs: Array<Buff>;
     tags: any;
@@ -144,23 +144,13 @@ export interface World extends Object {
     tale: Tale;
 }
 
-export interface PlayerBase extends Object {
+export interface Player extends Object {
     portrait: Image;
-}
-
-export interface LobbyPlayer extends PlayerBase {
-    lobbyMaster: boolean;
-    name: string;
-}
-
-export interface TalePlayer extends PlayerBase {
-    team: string;
-    color: string;
-}
-
-export interface GamePlayer extends TalePlayer {
     id: string;
     name: string;
+    team: string;
+    color: number;
+    gameMaster: boolean;
 }
 
 export interface Tale extends Object {
@@ -169,7 +159,7 @@ export interface Tale extends Object {
     langName: { [key in Lang]?: string };
     humanPlayersTeam: number;
     world: World;
-    players: { [key: string]: TalePlayer };
+    players: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: { [key: string]: Unit };
@@ -253,7 +243,7 @@ export interface LobbyTale extends Object {
 
 export interface OpenedLobby extends LobbyTale {
     lobbyName: string;
-    players: Array<LobbyPlayer>;
+    players: Array<Player>;
 }
 
 export type Lang = 'en' | 'cz';
@@ -287,7 +277,8 @@ export type OnClientAction =
     | 'setCurrentUser'
     | 'openedLobbyData'
     | 'taleData'
-    | 'taleStateUpdate';
+    | 'taleStateUpdate'
+    | 'intentionUpdate';
 
 export type OnServerAction =
     | 'goToState'
@@ -295,7 +286,8 @@ export type OnServerAction =
     | 'createLobby'
     | 'enterLobby'
     | 'enterGame'
-    | 'playerGameAction';
+    | 'playerGameAction'
+    | 'playerGameIntention';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

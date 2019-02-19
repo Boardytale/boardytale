@@ -26,7 +26,6 @@ app.use((req, res, next) => {
 
 runProxy(config.userServer);
 runProxy(config.editorServer);
-let wsProxy = proxyWebsocket(config.gameServer);
 
 proxyStaticDev(config.editorStaticDev);
 proxyStaticDev(config.gameStaticDev);
@@ -43,8 +42,6 @@ app.use(express.static(path.resolve(__dirname, '../www'), {
 var server = app.listen(config.proxyServer.uris[0].port, () => {
     console.log('Proxy server is listening to http://localhost:' + config.proxyServer.uris[0].port);
 });
-
-server.on('upgrade', wsProxy.upgrade);
 
 function proxyStaticDev(settings: FrontEndDevelopment) {
     if (settings.port) {

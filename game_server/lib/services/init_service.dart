@@ -26,6 +26,7 @@ class InitGameService {
       // TODO: manage username
       user.name = user.email;
       player = ServerPlayer()
+        ..id = "${playerService.lastPlayerId++}"
         ..user = user
         ..navigationState = shared.GameNavigationState.findLobby;
 

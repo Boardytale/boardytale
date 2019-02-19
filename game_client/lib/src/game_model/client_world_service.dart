@@ -1,23 +1,24 @@
 part of client_model;
 
-class ClientWorld extends shared.World {
+@Injectable()
+class ClientWorldService extends shared.World {
   SettingsService settings;
-  covariant ClientTale tale;
+  covariant ClientTaleService tale;
   covariant Map<String, ClientField> fields = {};
-  StreamController _onDimensionsChanged = StreamController();
+  StreamController _onDimensionsChanged = StreamController.broadcast();
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
   StreamController _onResolutionLevelChanged = StreamController();
   Stream get onResolutionLevelChanged => _onResolutionLevelChanged.stream;
   int userTopOffset = 0;
   int userLeftOffset = 0;
-  double _zoom = 1.0;
+  double _zoom = 1;
   int _resolutionLevel = 1;
   double defaultFieldHeight;
-  double widthHeightRatio = sqrt(3) / 2;
-  double fieldWidth = 1.0;
-  double fieldHeight = 1.0;
+  double defaultFieldWidth;
+  double widthHeightRatio = 1;
+  double fieldWidth = 1;
+  double fieldHeight = 1;
   HexaBorders defaultHex;
-
   double get zoom => _zoom;
 
   set zoom(double value) {
@@ -39,8 +40,11 @@ class ClientWorld extends shared.World {
     _onResolutionLevelChanged.add(null);
   }
 
-  ClientWorld.fromCreateEnvelope(this.tale, shared.WorldCreateEnvelope envelope, this.settings) : super.fromEnvelope(tale, envelope){
+  ClientWorldService(this.settings):super();
 
+  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
+    this.tale = tale;
+    super.fromEnvelope(envelope);
     fields.clear();
     for (int x = 0; x < width; x++) {
       for (int y = 0; y < height; y++) {
@@ -50,7 +54,7 @@ class ClientWorld extends shared.World {
         fields[key] = field;
       }
     }
-
+    defaultFieldWidth = settings.defaultFieldWidth;
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = HexaBorders(this);
     recalculate();

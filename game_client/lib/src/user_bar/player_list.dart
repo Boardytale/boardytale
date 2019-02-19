@@ -1,9 +1,9 @@
 import 'package:angular/core.dart';
 import 'package:angular/di.dart';
 import 'package:angular/src/common/directives.dart';
+import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/app_service.dart';
-import 'package:game_client/src/game/model/model.dart';
 
 @Component(selector: "player-list", directives: [
   NgFor

@@ -7,6 +7,7 @@ class ClientTaleData {
   Map<Lang, String> langName;
   WorldCreateEnvelope world;
   TaleCompiledAssets assets;
+  List<Player> players;
 
   ClientTaleData();
 

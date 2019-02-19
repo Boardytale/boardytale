@@ -1,10 +1,12 @@
 part of game_server;
 
-class ServerPlayer {
+class ServerPlayer extends shared.Player{
+  String id;
   Connection connection;
   shared.GameNavigationState navigationState;
   shared.User user;
   ServerTale tale;
+  int color = Color.Red;
   String get email => user.email;
 
   String get innerToken => user.innerToken;
@@ -32,13 +34,17 @@ class ServerPlayer {
     connection.player = this;
   }
 
-  shared.LobbyPlayer createLobbyPlayer() {
-    return shared.LobbyPlayer()..name = user.name;
-  }
-
   void enterGame(ServerTale tale) {
     this.tale = tale;
     navigationState = shared.GameNavigationState.inGame;
     navigationService.restoreState(this);
+  }
+
+  shared.Player createGamePlayer() {
+    return shared.Player()
+      ..name = user.name
+      ..color = color
+      ..id = id
+    ;
   }
 }

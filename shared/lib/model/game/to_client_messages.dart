@@ -73,8 +73,7 @@ class ToClientMessage {
 
   // ---
 
-  TaleData get getTaleDataMessage =>
-      TaleData.fromJson(json.decode(content));
+  TaleData get getTaleDataMessage => TaleData.fromJson(json.decode(content));
 
   factory ToClientMessage.fromTaleData(ClientTaleData data) {
     return ToClientMessage()
@@ -91,6 +90,21 @@ class ToClientMessage {
     return ToClientMessage()
       ..message = OnClientAction.taleStateUpdate
       ..content = json.encode((TaleStateUpdate()..lobby = lobby).toJson());
+  }
+
+  // ---
+
+  IntentionUpdate get getIntentionUpdate =>
+      IntentionUpdate.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromIntentionUpdate(
+      String playerId, String activeFieldId) {
+    return ToClientMessage()
+      ..message = OnClientAction.intentionUpdate
+      ..content = json.encode((IntentionUpdate()
+            ..playerId = playerId
+            ..activeFieldId = activeFieldId)
+          .toJson());
   }
 }
 
@@ -110,6 +124,8 @@ enum OnClientAction {
   taleData,
   @JsonValue('taleStateUpdate')
   taleStateUpdate,
+  @JsonValue('intentionUpdate')
+  intentionUpdate,
 }
 
 abstract class MessageContent {}
@@ -195,5 +211,18 @@ class TaleStateUpdate extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$TaleStateUpdateToJson(this);
+  }
+}
+
+@JsonSerializable()
+class IntentionUpdate extends MessageContent {
+  String playerId;
+  String activeFieldId;
+
+  static IntentionUpdate fromJson(Map<String, dynamic> json) =>
+      _$IntentionUpdateFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$IntentionUpdateToJson(this);
   }
 }

@@ -1,37 +1,37 @@
 library state_service;
 
 import 'dart:async';
+import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
-import 'package:game_client/src/services/game_service.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:angular/core.dart';
-import 'package:game_client/src/model/model.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
-import 'package:shared/model/model.dart';
+import 'package:shared/model/model.dart' as shared;
 
 @Injectable()
 class AppService {
-  BehaviorSubject<User> currentUser = BehaviorSubject<User>(seedValue: null);
-  Map<GameNavigationState, ClientGameState> states = {
-    GameNavigationState.loading: ClientGameState()
-      ..name = GameNavigationState.loading
+  BehaviorSubject<shared.User> currentUser = BehaviorSubject<shared.User>(seedValue: null);
+  Map<shared.GameNavigationState, ClientGameState> states = {
+    shared.GameNavigationState.loading: ClientGameState()
+      ..name = shared.GameNavigationState.loading
       ..showCreateGameButton = false,
-    GameNavigationState.createGame: ClientGameState()
-      ..name = GameNavigationState.createGame
+    shared.GameNavigationState.createGame: ClientGameState()
+      ..name = shared.GameNavigationState.createGame
       ..showCreateGameButton = false,
-    GameNavigationState.findLobby: ClientGameState()
-      ..name = GameNavigationState.findLobby
+    shared.GameNavigationState.findLobby: ClientGameState()
+      ..name = shared.GameNavigationState.findLobby
       ..showCreateGameButton = true,
-    GameNavigationState.inGame: ClientGameState()
-      ..name = GameNavigationState.inGame
+    shared.GameNavigationState.inGame: ClientGameState()
+      ..name = shared.GameNavigationState.inGame
       ..showCreateGameButton = false,
-    GameNavigationState.inLobby: ClientGameState()
-      ..name = GameNavigationState.inLobby
+    shared.GameNavigationState.inLobby: ClientGameState()
+      ..name = shared.GameNavigationState.inLobby
       ..showCreateGameButton = false,
   };
 
+  Map<String, Player> players = {};
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();
   Stream<Map> get onAlert => _onAlert.stream;
@@ -42,24 +42,22 @@ class AppService {
   // for initialize lobbies handler
   LobbyService lobbyService;
   CreateGameService createGameService;
-  GameService gameService;
 
   AppService(
       this.settings,
       this.gatewayService,
       this.lobbyService,
-      this.gameService,
       this.createGameService) {
-    navigationState.add(states[GameNavigationState.loading]);
-    this.gatewayService.handlers[OnClientAction.setNavigationState] = setState;
-    this.gatewayService.handlers[OnClientAction.setCurrentUser] = setUser;
+    navigationState.add(states[shared.GameNavigationState.loading]);
+    this.gatewayService.handlers[shared.OnClientAction.setNavigationState] = setState;
+    this.gatewayService.handlers[shared.OnClientAction.setCurrentUser] = setUser;
   }
 
-  void setState(ToClientMessage message) {
+  void setState(shared.ToClientMessage message) {
     navigationState.add(states[message.navigationStateMessage.newState]);
   }
 
-  void setUser(ToClientMessage message) {
+  void setUser(shared.ToClientMessage message) {
     currentUser.add(message.getCurrentUser.user);
   }
 
@@ -75,7 +73,12 @@ class AppService {
     _onAlert.add({"text": text, "type": "note"});
   }
 
-  void goToState(GameNavigationState newState) {
-    gatewayService.sendMessage(ToGameServerMessage.fromGoToState(newState));
+  void goToState(shared.GameNavigationState newState) {
+    gatewayService.sendMessage(shared.ToGameServerMessage.fromGoToState(newState));
   }
+}
+
+class ClientGameState {
+  shared.GameNavigationState name;
+  bool showCreateGameButton;
 }

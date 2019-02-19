@@ -9,7 +9,8 @@ class CreateGameService {
         await http.get(uri, headers: {"Content-Type": "application/json"});
     List<shared.LobbyTale> lobbies = [];
     (jsonDecode(response.body) as List).forEach((lobbyTaleData) {
-      lobbies.add(shared.LobbyTale.fromJson(lobbyTaleData));
+      shared.LobbyTale lobbyTale = shared.LobbyTale.fromJson(lobbyTaleData);
+      lobbies.add(lobbyTale);
     });
     return lobbies;
   }

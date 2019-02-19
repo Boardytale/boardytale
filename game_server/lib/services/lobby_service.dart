@@ -40,8 +40,8 @@ class LobbyService {
 
   Future<LobbyRoom> createLobbyRoom(
       ServerPlayer player, String taleName, String name) async {
-    var lobbyPlayer = player.createLobbyPlayer();
-    lobbyPlayer.lobbyMaster = true;
+    var lobbyPlayer = player.createGamePlayer();
+    lobbyPlayer.gameMaster = true;
 
     shared.TaleCompiled tale = await getTaleByName(taleName);
 
@@ -98,7 +98,7 @@ class LobbyService {
     shared.EnterLobby message = messageWithConnection.message.enterLobbyMessage;
 
     LobbyRoom room = getLobbyRoomById(message.lobbyId);
-    var lobbyPlayer = messageWithConnection.player.createLobbyPlayer();
+    var lobbyPlayer = messageWithConnection.player.createGamePlayer();
     room.openedLobby.players.add(lobbyPlayer);
     room.connectedPlayers[player.email] = player;
     messageWithConnection.player.navigationState =

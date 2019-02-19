@@ -28,11 +28,11 @@ class World {
   Field startField;
   Tale tale;
 
-  World(this.tale);
+  World();
 
   Field operator [](String fieldId) => fields[fieldId];
 
-  World.fromEnvelope(this.tale, WorldCreateEnvelope envelope) {
+  void fromEnvelope(WorldCreateEnvelope envelope) {
     width = envelope.width;
     height = envelope.height;
     dynamic __startFieldId = envelope.startFieldId;

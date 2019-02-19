@@ -85,6 +85,19 @@ class ToGameServerMessage {
           .toJson())
       ..message = OnServerAction.playerGameAction;
   }
+
+  // ---
+
+  PlayerGameIntention get playerGameIntentionMessage =>
+      PlayerGameIntention.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.playerGameIntention(String fieldId) {
+    return ToGameServerMessage()
+      ..content = jsonEncode((PlayerGameIntention()
+            ..fieldId = fieldId)
+          .toJson())
+      ..message = OnServerAction.playerGameIntention;
+  }
 }
 
 @Typescript()
@@ -101,6 +114,8 @@ enum OnServerAction {
   enterGame,
   @JsonValue('playerGameAction')
   playerGameAction,
+  @JsonValue('playerGameIntention')
+  playerGameIntention,
 }
 
 @JsonSerializable()
@@ -170,5 +185,16 @@ class PlayerGameAction extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$PlayerGameActionToJson(this);
+  }
+}
+
+@JsonSerializable()
+class PlayerGameIntention extends MessageContent {
+  String fieldId;
+  static PlayerGameIntention fromJson(Map<String, dynamic> json) =>
+      _$PlayerGameIntentionFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$PlayerGameIntentionToJson(this);
   }
 }

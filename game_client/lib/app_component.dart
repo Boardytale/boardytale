@@ -4,6 +4,7 @@ import 'package:game_client/src/game/game.dart';
 import 'package:game_client/src/lobby/lobbies.dart';
 import 'package:game_client/src/lobby/lobby.dart';
 import 'package:game_client/src/services/app_service.dart';
+import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
@@ -41,23 +42,29 @@ import 'dart:html';
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent {
-  AppService state;
+  AppService appService;
+  GameService gameService;
   final ChangeDetectorRef changeDetector;
 
   bool get showCreateGame =>
-      state.navigationState.value.name == GameNavigationState.createGame;
+      appService.navigationState.value.name == GameNavigationState.createGame;
 
   bool get showLobby =>
-      state.navigationState.value.name == GameNavigationState.inLobby;
+      appService.navigationState.value.name == GameNavigationState.inLobby;
 
   bool get showLobbies =>
-      state.navigationState.value.name == GameNavigationState.findLobby;
+      appService.navigationState.value.name == GameNavigationState.findLobby;
 
   bool get showGame =>
-      state.navigationState.value.name == GameNavigationState.inGame;
+      appService.navigationState.value.name == GameNavigationState.inGame;
 
-  AppComponent(this.state, this.changeDetector) {
-    state.navigationState.listen((_) => changeDetector.markForCheck());
+  // unused services are used for gateway handler injection
+  AppComponent(
+      this.appService,
+      this.changeDetector,
+      this.gameService,
+      ) {
+    appService.navigationState.listen((_) => changeDetector.markForCheck());
 
     window.onResize.listen(resizeBody);
   }
