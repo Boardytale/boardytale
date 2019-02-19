@@ -4,7 +4,6 @@ import 'dart:async';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
-import 'package:game_client/src/services/game_service.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';

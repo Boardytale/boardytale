@@ -1,17 +1,19 @@
 part of client_model;
 
-class ClientTale extends shared.Tale {
+@Injectable()
+class ClientTaleService extends shared.Tale {
   SettingsService settings;
+  ClientWorldService world;
   Map<String, shared.Player> players = {};
 
-  ClientTale() : super();
+  ClientTaleService(this.settings, this.world) : super();
 
-  ClientTale.fromClientTaleData(
-      shared.ClientTaleData clientTaleData, this.settings) {
+  void fromClientTaleData(
+      shared.ClientTaleData clientTaleData) {
     name = clientTaleData.name;
     langName = clientTaleData.langName;
     name = clientTaleData.name;
-    world = ClientWorld.fromCreateEnvelope(this, clientTaleData.world, settings);
+    world.fromCreateEnvelope(clientTaleData.world, this);
     clientTaleData.players.forEach((player){
       players[player.id] = player;
     });

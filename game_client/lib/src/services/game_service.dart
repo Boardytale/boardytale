@@ -11,22 +11,22 @@ import 'package:shared/model/model.dart' as shared;
 
 @Injectable()
 class GameService {
-  ClientWorld world;
+  ClientWorldService world;
   SettingsService settings;
   AppService appService;
   GatewayService gatewayService;
 
-  Stream<ClientWorld> get onWorldLoaded => _onWorldLoaded.stream;
-  StreamController<ClientWorld> _onWorldLoaded = StreamController();
-  ClientTale tale;
+  Stream<ClientWorldService> get onWorldLoaded => _onWorldLoaded.stream;
+  StreamController<ClientWorldService> _onWorldLoaded = StreamController();
+  ClientTaleService tale;
 
-  GameService(this.gatewayService, this.settings, this.appService) {
+  GameService(this.gatewayService, this.settings, this.appService, this.tale) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
   }
 
   void handleTaleData(shared.ToClientMessage message) {
     shared.ClientTaleData clientTaleData = message.getTaleDataMessage.data;
-    tale = ClientTale.fromClientTaleData(clientTaleData, settings);
+    tale.fromClientTaleData(clientTaleData);
     tale.players.forEach((String id, shared.Player player) {
       appService.players[id] = Player()
         ..sharedPlayer = player

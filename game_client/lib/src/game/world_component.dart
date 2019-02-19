@@ -60,12 +60,14 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
   ClientField _lastActiveField;
-  ClientWorld world;
+  ClientWorldService world;
 
-  WorldComponent(this.changeDetector, this.settings, this.appService, this.gateway, this.gameService, this.view) {
+  WorldComponent(this.changeDetector, this.settings, this.appService,
+      this.gateway, this.gameService, this.view) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     gameService.onWorldLoaded.listen(modelLoaded);
-    gateway.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
+    gateway.handlers[shared.OnClientAction.intentionUpdate] =
+        handleIntentionUpdate;
   }
 
   @ViewChild("world")
@@ -78,7 +80,7 @@ class WorldComponent implements OnDestroy {
     mapObjectsElement = element as CanvasElement;
   }
 
-  void handleIntentionUpdate(shared.ToClientMessage message){
+  void handleIntentionUpdate(shared.ToClientMessage message) {
     String activeFieldId = message.getIntentionUpdate.activeFieldId;
     String playerId = message.getIntentionUpdate.playerId;
     Player player = appService.players[playerId];
@@ -88,12 +90,14 @@ class WorldComponent implements OnDestroy {
 
   void detectChanges([dynamic _]) {
     if (destroyed || view == null) return;
-    view.repaint();
+    Future.delayed(Duration.zero).then((_) {
+      view.repaint();
+    });
     changeDetector.markForCheck();
     changeDetector.detectChanges();
   }
 
-  void modelLoaded(ClientWorld input) {
+  void modelLoaded(ClientWorldService input) {
     world = input;
     worldStage = stage_lib.Stage(worldElement,
         width: window.innerWidth,
@@ -139,7 +143,8 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (_draggedUnit != null) {
-      ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field =
+          world.getFieldByMouseOffset(event.page.x, event.page.y);
       List<String> path = _draggedUnit.field.getShortestPath(field);
       shared.Track track = shared.Track.fromIds(path, null);
       shared.Ability ability = _draggedUnit.getAbility(
@@ -161,8 +166,9 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-      if(field != _lastActiveField){
+      ClientField field =
+          world.getFieldByMouseOffset(event.page.x, event.page.y);
+      if (field != _lastActiveField) {
         gateway.setActiveField(field);
         unitManager.setActiveField(field);
         _lastActiveField = field;

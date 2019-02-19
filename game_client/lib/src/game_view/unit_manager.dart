@@ -3,7 +3,7 @@ part of world_view;
 class UnitManager {
   stage_lib.Stage stage;
   WorldViewService view;
-  ClientTale tale;
+  ClientTaleService tale;
   SettingsService settings;
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;

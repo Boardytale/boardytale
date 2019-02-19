@@ -22,7 +22,7 @@ part 'user_intention_paintable.dart';
 
 @Injectable()
 class WorldViewService {
-  ClientWorld model;
+  ClientWorldService model;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
@@ -31,7 +31,6 @@ class WorldViewService {
   final AppService appService;
 
   WorldViewService(this.appService) {
-    // TODO: this.worldStage, this.model
     Map<shared.Terrain, ImageElement> resources = {};
     ImageElement grassImage = ImageElement(src: "img/8-trav.png");
     resources[shared.Terrain.grass] = grassImage;

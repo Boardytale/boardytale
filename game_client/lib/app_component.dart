@@ -4,6 +4,7 @@ import 'package:game_client/src/game/game.dart';
 import 'package:game_client/src/lobby/lobbies.dart';
 import 'package:game_client/src/lobby/lobby.dart';
 import 'package:game_client/src/services/app_service.dart';
+import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
@@ -42,6 +43,7 @@ import 'dart:html';
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent {
   AppService appService;
+  GameService gameService;
   final ChangeDetectorRef changeDetector;
 
   bool get showCreateGame =>
@@ -56,7 +58,12 @@ class AppComponent {
   bool get showGame =>
       appService.navigationState.value.name == GameNavigationState.inGame;
 
-  AppComponent(this.appService, this.changeDetector) {
+  // unused services are used for gateway handler injection
+  AppComponent(
+      this.appService,
+      this.changeDetector,
+      this.gameService,
+      ) {
     appService.navigationState.listen((_) => changeDetector.markForCheck());
 
     window.onResize.listen(resizeBody);

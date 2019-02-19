@@ -28,7 +28,7 @@ class UnitPaintable extends Paintable {
     unit.onStepsChanged.listen(createBitmap);
   }
 
-  ClientWorld get world => view.model;
+  ClientWorldService get world => view.model;
 
   int get resolutionLevel => world.resolutionLevel;
 

@@ -9,9 +9,9 @@ class ClientField extends shared.Field {
   FieldPoint bottomLeft;
   FieldPoint bottomRight;
 
-  ClientField(String id, ClientWorld world) : super(id, world);
+  ClientField(String id, ClientWorldService world) : super(id, world);
 
-  ClientWorld get clientWorld => world as ClientWorld;
+  ClientWorldService get clientWorld => world as ClientWorldService;
 
   stageLib.Rectangle<num> get rectangle => stageLib.Rectangle<num>(
       offset.x, offset.y, clientWorld.fieldWidth, clientWorld.fieldHeight);
