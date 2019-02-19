@@ -1,6 +1,6 @@
 part of heroes;
 
-class Hero{
+class Hero {
   num id = 0;
   Element tab;
   Element content;
@@ -11,25 +11,26 @@ class Hero{
   HeroCalculated calculated = new HeroCalculated();
   HeroItemSum itemSum = new HeroItemSum();
   HeroSettings settings = new HeroSettings();
-  Weapon weapon = null; 
-  Hero(){
+  Weapon weapon = null;
+  Hero() {
     recalc();
   }
   addItem([String itemData]) {
     Item item = new Item();
     item.hero = this;
-    if(itemData != null){
+    if (itemData != null) {
       item.fromData(itemData);
     }
     items.add(item);
-    if(item is Weapon){
+    if (item is Weapon) {
       weapon = item;
     }
     recalc();
   }
-  recalc(){
+
+  recalc() {
     itemSum.reset();
-    for(Item item in items){
+    for (Item item in items) {
       itemSum.add(item);
     }
     calculated.takeBasic(this, itemSum);
@@ -39,8 +40,8 @@ class Hero{
     recalcAttack();
     out.health = calculated.health;
   }
-  recalcAttack () {
-    
+
+  recalcAttack() {
     double pp;
     double dmg;
     List<int> mask;
@@ -51,15 +52,15 @@ class Hero{
       pp = weapon.precision.toDouble();
       mask = weapon.mask;
       dmg = weapon.damage.toDouble();
-      dmg += (weapon.agilityUse * calculated.agility)/100;
-      dmg += (weapon.strengthUse * calculated.strength)/100;
-      dmg += (weapon.intelligenceUse * calculated.intelligence)/100;
+      dmg += (weapon.agilityUse * calculated.agility) / 100;
+      dmg += (weapon.strengthUse * calculated.strength) / 100;
+      dmg += (weapon.intelligenceUse * calculated.intelligence) / 100;
     } else {
       pp = 0.0;
       calculated.suitability = 0;
       calculated.usability = 0;
       mask = [0, 1, 1, 1, 1, 1];
-      dmg = 1.0+calculated.strength/7;
+      dmg = 1.0 + calculated.strength / 7;
     }
     pp += (calculated.speedPrecisionPoints * 3).toDouble();
     pp *= 1 - calculated.suitability;
@@ -82,14 +83,14 @@ class Hero{
     }
     calculated.unusedPrecisionPoints = pp;
     pp = sqrt(pp).floor().toDouble();
-    dmg *= 1 - calculated.suitability;  // desĂ­tky procent dolu
-    dmg *= 1 - calculated.usability;  // desĂ­tky procent dolu
+    dmg *= 1 - calculated.suitability; // desĂ­tky procent dolu
+    dmg *= 1 - calculated.usability; // desĂ­tky procent dolu
 //    dmg *= (calculated.strength + 100) / 100; // desĂ­tky procent nahoru
 //    dmg += (calculated.strength / 4).floor();
 //    dmg += (calculated.agility / 6).floor();
 
     dmg = dmg.floor().toDouble();
-    
+
     var attack = [0, 0, 0, 0, 0, 0];
 
     int maskSum = 0;
@@ -121,24 +122,24 @@ class Hero{
   }
 }
 
-class HeroSettings{
-  num expAditive =1;
+class HeroSettings {
+  num expAditive = 1;
   String selectedTab = "#heroWidgetOverview";
   num lastLevelMinusUsedFyzical = 0;
-  num lastLevelMinusUsedMystical= 0;
+  num lastLevelMinusUsedMystical = 0;
   HeroSettings();
 }
 
-class HeroItemSum{
-  num weight= 0;
-  num armor= 0;
-  num health= 0;
-  num mana= 0;
-  num strength= 0;
-  num agility= 0;
-  num intelligence= 0;
+class HeroItemSum {
+  num weight = 0;
+  num armor = 0;
+  num health = 0;
+  num mana = 0;
+  num strength = 0;
+  num agility = 0;
+  num intelligence = 0;
   HeroItemSum();
-  reset(){
+  reset() {
     weight = 0;
     armor = 0;
     health = 0;
@@ -147,34 +148,37 @@ class HeroItemSum{
     agility = 0;
     intelligence = 0;
   }
-  
+
   add(Item item) {
     item.recalc();
-    weight+=item.weight;
-    armor+=item.armor;
-    health+=item.health;
-    mana+=item.mana;
-    strength+=item.strength;
-    agility+=item.agility;
-    intelligence+=item.intelligence;
+    weight += item.weight;
+    armor += item.armor;
+    health += item.health;
+    mana += item.mana;
+    strength += item.strength;
+    agility += item.agility;
+    intelligence += item.intelligence;
   }
 }
 
-class HeroOut{
-  num health= 1;
-  num mana= 1;
-  num range= 0;
-  num armor= 0;
-  List<int> attack= [0,0,0,1,2,3];
-  num speed= 1;
+class HeroOut {
+  num health = 1;
+  num mana = 1;
+  num range = 0;
+  num armor = 0;
+  List<int> attack = [0, 0, 0, 1, 2, 3];
+  num speed = 1;
   HeroOut();
-  get shealth=>health.toString();
-  get attackString =>attack.toString();
-  operator [](item){
-    switch(item){
-      case "health": return health;
-      case "mana": return mana;
-      default: return armor;
+  get shealth => health.toString();
+  get attackString => attack.toString();
+  operator [](item) {
+    switch (item) {
+      case "health":
+        return health;
+      case "mana":
+        return mana;
+      default:
+        return armor;
     }
   }
 }

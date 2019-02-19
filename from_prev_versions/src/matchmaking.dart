@@ -9,32 +9,32 @@ class MatchMaking {
   final List onPlayersChanged = [];
 
   List _games;
-  List get games=> _games;
+  List get games => _games;
 
   List _players = [];
-  List get players=>_players;
+  List get players => _players;
 
   MatchMaking();
 
-  void open(){
+  void open() {
     new MatchmakingWidget(this);
   }
 
-  set games(List value){
+  set games(List value) {
     _games = value;
     callAll(onGamesChanged);
   }
 
-  set players(List value){
+  set players(List value) {
     _players = value;
     callAll(onPlayersChanged);
   }
 
-  void close(){
+  void close() {
     destroy();
   }
 
-  void destroy(){
+  void destroy() {
     callAll(onDestroy);
   }
 }

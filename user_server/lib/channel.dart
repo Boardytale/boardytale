@@ -1,23 +1,30 @@
+import 'package:io_utils/io_utils.dart';
+import 'package:shared/configuration/configuration.dart' as shared;
 import 'package:user_server/controller/user_controller.dart';
+import 'package:user_server/controller/user_inner_authentication.dart';
 
 import 'user_server.dart';
-
-class MyConfiguration extends Configuration {
-  MyConfiguration() : super.fromFile(File("config.yaml"));
-
-  DatabaseConfiguration database;
-}
 
 class UserServerChannel extends ApplicationChannel {
   ManagedContext context;
 
   @override
   Future prepare() async {
-    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final config = MyConfiguration();
-    final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        config.database.username, config.database.password, config.database.host, config.database.port, config.database.databaseName);
+    final shared.BoardytaleConfiguration boardytaleConfiguration =
+        getConfiguration();
+    shared.DatabaseConfiguration database =
+        boardytaleConfiguration.userDatabase;
+    logger.onRecord.listen(
+        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    final ManagedDataModel dataModel =
+        ManagedDataModel.fromCurrentMirrorSystem();
+    final PostgreSQLPersistentStore psc =
+        PostgreSQLPersistentStore.fromConnectionInfo(
+            database.username,
+            database.password,
+            database.host,
+            database.port,
+            database.databaseName);
 
     context = ManagedContext(dataModel, psc);
   }
@@ -26,7 +33,10 @@ class UserServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
     router.route("/login").link(() => UserController(context));
-
+    router
+        .route("/inner/getUserByInnerToken")
+        .link(() => UserInnerAuthController(context));
+    router.route("/*").link(() => FileController("../www/"));
     return router;
   }
 }

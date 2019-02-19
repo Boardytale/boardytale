@@ -1,10 +1,10 @@
 part of deskovka_client;
 
-class ClientPlayer extends PlayerBase{
+class ClientPlayer extends PlayerBase {
   String state = null;
   ClientWorld world;
 
-  ClientPlayer(String id):super(id);
+  ClientPlayer(String id) : super(id);
 
   void fromJson(Map json) {
     nick = json["nick"];
@@ -14,7 +14,6 @@ class ClientPlayer extends PlayerBase{
     gold = json["gold"];
     left = json["left"];
     you = json["you"];
-
   }
 
   Map toJson() {

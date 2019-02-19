@@ -2,26 +2,45 @@
   "name": "boardytale_proxy_server",
   "version": "0.0.2",
   "scripts": {
-    "start": "config && ts-node proxy_server/index.ts",
+    "start-dev": "npm run set-config-dev && dart libs/runner/run.dart",
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
-    "ts2dart": "ts2dart"
+    "ts2dart": "ts2dart",
+    "generate-shared": "cd shared && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\" && npm run generate-data-jsons",
+    "remove-duplicated-files": "remove-duplicated-files",
+    "start-proxy": "nodemon --watch proxy_server --exec ts-node proxy_server/index.ts",
+    "start-user-server": "dart user_server/bin/main.dart",
+    "ts-node": "ts-node",
+    "editor-client": "cd editor_client && dart bin/serve.dart",
+    "editor-server": "dart editor_server/bin/editor_server_start.dart",
+    "game-server": "dart game_server/bin/game_server_start.dart",
+    "game-client": "cd game_client && dart bin/serve.dart",
+    "generate-data-jsons": "cd shared/lib/data && ts-node generate-jsons.ts",
+    "initial-data-to-database": "dart libs/io_utils/bin/fill_database.dart"
   },
   "private": true,
   "devDependencies": {
     "@types/body-parser": "^1.17.0",
-    "@types/express": "^4.16.0",
+    "@types/express": "^4.16.1",
     "@types/node": "~8.9.4",
     "@types/prettier": "^1.13.2",
     "@types/request": "^2.47.1",
     "@types/set-cookie-parser": "0.0.2",
+    "child_process": "^1.0.2",
     "express": "^4.16.3",
     "gzipper": "^1.4.1",
+    "nodemon": "^1.18.7",
+    "prettier": "^1.16.1",
     "ts-node": "~5.0.1",
-    "tslint": "^5.11.0",
-    "typescript": "~2.7.2",
-    "ts2dart": "^0.9.11"
+    "tslint": "^5.12.1",
+    "typescript": "~2.7.2"
   },
   "dependencies": {
-    "http-proxy-middleware": "^0.19.0"
+    "bootstrap": "^4.2.1",
+    "http-proxy-middleware": "^0.19.1"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "singleQuote": true
   }
 }

@@ -1,3 +1,0 @@
-class GenerateTypescript {
-  const GenerateTypescript();
-}

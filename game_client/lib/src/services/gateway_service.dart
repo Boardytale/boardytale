@@ -4,94 +4,63 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
-import 'package:boardytale_client/src/world/model/model.dart';
-import 'package:boardytale_commons/model/model.dart' as commonLib;
-import 'package:utils/utils.dart';
+import 'package:game_client/src/game_model/model.dart';
+import 'package:shared/model/model.dart' as shared;
+import 'package:game_client/project_settings.dart';
 
 @Injectable()
 class GatewayService {
   WebSocket _socket;
-  String connectionName;
-  Player me;
-  final StateService state;
-  Notificator onChange = new Notificator();
-  ValueNotificator<Map<String, dynamic>> onMessage = new ValueNotificator<Map<String, dynamic>>();
+  bool _opened = false;
+  List<shared.ToGameServerMessage> _beforeOpenBuffer = [];
+  Map<shared.OnClientAction, void Function(shared.ToClientMessage message)>
+      handlers = {};
 
-  GatewayService(this.state) {
-    _socket = new WebSocket('ws://127.0.0.1:8086/ws');
+  GatewayService() {
+    var loc = window.location;
+    String newUri;
+    if (loc.protocol == "https:") {
+      newUri = "wss:";
+    } else {
+      newUri = "ws:";
+    }
+    newUri += "//" + loc.host;
+    _socket = WebSocket(
+        '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
-      Map<String, dynamic> message = JSON.decode(e.data.toString());
-      handleMessages(message);
+      print("got message");
+      Map<String, dynamic> message = json.decode(e.data.toString());
+      handleMessages(shared.ToClientMessage.fromJson(message));
     });
-//    socket.onOpen.listen((_) {
-    //      socket.send(JSON.encode({"type": "ping", "message": "ahoj"}));
-//    });
+    _socket.onOpen.listen((_) {
+      _opened = true;
+      _beforeOpenBuffer.forEach((message) => sendMessage(message));
+      _beforeOpenBuffer.clear();
+    });
   }
 
-  void handleMessages(Map<String, dynamic> message) {
-    print("Message ${message["type"]}");
-//    print(JSON.encode(message));
-    if (!message.containsKey("type")) {
-      throw ("Message do not contain \"type\"");
-    }
-    switch (message["type"]) {
-      case "error":
-        state.alertError(message["message"]);
-        break;
-      case "message":
-        state.alertNote(message["message"]);
-        break;
-      case "connection":
-        connectionName = message["name"];
-        updateMe();
-        break;
-      case "cancel":
-        state.alertWarning(message["reason"]);
-        break;
-      case "tale":
-        state.loadTaleFromData(message["tale"]);
-        updateMe();
-        break;
-      case "state":
-        state.teamPlaying = message["playing"];
-        state.tale.update(message);
-        updateMe();
-        break;
-      case "ping":
-        state.alertNote(message["message"]);
-        break;
-      default:
-        throw new UnimplementedError("Type ${message["type"]} unimplemented");
-    }
-    onMessage.notify(message);
+  void initMessages(String innerToken) {
+    sendMessage(shared.ToGameServerMessage.init(innerToken));
   }
 
-  void updateMe() {
-    if (connectionName == null || state.tale == null) {
-      me = null;
-      return;
-    }
-    me = state.tale.players.values
-        .firstWhere((player) => (player as Player).connectionName == connectionName, orElse: returnNull);
-    if (me != null) {
-      state.tale.players.values.forEach((player) {
-        (player as Player).isEnemy = player.team != me.team;
-        (player as Player).isMe = false;
-      });
-      me.isMe = true;
+  void sendMessage(shared.ToGameServerMessage message) {
+    if (!_opened) {
+      _beforeOpenBuffer.add(message);
+    } else {
+      _socket.send(json.encode(message.toJson()));
     }
   }
 
-  void _send(Map<String, dynamic> message) {
-    _socket.send(JSON.encode(message));
+  void handleMessages(shared.ToClientMessage message) {
+    if (handlers.containsKey(message.message)) {
+      print("handle message ${message.message}");
+      handlers[message.message](message);
+    } else {
+      throw "missing handler for ${jsonEncode(message.toJson())}";
+    }
   }
 
-  void sendCommand(Unit unit, List<String> path, commonLib.Ability ability, {Map<String, dynamic> other: const {}}) {
-    _send({"type": "command", "unit": unit.id, "ability": ability.name, "path": path}..addAll(other));
-  }
-
-  void sendNextTurn() {
-    _send({"type":"nextTurn"});
+  void setActiveField(ClientField field) {
+    sendMessage(shared.ToGameServerMessage.playerGameIntention(field?.id));
   }
 }

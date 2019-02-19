@@ -1,5 +1,5 @@
 part of heroes;
 
-class Ability{
+class Ability {
   Ability();
 }

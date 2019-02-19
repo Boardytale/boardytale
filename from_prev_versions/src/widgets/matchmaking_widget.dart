@@ -1,12 +1,12 @@
 part of deskovka_client;
 
-class MatchmakingWidget extends Widget{
+class MatchmakingWidget extends Widget {
   MatchMaking matchmaking;
   OverlayDiv overlay;
   Race selected;
   String path = "matchmaking/matchmaking";
 
-  MatchmakingWidget(this.matchmaking):super(){
+  MatchmakingWidget(this.matchmaking) : super() {
     overlay = new OverlayDiv("matchmaking");
     target = overlay.div;
 
@@ -18,17 +18,17 @@ class MatchmakingWidget extends Widget{
   }
 
   @override
-  void destroy(){
+  void destroy() {
     matchmaking.onDestroy.remove(destroy);
-    if(overlay != null){
+    if (overlay != null) {
       overlay.destroy();
     }
   }
 
   @override
-  Map out(){
+  Map out() {
     List nations = [];
-    races.forEach((k, v){
+    races.forEach((k, v) {
       nations.add({"id": k, "name": v.name, "color": v.color});
     });
     Map out = {};
@@ -38,28 +38,28 @@ class MatchmakingWidget extends Widget{
   }
 
   @override
-  void setChildrenTargets(){
+  void setChildrenTargets() {
     getChildByName("players").target = target.querySelector(".players");
     getChildByName("games").target = target.querySelector(".games");
   }
 
   @override
-  void tideFunctionality(){
-    races.forEach((k, v){
+  void tideFunctionality() {
+    races.forEach((k, v) {
       Element nation = target.querySelector("#nation_$k");
-      nation.onClick.listen((e){
+      nation.onClick.listen((e) {
         target.querySelectorAll(".nation").classes.remove("selected");
         nation.classes.add("selected");
         selected = v;
       });
     });
 
+    target.querySelector("button").onClick.listen((e) {
+      int gold = int.parse(
+          (target.querySelector("#gold") as InputElement).value,
+          onError: (e) => 50);
 
-
-    target.querySelector("button").onClick.listen((e){
-      int gold = int.parse((target.querySelector("#gold") as InputElement).value, onError: (e)=> 50);
-
-      if(selected == null){
+      if (selected == null) {
         selected = races.values.first;
       }
       gf.send(ACTION_HOST, {"gold": gold, "race": selected.id});

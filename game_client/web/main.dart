@@ -1,16 +1,31 @@
-import 'package:boardytale_client/src/app_component.dart';
 import 'package:angular/angular.dart';
-import 'package:boardytale_client/src/services/gateway_service.dart';
-import 'package:boardytale_client/src/services/settings_service.dart';
-import 'package:boardytale_client/src/services/state_service.dart';
+import 'package:game_client/app_component.template.dart' as ng;
+import 'package:game_client/src/game_model/model.dart';
+import 'package:game_client/src/game_view/world_view_service.dart';
+import 'package:game_client/src/services/create_game_service.dart';
+import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/lobby_service.dart';
+import 'package:game_client/src/services/settings_service.dart';
+import 'package:game_client/src/services/app_service.dart';
+import 'package:game_client/src/services/game_service.dart';
+import 'package:http/browser_client.dart';
+import 'package:http/http.dart';
+import 'main.template.dart' as self;
+
+@GenerateInjector([
+  ClassProvider(Client, useClass: BrowserClient, multi: false),
+  ClassProvider(AppService),
+  ClassProvider(SettingsService),
+  ClassProvider(GatewayService),
+  ClassProvider(LobbyService),
+  ClassProvider(CreateGameService),
+  ClassProvider(GameService),
+  ClassProvider(WorldViewService),
+  ClassProvider(ClientTaleService),
+  ClassProvider(ClientWorldService),
+])
+final InjectorFactory injector = self.injector$Injector;
 
 void main() {
-  Map settingsData = <String, dynamic>{};
-  SettingsService settings = new SettingsService()..fromMap(settingsData);
-  var stateService = new StateService(settings);
-  bootstrap(AppComponent, <dynamic>[
-    provide(StateService, useValue: stateService),
-    provide(SettingsService, useValue: settings),
-    provide(GatewayService, useValue: new GatewayService(stateService))
-  ]);
+  runApp(ng.AppComponentNgFactory, createInjector: injector);
 }

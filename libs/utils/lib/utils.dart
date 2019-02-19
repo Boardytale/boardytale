@@ -1,9 +1,5 @@
 library utils;
 
-import 'dart:convert' as convert;
-
-part 'notificator.dart';
-
 String convertToCamelCase(String name) {
   String out = '';
   for (int i = 0; i < name.length; i++) {
@@ -17,24 +13,13 @@ String convertToCamelCase(String name) {
   return out;
 }
 
-Null returnNull()=>null;
+Null returnNull() => null;
 
-Map<String,dynamic> parseJsonMap(String json){
-  dynamic result =  convert.json.decode(json);
-  if(result is Map<String,dynamic>) return result;
-  throw new ArgumentError("json is not a Map");
-}
-List<dynamic> parseJsonList(String json){
-  dynamic result =  convert.json.decode(json);
-  if(result is List<dynamic>) return result;
-  throw new ArgumentError("json is not a List");
-}
-
-class Call{
+class Call {
   String name;
   List arguments;
 
-  Call(String literal){
+  Call(String literal) {
 //    int argumentsStart = literal.indexOf("(");
 //    int argumentsEnd = literal.indexOf(")");
 //    name = literal.substring(0,argumentsStart);
@@ -42,8 +27,23 @@ class Call{
   }
 
   @override
-  String toString(){
+  String toString() {
     return '';
 //     return "$name(${arguments.join(",")})";
   }
+}
+
+void retypeMapInJsonToStringDynamic(Map originalJson, List<String> keys) {
+  keys.forEach((mainKey) {
+    dynamic __innerMap = originalJson[mainKey];
+    if (__innerMap is Map) {
+      Map<String, dynamic> output = {};
+      __innerMap.keys.forEach((key) {
+        output[key] = __innerMap[key];
+      });
+      originalJson[mainKey] = output;
+    } else {
+      throw "Not Map under given key ${mainKey}";
+    }
+  });
 }

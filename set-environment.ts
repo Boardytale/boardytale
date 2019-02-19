@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {BoardytaleConfiguration} from './config';
+import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
 
 let configPath = null;
 process.argv.forEach(function (val, index, array) {
@@ -19,7 +19,21 @@ port: ${config.userDatabase.port}
 databaseName: "${config.userDatabase.databaseName}" 
     `);
 
-    // TODO: yaml to editor_server
+    fs.writeFileSync('editor_server/database.yaml', `  
+username: "${config.editorDatabase.username}"
+password: "${config.editorDatabase.password}"
+host: "${config.editorDatabase.host}"
+port: ${config.editorDatabase.port}
+databaseName: "${config.editorDatabase.databaseName}" 
+    `);
 
-    // TODO: yaml to hero_server
+    fs.writeFileSync('game_client/lib/project_settings.dart', `
+library project_settings;
+
+class ProjectSettings {
+  static String gameApiRoute = "${config.gameServer.route}";
+  static String gameApiPort = "${config.gameServer.uris[0].port}";
+}  
+    `);
+
 });

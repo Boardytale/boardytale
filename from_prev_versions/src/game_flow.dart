@@ -11,44 +11,43 @@ class GameFlow {
 
   GameFlow();
 
-  bool get OnMove=> game.playerOnMove==game.you;
+  bool get OnMove => game.playerOnMove == game.you;
 
-  init(){
+  init() {
     game = new Game();
     game.init();
     matchmaking = new MatchMaking();
     openSocket();
   }
 
-
-  void send(String action, Map data){
+  void send(String action, Map data) {
     socket.send(JSON.encode({"action": action, "data": data}));
   }
 
-  void openSocket(){
+  void openSocket() {
     String address = 'ws://${window.location.host}$CONTROLLER_WEBSOCKET';
 //    window.console.log('ws://${window.location.host}/$CONTROLLER_WEBSOCKET');
     socket = new WebSocket(address);
-    socket.onOpen.listen((_){
+    socket.onOpen.listen((_) {
       send(CONTROLLER_STATE, {});
     });
-    socket.onMessage.listen((MessageEvent message){
+    socket.onMessage.listen((MessageEvent message) {
       Map json = JSON.decode(message.data.toString());
       Map data = json["data"];
       String state = json["state"];
-      if(json.containsKey("action") && json["action"] != null){
+      if (json.containsKey("action") && json["action"] != null) {
         String action = json["action"];
-        switch(action){
+        switch (action) {
           case ACTION_CHANGE_STATE:
             changeState(data, state);
             return;
           case ACTION_GAMES:
-            if(matchmaking != null){
+            if (matchmaking != null) {
               matchmaking.games = data["games"];
             }
             return;
           case ACTION_JOINED_GAME:
-            if(matchmaking!=null)matchmaking.destroy();
+            if (matchmaking != null) matchmaking.destroy();
             game.fromJson(data);
             selection = new UnitSelection(this);
             return;
@@ -56,7 +55,7 @@ class GameFlow {
             window.alert(lang["messages"]["gameIsFull"]);
             return;
           case ACTION_START_GAME:
-            if(selection!=null){
+            if (selection != null) {
               selection.destroy();
               selection = null;
             }
@@ -64,9 +63,9 @@ class GameFlow {
             game.start();
             return;
           case ACTION_TRACK_CHANGE:
-            if(data==null){
+            if (data == null) {
               game.world.clearTrack();
-            }else{
+            } else {
               Track track = new Track(null)..fromJson(data, game.world);
               game.world.paintTrack(track, "#FF0400");
             }
@@ -75,28 +74,27 @@ class GameFlow {
             game.newTurn(data);
             return;
           case ACTION_PLAYERS_CHANGE:
-            matchmaking.players=data["players"];
+            matchmaking.players = data["players"];
         }
       }
     });
   }
 
-
-  void changeState(Map data, String state){
-    if(data.containsKey("games")){
+  void changeState(Map data, String state) {
+    if (data.containsKey("games")) {
       matchmaking.games = data["games"];
     }
-    if(data.containsKey("game")){
+    if (data.containsKey("game")) {
       game.fromJson(data["game"]);
     }
-    if(data.containsKey("players")){
+    if (data.containsKey("players")) {
       matchmaking.players = data["players"];
     }
-    if(data.containsKey("player")){
+    if (data.containsKey("player")) {
       game.you.fromJson(data["player"]);
     }
-    if(game.you != null && game.you.nick != null){
-      if(header == null){
+    if (game.you != null && game.you.nick != null) {
+      if (header == null) {
         header = new DivElement();
         header.classes.add("header");
         document.body.append(header);
@@ -104,22 +102,21 @@ class GameFlow {
       header.text = "logged ${game.you.nick}: ${game.you.id}";
     }
 
-    if(login != null){
+    if (login != null) {
       login.destroy();
       login = null;
     }
 
-    if(matchmaking != null){
+    if (matchmaking != null) {
       matchmaking.close();
     }
 
-    if(state == STATE_NOT_LOGGED)login = new Login(this);
-    if(state == STATE_MATCHMAKING)matchmaking.open();
-    if(state == STATE_STATS)stats(data["stats"]);
-    if(state == STATE_UNITS)selection = new UnitSelection(this);
-    if(state == STATE_GAME)game.start();
+    if (state == STATE_NOT_LOGGED) login = new Login(this);
+    if (state == STATE_MATCHMAKING) matchmaking.open();
+    if (state == STATE_STATS) stats(data["stats"]);
+    if (state == STATE_UNITS) selection = new UnitSelection(this);
+    if (state == STATE_GAME) game.start();
   }
 
-  void stats(Map data){
-  }
+  void stats(Map data) {}
 }

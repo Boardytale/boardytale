@@ -1,0 +1,37 @@
+part of game_server;
+
+class ServerTale {
+  static const colors = const[Color.Red, Color.Blue, Color.Green, Color.Yellow];
+  LobbyRoom room;
+  Map<String, ServerPlayer> get players => room.connectedPlayers;
+  shared.ClientTaleData taleData;
+
+  ServerTale(this.room){
+    int index = 0;
+    taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
+    players.values.forEach((player){
+      player.color = ServerTale.colors[index++];
+    });
+
+    List<shared.Player> gamePlayers = [];
+    players.values.forEach((player){
+      gamePlayers.add(player.createGamePlayer());
+    });
+
+    taleData.players = gamePlayers;
+
+    players.values.forEach((player){
+      gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
+    });
+  }
+
+  void sendInitTaleDataToPlayer(ServerPlayer player){
+      gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
+  }
+
+  void handlePlayerAction(MessageWithConnection message){
+
+  }
+
+}
+
