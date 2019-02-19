@@ -7,16 +7,18 @@ abstract class Paintable {
   ClientField _field;
   stage_lib.Bitmap _bitmap;
   String _state = "default";
-  WorldView view;
+  WorldViewService view;
   stage_lib.Stage stage;
   int height;
   int width;
   int leftOffset = 0;
   int topOffset = 0;
+  bool _destroyed = false;
   bool _createBitmapOrdered = false;
+  StreamSubscription _onDimensionChangedSubscription;
 
   Paintable(this.view, this._field, this.stage) {
-    view.model.onDimensionsChanged.listen(_transformBitmap);
+    _onDimensionChangedSubscription = view.model.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;
@@ -58,6 +60,7 @@ abstract class Paintable {
 
   void createBitmap([_]) {
     if (_createBitmapOrdered) return;
+    if(_destroyed) throw "creating bitmap of destroyed element";
     _createBitmapOrdered = true;
     Future.delayed(const Duration(milliseconds: 30)).then((_) {
       _createBitmapOrdered = false;
@@ -76,5 +79,14 @@ abstract class Paintable {
     bitmap.height = height * view.model.zoom;
   }
 
-  void destroy();
+  void destroy(){
+    if(_destroyed) throw "double destroy";
+    _onDimensionChangedSubscription.cancel();
+    if (stage.contains(bitmap)) {
+      stage.removeChild(bitmap);
+    }
+    _destroyed = true;
+    field = null;
+    bitmap = null;
+  }
 }

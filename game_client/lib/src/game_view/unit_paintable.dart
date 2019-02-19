@@ -8,7 +8,11 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(this.unit, stage_lib.Stage stage, WorldView view, ClientField field,
+  UnitPaintable(
+      this.unit,
+      stage_lib.Stage stage,
+      WorldViewService view,
+      ClientField field,
       this.settings)
       : super(view, field, stage) {
     leftOffset = 0;
@@ -131,7 +135,7 @@ class UnitPaintable extends Paintable {
 
   stage_lib.BitmapData getStepsBar() {
     int resolutionLevel = view.model.resolutionLevel;
-    Player player = unit.player;
+    Player player = view.appService.players[unit.player.id];
     String description =
         "${unit.speed}_${unit.steps}_${resolutionLevel}_${player.meId}";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];

@@ -10,7 +10,7 @@ class LobbyPlayersComponent {
   final ChangeDetectorRef changeDetector;
 
   @Input()
-  List<shared.LobbyPlayer> players = [];
+  List<shared.Player> players = [];
 
   LobbyPlayersComponent(this.changeDetector) {}
 }

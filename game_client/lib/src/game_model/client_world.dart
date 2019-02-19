@@ -4,7 +4,7 @@ class ClientWorld extends shared.World {
   SettingsService settings;
   covariant ClientTale tale;
   covariant Map<String, ClientField> fields = {};
-  StreamController _onDimensionsChanged = StreamController();
+  StreamController _onDimensionsChanged = StreamController.broadcast();
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
   StreamController _onResolutionLevelChanged = StreamController();
   Stream get onResolutionLevelChanged => _onResolutionLevelChanged.stream;
@@ -17,7 +17,6 @@ class ClientWorld extends shared.World {
   double fieldWidth = 1.0;
   double fieldHeight = 1.0;
   HexaBorders defaultHex;
-
   double get zoom => _zoom;
 
   set zoom(double value) {

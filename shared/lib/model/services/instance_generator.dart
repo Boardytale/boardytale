@@ -7,7 +7,7 @@ abstract class InstanceGenerator {
   Image image() => Image();
   UnitType unitType();
   Field field(String id, World world);
-  LobbyPlayer player() => LobbyPlayer();
+  Player player() => Player();
   Trigger trigger() => Trigger();
   Dialog dialog() => Dialog();
 }

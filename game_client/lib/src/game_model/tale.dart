@@ -2,6 +2,7 @@ part of client_model;
 
 class ClientTale extends shared.Tale {
   SettingsService settings;
+  Map<String, shared.Player> players = {};
 
   ClientTale() : super();
 
@@ -11,6 +12,9 @@ class ClientTale extends shared.Tale {
     langName = clientTaleData.langName;
     name = clientTaleData.name;
     world = ClientWorld.fromCreateEnvelope(this, clientTaleData.world, settings);
+    clientTaleData.players.forEach((player){
+      players[player.id] = player;
+    });
   }
 
 //  @override

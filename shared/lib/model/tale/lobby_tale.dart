@@ -22,7 +22,7 @@ class LobbyTale {
 @JsonSerializable()
 class OpenedLobby extends LobbyTale {
   String lobbyName;
-  List<LobbyPlayer> players = [];
+  List<Player> players = [];
 
   static OpenedLobby fromLobbyTale(LobbyTale tale) {
     return OpenedLobby()

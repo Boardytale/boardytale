@@ -74,3 +74,18 @@ body{
   padding: 0;
   overflow: hidden;
 }
+
+#worldMap{
+  z-index:10;
+  position: absolute;
+}
+
+#mapObjects{
+  z-index: 20;
+  position: absolute;
+}
+
+#eventOverlay{
+  z-index: 30;
+  position: absolute;
+}

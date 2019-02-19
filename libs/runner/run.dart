@@ -6,6 +6,8 @@ import 'common.dart';
 import 'package:shared/configuration/configuration.dart';
 
 main() async {
+
+  Directory.current = getProjectDirectory();
   String projectDirectoryPath = harmonizePath();
 
   print('project directory path $projectDirectoryPath');
@@ -30,7 +32,7 @@ main() async {
 
   runServerByServerConfiguration(config.userServer);
 
-//  runServerByServerConfiguration(config.editorServer);
+  runServerByServerConfiguration(config.editorServer);
 
 //  Process.start(dartExecutable, ["lib/server.dart"], workingDirectory: projectDirectoryPath + "/server")
 //      .then((Process process) {

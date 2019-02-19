@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/image.dart';
-import 'package:shared/model/model.dart' as model;
+import 'package:shared/model/model.dart' as shared;
 
 class ImageController extends ResourceController {
   ImageController(this.context);
@@ -11,8 +11,8 @@ class ImageController extends ResourceController {
   @Operation.get('type')
   Future<Response> getImageByType() async {
     dynamic _type = request.path.variables['type'];
-    model.ImageType imageType;
-    if (_type is model.ImageType) {
+    shared.ImageType imageType;
+    if (_type is shared.ImageType) {
       imageType = _type;
     } else {
       return Response.badRequest(body: {
@@ -28,7 +28,7 @@ class ImageController extends ResourceController {
 
   @Operation.post()
   Future<Response> createImage(@Bind.body() ImageWrap imageWrap) async {
-    model.Image image = imageWrap.content;
+    shared.Image image = imageWrap.content;
     final query = Query<Image>(context)
       ..where((i) {
         return i.name;
@@ -51,7 +51,7 @@ class ImageController extends ResourceController {
 }
 
 class ImageWrap implements Serializable {
-  model.Image content;
+  shared.Image content;
 
   @override
   Map<String, dynamic> asMap() {
@@ -60,7 +60,7 @@ class ImageWrap implements Serializable {
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    content = model.Image.fromJson(requestBody);
+    content = shared.Image.fromJson(requestBody);
   }
 
   @override

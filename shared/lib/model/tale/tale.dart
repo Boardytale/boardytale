@@ -7,7 +7,7 @@ class Tale {
   Map<Lang, String> langName;
   int humanPlayersTeam;
   World world;
-  Map<String, TalePlayer> players = {};
+  covariant Map<String, Player> players = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};

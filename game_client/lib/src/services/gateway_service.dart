@@ -4,8 +4,9 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
+import 'package:game_client/src/game_model/model.dart';
 import 'package:shared/model/model.dart' as shared;
-import '../../project_settings.dart';
+import 'package:game_client/project_settings.dart';
 
 @Injectable()
 class GatewayService {
@@ -57,5 +58,9 @@ class GatewayService {
     } else {
       throw "missing handler for ${jsonEncode(message.toJson())}";
     }
+  }
+
+  void setActiveField(ClientField field) {
+    sendMessage(shared.ToGameServerMessage.playerGameIntention(field?.id));
   }
 }

@@ -2,10 +2,13 @@ library world_view;
 
 import 'dart:async';
 import 'dart:html';
+import 'dart:math' as math;
+import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
-import 'package:game_client/src/game/model/model.dart';
+import 'package:game_client/src/game_model/model.dart';
 import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
+import 'package:angular/core.dart';
 
 part 'unit_manager.dart';
 
@@ -15,15 +18,20 @@ part 'unit_paintable.dart';
 
 part 'active_field_paintable.dart';
 
-class WorldView {
+part 'user_intention_paintable.dart';
+
+@Injectable()
+class WorldViewService {
   ClientWorld model;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
   Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
+  final AppService appService;
 
-  WorldView(this.worldStage, this.model) {
+  WorldViewService(this.appService) {
+    // TODO: this.worldStage, this.model
     Map<shared.Terrain, ImageElement> resources = {};
     ImageElement grassImage = ImageElement(src: "img/8-trav.png");
     resources[shared.Terrain.grass] = grassImage;
@@ -34,6 +42,11 @@ class WorldView {
       createBitmapsByTerrain(resources);
       init();
     });
+  }
+
+  void construct(worldStage, model){
+    this.worldStage = worldStage;
+    this.model = model;
     model.fields.forEach((key, ClientField field) {
       fields[key] = ViewField(field);
     });
@@ -72,7 +85,7 @@ class WorldView {
             fieldBitmaps[field.original.terrain].bitmapData.clone());
         if (field.label == null) {
           var textField = stage_lib.TextField(field.original.id,
-              stage_lib.TextFormat('Spicy Rice', 24, stage_lib.Color.Black));
+              stage_lib.TextFormat('Spicy Rice', 18, stage_lib.Color.Black));
           stage_lib.BitmapData labelBitmap =
               stage_lib.BitmapData(60, 30, stage_lib.Color.Transparent);
           labelBitmap.draw(textField);

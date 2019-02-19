@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
-import 'package:game_client/src/game/model/model.dart';
-import 'package:game_client/src/game/view/world_view.dart';
+import 'package:game_client/src/game_model/model.dart';
+import 'package:game_client/src/game_view/world_view_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
-import 'package:shared/model/model.dart' as commonLib;
+import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 
 @Component(
@@ -43,9 +43,9 @@ class WorldComponent implements OnDestroy {
   bool destroyed = false;
   stage_lib.Stage worldStage;
   stage_lib.Stage unitStage;
-  AppService state;
+  AppService appService;
   GameService gameService;
-  WorldView view;
+  final WorldViewService view;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
   StreamSubscription onResizeSubscription;
@@ -59,13 +59,14 @@ class WorldComponent implements OnDestroy {
   Point _start;
   int _startOffsetTop;
   int _startOffsetLeft;
+  ClientField _lastActiveField;
+  ClientWorld world;
 
-  WorldComponent(this.changeDetector, this.settings, this.state, this.gateway, this.gameService) {
+  WorldComponent(this.changeDetector, this.settings, this.appService, this.gateway, this.gameService, this.view) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     gameService.onWorldLoaded.listen(modelLoaded);
+    gateway.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
   }
-
-  ClientWorld world;
 
   @ViewChild("world")
   set worldElementRef(Element element) {
@@ -75,6 +76,14 @@ class WorldComponent implements OnDestroy {
   @ViewChild("objects")
   set objectsElementRef(Element element) {
     mapObjectsElement = element as CanvasElement;
+  }
+
+  void handleIntentionUpdate(shared.ToClientMessage message){
+    String activeFieldId = message.getIntentionUpdate.activeFieldId;
+    String playerId = message.getIntentionUpdate.playerId;
+    Player player = appService.players[playerId];
+    int color = player.color;
+    unitManager.addIntention(world.fields[activeFieldId], color);
   }
 
   void detectChanges([dynamic _]) {
@@ -94,7 +103,7 @@ class WorldComponent implements OnDestroy {
           ..backgroundColor = stage_lib.Color.Transparent);
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
-    view = WorldView(worldStage, world);
+    view.construct(worldStage, world);
 
     unitStage = stage_lib.Stage(mapObjectsElement,
         width: window.innerWidth,
@@ -132,13 +141,13 @@ class WorldComponent implements OnDestroy {
     if (_draggedUnit != null) {
       ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
       List<String> path = _draggedUnit.field.getShortestPath(field);
-      commonLib.Track track = commonLib.Track.fromIds(path, null);
-      commonLib.Ability ability = _draggedUnit.getAbility(
+      shared.Track track = shared.Track.fromIds(path, null);
+      shared.Ability ability = _draggedUnit.getAbility(
           track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
 //        gateway.sendCommand(_draggedUnit, track.path, ability);
       } else {
-        state.alertError(
+        appService.alertError(
             "No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }
 //      _draggedUnit.unit.move(track);
@@ -153,7 +162,11 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (!_moving) {
       ClientField field = world.getFieldByMouseOffset(event.page.x, event.page.y);
-      unitManager.setActiveField(field);
+      if(field != _lastActiveField){
+        gateway.setActiveField(field);
+        unitManager.setActiveField(field);
+        _lastActiveField = field;
+      }
       return;
     }
     if (_draggedUnit != null) {
