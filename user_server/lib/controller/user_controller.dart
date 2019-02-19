@@ -22,7 +22,7 @@ class UserController extends ResourceController {
 
     // check if exist
     if (userData.containsKey("email") && userData["email"] is String) {
-      String innerToken = uuid.v4() + userData["email"];
+      String innerToken = uuid.v4() + userData["email"].toString();
       var query = Query<User>(context)
         ..where((u) => u.email).equalTo(userData["email"] as String);
       if ((await query.fetch()).isEmpty) {

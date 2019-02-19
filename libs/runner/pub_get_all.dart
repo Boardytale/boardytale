@@ -3,7 +3,7 @@ import 'package:io_utils/io_utils.dart';
 import 'common.dart';
 
 main() async {
-  String projectDirectoryPath = harmonizePath();
+  String projectDirectoryPath = getProjectDirectory().path;
 
   Function printRun = (ProcessResult process) {
     print(process.stdout.toString());
@@ -23,7 +23,7 @@ main() async {
       workingDirectory: projectDirectoryPath + "/shared"));
 
   printRun(Process.runSync(pubExecutable, ["get"],
-      workingDirectory: projectDirectoryPath + "/typescript_generator"));
+      workingDirectory: projectDirectoryPath + "/libs/typescript_generator"));
   printRun(Process.runSync(pubExecutable, ["get"],
       workingDirectory: projectDirectoryPath + "/user_server"));
 }

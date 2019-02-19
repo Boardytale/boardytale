@@ -21,14 +21,19 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
       List<String> enumValues = [];
       fields.forEach((field) {
         field.metadata.forEach((ElementAnnotation annotation) {
-          if (annotation.constantValue.type.name == 'JsonValue') {
-            enumValues.add(annotation
-                .computeConstantValue()
-                .getField('value')
-                .toStringValue());
+          if (annotation.computeConstantValue() != null) {
+            if (annotation.computeConstantValue().type.name == 'JsonValue') {
+              enumValues.add(annotation
+                  .computeConstantValue()
+                  .getField('value')
+                  .toStringValue());
+            }
           }
         });
       });
+      if(enumValues.isEmpty){
+        return "";
+      }
       return 'export type ${classElement.name} = ${enumValues.map((value) => "'$value'").join('|')}';
     }
 
@@ -52,9 +57,10 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
           return;
         }
       }
-
-      fields.add(
-          '${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');
+      if (field != null) {
+        fields.add(
+            '${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');
+      }
     });
 
     return '''
