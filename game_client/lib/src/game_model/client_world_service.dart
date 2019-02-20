@@ -77,51 +77,23 @@ class ClientWorldService extends shared.World {
     if (userLeft < 0 || userTop < 0) return null;
     int verticalSegment = userLeft ~/ qWidth;
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
-    if (verticalSegment % 3 == 0) {
+    if (verticalSegment % 3 == 0 || verticalSegment % 3 == 2) {   // vertical segments of sixtagram where left top/bottom == 0, middle top/bottom == 1 and right top/bottom == 2.
+                                                                  // segments are rectangles where 0 & 2 are folded by two triangles from different fields, so we have to calculate which one is focused0
       // resolving field by corner
       ClientField main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
-      if (verticalSegment % 6 == 0) {
-        double deltaLeft = x - main.left.x;
-        if (horizontalSegment % 2 == 0) {
-          // left upper
-          double deltaTop = main.left.y - y;
-          if (deltaTop / deltaLeft < sqrt(3)) {
-            return main;
-          } else {
-            return _getMainFieldBySegments(
-                verticalSegment - 1, horizontalSegment);
-          }
-        } else {
-          // left bottom
-          double deltaTop = y - main.left.y;
-          if (deltaTop / deltaLeft < sqrt(3)) {
-            return main;
-          } else {
-            return _getMainFieldBySegments(
-                verticalSegment - 1, horizontalSegment);
-          }
-        }
+      double deltaLeft = x - main.left.x;
+
+      // left upper
+      double deltaTop = y - main.left.y;
+      if (deltaTop < 0)
+        deltaTop *= -1;
+
+      if (deltaTop / deltaLeft < sqrt(3)) {
+        return main;
       } else {
-        double deltaTop = y - main.right.y;
-        double deltaLeft = x - main.right.x;
-        if (horizontalSegment % 2 == 0) {
-          // right upper
-          if (deltaTop / deltaLeft < sqrt(3)) {
-            return main;
-          } else {
-            return _getMainFieldBySegments(
-                verticalSegment + 1, horizontalSegment);
-          }
-        } else {
-          // right bottom
-          if (deltaTop / deltaLeft > sqrt(3)) {
-            return main;
-          } else {
-            return _getMainFieldBySegments(
-                verticalSegment + 1, horizontalSegment);
-          }
-        }
+        return _getMainFieldBySegments(
+            verticalSegment - 1, horizontalSegment);
       }
     } else {
       // resolving simple horizontal resolving
@@ -132,10 +104,10 @@ class ClientWorldService extends shared.World {
   ClientField _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
-    if (verticalSegment < 0 || horizontalSegment < 0) return null;
+    if (verticalSegment < 0 || horizontalSegment < 0) return null;                    // if Segment doesn't exist
     fx = verticalSegment ~/ 3;
     if (fx % 2 == 1) {
-      if (horizontalSegment < 1) return null;
+      if (horizontalSegment < 1) return null;                                         // every second column is starting one segment later (because of
       horizontalSegment--;
     }
     fy = horizontalSegment ~/ 2;
