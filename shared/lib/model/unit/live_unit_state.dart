@@ -26,6 +26,9 @@ class UnitManipulateAction {
   String fieldId;
   String unitId;
   LiveUnitState state;
+  String playerId;
+  String aiGroupId;
+
 
   static UnitManipulateAction fromJson(Map data) {
     return _$UnitManipulateActionFromJson(data);

@@ -37,28 +37,33 @@ class ServerTale {
     });
 
     Future.delayed(Duration(milliseconds: 10)).then((onValue) {
+      room.compiledTale.tale.assets.unitTypes
+          .forEach((String name, shared.UnitTypeCompiled unitType) {
+        unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
+      });
       sendInitialUnits();
     });
   }
 
   void sendInitTaleDataToPlayer(ServerPlayer player) {
     gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
+    sendInitialUnits();
   }
 
   void handlePlayerAction(MessageWithConnection message) {}
 
   void sendInitialUnits() {
-    room.compiledTale.tale.assets.unitTypes
-        .forEach((String name, shared.UnitTypeCompiled unitType) {
-      unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
-    });
-
     // TODO: implement line of sight here
-    room.compiledTale.tale.units.forEach((fieldId, unitName) {
-      shared.UnitType unitType = unitTypes[unitName];
+    room.compiledTale.tale.units.forEach((unitCreateEnvelope) {
+      shared.UnitType unitType = unitTypes[unitCreateEnvelope.unitTypeName];
       String unitId = "${_lastUnitId++}";
       ServerUnit unit = ServerUnit()..fromUnitType(unitType);
-      unit.field = sharedTale.world.fields[fieldId];
+      unit.field = sharedTale.world.fields[unitCreateEnvelope.fieldId];
+      if (unitCreateEnvelope.aiGroupId != null) {
+        unit.aiGroupId = unitCreateEnvelope.aiGroupId;
+      } else {
+        unit.player = players[unitCreateEnvelope.playerId];
+      }
       units[unitId] = unit;
     });
 
@@ -67,7 +72,9 @@ class ServerTale {
       actions.add(shared.UnitManipulateAction()
         ..isCreate = true
         ..unitTypeName = unit.type.name
-        ..fieldId = unit.field.id);
+        ..fieldId = unit.field.id
+        ..playerId = unit.player?.id
+        ..aiGroupId = unit.aiGroupId);
     });
 
     players.values.forEach((player) {

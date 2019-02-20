@@ -31,7 +31,7 @@ class AppService {
       ..showCreateGameButton = false,
   };
 
-  Map<String, Player> players = {};
+  Map<String, ClientPlayer> players = {};
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();
   Stream<Map> get onAlert => _onAlert.stream;

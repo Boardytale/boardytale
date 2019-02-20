@@ -5,7 +5,7 @@ part of model;
 class Image {
   String name;
   String data;
-  double multiply = 1.0;
+  double multiply = 1;
   int width;
   int height;
   int top = 0; // option to possible make smaller images
@@ -21,7 +21,11 @@ class Image {
   List<ImageTag> tags;
 
   static Image fromJson(Map<String, dynamic> json) {
-    return _$ImageFromJson(json);
+    Image out = _$ImageFromJson(json);
+    if(out.multiply == 0){
+      out.multiply = 1;
+    }
+    return out;
   }
 
   Map<String, dynamic> toJson() {

@@ -3,6 +3,8 @@ part of client_model;
 class ClientUnit extends shared.Unit {
   ClientUnit() : super();
 
+  get handlerId => (player != null?(player as ClientPlayer).meId:aiGroupId).substring(0,1);
+
   shared.Ability getAbility(
       shared.Track track, bool shift, bool alt, bool ctrl) {
     List<shared.Ability> possibles = abilities.toList();

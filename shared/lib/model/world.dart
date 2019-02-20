@@ -19,7 +19,6 @@ class WorldCreateEnvelope {
   }
 }
 
-@Typescript()
 class World {
   int width;
   int height;

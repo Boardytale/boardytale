@@ -14,8 +14,8 @@ class ActiveFieldPaintable extends Paintable {
     await highlightImage.onLoad.first;
     stage_lib.BitmapData data =
         stage_lib.BitmapData.fromImageElement(highlightImage);
-    width = view.model.fieldWidth.toInt();
-    height = view.model.fieldHeight.toInt();
+    width = view.clientWorldService.fieldWidth.toInt();
+    height = view.clientWorldService.fieldHeight.toInt();
     bitmap = stage_lib.Bitmap(data)
       ..x = 0
       ..y = 0

@@ -18,7 +18,7 @@ abstract class Paintable {
   StreamSubscription _onDimensionChangedSubscription;
 
   Paintable(this.view, this._field, this.stage) {
-    _onDimensionChangedSubscription = view.model.onDimensionsChanged.listen(_transformBitmap);
+    _onDimensionChangedSubscription = view.clientWorldService.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;
@@ -73,10 +73,10 @@ abstract class Paintable {
   // scale bitmap according to map
   void _transformBitmap([_]) {
     if (bitmap == null || field == null) return;
-    bitmap.x = _field.offset.x + (leftOffset * view.model.zoom);
-    bitmap.y = _field.offset.y + (topOffset * view.model.zoom);
-    bitmap.width = width * view.model.zoom;
-    bitmap.height = height * view.model.zoom;
+    bitmap.x = _field.offset.x + (leftOffset * view.clientWorldService.zoom);
+    bitmap.y = _field.offset.y + (topOffset * view.clientWorldService.zoom);
+    bitmap.width = width * view.clientWorldService.zoom;
+    bitmap.height = height * view.clientWorldService.zoom;
   }
 
   void destroy(){

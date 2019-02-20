@@ -35,7 +35,7 @@ class PlayerListComponent {
   final AppService state;
   final GatewayService gateway;
   final ChangeDetectorRef changeDetector;
-  Player me;
+  ClientPlayer me;
 
   PlayerListComponent(this.changeDetector, this.state, this.gateway) {
 //    gateway.onMessage.listen(updateOnMessage);
@@ -48,9 +48,9 @@ class PlayerListComponent {
     }
   }
 
-  List<Player> get players {
+  List<ClientPlayer> get players {
 //    if (state.tale == null) return const [];
-    List<Player> players = [];
+    List<ClientPlayer> players = [];
 //    for (commonLib.LobbyPlayer player in state.tale.players.values) {
 //      players.add(player);
 //    }

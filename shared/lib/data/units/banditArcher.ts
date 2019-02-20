@@ -9,7 +9,7 @@ export let data: UnitTypeCreateEnvelope = {
         move: {},
     },
     actions: 1,
-    armor: 0,
+    armor: 1,
     attack: '0 0 0 0 1 1',
     cost: 60,
     health: 1,

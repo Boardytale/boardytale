@@ -85,7 +85,7 @@ class WorldComponent implements OnDestroy {
   void handleIntentionUpdate(shared.ToClientMessage message) {
     String activeFieldId = message.getIntentionUpdate.activeFieldId;
     String playerId = message.getIntentionUpdate.playerId;
-    Player player = appService.players[playerId];
+    ClientPlayer player = appService.players[playerId];
     int color = player.color;
     unitManager.addIntention(clientWorldService.fields[activeFieldId], color);
   }

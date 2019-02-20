@@ -6,8 +6,8 @@ class UserIntentionPaintable extends Paintable {
 
   UserIntentionPaintable(WorldViewService view, ClientField field, stage_lib.Stage stage, this.color)
       : super(view, field, stage) {
-    width = view.model.defaultFieldWidth.toInt();
-    height = view.model.defaultFieldHeight.toInt();
+    width = view.clientWorldService.defaultFieldWidth.toInt();
+    height = view.clientWorldService.defaultFieldHeight.toInt();
     print("construct $width $height");
     createBitmap();
   }

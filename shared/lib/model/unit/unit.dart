@@ -1,6 +1,5 @@
 part of model;
 
-@Typescript()
 class Unit {
   String _name;
   int armor = 0;
@@ -18,21 +17,13 @@ class Unit {
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
+  String aiGroupId;
 
   /// called on health change with previous health state
-  StreamController<int> _onHealthChanged = StreamController<int>();
-  StreamController _onFieldChanged = StreamController();
-  StreamController _onTypeChanged = StreamController();
-  StreamController _onStepsChanged = StreamController();
-//  StreamController _onActionStateChanged = StreamController();
-
-  Stream<int> get onHealthChanged => _onHealthChanged.stream;
-
-  Stream get onFieldChanged => _onFieldChanged.stream;
-
-  Stream get onTypeChanged => _onTypeChanged.stream;
-
-  Stream get onStepsChanged => _onStepsChanged.stream;
+  BehaviorSubject onTypeChanged = BehaviorSubject();
+  BehaviorSubject onStepsChanged = BehaviorSubject();
+  BehaviorSubject<int> onHealthChanged = BehaviorSubject<int>();
+  BehaviorSubject<Field> onFieldChanged = BehaviorSubject<Field>();
 
 //  Stream get onActionStateChanged => _onActionStateChanged.stream;
 
@@ -113,7 +104,7 @@ class Unit {
     _field?.removeUnit(this);
     _field = field;
     field.addUnit(this);
-    _onFieldChanged.add(_field);
+    onFieldChanged.add(_field);
   }
 
   set actualHealth(int val) {
@@ -126,7 +117,7 @@ class Unit {
       destroy();
     }
     field.refresh();
-    _onHealthChanged.add(_health);
+    onHealthChanged.add(_health);
   }
 
   void destroy() {}
@@ -145,7 +136,7 @@ class Unit {
       _steps = 0;
       _actions = 0;
     }
-    _onStepsChanged.add(_steps);
+    onStepsChanged.add(_steps);
   }
 
   bool get isAlive => _health > 0;
@@ -161,6 +152,9 @@ class Unit {
 
   void fromUnitType(UnitType unitType) {
     type = unitType;
+    _health = type.health;
+    _steps = type.speed;
+    _actions = type.actions;
     _recalculate();
     setType(unitType);
   }
@@ -193,7 +187,7 @@ class Unit {
     }
 
     _recalculate();
-    _onTypeChanged.add(null);
+    onTypeChanged.add(null);
   }
 
   void addAbility(Ability ability) {

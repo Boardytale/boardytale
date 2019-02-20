@@ -86,8 +86,8 @@ class TaleController extends ResourceController {
 
     model.TaleCompiledAssets assets = innerCompiled.assets;
 
-    for (String key in innerCompiled.units.keys) {
-      String unitName = innerCompiled.units[key];
+    for (var envelope in innerCompiled.units) {
+      String unitName = envelope.unitTypeName;
       var query = Query<UnitType>(context)
         ..where((u) => u.name).equalTo("${unitName}Compiled");
       List<UnitType> result = await query.fetch();

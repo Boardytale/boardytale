@@ -44,7 +44,6 @@ enum TargetModificators {
   undead,
 }
 
-@Typescript()
 abstract class Ability {
   String name;
   String image;

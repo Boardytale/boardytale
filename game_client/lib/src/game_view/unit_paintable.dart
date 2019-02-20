@@ -20,7 +20,7 @@ class UnitPaintable extends Paintable {
     height = world.fieldHeight.toInt();
     width = world.fieldWidth.toInt();
     createBitmap();
-    view.model.onResolutionLevelChanged.listen(createBitmap);
+    view.clientWorldService.onResolutionLevelChanged.listen(createBitmap);
     unit.onFieldChanged.listen((_) {
       this.field = unit.field;
     });
@@ -28,7 +28,7 @@ class UnitPaintable extends Paintable {
     unit.onStepsChanged.listen(createBitmap);
   }
 
-  ClientWorldService get world => view.model;
+  ClientWorldService get world => view.clientWorldService;
 
   int get resolutionLevel => world.resolutionLevel;
 
@@ -46,7 +46,7 @@ class UnitPaintable extends Paintable {
 
   @override
   Future createBitmapInner() async {
-    int resolutionLevel = view.model.resolutionLevel;
+    int resolutionLevel = view.clientWorldService.resolutionLevel;
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
@@ -90,7 +90,7 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.BitmapData getLifeBar() {
-    int resolutionLevel = view.model.resolutionLevel;
+    int resolutionLevel = view.clientWorldService.resolutionLevel;
     String description =
         "${unit.type.health}_${unit.actualHealth}_$resolutionLevel";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
@@ -134,10 +134,9 @@ class UnitPaintable extends Paintable {
   };
 
   stage_lib.BitmapData getStepsBar() {
-    int resolutionLevel = view.model.resolutionLevel;
-    Player player = view.appService.players[unit.player.id];
+    int resolutionLevel = view.clientWorldService.resolutionLevel;
     String description =
-        "${unit.speed}_${unit.steps}_${resolutionLevel}_${player.meId}";
+        "${unit.speed}_${unit.steps}_${resolutionLevel}";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.speed < 10) {
       bitSpace = 1.0;
@@ -156,9 +155,9 @@ class UnitPaintable extends Paintable {
             bitWidth,
             lifeBarHeight - 2 * bitSpace);
         if (i < unit.steps) {
-          data.fillRect(bitRectangle, activeStepColors[player.meId]);
+          data.fillRect(bitRectangle, 0xFF00D2FF);
         } else {
-          data.fillRect(bitRectangle, usedStepColors[player.meId]);
+          data.fillRect(bitRectangle, 0xFF007088);
         }
       }
       stepsGlobalCache[description] = data;
@@ -167,7 +166,7 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.Rectangle getLifeBarRect() {
-    double width = view.model.fieldWidth / 2;
+    double width = view.clientWorldService.fieldWidth / 2;
     return stage_lib.Rectangle(0, 0, width, lifeBarHeight * pixelRatio);
   }
 
@@ -175,11 +174,11 @@ class UnitPaintable extends Paintable {
     if (!unit.isAlive) {
       return "u${unit.type.name}h${unit.actualHealth}";
     }
-    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${(unit.player as Player).meId.substring(0, 1)}";
+    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${unit.handlerId}";
   }
 
   shared.Image getPrimaryImage() {
-    int resolutionLevel = view.model.resolutionLevel;
+    int resolutionLevel = view.clientWorldService.resolutionLevel;
     if (resolutionLevel == 0) {
       if (unit.type.icon != null) {
         return unit.type.icon;

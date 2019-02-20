@@ -7,6 +7,8 @@ import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stageLib;
 import 'package:utils/utils.dart';
 import 'package:angular/core.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:game_client/src/services/app_service.dart';
 
 part 'package:game_client/src/game_model/field.dart';
 part 'package:game_client/src/game_model/hexa_borders.dart';

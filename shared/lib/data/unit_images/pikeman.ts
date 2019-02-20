@@ -7,7 +7,7 @@ export let data: Image = {
     dataModelVersion: 0,
     height: 84,
     width: 60,
-    multiply: 0,
+    multiply: 1,
     name: 'pikeman',
     left: 0,
     top: 0,

@@ -48,7 +48,7 @@ class TaleInnerEnvelope {
   Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
-  Map<String, String> units = {};
+  List<UnitCreateEnvelope> units = [];
 
   static TaleInnerEnvelope fromJson(Map json) {
     return _$TaleInnerEnvelopeFromJson(json);
@@ -70,7 +70,7 @@ class TaleInnerCompiled {
   Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
-  Map<String, String> units = {};
+  List<UnitCreateEnvelope> units = [];
   TaleCompiledAssets assets;
 
   static TaleInnerCompiled fromJson(Map json) {
@@ -80,6 +80,23 @@ class TaleInnerCompiled {
 
   Map<String, dynamic> toJson() {
     return _$TaleInnerCompiledToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class UnitCreateEnvelope {
+  String fieldId;
+  String unitTypeName;
+  // used aiGroupId if not null
+  String aiGroupId;
+  String playerId;
+  static UnitCreateEnvelope fromJson(Map json) {
+    return _$UnitCreateEnvelopeFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$UnitCreateEnvelopeToJson(this);
   }
 }
 

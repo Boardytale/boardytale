@@ -38,29 +38,6 @@ export interface User extends Object {
     innerToken: string;
 }
 
-export interface Unit extends Object {
-    _name: string;
-    armor: number;
-    speed: number;
-    range: number;
-    attack: Array<number>;
-    _health: number;
-    _far: number;
-    id: string;
-    _actions: number;
-    _steps: number;
-    type: UnitType;
-    _field: Field;
-    player: Player;
-    abilities: Array<Ability>;
-    _buffs: Array<Buff>;
-    tags: any;
-    _onHealthChanged: any;
-    _onFieldChanged: any;
-    _onTypeChanged: any;
-    _onStepsChanged: any;
-}
-
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {
@@ -109,30 +86,12 @@ export interface FieldCreateEnvelope extends Object {
     terrain: Terrain;
 }
 
-export interface Field extends Object {
-    units: Array<Unit>;
-    id: string;
-    world: World;
-    terrain: Terrain;
-    x: number;
-    y: number;
-}
-
 export interface WorldCreateEnvelope extends Object {
     width: number;
     height: number;
     baseTerrain: Terrain;
     fields: { [key: string]: FieldCreateEnvelope };
     startFieldId: string;
-}
-
-export interface World extends Object {
-    width: number;
-    height: number;
-    baseTerrain: Terrain;
-    fields: { [key: string]: Field };
-    startField: Field;
-    clientTaleService: Tale;
 }
 
 export interface Player extends Object {
@@ -142,18 +101,6 @@ export interface Player extends Object {
     team: string;
     color: number;
     gameMaster: boolean;
-}
-
-export interface Tale extends Object {
-    name: string;
-    langs: { [key in Lang]?: { [key: string]: string } };
-    langName: { [key in Lang]?: string };
-    humanPlayersTeam: number;
-    world: World;
-    players: { [key: string]: Player };
-    events: { [key: string]: Event };
-    dialogs: { [key: string]: Dialog };
-    units: { [key: string]: Unit };
 }
 
 export interface Event extends Object {
@@ -197,7 +144,7 @@ export interface TaleInnerEnvelope extends Object {
     aiGroups: { [key: string]: AiGroup };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
-    units: { [key: string]: string };
+    units: Array<UnitCreateEnvelope>;
 }
 
 export interface TaleInnerCompiled extends Object {
@@ -209,8 +156,15 @@ export interface TaleInnerCompiled extends Object {
     aiGroups: { [key: string]: AiGroup };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
-    units: { [key: string]: string };
+    units: Array<UnitCreateEnvelope>;
     assets: TaleCompiledAssets;
+}
+
+export interface UnitCreateEnvelope extends Object {
+    fieldId: string;
+    unitTypeName: string;
+    aiGroupId: string;
+    playerId: string;
 }
 
 export interface TaleCompiledAssets extends Object {
@@ -307,13 +261,6 @@ export interface AbilitiesEnvelope extends Object {
     move?: MoveAbilityEnvelope;
     // annotation @TypescriptOptional() → TypescriptOptional
     attack?: AttackAbilityEnvelope;
-}
-
-export interface Ability extends Object {
-    name: string;
-    image: string;
-    targets: { [key in Targets]?: Array<TargetModificators> };
-    invoker: Unit;
 }
 
 export interface MoveAbilityEnvelope extends Object {

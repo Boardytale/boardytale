@@ -1,6 +1,5 @@
 part of model;
 
-@Typescript()
 class Tale {
   String name;
   Map<Lang, Map<String, String>> langs;

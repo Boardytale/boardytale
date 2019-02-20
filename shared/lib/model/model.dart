@@ -1,12 +1,11 @@
 library model;
 
 import "dart:math" as Math;
-import 'dart:async';
 import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 import 'package:utils/utils.dart' as utils;
-
+import 'package:rxdart/rxdart.dart';
 part 'image.dart';
 part 'user.dart';
 part 'unit/unit.dart';

@@ -4,10 +4,11 @@ part of client_model;
 class ClientTaleService extends shared.Tale {
   SettingsService settings;
   ClientWorldService world;
-  Map<String, shared.Player> players = {};
+  AppService appService;
+  Map<String, ClientPlayer> get players => appService.players;
   Map<String, shared.UnitType> unitTypes = {};
 
-  ClientTaleService(this.settings, this.world) : super();
+  ClientTaleService(this.settings, this.world, this.appService) : super();
 
   void fromClientTaleData(
       shared.ClientTaleData clientTaleData) {
@@ -16,7 +17,11 @@ class ClientTaleService extends shared.Tale {
     name = clientTaleData.name;
     world.fromCreateEnvelope(clientTaleData.world, this);
     clientTaleData.players.forEach((player){
-      players[player.id] = player;
+      if(appService.players.containsKey(player.id)){
+        appService.players[player.id].fromSharedPlayer(player);
+      }else{
+        appService.players[player.id] = ClientPlayer()..fromSharedPlayer(player);
+      }
     });
     clientTaleData.assets.unitTypes
         .forEach((String name, shared.UnitTypeCompiled unitType) {

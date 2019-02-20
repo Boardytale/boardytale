@@ -50,9 +50,14 @@ export let data: TaleCreateEnvelope = {
             cz: 'Tábor banditů',
         },
         taleVersion: 0,
-        units: {
-            '0_0': 'pikeman',
-        },
+        units: [
+            {
+                fieldId: '10_10',
+                aiGroupId: 'bandits',
+                unitTypeName: 'pikeman',
+                playerId: null,
+            },
+        ],
         world: {
             baseTerrain: 'grass',
             fields: {

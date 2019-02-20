@@ -8,9 +8,10 @@ class ClientWorldService extends shared.World {
   StreamController _onDimensionsChanged = StreamController.broadcast();
 
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
-  StreamController _onResolutionLevelChanged = StreamController();
 
-  Stream get onResolutionLevelChanged => _onResolutionLevelChanged.stream;
+  BehaviorSubject<Null> onResolutionLevelChanged = BehaviorSubject();
+
+  BehaviorSubject<ClientUnit> onUnitAdded = BehaviorSubject<ClientUnit>();
   int userTopOffset = 0;
   int userLeftOffset = 0;
   double _zoom = 1;
@@ -40,15 +41,17 @@ class ClientWorldService extends shared.World {
   set resolutionLevel(int value) {
     if (_resolutionLevel == value) return;
     _resolutionLevel = value;
-    _onResolutionLevelChanged.add(null);
+    onResolutionLevelChanged.add(null);
   }
 
-  ClientWorldService(this.settings) : super();
+  AppService appService;
+
+  ClientWorldService(this.settings, this.appService) : super();
 
   void fromCreateEnvelope(
       shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
     this.clientTaleService = tale;
-    super.fromEnvelope(envelope, (key, world)=>ClientField(key, this));
+    super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     defaultFieldWidth = settings.defaultFieldWidth;
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = HexaBorders(this);
@@ -72,8 +75,9 @@ class ClientWorldService extends shared.World {
     if (userLeft < 0 || userTop < 0) return null;
     int verticalSegment = userLeft ~/ qWidth;
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
-    if (verticalSegment % 3 == 0 || verticalSegment % 3 == 2) {   // vertical segments of sixtagram where left top/bottom == 0, middle top/bottom == 1 and right top/bottom == 2.
-                                                                  // segments are rectangles where 0 & 2 are folded by two triangles from different fields, so we have to calculate which one is focused0
+    if (verticalSegment % 3 == 0 || verticalSegment % 3 == 2) {
+      // vertical segments of sixtagram where left top/bottom == 0, middle top/bottom == 1 and right top/bottom == 2.
+      // segments are rectangles where 0 & 2 are folded by two triangles from different fields, so we have to calculate which one is focused0
       // resolving field by corner
       ClientField main =
           _getMainFieldBySegments(verticalSegment, horizontalSegment);
@@ -82,14 +86,12 @@ class ClientWorldService extends shared.World {
 
       // left upper
       double deltaTop = y - main.left.y;
-      if (deltaTop < 0)
-        deltaTop *= -1;
+      if (deltaTop < 0) deltaTop *= -1;
 
       if (deltaTop / deltaLeft < sqrt(3)) {
         return main;
       } else {
-        return _getMainFieldBySegments(
-            verticalSegment - 1, horizontalSegment);
+        return _getMainFieldBySegments(verticalSegment - 1, horizontalSegment);
       }
     } else {
       // resolving simple horizontal resolving
@@ -101,10 +103,12 @@ class ClientWorldService extends shared.World {
       int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
-    if (verticalSegment < 0 || horizontalSegment < 0) return null;                    // if Segment doesn't exist
+    if (verticalSegment < 0 || horizontalSegment < 0)
+      return null; // if Segment doesn't exist
     fx = verticalSegment ~/ 3;
     if (fx % 2 == 1) {
-      if (horizontalSegment < 1) return null;                                         // every second column is starting one segment later (because of
+      if (horizontalSegment < 1)
+        return null; // every second column is starting one segment later (because of
       horizontalSegment--;
     }
     fy = horizontalSegment ~/ 2;
@@ -112,10 +116,17 @@ class ClientWorldService extends shared.World {
   }
 
   void updateState(List<shared.UnitManipulateAction> actions) {
-    actions.forEach((action){
-      if(action.isCreate){
-        ClientUnit unit = ClientUnit()..fromUnitType(clientTaleService.unitTypes[action.unitTypeName]);
+    actions.forEach((action) {
+      if (action.isCreate) {
+        ClientUnit unit = ClientUnit()
+          ..fromUnitType(clientTaleService.unitTypes[action.unitTypeName]);
         unit.field = fields[action.fieldId];
+        if(action.aiGroupId != null){
+          unit.aiGroupId = action.aiGroupId;
+        }else{
+          unit.player = appService.players[action.playerId];
+        }
+        onUnitAdded.add(unit);
       }
     });
   }

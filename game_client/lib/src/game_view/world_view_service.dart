@@ -22,7 +22,7 @@ part 'user_intention_paintable.dart';
 
 @Injectable()
 class WorldViewService {
-  ClientWorldService model;
+  ClientWorldService clientWorldService;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
@@ -55,14 +55,14 @@ class WorldViewService {
 
   void construct(worldStage, model) {
     this.worldStage = worldStage;
-    this.model = model;
+    this.clientWorldService = model;
     model.fields.forEach((key, ClientField field) {
       fields[key] = ViewField(field);
     });
   }
 
   void createBitmapsByTerrain(Map<shared.Terrain, ImageElement> resources) {
-    HexaBorders defaultHex = model.defaultHex;
+    HexaBorders defaultHex = clientWorldService.defaultHex;
     var path = stage_lib.Shape();
     stage_lib.Graphics graphics = path.graphics;
     graphics
@@ -106,8 +106,8 @@ class WorldViewService {
       }
       field.terrain.x = field.original.offset.x;
       field.terrain.y = field.original.offset.y;
-      field.terrain.width = model.fieldWidth;
-      field.terrain.height = model.fieldHeight;
+      field.terrain.width = clientWorldService.fieldWidth;
+      field.terrain.height = clientWorldService.fieldHeight;
     });
     worldStage.materialize(0.0, 0.0);
 //    print(stopwatch.elapsedMilliseconds);
