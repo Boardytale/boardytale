@@ -26,8 +26,8 @@ class TaleController extends ResourceController {
       ..where((i) {
         return i.name;
       }).equalTo(taleWrap.content.tale.name);
-    List<Tale> existingImages = await query.fetch();
-    if (existingImages.isEmpty) {
+    List<Tale> existingTale = await query.fetch();
+    if (existingTale.isEmpty) {
       var lobbyTale = taleWrap.content.lobby;
       var tale = taleWrap.content.tale;
       final query = Query<Tale>(context)
@@ -39,7 +39,21 @@ class TaleController extends ResourceController {
       Tale created = await query.insert();
       return Response.ok(created);
     } else {
-      return Response.conflict(body: "tale name is alredy used");
+
+      // TODO: rethink tal update
+
+      var lobbyTale = taleWrap.content.lobby;
+      var tale = taleWrap.content.tale;
+      query
+        ..values.name = tale.name
+        ..values.authorEmail = taleWrap.content.authorEmail
+        ..values.taleDataVersion = taleWrap.content.taleDataVersion
+        ..values.lobbyTale = Document(lobbyTale.toJson())
+        ..values.taleData = Document(tale.toJson());
+      Tale created = await query.updateOne();
+      return Response.ok(created);
+
+//      return Response.conflict(body: "tale name is alredy used");
     }
   }
 

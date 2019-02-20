@@ -6,7 +6,6 @@ import 'common.dart';
 import 'package:shared/configuration/configuration.dart';
 
 main() async {
-
   Directory.current = getProjectDirectory();
   String projectDirectoryPath = harmonizePath();
 
@@ -98,8 +97,11 @@ void runServerByServerConfiguration(ServerConfiguration config) {
       slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
 
   Process.start(executable, [executableFile],
-          workingDirectory: workingDirectory, runInShell: true)
-      .then((Process process) {
-    printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
-  });
+      workingDirectory: workingDirectory, runInShell: true)
+    ..then((Process process) {
+      print(
+          "running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");
+      printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
+    });
+  ;
 }

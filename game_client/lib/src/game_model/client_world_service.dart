@@ -6,8 +6,10 @@ class ClientWorldService extends shared.World {
   covariant ClientTaleService tale;
   covariant Map<String, ClientField> fields = {};
   StreamController _onDimensionsChanged = StreamController.broadcast();
+
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
   StreamController _onResolutionLevelChanged = StreamController();
+
   Stream get onResolutionLevelChanged => _onResolutionLevelChanged.stream;
   int userTopOffset = 0;
   int userLeftOffset = 0;
@@ -19,6 +21,7 @@ class ClientWorldService extends shared.World {
   double fieldWidth = 1;
   double fieldHeight = 1;
   HexaBorders defaultHex;
+
   double get zoom => _zoom;
 
   set zoom(double value) {
@@ -40,9 +43,10 @@ class ClientWorldService extends shared.World {
     _onResolutionLevelChanged.add(null);
   }
 
-  ClientWorldService(this.settings):super();
+  ClientWorldService(this.settings) : super();
 
-  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
+  void fromCreateEnvelope(
+      shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
     this.tale = tale;
     super.fromEnvelope(envelope);
     fields.clear();
@@ -50,7 +54,11 @@ class ClientWorldService extends shared.World {
       for (int y = 0; y < height; y++) {
         String key = "${x}_$y";
         ClientField field = ClientField(key, this);
-        field.terrain = baseTerrain;
+        if (envelope.fields.containsKey(key)) {
+          field.terrain = envelope.fields[key].terrain;
+        } else {
+          field.terrain = baseTerrain;
+        }
         fields[key] = field;
       }
     }
@@ -79,7 +87,8 @@ class ClientWorldService extends shared.World {
     int horizontalSegment = userTop ~/ (fieldHeight / 2);
     if (verticalSegment % 3 == 0) {
       // resolving field by corner
-      ClientField main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
+      ClientField main =
+          _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
       if (verticalSegment % 6 == 0) {
         double deltaLeft = x - main.left.x;
@@ -129,7 +138,8 @@ class ClientWorldService extends shared.World {
     }
   }
 
-  ClientField _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
+  ClientField _getMainFieldBySegments(
+      int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
     if (verticalSegment < 0 || horizontalSegment < 0) return null;

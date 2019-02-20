@@ -14,16 +14,15 @@ const walkSync = dir => {
             if (file !== 'generate-jsons.ts') {
                 console.log('file', dirFile);
                 if (file.substr(file.length - 3) === '.ts') {
-
                     import('./' + dirFile).then((imageFile: any) => {
-
-                        if (dir.search('unit_images') != -1)
-                        {
+                        if (dir.search('unit_images') != -1) {
                             let imgPath: string = imageFile.data.data;
 
                             ['png', 'jpg', 'jpeg'].forEach(imageExt => {
                                 if (
-                                    imgPath.substr(imgPath.length - imageExt.length - 1) ===
+                                    imgPath.substr(
+                                        imgPath.length - imageExt.length - 1
+                                    ) ===
                                     '.' + imageExt
                                 ) {
                                     const imageAsBase64 = fs.readFileSync(
@@ -31,7 +30,8 @@ const walkSync = dir => {
                                         'base64'
                                     );
 
-                                    imageFile.data.data = 'data:image/' +
+                                    imageFile.data.data =
+                                        'data:image/' +
                                         imageExt +
                                         ';base64,' +
                                         imageAsBase64;
@@ -39,13 +39,15 @@ const walkSync = dir => {
                             });
                         }
 
-                        if (dir.search('tales') != -1)
-                        {
-                            let imgPath: string = imageFile.data.lobby.image.data;
+                        if (dir.search('tales') != -1) {
+                            let imgPath: string =
+                                imageFile.data.lobby.image.data;
 
                             ['png', 'jpg', 'jpeg'].forEach(imageExt => {
                                 if (
-                                    imgPath.substr(imgPath.length - imageExt.length - 1) ===
+                                    imgPath.substr(
+                                        imgPath.length - imageExt.length - 1
+                                    ) ===
                                     '.' + imageExt
                                 ) {
                                     const imageAsBase64 = fs.readFileSync(
@@ -53,7 +55,8 @@ const walkSync = dir => {
                                         'base64'
                                     );
 
-                                    imageFile.data.lobby.image.data = 'data:image/' +
+                                    imageFile.data.lobby.image.data =
+                                        'data:image/' +
                                         imageExt +
                                         ';base64,' +
                                         imageAsBase64;

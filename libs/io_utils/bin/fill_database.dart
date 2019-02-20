@@ -77,7 +77,7 @@ createTale() async {
 
   for (FileSystemEntity entity in entities) {
     if (entity is File) {
-      if (path.extension(entity.path) == ".json") {
+      if (path.extension(entity.path) == ".json" && !entity.path.contains("compiled")) {
         String url = makeAddressFromUri(
                 boardytaleConfiguration.editorServer.uris.first) +
             "tales";

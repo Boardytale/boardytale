@@ -12,6 +12,14 @@ class Tale {
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};
 
+  void fromCompiledTale(TaleInnerCompiled tale) {
+    name = tale.name;
+    langs = tale.langs;
+    world = World()..fromEnvelope(tale.world);
+    events = tale.events;
+    dialogs = tale.dialogs;
+  }
+
 //  void update(Map<String, dynamic> state) {
 //    List<Map<String, dynamic>> unitMapList = state["units"];
 //    Map<String, Unit> oldUnits = units;

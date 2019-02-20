@@ -3,10 +3,7 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class FieldCreateEnvelope {
-  String id;
   Terrain terrain;
-  int x;
-  int y;
 
   Map toJson() {
     return _$FieldCreateEnvelopeToJson(this);

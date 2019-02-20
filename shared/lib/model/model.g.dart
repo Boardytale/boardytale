@@ -66,7 +66,12 @@ const _$ImageTypeEnumMap = <ImageType, dynamic>{
   ImageType.taleBottomScreen: 'taleBottomScreen'
 };
 
-const _$ImageTagEnumMap = <ImageTag, dynamic>{ImageTag.grass: 'grass'};
+const _$ImageTagEnumMap = <ImageTag, dynamic>{
+  ImageTag.grass: 'grass',
+  ImageTag.forest: 'forest',
+  ImageTag.water: 'water',
+  ImageTag.rock: 'rock'
+};
 
 User _$UserFromJson(Map<String, dynamic> json) {
   return User()
@@ -214,55 +219,6 @@ Map<String, dynamic> _$UnitTypeCompiledToJson(UnitTypeCompiled instance) =>
       'bigImage': instance.bigImage?.toJson()
     };
 
-UnitType _$UnitTypeFromJson(Map<String, dynamic> json) {
-  return UnitType()
-    ..name = json['name'] as String
-    ..race = _$enumDecodeNullable(_$RacesEnumMap, json['race'])
-    ..tags = (json['tags'] as List)
-        ?.map((e) => _$enumDecodeNullable(_$UnitTypeTagEnumMap, e))
-        ?.toList()
-    ..health = json['health'] as int
-    ..armor = json['armor'] as int
-    ..speed = json['speed'] as int
-    ..range = json['range'] as int
-    ..actions = json['actions'] as int
-    ..attack = json['attack'] as String
-    ..cost = json['cost'] as int
-    ..langName = (json['langName'] as Map<String, dynamic>)?.map(
-        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
-    ..unitTypeDataVersion = json['unitTypeDataVersion'] as int
-    ..unitTypeVersion = json['unitTypeVersion'] as int
-    ..bigImage = json['bigImage'] == null
-        ? null
-        : Image.fromJson(json['bigImage'] as Map<String, dynamic>)
-    ..image = json['image'] == null
-        ? null
-        : Image.fromJson(json['image'] as Map<String, dynamic>)
-    ..icon = json['icon'] == null
-        ? null
-        : Image.fromJson(json['icon'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$UnitTypeToJson(UnitType instance) => <String, dynamic>{
-      'name': instance.name,
-      'race': _$RacesEnumMap[instance.race],
-      'tags': instance.tags?.map((e) => _$UnitTypeTagEnumMap[e])?.toList(),
-      'health': instance.health,
-      'armor': instance.armor,
-      'speed': instance.speed,
-      'range': instance.range,
-      'actions': instance.actions,
-      'attack': instance.attack,
-      'cost': instance.cost,
-      'langName':
-          instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
-      'unitTypeDataVersion': instance.unitTypeDataVersion,
-      'unitTypeVersion': instance.unitTypeVersion,
-      'bigImage': instance.bigImage?.toJson(),
-      'image': instance.image?.toJson(),
-      'icon': instance.icon?.toJson()
-    };
-
 Race _$RaceFromJson(Map<String, dynamic> json) {
   return Race()
     ..id = _$enumDecodeNullable(_$RacesEnumMap, json['id'])
@@ -277,20 +233,12 @@ Map<String, dynamic> _$RaceToJson(Race instance) => <String, dynamic>{
 
 FieldCreateEnvelope _$FieldCreateEnvelopeFromJson(Map<String, dynamic> json) {
   return FieldCreateEnvelope()
-    ..id = json['id'] as String
-    ..terrain = _$enumDecodeNullable(_$TerrainEnumMap, json['terrain'])
-    ..x = json['x'] as int
-    ..y = json['y'] as int;
+    ..terrain = _$enumDecodeNullable(_$TerrainEnumMap, json['terrain']);
 }
 
 Map<String, dynamic> _$FieldCreateEnvelopeToJson(
         FieldCreateEnvelope instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'terrain': _$TerrainEnumMap[instance.terrain],
-      'x': instance.x,
-      'y': instance.y
-    };
+    <String, dynamic>{'terrain': _$TerrainEnumMap[instance.terrain]};
 
 const _$TerrainEnumMap = <Terrain, dynamic>{
   Terrain.grass: 'grass',
@@ -842,6 +790,18 @@ MoveAbilityEnvelope _$MoveAbilityEnvelopeFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$MoveAbilityEnvelopeToJson(
         MoveAbilityEnvelope instance) =>
     <String, dynamic>{'steps': instance.steps};
+
+MoveAction _$MoveActionFromJson(Map<String, dynamic> json) {
+  return MoveAction()
+    ..unitId = json['unitId'] as String
+    ..toFieldId = json['toFieldId'] as String;
+}
+
+Map<String, dynamic> _$MoveActionToJson(MoveAction instance) =>
+    <String, dynamic>{
+      'unitId': instance.unitId,
+      'toFieldId': instance.toFieldId
+    };
 
 AttackAbilityEnvelope _$AttackAbilityEnvelopeFromJson(
     Map<String, dynamic> json) {

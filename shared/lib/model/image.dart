@@ -61,4 +61,10 @@ enum ImageType {
 enum ImageTag {
   @JsonValue('grass')
   grass,
+  @JsonValue('forest')
+  forest,
+  @JsonValue('water')
+  water,
+  @JsonValue('rock')
+  rock,
 }

@@ -20,3 +20,17 @@ class MoveAbilityEnvelope {
     return _$MoveAbilityEnvelopeFromJson(json);
   }
 }
+
+@JsonSerializable()
+class MoveAction {
+  String unitId;
+  String toFieldId;
+  Map<String, dynamic> toJson() {
+    return _$MoveActionToJson(this);
+  }
+
+  static MoveAction fromJson(Map<String, dynamic> json) {
+    return _$MoveActionFromJson(json);
+  }
+}
+

@@ -32,18 +32,28 @@ class WorldViewService {
 
   WorldViewService(this.appService) {
     Map<shared.Terrain, ImageElement> resources = {};
-    ImageElement grassImage = ImageElement(src: "img/8-trav.png");
-    resources[shared.Terrain.grass] = grassImage;
-    ImageElement rockImage = ImageElement(src: "img/rock.png");
-    resources[shared.Terrain.rock] = rockImage;
-    Future.wait([grassImage.onLoad.first, rockImage.onLoad.first]).then((_) {
+    Map<shared.Terrain, String> paths = {
+    shared.Terrain.grass: "img/map_tiles/grass.png",
+    shared.Terrain.rock: "img/map_tiles/rock.png",
+    shared.Terrain.water: "img/map_tiles/water.png",
+    shared.Terrain.forest: "img/map_tiles/forest2.png",
+    };
+    List<Future<Event>> imageLoads = [];
+
+    paths.forEach((terrain, path){
+      ImageElement image = ImageElement(src: path);
+      resources[terrain] = image;
+      imageLoads.add(image.onLoad.first);
+    });
+
+    Future.wait(imageLoads).then((_) {
       _imageLoaded = true;
       createBitmapsByTerrain(resources);
       init();
     });
   }
 
-  void construct(worldStage, model){
+  void construct(worldStage, model) {
     this.worldStage = worldStage;
     this.model = model;
     model.fields.forEach((key, ClientField field) {

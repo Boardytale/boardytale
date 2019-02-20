@@ -1,13 +1,15 @@
 part of game_server;
 
-class GameService{
+class GameService {
   Map<String, ServerTale> tales = {};
 
-  GameService(){
+  GameService() {
     gateway.handlers[shared.OnServerAction.enterGame] = handleEnterGame;
-    gateway.handlers[shared.OnServerAction.playerGameAction] = handlePlayerAction;
+    gateway.handlers[shared.OnServerAction.playerGameAction] =
+        handlePlayerAction;
   }
-  void handleEnterGame(MessageWithConnection message){
+
+  void handleEnterGame(MessageWithConnection message) {
     String lobbyId = message.message.enterGameMessage.lobbyId;
     LobbyRoom room = lobbyService.getLobbyRoomById(lobbyId);
 
@@ -15,13 +17,12 @@ class GameService{
 
     tales[room.id] = tale;
 
-    room.connectedPlayers.values.forEach((player){
+    room.connectedPlayers.values.forEach((player) {
       player.enterGame(tale);
     });
   }
 
-  void handlePlayerAction(MessageWithConnection message){
+  void handlePlayerAction(MessageWithConnection message) {
     message.player.tale.handlePlayerAction(message);
   }
 }
-

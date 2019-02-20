@@ -13,7 +13,7 @@ export type ImageType =
     | 'taleFullScreen'
     | 'taleBottomScreen';
 
-export type ImageTag = 'grass';
+export type ImageTag = 'grass' | 'forest' | 'water' | 'rock';
 
 export interface Image extends Object {
     name: string;
@@ -96,12 +96,6 @@ export interface UnitTypeCompiled extends UnitTypeCommons {
     bigImage: Image;
 }
 
-export interface UnitType extends UnitTypeCommons {
-    bigImage: Image;
-    image: Image;
-    icon: Image;
-}
-
 export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal';
 
 export interface Race extends Object {
@@ -112,10 +106,7 @@ export interface Race extends Object {
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
 export interface FieldCreateEnvelope extends Object {
-    id: string;
     terrain: Terrain;
-    x: number;
-    y: number;
 }
 
 export interface Field extends Object {
