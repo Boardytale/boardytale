@@ -42,6 +42,10 @@ class Unit {
 
   String get name => _name;
 
+  static List<int> parseAttack(String input){
+    return input.split(" ").map((segment)=>int.parse(segment)).toList(growable: false);
+  }
+
   void addBuff(Buff buff) {
     _buffs.add(buff);
     _recalculate();
@@ -54,35 +58,30 @@ class Unit {
 
   // called on buffs and type change
   void _recalculate() {
-//    assert(type != null);
-//    armor = type.armor;
-//    speed = type.speed;
-//    range = type.range;
-//    attack = type.attack.toList(growable: false);
-//    abilities.clear();
-//    for (Ability ability in type.abilities) {
-//      abilities.add(ability);
-//    }
-//
-//    if (type.tags != null) {
-//      tags = type.tags.toSet();
-//    }
-//
-//    for (Buff buff in _buffs) {
-//      armor += buff.armorDelta;
-//      speed += buff.speedDelta;
-//      if (range != null) range += buff.rangeDelta;
-//      for (int i = 0; i < 6; i++) {
-//        attack[i] += buff.attackDelta[i];
-//      }
-//      if (buff.extraTags != null) {
-//        tags.addAll(buff.extraTags);
-//      }
-//      if (buff.bannedTags != null) {
-//        tags.removeAll(buff.bannedTags);
-//      }
-//    }
-//    limitAttributes();
+    armor = type.armor;
+    speed = type.speed;
+    range = type.range;
+    attack = parseAttack(type.attack);
+    abilities.clear();
+    for (Ability ability in type.abilities) {
+      abilities.add(ability);
+    }
+
+    for (Buff buff in _buffs) {
+      armor += buff.armorDelta;
+      speed += buff.speedDelta;
+      if (range != null) range += buff.rangeDelta;
+      for (int i = 0; i < 6; i++) {
+        attack[i] += buff.attackDelta[i];
+      }
+      if (buff.extraTags != null) {
+        tags.addAll(buff.extraTags);
+      }
+      if (buff.bannedTags != null) {
+        tags.removeAll(buff.bannedTags);
+      }
+    }
+    limitAttributes();
   }
 
   void limitAttributes() {
@@ -93,8 +92,6 @@ class Unit {
       if (attack[i] > 9) attack[i] = 9;
     }
   }
-
-  Unit(this.id);
 
   bool get isPlayable => isAlive && _actions > 0;
 
@@ -160,6 +157,12 @@ class Unit {
     actualHealth += realDamage;
     alea.damage += realDamage;
     return alea;
+  }
+
+  void fromUnitType(UnitType unitType) {
+    type = unitType;
+    _recalculate();
+    setType(unitType);
   }
 
   /// Type change cause nullation of abilities pseudostates.

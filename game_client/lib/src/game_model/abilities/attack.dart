@@ -1,13 +1,13 @@
 part of boardytale.client.abilities;
 
-class AttackAbility extends commonLib.AttackAbilityEnvelope
+class AttackAbility extends shared.AttackAbilityEnvelope
     implements ClientAbility {
   @override
-  void show(commonLib.Unit invoker, commonLib.Track track) {
+  void show(shared.Unit invoker, shared.Track track) {
     // TODO: implement perform
   }
 
-  bool validate(commonLib.Unit invoker, commonLib.Track track) {
+  bool validate(shared.Unit invoker, shared.Track track) {
     throw "not implemented";
   }
 
@@ -18,17 +18,17 @@ class AttackAbility extends commonLib.AttackAbilityEnvelope
   String name;
 
   @override
-  Map<commonLib.Targets, List<commonLib.TargetModificators>> targets;
+  Map<shared.Targets, List<shared.TargetModificators>> targets;
 
   @override
   // TODO: implement reach
   String get reach => null;
 
   @override
-  commonLib.Unit invoker;
+  shared.Unit invoker;
 
   @override
-  void setInvoker(commonLib.Unit invoker) {
+  void setInvoker(shared.Unit invoker) {
     // TODO: implement setInvoker
   }
 }

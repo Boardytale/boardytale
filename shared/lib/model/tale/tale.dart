@@ -15,7 +15,8 @@ class Tale {
   void fromCompiledTale(TaleInnerCompiled tale) {
     name = tale.name;
     langs = tale.langs;
-    world = World()..fromEnvelope(tale.world);
+    world = World()
+      ..fromEnvelope(tale.world, (key, world) => Field(key, world));
     events = tale.events;
     dialogs = tale.dialogs;
   }

@@ -86,6 +86,52 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'innerToken': instance.innerToken
     };
 
+LiveUnitState _$LiveUnitStateFromJson(Map<String, dynamic> json) {
+  return LiveUnitState()
+    ..id = json['id'] as String
+    ..far = json['far'] as int
+    ..health = json['health'] as int
+    ..buffs = (json['buffs'] as List)
+        ?.map(
+            (e) => e == null ? null : Buff.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..actions = json['actions'] as int;
+}
+
+Map<String, dynamic> _$LiveUnitStateToJson(LiveUnitState instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'far': instance.far,
+      'health': instance.health,
+      'buffs': instance.buffs?.map((e) => e?.toJson())?.toList(),
+      'actions': instance.actions
+    };
+
+UnitManipulateAction _$UnitManipulateActionFromJson(Map<String, dynamic> json) {
+  return UnitManipulateAction()
+    ..isCreate = json['isCreate'] as bool
+    ..isDelete = json['isDelete'] as bool
+    ..isUpdate = json['isUpdate'] as bool
+    ..unitTypeName = json['unitTypeName'] as String
+    ..fieldId = json['fieldId'] as String
+    ..unitId = json['unitId'] as String
+    ..state = json['state'] == null
+        ? null
+        : LiveUnitState.fromJson(json['state'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UnitManipulateActionToJson(
+        UnitManipulateAction instance) =>
+    <String, dynamic>{
+      'isCreate': instance.isCreate,
+      'isDelete': instance.isDelete,
+      'isUpdate': instance.isUpdate,
+      'unitTypeName': instance.unitTypeName,
+      'fieldId': instance.fieldId,
+      'unitId': instance.unitId,
+      'state': instance.state?.toJson()
+    };
+
 UnitTypeCreateEnvelope _$UnitTypeCreateEnvelopeFromJson(
     Map<String, dynamic> json) {
   return UnitTypeCreateEnvelope()
@@ -568,6 +614,38 @@ Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
       'players': instance.players?.map((e) => e?.toJson())?.toList()
     };
 
+Buff _$BuffFromJson(Map<String, dynamic> json) {
+  return Buff()
+    ..speedDelta = json['speedDelta'] as int
+    ..armorDelta = json['armorDelta'] as int
+    ..rangeDelta = json['rangeDelta'] as int
+    ..healthDelta = json['healthDelta'] as int
+    ..attackDelta =
+        (json['attackDelta'] as List)?.map((e) => e as int)?.toList()
+    ..extraTags = (json['extraTags'] as List)?.map((e) => e as String)?.toSet()
+    ..bannedTags =
+        (json['bannedTags'] as List)?.map((e) => e as String)?.toSet()
+    ..expiration = json['expiration'] as int
+    ..buffType = json['buffType'] as String
+    ..stackStrength = json['stackStrength'] as int
+    ..doesNotStackWith =
+        (json['doesNotStackWith'] as List)?.map((e) => e as String)?.toList();
+}
+
+Map<String, dynamic> _$BuffToJson(Buff instance) => <String, dynamic>{
+      'speedDelta': instance.speedDelta,
+      'armorDelta': instance.armorDelta,
+      'rangeDelta': instance.rangeDelta,
+      'healthDelta': instance.healthDelta,
+      'attackDelta': instance.attackDelta,
+      'extraTags': instance.extraTags?.toList(),
+      'bannedTags': instance.bannedTags?.toList(),
+      'expiration': instance.expiration,
+      'buffType': instance.buffType,
+      'stackStrength': instance.stackStrength,
+      'doesNotStackWith': instance.doesNotStackWith
+    };
+
 ToClientMessage _$ToClientMessageFromJson(Map<String, dynamic> json) {
   return ToClientMessage()
     ..message = _$enumDecodeNullable(_$OnClientActionEnumMap, json['message'])
@@ -668,13 +746,17 @@ Map<String, dynamic> _$TaleDataToJson(TaleData instance) =>
 
 TaleStateUpdate _$TaleStateUpdateFromJson(Map<String, dynamic> json) {
   return TaleStateUpdate()
-    ..lobby = json['lobby'] == null
-        ? null
-        : OpenedLobby.fromJson(json['lobby'] as Map<String, dynamic>);
+    ..actions = (json['actions'] as List)
+        ?.map((e) => e == null
+            ? null
+            : UnitManipulateAction.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$TaleStateUpdateToJson(TaleStateUpdate instance) =>
-    <String, dynamic>{'lobby': instance.lobby?.toJson()};
+    <String, dynamic>{
+      'actions': instance.actions?.map((e) => e?.toJson())?.toList()
+    };
 
 IntentionUpdate _$IntentionUpdateFromJson(Map<String, dynamic> json) {
   return IntentionUpdate()

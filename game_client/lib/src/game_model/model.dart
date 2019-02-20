@@ -10,7 +10,7 @@ import 'package:angular/core.dart';
 
 part 'package:game_client/src/game_model/field.dart';
 part 'package:game_client/src/game_model/hexa_borders.dart';
-part 'package:game_client/src/game_model/unit.dart';
-part 'package:game_client/src/game_model/tale_service.dart';
+part 'package:game_client/src/game_model/client_unit.dart';
+part 'package:game_client/src/game_model/client_tale_service.dart';
 part 'package:game_client/src/game_model/client_world_service.dart';
 part 'package:game_client/src/game_model/player.dart';

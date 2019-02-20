@@ -1,7 +1,7 @@
 part of world_view;
 
 class UnitPaintable extends Paintable {
-  Unit unit;
+  ClientUnit unit;
   SettingsService settings;
   static Map<String, stage_lib.BitmapData> unitGlobalCache = {};
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};
@@ -171,7 +171,7 @@ class UnitPaintable extends Paintable {
     return stage_lib.Rectangle(0, 0, width, lifeBarHeight * pixelRatio);
   }
 
-  String getUnitPaintedState(Unit unit) {
+  String getUnitPaintedState(ClientUnit unit) {
     if (!unit.isAlive) {
       return "u${unit.type.name}h${unit.actualHealth}";
     }

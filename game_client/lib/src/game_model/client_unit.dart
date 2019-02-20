@@ -1,7 +1,7 @@
 part of client_model;
 
-class Unit extends shared.Unit {
-  Unit(String id) : super(id);
+class ClientUnit extends shared.Unit {
+  ClientUnit() : super();
 
   shared.Ability getAbility(
       shared.Track track, bool shift, bool alt, bool ctrl) {

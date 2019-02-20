@@ -10,6 +10,7 @@ import 'package:utils/utils.dart' as utils;
 part 'image.dart';
 part 'user.dart';
 part 'unit/unit.dart';
+part 'unit/live_unit_state.dart';
 part 'unit/unit_type.dart';
 part 'race.dart';
 part 'track.dart';
@@ -46,6 +47,5 @@ part "abilities/step_shoot.dart";
 part "abilities/dismiss.dart";
 part "abilities/dark_shoot.dart";
 part "abilities/light.dart";
-part 'services/instance_generator.dart';
 
 part 'model.g.dart';

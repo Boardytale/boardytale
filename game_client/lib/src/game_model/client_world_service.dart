@@ -3,7 +3,7 @@ part of client_model;
 @Injectable()
 class ClientWorldService extends shared.World {
   SettingsService settings;
-  covariant ClientTaleService tale;
+  covariant ClientTaleService clientTaleService;
   covariant Map<String, ClientField> fields = {};
   StreamController _onDimensionsChanged = StreamController.broadcast();
 
@@ -47,21 +47,8 @@ class ClientWorldService extends shared.World {
 
   void fromCreateEnvelope(
       shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
-    this.tale = tale;
-    super.fromEnvelope(envelope);
-    fields.clear();
-    for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
-        String key = "${x}_$y";
-        ClientField field = ClientField(key, this);
-        if (envelope.fields.containsKey(key)) {
-          field.terrain = envelope.fields[key].terrain;
-        } else {
-          field.terrain = baseTerrain;
-        }
-        fields[key] = field;
-      }
-    }
+    this.clientTaleService = tale;
+    super.fromEnvelope(envelope, (key, world)=>ClientField(key, this));
     defaultFieldWidth = settings.defaultFieldWidth;
     defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
     defaultHex = HexaBorders(this);
@@ -150,5 +137,14 @@ class ClientWorldService extends shared.World {
     }
     fy = horizontalSegment ~/ 2;
     return fields["${fx}_$fy"];
+  }
+
+  void updateState(List<shared.UnitManipulateAction> actions) {
+    actions.forEach((action){
+      if(action.isCreate){
+        ClientUnit unit = ClientUnit()..fromUnitType(clientTaleService.unitTypes[action.unitTypeName]);
+        unit.field = fields[action.fieldId];
+      }
+    });
   }
 }

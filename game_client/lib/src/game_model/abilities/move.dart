@@ -1,9 +1,9 @@
 part of boardytale.client.abilities;
 
-class MoveAbility extends commonLib.MoveAbilityEnvelope
+class MoveAbility extends shared.MoveAbilityEnvelope
     implements ClientAbility {
   @override
-  void show(commonLib.Unit invoker, commonLib.Track track) {
+  void show(shared.Unit invoker, shared.Track track) {
     invoker.move(track);
   }
 
@@ -14,23 +14,23 @@ class MoveAbility extends commonLib.MoveAbilityEnvelope
   String name;
 
   @override
-  Map<commonLib.Targets, List<commonLib.TargetModificators>> targets;
+  Map<shared.Targets, List<shared.TargetModificators>> targets;
 
   @override
   // TODO: implement reach
   String get reach => null;
 
   @override
-  bool validate(commonLib.Unit invoker, commonLib.Track track) {
+  bool validate(shared.Unit invoker, shared.Track track) {
     // TODO: implement validate
     return null;
   }
 
   @override
-  commonLib.Unit invoker;
+  shared.Unit invoker;
 
   @override
-  void setInvoker(commonLib.Unit invoker) {
+  void setInvoker(shared.Unit invoker) {
     // TODO: implement setInvoker
   }
 }

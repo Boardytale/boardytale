@@ -1,13 +1,13 @@
 part of boardytale.client.abilities;
 
-class ShootAbility extends commonLib.ShootAbility implements ClientAbility {
+class ShootAbility extends shared.ShootAbility implements ClientAbility {
   @override
-  void show(commonLib.Unit invoker, commonLib.Track track) {
+  void show(shared.Unit invoker, shared.Track track) {
     // TODO: implement perform
   }
 
   @override
-  bool validate(commonLib.Unit invoker, commonLib.Track track) {
+  bool validate(shared.Unit invoker, shared.Track track) {
     // TODO: implement validate
     return null;
   }

@@ -64,7 +64,15 @@ class UnitType extends UnitTypeCommons {
     bigImage = data.bigImage;
     image = data.image;
     icon = data.icon;
-
+    race = data.race;
+    name = data.name;
+    health = data.health;
+    armor = data.armor;
+    speed = data.speed;
+    range = data.range;
+    actions = data.actions;
+    attack = data.attack;
+    cost = data.cost;
   }
 }
 

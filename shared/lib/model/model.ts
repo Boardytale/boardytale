@@ -132,7 +132,7 @@ export interface World extends Object {
     baseTerrain: Terrain;
     fields: { [key: string]: Field };
     startField: Field;
-    tale: Tale;
+    clientTaleService: Tale;
 }
 
 export interface Player extends Object {
@@ -250,7 +250,6 @@ export interface Buff extends Object {
     expiration: number;
     buffType: string;
     stackStrength: number;
-    unit: Unit;
     doesNotStackWith: Array<string>;
 }
 

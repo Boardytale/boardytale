@@ -10,7 +10,7 @@ class UnitManager {
   List<UserIntentionPaintable> intentions = [];
 
   UnitManager(this.stage, this.view, this.settings) {
-    tale = view.model.tale;
+    tale = view.model.clientTaleService;
     activeField = ActiveFieldPaintable(view, null, stage);
     tale.units.forEach((id, unit) {
       paintables.add(UnitPaintable(unit, stage, view, unit.field, settings));

@@ -5,6 +5,7 @@ class ClientTaleService extends shared.Tale {
   SettingsService settings;
   ClientWorldService world;
   Map<String, shared.Player> players = {};
+  Map<String, shared.UnitType> unitTypes = {};
 
   ClientTaleService(this.settings, this.world) : super();
 
@@ -16,6 +17,10 @@ class ClientTaleService extends shared.Tale {
     world.fromCreateEnvelope(clientTaleData.world, this);
     clientTaleData.players.forEach((player){
       players[player.id] = player;
+    });
+    clientTaleData.assets.unitTypes
+        .forEach((String name, shared.UnitTypeCompiled unitType) {
+      unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
   }
 

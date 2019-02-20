@@ -26,15 +26,28 @@ class World {
   Terrain baseTerrain = Terrain.grass;
   Map<String, Field> fields = {};
   Field startField;
-  Tale tale;
+  Tale clientTaleService;
 
   World();
 
-  Field operator [](String fieldId) => fields[fieldId];
+//  Field operator [](String fieldId) => fields[fieldId];
 
-  void fromEnvelope(WorldCreateEnvelope envelope) {
+  void fromEnvelope(WorldCreateEnvelope envelope, Field Function(String key, World world) fieldInstanceGenerator) {
     width = envelope.width;
     height = envelope.height;
+    fields.clear();
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        String key = "${x}_$y";
+        Field field = fieldInstanceGenerator(key, this);
+        if (envelope.fields.containsKey(key)) {
+          field.terrain = envelope.fields[key].terrain;
+        } else {
+          field.terrain = baseTerrain;
+        }
+        fields[key] = field;
+      }
+    }
     dynamic __startFieldId = envelope.startFieldId;
     if (__startFieldId is String) {
       startField = fields[__startFieldId];
@@ -61,5 +74,4 @@ class World {
     return fieldsData;
   }
 
-  getFieldById(String id) => fields[id];
 }

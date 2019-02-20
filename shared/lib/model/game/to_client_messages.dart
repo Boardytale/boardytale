@@ -86,10 +86,10 @@ class ToClientMessage {
   TaleStateUpdate get getTaleStateUpdate =>
       TaleStateUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleStateUpdate(OpenedLobby lobby) {
+  factory ToClientMessage.fromTaleStateUpdate(List<UnitManipulateAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.taleStateUpdate
-      ..content = json.encode((TaleStateUpdate()..lobby = lobby).toJson());
+      ..content = json.encode((TaleStateUpdate()..actions = actions).toJson());
   }
 
   // ---
@@ -204,7 +204,7 @@ class TaleData extends MessageContent {
 
 @JsonSerializable()
 class TaleStateUpdate extends MessageContent {
-  OpenedLobby lobby;
+  List<UnitManipulateAction> actions;
 
   static TaleStateUpdate fromJson(Map<String, dynamic> json) =>
       _$TaleStateUpdateFromJson(json);

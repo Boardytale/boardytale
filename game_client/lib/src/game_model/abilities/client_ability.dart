@@ -1,6 +1,6 @@
 part of boardytale.client.abilities;
 
-class ClientAbility extends commonLib.Ability {
+class ClientAbility extends shared.Ability {
 //  static commonLib.Ability createAbility(Map<String, dynamic> data) {
 //    String abilityClass = data["class"] as String;
 //    switch (abilityClass) {
@@ -42,16 +42,16 @@ class ClientAbility extends commonLib.Ability {
 //    throw "ability $abilityClass $data not implemented";
 //  }
 
-  void show(commonLib.Unit invoker, commonLib.Track track) {}
+  void show(shared.Unit invoker, shared.Track track) {}
 
   String get reach => "not set";
-  commonLib.Unit invoker;
+  shared.Unit invoker;
 
-  bool validate(commonLib.Unit invoker, commonLib.Track track) {
+  bool validate(shared.Unit invoker, shared.Track track) {
     throw "not implemented";
   }
 
-  void setInvoker(commonLib.Unit invoker) {
+  void setInvoker(shared.Unit invoker) {
     this.invoker = invoker;
   }
 }

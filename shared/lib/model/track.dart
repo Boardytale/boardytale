@@ -15,7 +15,7 @@ class Track {
             previous.fields.sublist(0, previous.fields.length - removeLast);
 
   static List<Field> _fieldsFromIds(List<String> path, Tale tale) {
-    return path.map((String id) => tale.world.getFieldById(id)).toList();
+    return path.map((String id) => tale.world.fields[id]).toList();
   }
 
   int get length => fields.length - 1;

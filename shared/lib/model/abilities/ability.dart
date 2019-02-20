@@ -57,7 +57,7 @@ abstract class Ability {
   @TypescriptSkip()
   @TypescriptOptional()
   String get reach;
-  Unit invoker;
+  covariant Unit invoker;
 
   bool validate(Unit invoker, Track track) {
     throw "not implemented";

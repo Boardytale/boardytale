@@ -37,7 +37,7 @@ class ClientField extends shared.Field {
     bottomRight = FieldPoint(left2, bottom);
   }
 
-  Unit getFirstPlayableUnitOnField() {
+  ClientUnit getFirstPlayableUnitOnField() {
     return units.firstWhere((shared.Unit unit) => unit.isPlayable,
         orElse: returnNull);
   }
