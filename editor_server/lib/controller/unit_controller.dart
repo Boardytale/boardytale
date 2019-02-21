@@ -40,7 +40,16 @@ class UnitController extends ResourceController {
       UnitType created = await query.insert();
       return Response.ok(created);
     } else {
-      return Response.conflict(body: "unit name is alredy used");
+      model.UnitTypeCreateEnvelope content = unitWrap.content;
+      query
+        ..values.name = content.name
+        ..values.authorEmail = content.authorEmail
+        ..values.unitTypeDataVersion = content.unitTypeDataVersion
+        ..values.unitTypeVersion = content.unitTypeVersion
+        ..values.unitTypeData = Document(content.toJson());
+      UnitType created = await query.updateOne();
+      return Response.ok(created);
+//      return Response.conflict(body: "unit name is alredy used");
     }
   }
 

@@ -36,11 +36,12 @@ class ServerTale {
           shared.ToClientMessage.fromTaleData(taleData), player);
     });
 
+    room.compiledTale.tale.assets.unitTypes
+        .forEach((String name, shared.UnitTypeCompiled unitType) {
+      unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
+    });
+
     Future.delayed(Duration(milliseconds: 10)).then((onValue) {
-      room.compiledTale.tale.assets.unitTypes
-          .forEach((String name, shared.UnitTypeCompiled unitType) {
-        unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
-      });
       sendInitialUnits();
     });
   }

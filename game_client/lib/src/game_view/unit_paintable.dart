@@ -32,6 +32,7 @@ class UnitPaintable extends Paintable {
 
   int get resolutionLevel => world.resolutionLevel;
 
+  // TODO: explain
   double get pixelRatio => [0.5, 1.0, 2.0][resolutionLevel];
 
   double get lifeBarHeight => const [6.0, 5.0, 8.0][resolutionLevel];

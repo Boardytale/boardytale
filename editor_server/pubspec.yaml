@@ -9,6 +9,7 @@ environment:
 dependencies:
   aqueduct: ^3.0.0
   uuid: any
+  rxdart: ^0.20.0
   shared:
     path: ../shared
   io_utils:

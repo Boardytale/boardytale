@@ -45,7 +45,16 @@ class ImageController extends ResourceController {
       Image created = await query.insert();
       return Response.ok(created);
     } else {
-      return Response.conflict(body: "image name is alredy used");
+      query
+        ..values.name = image.name
+        ..values.imageType = image.type
+        ..values.authorEmail = image.authorEmail
+        ..values.imageDataVersion = image.dataModelVersion
+        ..values.imageVersion = image.imageVersion
+        ..values.imageData = Document(image.toJson());
+      Image created = await query.updateOne();
+      return Response.ok(created);
+//      return Response.conflict(body: "image name is alredy used");
     }
   }
 }

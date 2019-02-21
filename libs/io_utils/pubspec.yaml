@@ -14,5 +14,6 @@ dependencies:
   utils:
     path: '../utils'
   console: any
+  rxdart: ^0.20.0
 
 
