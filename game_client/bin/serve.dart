@@ -14,6 +14,6 @@ Future main() async {
           runInShell: true,
           workingDirectory: "${projectDirectoryPath}/game_client")
       .then((Process process) {
-    printFromOutputStreams(process, "game serve", "light_cyan");
+    printFromOutputStreams(process, "game client serve", "light_cyan");
   });
 }

@@ -237,7 +237,7 @@ export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 
 export type TargetModificators = 'wounded' | 'notUndead' | 'undead';
 
-export type AbilityNames =
+export type AbilityName =
     | 'move'
     | 'attack'
     | 'shoot'

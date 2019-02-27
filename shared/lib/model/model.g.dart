@@ -854,12 +854,40 @@ EnterGame _$EnterGameFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$EnterGameToJson(EnterGame instance) =>
     <String, dynamic>{'lobbyId': instance.lobbyId};
 
-PlayerGameAction _$PlayerGameActionFromJson(Map<String, dynamic> json) {
-  return PlayerGameAction()..lobbyId = json['lobbyId'] as String;
+UnitTrackAction _$UnitTrackActionFromJson(Map<String, dynamic> json) {
+  return UnitTrackAction()
+    ..abilityName =
+        _$enumDecodeNullable(_$AbilityNameEnumMap, json['abilityName'])
+    ..unitId = json['unitId'] as String
+    ..track = (json['track'] as List)?.map((e) => e as String)?.toList();
 }
 
-Map<String, dynamic> _$PlayerGameActionToJson(PlayerGameAction instance) =>
-    <String, dynamic>{'lobbyId': instance.lobbyId};
+Map<String, dynamic> _$UnitTrackActionToJson(UnitTrackAction instance) =>
+    <String, dynamic>{
+      'abilityName': _$AbilityNameEnumMap[instance.abilityName],
+      'unitId': instance.unitId,
+      'track': instance.track
+    };
+
+const _$AbilityNameEnumMap = <AbilityName, dynamic>{
+  AbilityName.move: 'move',
+  AbilityName.attack: 'attack',
+  AbilityName.shoot: 'shoot',
+  AbilityName.heal: 'heal',
+  AbilityName.revive: 'revive',
+  AbilityName.hand_heal: 'hand_heal',
+  AbilityName.boost: 'boost',
+  AbilityName.linked_move: 'linked_move',
+  AbilityName.step_shoot: 'step_shoot',
+  AbilityName.light: 'light',
+  AbilityName.summon: 'summon',
+  AbilityName.dismiss: 'dismiss',
+  AbilityName.change_type: 'change_type',
+  AbilityName.regeneration: 'regeneration',
+  AbilityName.dark_shoot: 'dark_shoot',
+  AbilityName.teleport: 'teleport',
+  AbilityName.raise: 'raise'
+};
 
 PlayerGameIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
   return PlayerGameIntention()..fieldId = json['fieldId'] as String;
@@ -897,14 +925,11 @@ Map<String, dynamic> _$MoveAbilityEnvelopeToJson(
 MoveAction _$MoveActionFromJson(Map<String, dynamic> json) {
   return MoveAction()
     ..unitId = json['unitId'] as String
-    ..toFieldId = json['toFieldId'] as String;
+    ..track = (json['track'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$MoveActionToJson(MoveAction instance) =>
-    <String, dynamic>{
-      'unitId': instance.unitId,
-      'toFieldId': instance.toFieldId
-    };
+    <String, dynamic>{'unitId': instance.unitId, 'track': instance.track};
 
 AttackAbilityEnvelope _$AttackAbilityEnvelopeFromJson(
     Map<String, dynamic> json) {

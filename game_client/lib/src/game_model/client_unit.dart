@@ -1,7 +1,7 @@
 part of client_model;
 
 class ClientUnit extends shared.Unit {
-  ClientUnit() : super();
+  ClientUnit() : super(createClientAbilityList);
 
   get handlerId => (player != null?(player as ClientPlayer).meId:aiGroupId).substring(0,1);
 

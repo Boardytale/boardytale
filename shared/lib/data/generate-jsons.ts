@@ -15,6 +15,9 @@ const walkSync = dir => {
                 console.log('file', dirFile);
                 if (file.substr(file.length - 3) === '.ts') {
                     import('./' + dirFile).then((imageFile: any) => {
+                        if (!imageFile.data) {
+                            return;
+                        }
                         if (dir.search('unit_images') != -1) {
                             let imgPath: string = imageFile.data.data;
 
@@ -74,31 +77,6 @@ const walkSync = dir => {
                         );
                     });
                 }
-
-                // ['png', 'jpg', 'jpeg'].forEach(imageExt => {
-                //     if (
-                //         file.substr(file.length - imageExt.length - 1) ===
-                //         '.' + imageExt
-                //     ) {
-                //         const imageAsBase64 = fs.readFileSync(
-                //             './' + dirFile,
-                //             'base64'
-                //         );
-                //         fs.writeFileSync(
-                //             path.join(
-                //                 dir,
-                //                 file.substr(
-                //                     0,
-                //                     file.length - imageExt.length - 1
-                //                 ) + '.base64'
-                //             ),
-                //             'data:image/' +
-                //                 imageExt +
-                //                 ';base64,' +
-                //                 imageAsBase64
-                //         );
-                //     }
-                // });
             }
         }
     }

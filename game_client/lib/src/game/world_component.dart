@@ -60,7 +60,7 @@ class WorldComponent implements OnDestroy {
   int _startOffsetTop;
   int _startOffsetLeft;
   ClientField _lastActiveField;
-  ClientWorldService clientWorldService;
+  ClientWorldService _clientWorldService;
 
   WorldComponent(this.changeDetector, this.settings, this.appService,
       this.gateway, this.gameService, this.view) {
@@ -87,12 +87,12 @@ class WorldComponent implements OnDestroy {
     String playerId = message.getIntentionUpdate.playerId;
     ClientPlayer player = appService.players[playerId];
     int color = player.color;
-    unitManager.addIntention(clientWorldService.fields[activeFieldId], color);
+    unitManager.addIntention(_clientWorldService.fields[activeFieldId], color);
   }
 
   void handleTaleStateUpdate(shared.ToClientMessage message) {
     shared.TaleStateUpdate state = message.getTaleStateUpdate;
-    clientWorldService.updateState(state.actions);
+    _clientWorldService.updateState(state.actions);
   }
 
   void detectChanges([dynamic _]) {
@@ -105,7 +105,7 @@ class WorldComponent implements OnDestroy {
   }
 
   void modelLoaded(ClientWorldService input) {
-    clientWorldService = input;
+    _clientWorldService = input;
     worldStage = stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,
@@ -114,7 +114,7 @@ class WorldComponent implements OnDestroy {
           ..backgroundColor = stage_lib.Color.Transparent);
     worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
     worldStage.align = stage_lib.StageAlign.TOP_LEFT;
-    view.construct(worldStage, clientWorldService);
+    view.construct(worldStage, _clientWorldService);
 
     unitStage = stage_lib.Stage(mapObjectsElement,
         width: window.innerWidth,
@@ -134,15 +134,16 @@ class WorldComponent implements OnDestroy {
   void onMouseDown(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    ClientField field = clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+    ClientField field =
+        _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
     ClientUnit unit = field.getFirstPlayableUnitOnField();
     if (unit != null) {
       _draggedUnit = unit;
     } else {
       _moving = true;
       _start = event.page;
-      _startOffsetTop = clientWorldService.userTopOffset;
-      _startOffsetLeft = clientWorldService.userLeftOffset;
+      _startOffsetTop = _clientWorldService.userTopOffset;
+      _startOffsetLeft = _clientWorldService.userLeftOffset;
     }
   }
 
@@ -151,13 +152,17 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (_draggedUnit != null) {
       ClientField field =
-          clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+          _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
       List<String> path = _draggedUnit.field.getShortestPath(field);
-      shared.Track track = shared.Track.fromIds(path, null);
+      shared.Track track = shared.Track.fromIds(path, _clientWorldService);
       shared.Ability ability = _draggedUnit.getAbility(
           track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
-//        gateway.sendCommand(_draggedUnit, track.path, ability);
+        gateway.sendMessage(
+            shared.ToGameServerMessage.playerGameAction(shared.UnitTrackAction()
+              ..abilityName = ability.name
+              ..unitId = _draggedUnit.id
+              ..track = track.toIds()));
       } else {
         appService.alertError(
             "No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
@@ -174,7 +179,7 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     if (!_moving) {
       ClientField field =
-          clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+          _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
       if (field != _lastActiveField) {
         gateway.setActiveField(field);
         unitManager.setActiveField(field);
@@ -187,28 +192,32 @@ class WorldComponent implements OnDestroy {
     }
     int deltaX = (event.page.x - _start.x).toInt();
     int deltaY = (event.page.y - _start.y).toInt();
-    clientWorldService.userLeftOffset = _startOffsetLeft - deltaX;
-    clientWorldService.userTopOffset = _startOffsetTop - deltaY;
+    _clientWorldService.userLeftOffset = _startOffsetLeft - deltaX;
+    _clientWorldService.userTopOffset = _startOffsetTop - deltaY;
     // TODO: stack on anim frame
-    clientWorldService.recalculate();
+    _clientWorldService.recalculate();
     view.repaint();
   }
 
   void onMouseWheel(WheelEvent event) {
+    // TODO: refactor mouse wheel to be working in firefox
     event.preventDefault();
     event.stopPropagation();
     double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
-    clientWorldService.zoom *= zoomMultiply;
+    _clientWorldService.zoom *= zoomMultiply;
 
-    if (clientWorldService.zoom < 0.3) {
-      clientWorldService.zoom = 0.3;
+    if (_clientWorldService.zoom < 0.3) {
+      _clientWorldService.zoom = 0.3;
     } else {
-      int topOfMap = (event.page.y + clientWorldService.userTopOffset).toInt();
-      int leftOfMap = (event.page.x + clientWorldService.userLeftOffset).toInt();
-      clientWorldService.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
-      clientWorldService.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
+      int topOfMap = (event.page.y + _clientWorldService.userTopOffset).toInt();
+      int leftOfMap =
+          (event.page.x + _clientWorldService.userLeftOffset).toInt();
+      _clientWorldService.userLeftOffset +=
+          (leftOfMap * zoomMultiply - leftOfMap).toInt();
+      _clientWorldService.userTopOffset +=
+          (topOfMap * zoomMultiply - topOfMap).toInt();
     }
-    clientWorldService.recalculate();
+    _clientWorldService.recalculate();
     view.repaint();
   }
 

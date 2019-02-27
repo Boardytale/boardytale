@@ -22,6 +22,9 @@ class InitGameService {
           headers: {"Content-Type": "application/json"},
           body:
               jsonEncode((InnerTokenWrap()..innerToken = innerToken).asMap()));
+      if(response.body.isEmpty){
+        // TODO: handle failed login
+      }
       shared.User user = shared.User.fromJson(jsonDecode(response.body));
       // TODO: manage username
       user.name = user.email;

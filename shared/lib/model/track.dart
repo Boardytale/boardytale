@@ -7,15 +7,19 @@ class Track {
 
   Track(this.fields) {}
 
-  Track.fromIds(List<String> path, Tale tale)
-      : fields = _fieldsFromIds(path, tale);
+  Track.fromIds(List<String> path, World world)
+      : fields = _fieldsFromIds(path, world);
 
   Track.shorten(Track previous, int removeLast)
       : fields =
-            previous.fields.sublist(0, previous.fields.length - removeLast);
+  previous.fields.sublist(0, previous.fields.length - removeLast);
 
-  static List<Field> _fieldsFromIds(List<String> path, Tale tale) {
-    return path.map((String id) => tale.world.fields[id]).toList();
+  List<String> toIds() {
+    return this.fields.map((f)=>f.id).toList();
+  }
+
+  static List<Field> _fieldsFromIds(List<String> path, World world) {
+    return path.map((String id) => world.fields[id]).toList();
   }
 
   int get length => fields.length - 1;
@@ -104,19 +108,4 @@ class Track {
     }
     return false;
   }
-
-//  Map toJson() {
-//    List out = [];
-//    for (Field f in fields) {
-//      out.add(f.toMap());
-//    }
-//    return {"fields": out};
-//  }
-
-//  void fromJson(Map data, World world) {
-//    List fields = data["fields"];
-//    for (Map f in fields) {
-//      this.fields.add(world.fields[f["id"]]);
-//    }
-//  }
 }

@@ -58,9 +58,10 @@ class UnitType extends UnitTypeCommons {
   Image bigImage;
   Image image;
   Image icon;
-  List<Ability> abilities = [];
+  AbilitiesEnvelope abilities;
 
   void fromCompiledUnitType(UnitTypeCompiled data) {
+    abilities = data.abilities;
     bigImage = data.bigImage;
     image = data.image;
     icon = data.icon;

@@ -18,11 +18,11 @@ class UserController extends ResourceController {
   Future<Response> login(@Bind.body() IdWrap idWrapper) async {
     http.Response response = await http.get(
         'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${idWrapper.id}');
-    Map userData = json.decode(response.body);
+    Map userData = json.decode(response.body) as Map;
 
     // check if exist
     if (userData.containsKey("email") && userData["email"] is String) {
-      String innerToken = uuid.v4() + userData["email"].toString();
+      String innerToken = uuid.v4().toString() + userData["email"].toString();
       var query = Query<User>(context)
         ..where((u) => u.email).equalTo(userData["email"] as String);
       if ((await query.fetch()).isEmpty) {

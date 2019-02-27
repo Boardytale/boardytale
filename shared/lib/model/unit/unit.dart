@@ -33,8 +33,16 @@ class Unit {
 
   String get name => _name;
 
-  static List<int> parseAttack(String input){
-    return input.split(" ").map((segment)=>int.parse(segment)).toList(growable: false);
+  List<Ability> Function(AbilitiesEnvelope envelope) _createClientAbilityList;
+
+  Unit(List<Ability> this._createClientAbilityList(AbilitiesEnvelope envelope));
+
+
+  static List<int> parseAttack(String input) {
+    return input
+        .split(" ")
+        .map((segment) => int.parse(segment))
+        .toList(growable: false);
   }
 
   void addBuff(Buff buff) {
@@ -53,11 +61,7 @@ class Unit {
     speed = type.speed;
     range = type.range;
     attack = parseAttack(type.attack);
-    abilities.clear();
-    for (Ability ability in type.abilities) {
-      abilities.add(ability);
-    }
-
+    abilities = _createClientAbilityList(type.abilities);
     for (Buff buff in _buffs) {
       armor += buff.armorDelta;
       speed += buff.speedDelta;
@@ -241,4 +245,5 @@ class Unit {
   Ability getAbilityByName(String name) =>
       abilities.firstWhere((Ability ability) => ability.name == name,
           orElse: () => null);
+
 }

@@ -1,4 +1,5 @@
 import { TaleCreateEnvelope, AiGroup } from '../../model/model';
+import { world } from './0lvl_bandits/world';
 
 const bandits: AiGroup = {
     color: 'red',
@@ -57,23 +58,13 @@ export let data: TaleCreateEnvelope = {
                 unitTypeName: 'pikeman',
                 playerId: null,
             },
-        ],
-        world: {
-            baseTerrain: 'grass',
-            fields: {
-                '3_3': {
-                    terrain: 'rock',
-                },
-                '4_4': {
-                    terrain: 'forest',
-                },
-                '5_5': {
-                    terrain: 'water',
-                },
+            {
+                fieldId: '7_5',
+                aiGroupId: 'bandits',
+                unitTypeName: 'pikeman',
+                playerId: null,
             },
-            height: 30,
-            width: 30,
-            startFieldId: '2_2',
-        },
+        ],
+        world: world,
     },
 };

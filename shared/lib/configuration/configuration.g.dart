@@ -157,4 +157,4 @@ Map<String, dynamic> _$BoardytaleConfigurationToJson(
       'proxyServer': instance.proxyServer?.toJson(),
       'gameStaticDev': instance.gameStaticDev?.toJson(),
       'editorStaticDev': instance.editorStaticDev?.toJson()
-};
+    };

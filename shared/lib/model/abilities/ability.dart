@@ -45,7 +45,7 @@ enum TargetModificators {
 }
 
 abstract class Ability {
-  String name;
+  AbilityName name;
   String image;
   Map<Targets, List<TargetModificators>> targets;
   static const TRIGGER_MINE_TURN_START = "mine_turn_start";
@@ -176,7 +176,7 @@ abstract class Ability {
 //}
 
 @Typescript()
-enum AbilityNames {
+enum AbilityName {
   @JsonValue('move')
   move,
   @JsonValue('attack')

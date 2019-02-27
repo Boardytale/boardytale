@@ -50,39 +50,32 @@ class ToGameServerMessage {
 
   // ---
 
-  EnterLobby get enterLobbyMessage =>
-      EnterLobby.fromJson(json.decode(content));
+  EnterLobby get enterLobbyMessage => EnterLobby.fromJson(json.decode(content));
 
   factory ToGameServerMessage.enterLobby(String lobbyId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((EnterLobby()
-            ..lobbyId = lobbyId)
-          .toJson())
+      ..content = jsonEncode((EnterLobby()..lobbyId = lobbyId).toJson())
       ..message = OnServerAction.enterLobby;
   }
 
   // ---
 
-  EnterGame get enterGameMessage =>
-      EnterGame.fromJson(json.decode(content));
+  EnterGame get enterGameMessage => EnterGame.fromJson(json.decode(content));
 
   factory ToGameServerMessage.enterGame(String lobbyId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((EnterGame()
-            ..lobbyId = lobbyId)
-          .toJson())
+      ..content = jsonEncode((EnterGame()..lobbyId = lobbyId).toJson())
       ..message = OnServerAction.enterGame;
   }
+
   // ---
 
-  PlayerGameAction get playerGameActionMessage =>
-      PlayerGameAction.fromJson(json.decode(content));
+  UnitTrackAction get playerGameActionMessage =>
+      UnitTrackAction.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.playerGameAction(String lobbyId) {
+  factory ToGameServerMessage.playerGameAction(UnitTrackAction action) {
     return ToGameServerMessage()
-      ..content = jsonEncode((PlayerGameAction()
-            ..lobbyId = lobbyId)
-          .toJson())
+      ..content = jsonEncode(action.toJson())
       ..message = OnServerAction.playerGameAction;
   }
 
@@ -93,9 +86,8 @@ class ToGameServerMessage {
 
   factory ToGameServerMessage.playerGameIntention(String fieldId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((PlayerGameIntention()
-            ..fieldId = fieldId)
-          .toJson())
+      ..content =
+          jsonEncode((PlayerGameIntention()..fieldId = fieldId).toJson())
       ..message = OnServerAction.playerGameIntention;
   }
 }
@@ -158,6 +150,7 @@ class CreateLobby extends MessageContent {
 @JsonSerializable()
 class EnterLobby extends MessageContent {
   String lobbyId;
+
   static EnterLobby fromJson(Map<String, dynamic> json) =>
       _$EnterLobbyFromJson(json);
 
@@ -169,6 +162,7 @@ class EnterLobby extends MessageContent {
 @JsonSerializable()
 class EnterGame extends MessageContent {
   String lobbyId;
+
   static EnterGame fromJson(Map<String, dynamic> json) =>
       _$EnterGameFromJson(json);
 
@@ -178,19 +172,23 @@ class EnterGame extends MessageContent {
 }
 
 @JsonSerializable()
-class PlayerGameAction extends MessageContent {
-  String lobbyId;
-  static PlayerGameAction fromJson(Map<String, dynamic> json) =>
-      _$PlayerGameActionFromJson(json);
+class UnitTrackAction extends MessageContent {
+  AbilityName abilityName;
+  String unitId;
+  List<String> track;
+
+  static UnitTrackAction fromJson(Map<String, dynamic> json) =>
+      _$UnitTrackActionFromJson(json);
 
   Map<String, dynamic> toJson() {
-    return _$PlayerGameActionToJson(this);
+    return _$UnitTrackActionToJson(this);
   }
 }
 
 @JsonSerializable()
 class PlayerGameIntention extends MessageContent {
   String fieldId;
+
   static PlayerGameIntention fromJson(Map<String, dynamic> json) =>
       _$PlayerGameIntentionFromJson(json);
 

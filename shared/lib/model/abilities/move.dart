@@ -24,7 +24,7 @@ class MoveAbilityEnvelope {
 @JsonSerializable()
 class MoveAction {
   String unitId;
-  String toFieldId;
+  List<String> track;
   Map<String, dynamic> toJson() {
     return _$MoveActionToJson(this);
   }
