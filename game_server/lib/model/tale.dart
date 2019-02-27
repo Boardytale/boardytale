@@ -32,6 +32,7 @@ class ServerTale {
     taleData.players = gamePlayers;
 
     players.values.forEach((player) {
+      taleData.playerIdOnThisClientMachine = player.id;
       gateway.sendMessage(
           shared.ToClientMessage.fromTaleData(taleData), player);
     });
@@ -47,19 +48,25 @@ class ServerTale {
   }
 
   void sendInitTaleDataToPlayer(ServerPlayer player) {
+    taleData.playerIdOnThisClientMachine = player.id;
     gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
     sendInitialUnits();
   }
 
-  void handlePlayerAction(MessageWithConnection message) {}
+  void handlePlayerAction(MessageWithConnection message) {
+    shared.UnitTrackAction action = message.message.unitTrackActionMessage;
+    ServerUnit unit = units[action.unitId];
+    shared.Track track  = shared.Track(action.track.map((f)=>sharedTale.world.fields[f]).toList());
+    shared.AbilityName name = action.abilityName;
+    unit.perform(name, track, action, this);
+  }
 
   void sendInitialUnits() {
     // TODO: implement line of sight here
     room.compiledTale.tale.units.forEach((unitCreateEnvelope) {
       shared.UnitType unitType = unitTypes[unitCreateEnvelope.unitTypeName];
       String unitId = "${_lastUnitId++}";
-      ServerUnit unit = ServerUnit()..fromUnitType(unitType);
-      unit.field = sharedTale.world.fields[unitCreateEnvelope.fieldId];
+      ServerUnit unit = ServerUnit()..fromUnitType(unitType, sharedTale.world.fields[unitCreateEnvelope.fieldId], unitId);
       if (unitCreateEnvelope.aiGroupId != null) {
         unit.aiGroupId = unitCreateEnvelope.aiGroupId;
       } else {
@@ -72,6 +79,7 @@ class ServerTale {
     units.forEach((id, unit) {
       actions.add(shared.UnitManipulateAction()
         ..isCreate = true
+        ..unitId = unit.id
         ..unitTypeName = unit.type.name
         ..fieldId = unit.field.id
         ..playerId = unit.player?.id
@@ -81,6 +89,13 @@ class ServerTale {
     players.values.forEach((player) {
       gateway.sendMessage(
           shared.ToClientMessage.fromTaleStateUpdate(actions), player);
+    });
+  }
+
+  void sendNewState(shared.UnitManipulateAction action) {
+    players.values.forEach((player) {
+      gateway.sendMessage(
+          shared.ToClientMessage.fromTaleStateUpdate([action]), player);
     });
   }
 }

@@ -22,7 +22,9 @@ part 'package:game_server/model/communication.dart';
 part 'package:game_server/model/tale.dart';
 part 'package:game_server/model/world.dart';
 part 'package:game_server/model/unit.dart';
+part 'package:game_server/model/abilities/ability.dart';
 part 'package:game_server/model/abilities/move.dart';
+part 'package:game_server/model/abilities/attack.dart';
 
 part 'package:game_server/services/player_service.dart';
 

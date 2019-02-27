@@ -70,10 +70,10 @@ class ToGameServerMessage {
 
   // ---
 
-  UnitTrackAction get playerGameActionMessage =>
+  UnitTrackAction get unitTrackActionMessage =>
       UnitTrackAction.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.playerGameAction(UnitTrackAction action) {
+  factory ToGameServerMessage.unitTrackAction(UnitTrackAction action) {
     return ToGameServerMessage()
       ..content = jsonEncode(action.toJson())
       ..message = OnServerAction.playerGameAction;
@@ -176,6 +176,9 @@ class UnitTrackAction extends MessageContent {
   AbilityName abilityName;
   String unitId;
   List<String> track;
+
+  /// playerId_clientManagedActionId - originated by UserManipulateAction
+  String actionId;
 
   static UnitTrackAction fromJson(Map<String, dynamic> json) =>
       _$UnitTrackActionFromJson(json);

@@ -28,7 +28,11 @@ class GameService {
     shared.ClientTaleData clientTaleData = message.getTaleDataMessage.data;
     tale.fromClientTaleData(clientTaleData);
     tale.players.forEach((String id, shared.Player player) {
-      appService.players[id] = ClientPlayer()..fromSharedPlayer(player);
+      ClientPlayer newPlayer = ClientPlayer()..fromSharedPlayer(player);
+      appService.players[id] = newPlayer;
+      if (newPlayer.id == clientTaleData.playerIdOnThisClientMachine) {
+        appService.currentPlayer = newPlayer;
+      }
     });
     world = tale.world;
     this._onWorldLoaded.add(world);

@@ -59,6 +59,7 @@ class WorldComponent implements OnDestroy {
   Point _start;
   int _startOffsetTop;
   int _startOffsetLeft;
+  int _lastActionId = 0;
   ClientField _lastActiveField;
   ClientWorldService _clientWorldService;
 
@@ -159,9 +160,10 @@ class WorldComponent implements OnDestroy {
           track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
         gateway.sendMessage(
-            shared.ToGameServerMessage.playerGameAction(shared.UnitTrackAction()
+            shared.ToGameServerMessage.unitTrackAction(shared.UnitTrackAction()
               ..abilityName = ability.name
               ..unitId = _draggedUnit.id
+              ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
               ..track = track.toIds()));
       } else {
         appService.alertError(

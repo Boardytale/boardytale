@@ -237,6 +237,13 @@ export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 
 export type TargetModificators = 'wounded' | 'notUndead' | 'undead';
 
+export type AbilityReach =
+    | 'mineTurnStart'
+    | 'reachMove'
+    | 'reachHand'
+    | 'reachArrow'
+    | 'reachConjuration';
+
 export type AbilityName =
     | 'move'
     | 'attack'

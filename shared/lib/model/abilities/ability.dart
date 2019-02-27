@@ -44,18 +44,30 @@ enum TargetModificators {
   undead,
 }
 
+@Typescript()
+enum AbilityReach {
+  @JsonValue('mineTurnStart')
+  mineTurnStart,
+  @JsonValue('reachMove')
+  move,
+  @JsonValue('reachHand')
+  hand,
+  @JsonValue('reachArrow')
+  reachArrow,
+  @JsonValue('reachConjuration')
+  reachConjuration,
+}
+
 abstract class Ability {
-  AbilityName name;
+  AbilityName get name;
+
   String image;
   Map<Targets, List<TargetModificators>> targets;
-  static const TRIGGER_MINE_TURN_START = "mine_turn_start";
-  static const REACH_MOVE = "reachMove";
-  static const REACH_HAND = "reachHand";
-  static const REACH_ARROW = "reachArrow";
-  static const REACH_CONJURATION = "reachConjuration";
+
   @TypescriptSkip()
   @TypescriptOptional()
-  String get reach;
+  AbilityReach get reach;
+
   covariant Unit invoker;
 
   bool validate(Unit invoker, Track track) {

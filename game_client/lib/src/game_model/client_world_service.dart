@@ -119,14 +119,16 @@ class ClientWorldService extends shared.World {
     actions.forEach((action) {
       if (action.isCreate) {
         ClientUnit unit = ClientUnit()
-          ..fromUnitType(clientTaleService.unitTypes[action.unitTypeName]);
-        unit.field = fields[action.fieldId];
-        if(action.aiGroupId != null){
+          ..fromUnitType(clientTaleService.unitTypes[action.unitTypeName], fields[action.fieldId], action.unitId);
+        if (action.aiGroupId != null) {
           unit.aiGroupId = action.aiGroupId;
-        }else{
+        } else {
           unit.player = appService.players[action.playerId];
         }
         onUnitAdded.add(unit);
+      }
+      if(action.isUpdate){
+        clientTaleService.units[action.unitId].field = fields[action.state.newFieldId];
       }
     });
   }

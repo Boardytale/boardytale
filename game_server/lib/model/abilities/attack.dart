@@ -1,10 +1,10 @@
 part of game_server;
 
-class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
+class ServerAttackAbility extends shared.AttackAbility implements ServerAbility {
   @override
   void perform(
       ServerUnit unit, shared.Track track, shared.UnitTrackAction action, ServerTale tale) {
-    bool isValid = super.validate(unit, track);
+    bool isValid = super.validate(invoker, track);
 
     shared.UnitManipulateAction action = shared.UnitManipulateAction();
     action
@@ -17,11 +17,11 @@ class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
           shared.ToClientMessage.fromTaleStateUpdate([action]), unit.player);
       return;
     }
-    unit.move(track);
-    action.isUpdate = true;
-    action.state = shared.LiveUnitState()
-      ..far = unit.far
-      ..newFieldId = unit.field.id;
-    tale.sendNewState(action);
+//    unit.move(track);
+//    action.isUpdate = true;
+//    action.state = shared.LiveUnitState()
+//      ..far = unit.far
+//      ..newFieldId = unit.field.id;
+//    unit.player.tale.sendNewState(action);
   }
 }

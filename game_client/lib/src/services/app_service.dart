@@ -32,6 +32,7 @@ class AppService {
   };
 
   Map<String, ClientPlayer> players = {};
+  ClientPlayer currentPlayer;
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();
   Stream<Map> get onAlert => _onAlert.stream;

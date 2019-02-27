@@ -13,7 +13,7 @@ class Unit {
   int _steps = 1;
   UnitType type;
   Field _field;
-  Player player;
+  covariant Player player;
   List<Ability> abilities = [];
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
@@ -154,13 +154,15 @@ class Unit {
     return alea;
   }
 
-  void fromUnitType(UnitType unitType) {
+  void fromUnitType(UnitType unitType, Field field, String id) {
+    this.id = id;
     type = unitType;
     _health = type.health;
     _steps = type.speed;
     _actions = type.actions;
     _recalculate();
     setType(unitType);
+    this.field = field;
   }
 
   /// Type change cause nullation of abilities pseudostates.
@@ -200,7 +202,8 @@ class Unit {
   }
 
   void move(Track track) {
-    this.steps -= track.length;
+    this.steps -= track.length - 1;
+    _far = track.length - 1;
     this.field = track.last;
   }
 

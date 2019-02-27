@@ -7,6 +7,7 @@ class LiveUnitState {
   int health;
   List<Buff> buffs = [];
   int actions;
+  String newFieldId;
 
   static LiveUnitState fromJson(Map data) {
     return _$LiveUnitStateFromJson(data);
@@ -22,13 +23,15 @@ class UnitManipulateAction {
   bool isCreate = false;
   bool isDelete = false;
   bool isUpdate = false;
+  bool isCancel = false;
   String unitTypeName;
   String fieldId;
   String unitId;
   LiveUnitState state;
   String playerId;
   String aiGroupId;
-
+  /// playerId_clientManagedActionId
+  String actionId;
 
   static UnitManipulateAction fromJson(Map data) {
     return _$UnitManipulateActionFromJson(data);

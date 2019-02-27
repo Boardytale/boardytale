@@ -8,6 +8,7 @@ class ClientTaleData {
   WorldCreateEnvelope world;
   TaleCompiledAssets assets;
   List<Player> players;
+  String playerIdOnThisClientMachine;
 
   ClientTaleData();
 
