@@ -434,6 +434,10 @@ TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
         _$enumDecodeNullable(_$LangEnumMap, k),
         (e as Map<String, dynamic>)?.map((k, e) => MapEntry(k, e as String))))
     ..taleVersion = json['taleVersion'] as int
+    ..teams = (json['teams'] as List)
+        ?.map(
+            (e) => e == null ? null : Team.fromJson(e as Map<String, dynamic>))
+        ?.toList()
     ..world = json['world'] == null
         ? null
         : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
@@ -442,11 +446,11 @@ TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
             k, e == null ? null : AiGroup.fromJson(e as Map<String, dynamic>)))
     ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
-    ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
-        k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
+    ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
     ..units = (json['units'] as List)
-        ?.map((e) =>
-            e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -457,6 +461,7 @@ Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
           instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'langs': instance.langs?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'taleVersion': instance.taleVersion,
+      'teams': instance.teams?.map((e) => e?.toJson())?.toList(),
       'world': instance.world?.toJson(),
       'aiGroups': instance.aiGroups?.map((k, e) => MapEntry(k, e?.toJson())),
       'events': instance.events?.map((k, e) => MapEntry(k, e?.toJson())),
@@ -511,7 +516,8 @@ UnitCreateEnvelope _$UnitCreateEnvelopeFromJson(Map<String, dynamic> json) {
     ..fieldId = json['fieldId'] as String
     ..unitTypeName = json['unitTypeName'] as String
     ..aiGroupId = json['aiGroupId'] as String
-    ..playerId = json['playerId'] as String;
+    ..playerId = json['playerId'] as String
+    ..health = json['health'] as int;
 }
 
 Map<String, dynamic> _$UnitCreateEnvelopeToJson(UnitCreateEnvelope instance) =>
@@ -519,7 +525,8 @@ Map<String, dynamic> _$UnitCreateEnvelopeToJson(UnitCreateEnvelope instance) =>
       'fieldId': instance.fieldId,
       'unitTypeName': instance.unitTypeName,
       'aiGroupId': instance.aiGroupId,
-      'playerId': instance.playerId
+      'playerId': instance.playerId,
+      'health': instance.health
     };
 
 TaleCompiledAssets _$TaleCompiledAssetsFromJson(Map<String, dynamic> json) {
@@ -543,16 +550,27 @@ Map<String, dynamic> _$TaleCompiledAssetsToJson(TaleCompiledAssets instance) =>
 AiGroup _$AiGroupFromJson(Map<String, dynamic> json) {
   return AiGroup()
     ..id = json['id'] as String
+    ..team = json['team'] as String;
+}
+
+Map<String, dynamic> _$AiGroupToJson(AiGroup instance) =>
+    <String, dynamic>{'id': instance.id, 'team': instance.team};
+
+Team _$TeamFromJson(Map<String, dynamic> json) {
+  return Team()
+    ..id = json['id'] as String
+    ..allies = (json['allies'] as List)?.map((e) => e as String)?.toList()
+    ..hostiles = (json['hostiles'] as List)?.map((e) => e as String)?.toList()
     ..name = (json['name'] as Map<String, dynamic>)?.map(
         (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
-    ..team = json['team'] as String
     ..color = json['color'] as String;
 }
 
-Map<String, dynamic> _$AiGroupToJson(AiGroup instance) => <String, dynamic>{
+Map<String, dynamic> _$TeamToJson(Team instance) => <String, dynamic>{
       'id': instance.id,
+      'allies': instance.allies,
+      'hostiles': instance.hostiles,
       'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
-      'team': instance.team,
       'color': instance.color
     };
 

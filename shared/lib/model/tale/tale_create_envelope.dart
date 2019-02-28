@@ -43,7 +43,7 @@ class TaleInnerEnvelope {
   Map<Lang, String> langName;
   Map<Lang, Map<String, String>> langs;
   int taleVersion;
-
+  List<Team> teams = [];
   WorldCreateEnvelope world;
   Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
@@ -88,9 +88,13 @@ class TaleInnerCompiled {
 class UnitCreateEnvelope {
   String fieldId;
   String unitTypeName;
+
   // used aiGroupId if not null
   String aiGroupId;
   String playerId;
+  @TypescriptOptional()
+  int health;
+
   static UnitCreateEnvelope fromJson(Map json) {
     return _$UnitCreateEnvelopeFromJson(json);
   }
@@ -119,9 +123,8 @@ class TaleCompiledAssets {
 @JsonSerializable()
 class AiGroup {
   String id;
-  Map<Lang, String> name;
   String team;
-  String color;
+
   static AiGroup fromJson(Map<String, dynamic> json) {
     utils.retypeMapInJsonToStringDynamic(json, ["name"]);
     return _$AiGroupFromJson(json);
@@ -129,5 +132,24 @@ class AiGroup {
 
   Map<String, dynamic> toJson() {
     return _$AiGroupToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class Team {
+  String id;
+  List<String> allies;
+  List<String> hostiles;
+  Map<Lang, String> name;
+  String color;
+
+  static Team fromJson(Map<String, dynamic> json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
+    return _$TeamFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$TeamToJson(this);
   }
 }

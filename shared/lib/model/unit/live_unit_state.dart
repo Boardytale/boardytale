@@ -1,6 +1,7 @@
 part of model;
 
 @JsonSerializable()
+@Typescript()
 class LiveUnitState {
   String id;
   int far;
@@ -17,6 +18,7 @@ class LiveUnitState {
   }
 }
 
+@Typescript()
 @JsonSerializable()
 class UnitManipulateAction {
   bool isCreate = false;

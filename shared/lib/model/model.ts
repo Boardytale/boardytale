@@ -38,6 +38,26 @@ export interface User extends Object {
     innerToken: string;
 }
 
+export interface LiveUnitState extends Object {
+    id: string;
+    far: number;
+    health: number;
+    buffs: Array<Buff>;
+    actions: number;
+}
+
+export interface UnitManipulateAction extends Object {
+    isCreate: boolean;
+    isDelete: boolean;
+    isUpdate: boolean;
+    unitTypeName: string;
+    fieldId: string;
+    unitId: string;
+    state: LiveUnitState;
+    playerId: string;
+    aiGroupId: string;
+}
+
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {
@@ -140,6 +160,7 @@ export interface TaleInnerEnvelope extends Object {
     langName: { [key in Lang]?: string };
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
+    teams: Array<Team>;
     world: WorldCreateEnvelope;
     aiGroups: { [key: string]: AiGroup };
     events: { [key: string]: Event };
@@ -165,6 +186,8 @@ export interface UnitCreateEnvelope extends Object {
     unitTypeName: string;
     aiGroupId: string;
     playerId: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    health?: number;
 }
 
 export interface TaleCompiledAssets extends Object {
@@ -174,8 +197,14 @@ export interface TaleCompiledAssets extends Object {
 
 export interface AiGroup extends Object {
     id: string;
-    name: { [key in Lang]?: string };
     team: string;
+}
+
+export interface Team extends Object {
+    id: string;
+    allies: Array<string>;
+    hostiles: Array<string>;
+    name: { [key in Lang]?: string };
     color: string;
 }
 
