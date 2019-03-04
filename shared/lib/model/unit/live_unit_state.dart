@@ -2,12 +2,11 @@ part of model;
 
 @JsonSerializable()
 class LiveUnitState {
-  String id;
   int far;
+  int steps;
   int health;
   List<Buff> buffs = [];
   int actions;
-  String newFieldId;
 
   static LiveUnitState fromJson(Map data) {
     return _$LiveUnitStateFromJson(data);
@@ -15,6 +14,15 @@ class LiveUnitState {
 
   Map<String, dynamic> toJson() {
     return _$LiveUnitStateToJson(this);
+  }
+
+  void fromUnit(Unit unit) {
+    // action not triggered directly by user action
+    far = unit.far;
+    health = unit.actualHealth;
+    actions = unit.actions;
+    buffs = unit._buffs;
+    steps = unit.steps;
   }
 }
 
@@ -30,8 +38,10 @@ class UnitManipulateAction {
   LiveUnitState state;
   String playerId;
   String aiGroupId;
+
   /// playerId_clientManagedActionId
   String actionId;
+  AnimationName animationName;
 
   static UnitManipulateAction fromJson(Map data) {
     return _$UnitManipulateActionFromJson(data);
@@ -40,4 +50,23 @@ class UnitManipulateAction {
   Map<String, dynamic> toJson() {
     return _$UnitManipulateActionToJson(this);
   }
+}
+
+class UnitUpdateReport {
+  Unit unit;
+  String newUnitTypeName;
+  String newFieldId;
+  int deltaFar;
+  int deltaSteps;
+  int deltaHealth;
+  int deltaActions;
+  List<String> removedBuffIds;
+  List<Buff> buffsAdded;
+  UnitManipulateAction action;
+}
+
+@Typescript()
+enum AnimationName {
+  @JsonValue('move')
+  move,
 }

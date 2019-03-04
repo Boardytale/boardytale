@@ -9,6 +9,7 @@ import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
 import 'dart:html';
+import 'dart:async';
 
 @Component(
     selector: 'my-app',
@@ -60,16 +61,20 @@ class AppComponent {
 
   // unused services are used for gateway handler injection
   AppComponent(
-      this.appService,
-      this.changeDetector,
-      this.gameService,
-      ) {
-    appService.navigationState.listen((_) => changeDetector.markForCheck());
-
+    this.appService,
+    this.changeDetector,
+    this.gameService,
+  ) {
+    appService.navigationState.listen((navigation){
+      changeDetector.markForCheck();
+      if(navigation.name == GameNavigationState.findLobby){
+        appService.goToState(GameNavigationState.createGame);
+      }
+    });
     window.onResize.listen(resizeBody);
   }
 
-  void resizeBody([_]){
+  void resizeBody([_]) {
     document.body.style.width = "${window.innerWidth}px";
     document.body.style.height = "${window.innerHeight}px";
   }

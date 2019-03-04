@@ -5,8 +5,10 @@ class GameService {
 
   GameService() {
     gateway.handlers[shared.OnServerAction.enterGame] = handleEnterGame;
-    gateway.handlers[shared.OnServerAction.playerGameAction] =
-        handlePlayerAction;
+    gateway.handlers[shared.OnServerAction.unitTrackAction] =
+        handleUnitTrackAction;
+    gateway.handlers[shared.OnServerAction.controlsAction] =
+        handleControlsAction;
   }
 
   void handleEnterGame(MessageWithConnection message) {
@@ -22,7 +24,14 @@ class GameService {
     });
   }
 
-  void handlePlayerAction(MessageWithConnection message) {
-    message.player.tale.handlePlayerAction(message);
+  void handleUnitTrackAction(MessageWithConnection message) {
+    message.player.tale.handleUnitTrack(message);
   }
+
+  void handleControlsAction(MessageWithConnection message) {
+    if(message.message.controlsActionMessage.actionName == shared.ControlsActionName.andOfTurn){
+      message.player.tale.endOfTurn(message);
+    }
+  }
+
 }

@@ -18,13 +18,13 @@ import 'package:shared/model/model.dart';
                theme="dark" longTitle="true" fetchBasicProfile="true"
                (googleSigninSuccess)="onGoogleSigninSuccess"></google-signin>
        <span
-       *ngIf="state.currentUser.value != null"
+       *ngIf="appService.currentUser.value != null"
        >
-       Logged user: {{state.currentUser.value?.email}}
+       Logged user: {{appService.currentUser.value?.email}}
        </span>
        
        <button
-       *ngIf="state.navigationState.value.showCreateGameButton"
+       *ngIf="appService.navigationState.value.showCreateGameButton"
        (click)="goToCreate()"
        >
          Create game
@@ -35,20 +35,20 @@ import 'package:shared/model/model.dart';
     changeDetection: ChangeDetectionStrategy.OnPush)
 class UserBarComponent {
   final http.Client _http;
-  final AppService state;
+  final AppService appService;
   final GatewayService gatewayService;
 
   bool showSignInButton = false;
   final ChangeDetectorRef _cdRef;
 
-  UserBarComponent(this._http, this.state, this.gatewayService, this._cdRef) {
+  UserBarComponent(this._http, this.appService, this.gatewayService, this._cdRef) {
     if (html.window.localStorage.containsKey("innerToken")) {
       gatewayService.initMessages(html.window.localStorage["innerToken"]);
     } else {
       showSignInButton = true;
     }
-    state.navigationState.listen((_) => _cdRef.markForCheck());
-    state.currentUser.listen((_) => _cdRef.markForCheck());
+    appService.navigationState.listen((_) => _cdRef.markForCheck());
+    appService.currentUser.listen((_) => _cdRef.markForCheck());
   }
 
   void onGoogleSigninSuccess(GoogleSignInSuccess event) async {
@@ -59,7 +59,7 @@ class UserBarComponent {
         body: json.encode({"id": response.id_token}));
     User currentUser =
         model.User.fromGoogleJson(json.decode(loginResponse.body));
-    state.currentUser.add(currentUser);
+    appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
     showSignInButton = false;
@@ -67,10 +67,10 @@ class UserBarComponent {
 
   void signOut() {
     getAuthInstance().signOut();
-    state.currentUser.add(null);
+    appService.currentUser.add(null);
   }
 
   void goToCreate() {
-    state.goToState(GameNavigationState.createGame);
+    appService.goToState(GameNavigationState.createGame);
   }
 }

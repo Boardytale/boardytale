@@ -22,8 +22,6 @@ class Track {
     return path.map((String id) => world.fields[id]).toList();
   }
 
-  int get length => fields.length - 1;
-
   bool get isEmpty => fields.isEmpty;
 
   List<String> get path =>

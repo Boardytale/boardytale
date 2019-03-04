@@ -75,6 +75,16 @@ body{
   overflow: hidden;
 }
 
+world{
+  display: block;
+  position:absolute;
+  top: 0;
+  game-controls{
+    position: fixed;
+    z-index: 100;
+  }
+}
+
 #worldMap{
   z-index:10;
   position: absolute;

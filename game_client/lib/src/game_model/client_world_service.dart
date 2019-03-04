@@ -118,6 +118,9 @@ class ClientWorldService extends shared.World {
   void updateState(List<shared.UnitManipulateAction> actions) {
     actions.forEach((action) {
       if (action.isCreate) {
+        if(clientTaleService.units.containsKey(action.unitId)){
+          throw "unit ${action.unitId} is already created";
+        }
         ClientUnit unit = ClientUnit()
           ..fromUnitType(clientTaleService.unitTypes[action.unitTypeName], fields[action.fieldId], action.unitId);
         if (action.aiGroupId != null) {
@@ -125,10 +128,15 @@ class ClientWorldService extends shared.World {
         } else {
           unit.player = appService.players[action.playerId];
         }
+
+        unit.addUnitUpdateAction(action, fields[action.fieldId]);
+
+        clientTaleService.units[unit.id] = unit;
         onUnitAdded.add(unit);
       }
       if(action.isUpdate){
-        clientTaleService.units[action.unitId].field = fields[action.state.newFieldId];
+        ClientUnit unit = clientTaleService.units[action.unitId];
+        unit.addUnitUpdateAction(action, fields[action.fieldId]);
       }
     });
   }

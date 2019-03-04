@@ -9,6 +9,7 @@ class ServerTale {
   ];
   LobbyRoom room;
 
+  BehaviorSubject<shared.UnitUpdateReport> onReport = BehaviorSubject<shared.UnitUpdateReport>();
   Map<String, ServerPlayer> get players => room.connectedPlayers;
   shared.ClientTaleData taleData;
   shared.Tale sharedTale;
@@ -42,6 +43,20 @@ class ServerTale {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
 
+    room.compiledTale.tale.units.forEach((unitCreateEnvelope) {
+      shared.UnitType unitType = unitTypes[unitCreateEnvelope.unitTypeName];
+      String unitId = "${_lastUnitId++}";
+      ServerUnit unit = ServerUnit()
+        ..fromUnitType(unitType,
+            sharedTale.world.fields[unitCreateEnvelope.fieldId], unitId);
+      if (unitCreateEnvelope.aiGroupId != null) {
+        unit.aiGroupId = unitCreateEnvelope.aiGroupId;
+      } else {
+        unit.player = players[unitCreateEnvelope.playerId];
+      }
+      units[unitId] = unit;
+    });
+
     Future.delayed(Duration(milliseconds: 10)).then((onValue) {
       sendInitialUnits();
     });
@@ -53,27 +68,17 @@ class ServerTale {
     sendInitialUnits();
   }
 
-  void handlePlayerAction(MessageWithConnection message) {
+  void handleUnitTrack(MessageWithConnection message) {
     shared.UnitTrackAction action = message.message.unitTrackActionMessage;
     ServerUnit unit = units[action.unitId];
-    shared.Track track  = shared.Track(action.track.map((f)=>sharedTale.world.fields[f]).toList());
+    shared.Track track = shared.Track(
+        action.track.map((f) => sharedTale.world.fields[f]).toList());
     shared.AbilityName name = action.abilityName;
     unit.perform(name, track, action, this);
   }
 
   void sendInitialUnits() {
     // TODO: implement line of sight here
-    room.compiledTale.tale.units.forEach((unitCreateEnvelope) {
-      shared.UnitType unitType = unitTypes[unitCreateEnvelope.unitTypeName];
-      String unitId = "${_lastUnitId++}";
-      ServerUnit unit = ServerUnit()..fromUnitType(unitType, sharedTale.world.fields[unitCreateEnvelope.fieldId], unitId);
-      if (unitCreateEnvelope.aiGroupId != null) {
-        unit.aiGroupId = unitCreateEnvelope.aiGroupId;
-      } else {
-        unit.player = players[unitCreateEnvelope.playerId];
-      }
-      units[unitId] = unit;
-    });
 
     List<shared.UnitManipulateAction> actions = [];
     units.forEach((id, unit) {
@@ -83,7 +88,9 @@ class ServerTale {
         ..unitTypeName = unit.type.name
         ..fieldId = unit.field.id
         ..playerId = unit.player?.id
-        ..aiGroupId = unit.aiGroupId);
+        ..aiGroupId = unit.aiGroupId
+        ..state = unit.getState()
+      );
     });
 
     players.values.forEach((player) {
@@ -96,6 +103,22 @@ class ServerTale {
     players.values.forEach((player) {
       gateway.sendMessage(
           shared.ToClientMessage.fromTaleStateUpdate([action]), player);
+    });
+  }
+
+  void endOfTurn(MessageWithConnection message) {
+    List<shared.UnitManipulateAction> actions = [];
+    units.forEach((key, unit) {
+      if (unit.newTurn()) {
+        actions.add(shared.UnitManipulateAction()
+          ..unitId = unit.id
+          ..isUpdate = true
+          ..state = (shared.LiveUnitState()..fromUnit(unit)));
+      }
+    });
+    players.values.forEach((player) {
+      gateway.sendMessage(
+          shared.ToClientMessage.fromTaleStateUpdate(actions), player);
     });
   }
 }

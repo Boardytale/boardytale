@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:game_client/src/game/game_controls_component.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/game_view/world_view_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -14,6 +15,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 @Component(
     selector: 'world',
     template: r'''
+        <game-controls></game-controls>
         <canvas id="worldMap" #world [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
         <canvas id="mapObjects" #objects [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
         <div id="eventOverlay" [ngStyle]="{'width': widthString, 'height': heightString}"
@@ -25,16 +27,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 
         ></div>
       ''',
-    styles: [
-      """
-      :host{
-        display: block;
-        position:absolute;
-        top: 0;
-      }
-    """
-    ],
-    directives: [coreDirectives],
+    directives: [coreDirectives, GameControlsComponent],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   String get widthString => "${window.innerWidth}px";

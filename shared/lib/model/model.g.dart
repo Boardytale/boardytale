@@ -88,25 +88,23 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 
 LiveUnitState _$LiveUnitStateFromJson(Map<String, dynamic> json) {
   return LiveUnitState()
-    ..id = json['id'] as String
     ..far = json['far'] as int
+    ..steps = json['steps'] as int
     ..health = json['health'] as int
     ..buffs = (json['buffs'] as List)
         ?.map(
             (e) => e == null ? null : Buff.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..actions = json['actions'] as int
-    ..newFieldId = json['newFieldId'] as String;
+    ..actions = json['actions'] as int;
 }
 
 Map<String, dynamic> _$LiveUnitStateToJson(LiveUnitState instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'far': instance.far,
+      'steps': instance.steps,
       'health': instance.health,
       'buffs': instance.buffs?.map((e) => e?.toJson())?.toList(),
-      'actions': instance.actions,
-      'newFieldId': instance.newFieldId
+      'actions': instance.actions
     };
 
 UnitManipulateAction _$UnitManipulateActionFromJson(Map<String, dynamic> json) {
@@ -123,7 +121,9 @@ UnitManipulateAction _$UnitManipulateActionFromJson(Map<String, dynamic> json) {
         : LiveUnitState.fromJson(json['state'] as Map<String, dynamic>)
     ..playerId = json['playerId'] as String
     ..aiGroupId = json['aiGroupId'] as String
-    ..actionId = json['actionId'] as String;
+    ..actionId = json['actionId'] as String
+    ..animationName =
+        _$enumDecodeNullable(_$AnimationNameEnumMap, json['animationName']);
 }
 
 Map<String, dynamic> _$UnitManipulateActionToJson(
@@ -139,8 +139,20 @@ Map<String, dynamic> _$UnitManipulateActionToJson(
       'state': instance.state?.toJson(),
       'playerId': instance.playerId,
       'aiGroupId': instance.aiGroupId,
-      'actionId': instance.actionId
+      'actionId': instance.actionId,
+      'animationName': _$AnimationNameEnumMap[instance.animationName]
     };
+
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source);
+}
+
+const _$AnimationNameEnumMap = <AnimationName, dynamic>{
+  AnimationName.move: 'move'
+};
 
 UnitTypeCreateEnvelope _$UnitTypeCreateEnvelopeFromJson(
     Map<String, dynamic> json) {
@@ -195,13 +207,6 @@ Map<String, dynamic> _$UnitTypeCreateEnvelopeToJson(
       'iconName': instance.iconName,
       'bigImageName': instance.bigImageName
     };
-
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source);
-}
 
 const _$RacesEnumMap = <Races, dynamic>{
   Races.human: 'human',
@@ -819,8 +824,9 @@ const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
   OnServerAction.createLobby: 'createLobby',
   OnServerAction.enterLobby: 'enterLobby',
   OnServerAction.enterGame: 'enterGame',
-  OnServerAction.playerGameAction: 'playerGameAction',
-  OnServerAction.playerGameIntention: 'playerGameIntention'
+  OnServerAction.unitTrackAction: 'unitTrackAction',
+  OnServerAction.playerGameIntention: 'playerGameIntention',
+  OnServerAction.controlsAction: 'controlsAction'
 };
 
 GoToState _$GoToStateFromJson(Map<String, dynamic> json) {
@@ -907,6 +913,21 @@ PlayerGameIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PlayerGameIntentionToJson(
         PlayerGameIntention instance) =>
     <String, dynamic>{'fieldId': instance.fieldId};
+
+ControlsAction _$ControlsActionFromJson(Map<String, dynamic> json) {
+  return ControlsAction()
+    ..actionName =
+        _$enumDecodeNullable(_$ControlsActionNameEnumMap, json['actionName']);
+}
+
+Map<String, dynamic> _$ControlsActionToJson(ControlsAction instance) =>
+    <String, dynamic>{
+      'actionName': _$ControlsActionNameEnumMap[instance.actionName]
+    };
+
+const _$ControlsActionNameEnumMap = <ControlsActionName, dynamic>{
+  ControlsActionName.andOfTurn: 'andOfTurn'
+};
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()

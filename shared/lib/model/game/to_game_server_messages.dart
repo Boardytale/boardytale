@@ -76,7 +76,7 @@ class ToGameServerMessage {
   factory ToGameServerMessage.unitTrackAction(UnitTrackAction action) {
     return ToGameServerMessage()
       ..content = jsonEncode(action.toJson())
-      ..message = OnServerAction.playerGameAction;
+      ..message = OnServerAction.unitTrackAction;
   }
 
   // ---
@@ -89,6 +89,18 @@ class ToGameServerMessage {
       ..content =
           jsonEncode((PlayerGameIntention()..fieldId = fieldId).toJson())
       ..message = OnServerAction.playerGameIntention;
+  }
+
+  // ---
+
+  ControlsAction get controlsActionMessage =>
+      ControlsAction.fromJson(json.decode(content));
+
+  factory ToGameServerMessage.controlsAction(ControlsActionName actionName) {
+    return ToGameServerMessage()
+      ..content =
+          jsonEncode((ControlsAction()..actionName = actionName).toJson())
+      ..message = OnServerAction.controlsAction;
   }
 }
 
@@ -104,10 +116,12 @@ enum OnServerAction {
   enterLobby,
   @JsonValue('enterGame')
   enterGame,
-  @JsonValue('playerGameAction')
-  playerGameAction,
+  @JsonValue('unitTrackAction')
+  unitTrackAction,
   @JsonValue('playerGameIntention')
   playerGameIntention,
+  @JsonValue('controlsAction')
+  controlsAction,
 }
 
 @JsonSerializable()
@@ -198,4 +212,22 @@ class PlayerGameIntention extends MessageContent {
   Map<String, dynamic> toJson() {
     return _$PlayerGameIntentionToJson(this);
   }
+}
+
+@JsonSerializable()
+class ControlsAction extends MessageContent {
+  ControlsActionName actionName;
+
+  static ControlsAction fromJson(Map<String, dynamic> json) =>
+      _$ControlsActionFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ControlsActionToJson(this);
+  }
+}
+
+@Typescript()
+enum ControlsActionName {
+@JsonValue('andOfTurn')
+andOfTurn,
 }

@@ -37,7 +37,8 @@ class ServerPlayer extends shared.Player{
   void enterGame(ServerTale tale) {
     this.tale = tale;
     navigationState = shared.GameNavigationState.inGame;
-    navigationService.restoreState(this);
+    gateway.sendMessage(
+        shared.ToClientMessage.fromSetNavigationState(navigationState), this);
   }
 
   shared.Player createGamePlayer() {

@@ -38,6 +38,8 @@ export interface User extends Object {
     innerToken: string;
 }
 
+export type AnimationName = 'move';
+
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {
@@ -230,8 +232,11 @@ export type OnServerAction =
     | 'createLobby'
     | 'enterLobby'
     | 'enterGame'
-    | 'playerGameAction'
-    | 'playerGameIntention';
+    | 'unitTrackAction'
+    | 'playerGameIntention'
+    | 'controlsAction';
+
+export type ControlsActionName = 'andOfTurn';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

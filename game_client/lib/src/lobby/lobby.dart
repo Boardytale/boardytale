@@ -35,7 +35,12 @@ class LobbyComponent {
   LobbyService lobbyService;
 
   LobbyComponent(this.lobbyService, this.changeDetector, this.gateway) {
-    lobbyService.openedLobby.listen((onData) => changeDetector.markForCheck());
+    lobbyService.openedLobby.listen((onData){
+      changeDetector.markForCheck();
+      if(onData.id != null){
+        gateway.sendMessage(shared.ToGameServerMessage.enterGame(onData.id));
+      }
+    });
   }
 
   void enterGame() {

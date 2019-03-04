@@ -68,10 +68,6 @@ class Field {
     return false;
   }
 
-  void refresh() {
-//    reimplement in ancestor
-  }
-
   Field getFieldWithUnitNear() {
     if (hasUnit) return this;
 //    var fields = World.instance.getFieldsRound(this);
@@ -92,12 +88,10 @@ class Field {
 
   void addUnit(Unit unit) {
     units.add(unit);
-    refresh();
   }
 
   void removeUnit(Unit unit) {
     units.remove(unit);
-    refresh();
   }
 
   bool isAllyOnField(Player player) {
