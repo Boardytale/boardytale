@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:game_client/src/game/game_controls_component.dart';
+import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/game_view/world_view_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -144,6 +145,7 @@ class WorldComponent implements OnDestroy {
   void onMouseUp(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
+    _clientWorldService.onUnitAssistanceChanged.add(null);
     if (_draggedUnit != null) {
       ClientField field =
           _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
@@ -179,6 +181,18 @@ class WorldComponent implements OnDestroy {
         gateway.setActiveField(field);
         unitManager.setActiveField(field);
         _lastActiveField = field;
+      }
+      if (_draggedUnit != null) {
+        List<String> path = _draggedUnit.field.getShortestPath(field);
+        shared.Track track = shared.Track.fromIds(path, _clientWorldService);
+        ClientAbility ability = _draggedUnit.getAbility(
+            track, event.shiftKey, event.altKey, event.ctrlKey) as ClientAbility;
+        if (ability != null) {
+          ability.show(_draggedUnit, track);
+          _clientWorldService.onUnitAssistanceChanged.add(ability);
+        } else {
+          _clientWorldService.onUnitAssistanceChanged.add(null);
+        }
       }
       return;
     }

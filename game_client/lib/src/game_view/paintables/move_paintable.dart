@@ -1,19 +1,19 @@
 part of world_view;
 
-class ActiveFieldPaintable extends Paintable {
-  ImageElement highlightImage;
+class MovePaintable extends Paintable {
+  ImageElement image;
 
-  ActiveFieldPaintable(WorldViewService view, ClientField field, stage_lib.Stage stage)
+  MovePaintable(WorldViewService view, ClientField field, stage_lib.Stage stage)
       : super(view, field, stage) {
     createBitmap();
   }
 
   @override
   Future<stage_lib.Bitmap> createBitmapInner() async {
-    highlightImage = ImageElement(src: "img/highlight.png");
-    await highlightImage.onLoad.first;
+    image = ImageElement(src: "img/track.png");
+    await image.onLoad.first;
     stage_lib.BitmapData data =
-        stage_lib.BitmapData.fromImageElement(highlightImage);
+    stage_lib.BitmapData.fromImageElement(image);
     width = view.clientWorldService.fieldWidth.toInt();
     height = view.clientWorldService.fieldHeight.toInt();
     bitmap = stage_lib.Bitmap(data)
@@ -26,6 +26,6 @@ class ActiveFieldPaintable extends Paintable {
 
   @override
   void destroy() {
-    // TODO: implement destroy
+    super.destroy();
   }
 }

@@ -10,6 +10,7 @@ class ClientWorldService extends shared.World {
   Stream get onDimensionsChanged => _onDimensionsChanged.stream;
 
   BehaviorSubject<Null> onResolutionLevelChanged = BehaviorSubject();
+  BehaviorSubject<ClientAbility> onUnitAssistanceChanged = BehaviorSubject();
 
   BehaviorSubject<ClientUnit> onUnitAdded = BehaviorSubject<ClientUnit>();
   int userTopOffset = 0;

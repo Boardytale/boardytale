@@ -10,4 +10,7 @@ class ClientAttackAbility extends shared.AttackAbility implements ClientAbility 
     return false;
   }
 
+  @override
+  List<FieldHighlight> highlights = [];
+
 }

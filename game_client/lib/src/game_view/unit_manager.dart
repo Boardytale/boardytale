@@ -8,22 +8,49 @@ class UnitManager {
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
   List<UserIntentionPaintable> intentions = [];
+  List<Paintable> abilityAssistance = [];
 
-  ClientWorldService get clientWorldService => worldViewService.clientWorldService;
+  ClientWorldService get clientWorldService =>
+      worldViewService.clientWorldService;
 
   UnitManager(this.stage, this.worldViewService, this.settings) {
     tale = clientWorldService.clientTaleService;
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
     tale.units.forEach((id, unit) {
-      paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+      paintables.add(
+          UnitPaintable(unit, stage, worldViewService, unit.field, settings));
     });
-    clientWorldService.onUnitAdded.listen((unit){
+    clientWorldService.onUnitAdded.listen((unit) {
       addUnit(unit);
+    });
+    clientWorldService.onUnitAssistanceChanged.listen((ClientAbility ability) {
+      abilityAssistance.forEach((p) => p.destroy());
+      abilityAssistance.clear();
+      if (ability == null) {
+        return;
+      }
+      ability.highlights.forEach((highlight) {
+        switch (highlight.highlightName) {
+          case HighlightName.track:
+            abilityAssistance
+                .add(MovePaintable(worldViewService, highlight.field, stage));
+        }
+      });
     });
   }
 
   void addUnit(shared.Unit unit) {
-    paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+    paintables.add(
+        UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+  }
+
+  void removeUnit(shared.Unit unit) {
+    paintables.removeWhere((paintable) {
+      if (paintable is UnitPaintable) {
+        return paintable.unit == unit;
+      }
+      return false;
+    });
   }
 
   void setActiveField(ClientField field) {
@@ -42,11 +69,12 @@ class UnitManager {
   }
 
   void addIntention(ClientField field, int color) {
-    var test = (test)=>test.color == color;
-    intentions.where(test).forEach((paintable){
+    var test = (test) => test.color == color;
+    intentions.where(test).forEach((paintable) {
       paintable.destroy();
     });
     intentions.removeWhere(test);
-    intentions.add(UserIntentionPaintable(worldViewService, field, stage, color));
+    intentions
+        .add(UserIntentionPaintable(worldViewService, field, stage, color));
   }
 }

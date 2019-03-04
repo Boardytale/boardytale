@@ -12,5 +12,15 @@ List<shared.Ability> createClientAbilityList(shared.AbilitiesEnvelope envelope){
 }
 
 abstract class ClientAbility {
+  List<FieldHighlight> highlights = [];
   void show(shared.Unit invoker, shared.Track track);
+}
+
+class FieldHighlight {
+  HighlightName highlightName;
+  shared.Field field;
+}
+
+enum HighlightName{
+  track
 }

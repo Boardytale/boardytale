@@ -6,6 +6,7 @@ import 'dart:math' as math;
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/game_model/model.dart';
+import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 import 'package:angular/core.dart';
@@ -14,11 +15,12 @@ part 'unit_manager.dart';
 
 part 'paintable.dart';
 
-part 'unit_paintable.dart';
+part 'package:game_client/src/game_view/paintables/unit_paintable.dart';
 
-part 'active_field_paintable.dart';
+part 'package:game_client/src/game_view/paintables/active_field_paintable.dart';
 
-part 'user_intention_paintable.dart';
+part 'package:game_client/src/game_view/paintables/user_intention_paintable.dart';
+part 'package:game_client/src/game_view/paintables/move_paintable.dart';
 
 @Injectable()
 class WorldViewService {

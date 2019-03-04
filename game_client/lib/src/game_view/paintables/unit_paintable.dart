@@ -211,6 +211,6 @@ class UnitPaintable extends Paintable {
   }
 
   void destroy() {
-    stage.removeChild(bitmap);
+    super.destroy();
   }
 }
