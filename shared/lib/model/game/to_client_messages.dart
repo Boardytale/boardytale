@@ -106,7 +106,7 @@ class ToClientMessage {
   CancelOnField get getCancelOnField =>
       CancelOnField.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleStateUpdate(List<CancelOnFieldAction> actions) {
+  factory ToClientMessage.fromCancelOnField(List<CancelOnFieldAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.cancelOnField
       ..content = json.encode((CancelOnField()..actions = actions).toJson());
@@ -118,12 +118,12 @@ class ToClientMessage {
       IntentionUpdate.fromJson(json.decode(content));
 
   factory ToClientMessage.fromIntentionUpdate(
-      String playerId, String activeFieldId) {
+      String playerId, List<String> trackFieldsId) {
     return ToClientMessage()
       ..message = OnClientAction.intentionUpdate
       ..content = json.encode((IntentionUpdate()
             ..playerId = playerId
-            ..activeFieldId = activeFieldId)
+            ..trackFieldsId = trackFieldsId)
           .toJson());
   }
 }
@@ -265,7 +265,7 @@ class CancelOnField extends MessageContent {
 @JsonSerializable()
 class IntentionUpdate extends MessageContent {
   String playerId;
-  String activeFieldId;
+  List<String> trackFieldsId;
 
   static IntentionUpdate fromJson(Map<String, dynamic> json) =>
       _$IntentionUpdateFromJson(json);

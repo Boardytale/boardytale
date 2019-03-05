@@ -84,10 +84,10 @@ class ToGameServerMessage {
   PlayerGameIntention get playerGameIntentionMessage =>
       PlayerGameIntention.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.playerGameIntention(String fieldId) {
+  factory ToGameServerMessage.playerGameIntention(List<String> fieldsId) {
     return ToGameServerMessage()
       ..content =
-          jsonEncode((PlayerGameIntention()..fieldId = fieldId).toJson())
+          jsonEncode((PlayerGameIntention()..fieldsId = fieldsId).toJson())
       ..message = OnServerAction.playerGameIntention;
   }
 
@@ -204,7 +204,7 @@ class UnitTrackAction extends MessageContent {
 
 @JsonSerializable()
 class PlayerGameIntention extends MessageContent {
-  String fieldId;
+  List<String> fieldsId;
 
   static PlayerGameIntention fromJson(Map<String, dynamic> json) =>
       _$PlayerGameIntentionFromJson(json);

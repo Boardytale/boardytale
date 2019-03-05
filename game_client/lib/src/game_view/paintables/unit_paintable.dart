@@ -85,8 +85,6 @@ class UnitPaintable extends Paintable {
       data = unitGlobalCache[state];
     }
     bitmap = stage_lib.Bitmap(data);
-    bitmap.width = world.fieldWidth;
-    bitmap.height = world.fieldHeight;
     return;
   }
 

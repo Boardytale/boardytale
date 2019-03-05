@@ -5,11 +5,13 @@ import 'package:game_client/src/lobby/lobbies.dart';
 import 'package:game_client/src/lobby/lobby.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
+import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
 import 'dart:html';
-import 'dart:async';
+import 'package:shared/model/model.dart' as shared;
 
 @Component(
     selector: 'my-app',
@@ -59,17 +61,25 @@ class AppComponent {
   bool get showGame =>
       appService.navigationState.value.name == GameNavigationState.inGame;
 
+  LobbyService lobbyService;
+  GatewayService gateway;
+
   // unused services are used for gateway handler injection
-  AppComponent(
-    this.appService,
-    this.changeDetector,
-    this.gameService,
-  ) {
-    appService.navigationState.listen((navigation){
-      changeDetector.markForCheck();
-      if(navigation.name == GameNavigationState.findLobby){
-        appService.goToState(GameNavigationState.createGame);
+  AppComponent(this.appService, this.changeDetector, this.gameService,
+      this.lobbyService, this.gateway) {
+    appService.navigationState.listen((navigation) {
+      if (navigation.name == GameNavigationState.findLobby) {
+        lobbyService.lobbies.listen((onData) {
+          if (onData != null && onData.isNotEmpty) {
+            gateway.sendMessage(
+                shared.ToGameServerMessage.enterLobby(onData.first.id));
+          }
+          if (onData.isEmpty) {
+            appService.goToState(GameNavigationState.createGame);
+          }
+        });
       }
+      changeDetector.markForCheck();
     });
     window.onResize.listen(resizeBody);
   }

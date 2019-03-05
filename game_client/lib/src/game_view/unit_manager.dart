@@ -68,13 +68,26 @@ class UnitManager {
     return null;
   }
 
-  void addIntention(ClientField field, int color) {
+  void addIntention(List<ClientField> fields, int color) {
     var test = (test) => test.color == color;
     intentions.where(test).forEach((paintable) {
       paintable.destroy();
     });
     intentions.removeWhere(test);
-    intentions
-        .add(UserIntentionPaintable(worldViewService, field, stage, color));
+    if(fields != null){
+      var lastField = null;
+      fields.forEach((field){
+        if(field == null){
+          return;
+        }
+        intentions
+            .add(UserIntentionPaintable(worldViewService, field, stage, color));
+        if(lastField != null){
+          intentions
+              .add(UserIntentionConnectorPaintable(worldViewService, lastField, field, stage, color));
+        }
+        lastField = field;
+      });
+    }
   }
 }

@@ -4,5 +4,5 @@ import 'package:shared/model/model.dart';
 @Injectable()
 class SettingsService {
   Lang language = Lang.cz;
-  double defaultFieldWidth = 72;
+  int defaultFieldWidth = 72;
 }

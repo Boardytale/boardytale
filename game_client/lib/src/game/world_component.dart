@@ -78,11 +78,17 @@ class WorldComponent implements OnDestroy {
   }
 
   void handleIntentionUpdate(shared.ToClientMessage message) {
-    String activeFieldId = message.getIntentionUpdate.activeFieldId;
+    List<String> activeFieldIds = message.getIntentionUpdate.trackFieldsId;
     String playerId = message.getIntentionUpdate.playerId;
     ClientPlayer player = appService.players[playerId];
     int color = player.color;
-    unitManager.addIntention(_clientWorldService.fields[activeFieldId], color);
+    unitManager.addIntention(
+        activeFieldIds == null
+            ? null
+            : activeFieldIds
+                .map((id) => _clientWorldService.fields[id])
+                .toList(),
+        color);
   }
 
   void handleUnitCreateOrUpdate(shared.ToClientMessage message) {
@@ -160,6 +166,7 @@ class WorldComponent implements OnDestroy {
               ..unitId = _draggedUnit.id
               ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
               ..track = track.toIds()));
+        gateway.sendIntention(field == null ? null : [field]);
       } else {
         appService.alertError(
             "No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
@@ -178,20 +185,23 @@ class WorldComponent implements OnDestroy {
       ClientField field =
           _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
       if (field != _lastActiveField) {
-        gateway.setActiveField(field);
-        unitManager.setActiveField(field);
         _lastActiveField = field;
-      }
-      if (_draggedUnit != null) {
-        List<String> path = _draggedUnit.field.getShortestPath(field);
-        shared.Track track = shared.Track.fromIds(path, _clientWorldService);
-        ClientAbility ability = _draggedUnit.getAbility(
-            track, event.shiftKey, event.altKey, event.ctrlKey) as ClientAbility;
-        if (ability != null) {
-          ability.show(_draggedUnit, track);
-          _clientWorldService.onUnitAssistanceChanged.add(ability);
+        if (_draggedUnit != null) {
+          List<String> path = _draggedUnit.field.getShortestPath(field);
+          shared.Track track = shared.Track.fromIds(path, _clientWorldService);
+          ClientAbility ability = _draggedUnit.getAbility(
+                  track, event.shiftKey, event.altKey, event.ctrlKey)
+              as ClientAbility;
+          if (ability != null) {
+            ability.show(_draggedUnit, track);
+            _clientWorldService.onUnitAssistanceChanged.add(ability);
+          } else {
+            _clientWorldService.onUnitAssistanceChanged.add(null);
+          }
+          gateway.sendIntention(track.fields);
         } else {
-          _clientWorldService.onUnitAssistanceChanged.add(null);
+          unitManager.setActiveField(field);
+          gateway.sendIntention(field == null ? null : [field]);
         }
       }
       return;

@@ -36,8 +36,10 @@ class Field {
     y = int.parse(xy[1]);
   }
 
+  // TODO: explain
   int get yt => y - (x / 2).floor();
 
+  // TODO: explain
   double get posY => y + (x % 2) / 2;
 
   List<Unit> alivesOnField() {

@@ -18,7 +18,10 @@ abstract class Paintable {
   StreamSubscription _onDimensionChangedSubscription;
 
   Paintable(this.view, this._field, this.stage) {
-    _onDimensionChangedSubscription = view.clientWorldService.onDimensionsChanged.listen(_transformBitmap);
+    width = view.clientWorldService.defaultFieldWidth;
+    height = view.clientWorldService.defaultFieldHeight;
+    _onDimensionChangedSubscription =
+        view.clientWorldService.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;
@@ -60,17 +63,24 @@ abstract class Paintable {
 
   void createBitmap([_]) {
     if (_createBitmapOrdered) return;
-    if(_destroyed) throw "creating bitmap of destroyed element";
+    if (_destroyed) {
+      print("creating bitmap of destroyed element");
+      return;
+    }
     _createBitmapOrdered = true;
     Future.delayed(const Duration(milliseconds: 30)).then((_) {
+      if (_destroyed) {
+        return;
+      }
       _createBitmapOrdered = false;
       createBitmapInner();
+      _transformBitmap();
     });
   }
 
   Future createBitmapInner();
 
-  // scale bitmap according to map
+// scale bitmap according to map
   void _transformBitmap([_]) {
     if (bitmap == null || field == null) return;
     bitmap.x = _field.offset.x + (leftOffset * view.clientWorldService.zoom);
@@ -79,8 +89,8 @@ abstract class Paintable {
     bitmap.height = height * view.clientWorldService.zoom;
   }
 
-  void destroy(){
-    if(_destroyed) throw "double destroy";
+  void destroy() {
+    if (_destroyed) throw "double destroy";
     _onDimensionChangedSubscription.cancel();
     if (stage.contains(bitmap)) {
       stage.removeChild(bitmap);

@@ -6,10 +6,12 @@ class IntentionService {
   }
 
   void handle(MessageWithConnection message) {
-    String fieldId = message.message.playerGameIntentionMessage.fieldId;
-    message.player.tale.players.forEach((email, player){
-      if(player != message.player){
-        gateway.sendMessage(shared.ToClientMessage.fromIntentionUpdate(player.id, fieldId), player);
+    message.player.tale.players.forEach((email, player) {
+      if (player != message.player) {
+        gateway.sendMessage(
+            shared.ToClientMessage.fromIntentionUpdate(
+                player.id, message.message.playerGameIntentionMessage.fieldsId),
+            player);
       }
     });
   }

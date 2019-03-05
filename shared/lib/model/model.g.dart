@@ -859,13 +859,14 @@ Map<String, dynamic> _$CancelOnFieldToJson(CancelOnField instance) =>
 IntentionUpdate _$IntentionUpdateFromJson(Map<String, dynamic> json) {
   return IntentionUpdate()
     ..playerId = json['playerId'] as String
-    ..activeFieldId = json['activeFieldId'] as String;
+    ..trackFieldsId =
+        (json['trackFieldsId'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$IntentionUpdateToJson(IntentionUpdate instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
-      'activeFieldId': instance.activeFieldId
+      'trackFieldsId': instance.trackFieldsId
     };
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
@@ -970,12 +971,13 @@ const _$AbilityNameEnumMap = <AbilityName, dynamic>{
 };
 
 PlayerGameIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
-  return PlayerGameIntention()..fieldId = json['fieldId'] as String;
+  return PlayerGameIntention()
+    ..fieldsId = (json['fieldsId'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$PlayerGameIntentionToJson(
         PlayerGameIntention instance) =>
-    <String, dynamic>{'fieldId': instance.fieldId};
+    <String, dynamic>{'fieldsId': instance.fieldsId};
 
 ControlsAction _$ControlsActionFromJson(Map<String, dynamic> json) {
   return ControlsAction()

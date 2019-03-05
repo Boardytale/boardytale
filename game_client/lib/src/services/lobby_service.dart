@@ -7,7 +7,7 @@ import 'package:shared/model/model.dart' as shared;
 class LobbyService {
   final GatewayService gatewayService;
   BehaviorSubject<List<shared.OpenedLobby>> lobbies =
-      BehaviorSubject<List<shared.OpenedLobby>>(seedValue: []);
+      BehaviorSubject<List<shared.OpenedLobby>>(seedValue: null);
   BehaviorSubject<shared.OpenedLobby> openedLobby = BehaviorSubject<shared.OpenedLobby>();
 
   LobbyService(this.gatewayService) {

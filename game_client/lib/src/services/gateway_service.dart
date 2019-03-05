@@ -60,7 +60,9 @@ class GatewayService {
     }
   }
 
-  void setActiveField(ClientField field) {
-    sendMessage(shared.ToGameServerMessage.playerGameIntention(field?.id));
+  void sendIntention(List<shared.Field> fields) {
+    sendMessage(shared.ToGameServerMessage.playerGameIntention(fields?.map((f){
+      return f.id;
+    })?.toList()));
   }
 }

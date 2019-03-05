@@ -17,8 +17,8 @@ class ClientWorldService extends shared.World {
   int userLeftOffset = 0;
   double _zoom = 1;
   int _resolutionLevel = 1;
-  double defaultFieldHeight;
-  double defaultFieldWidth;
+  int defaultFieldHeight;
+  int defaultFieldWidth;
   double widthHeightRatio = 1;
   double fieldWidth = 1;
   double fieldHeight = 1;
@@ -54,7 +54,7 @@ class ClientWorldService extends shared.World {
     this.clientTaleService = tale;
     super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     defaultFieldWidth = settings.defaultFieldWidth;
-    defaultFieldHeight = settings.defaultFieldWidth * widthHeightRatio;
+    defaultFieldHeight = (settings.defaultFieldWidth * widthHeightRatio).toInt();
     defaultHex = HexaBorders(this);
     recalculate();
   }
