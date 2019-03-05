@@ -53,9 +53,8 @@ class ServerUnit extends shared.Unit {
 //  }
 
   bool newTurn() {
-    shared.UnitManipulateAction action = shared.UnitManipulateAction()
+    shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction()
       ..unitId = id
-      ..isUpdate = true
       ..state = (shared.LiveUnitState()
         ..steps = type.speed
         ..actions = type.actions

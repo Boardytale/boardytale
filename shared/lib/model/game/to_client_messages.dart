@@ -83,13 +83,33 @@ class ToClientMessage {
 
   // ---
 
-  TaleStateUpdate get getTaleStateUpdate =>
-      TaleStateUpdate.fromJson(json.decode(content));
+  UnitCreateOrUpdate get getUnitCreateOrUpdate =>
+      UnitCreateOrUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleStateUpdate(List<UnitManipulateAction> actions) {
+  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions) {
     return ToClientMessage()
-      ..message = OnClientAction.taleStateUpdate
-      ..content = json.encode((TaleStateUpdate()..actions = actions).toJson());
+      ..message = OnClientAction.unitCreateOrUpdate
+      ..content = json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
+  }
+  // ---
+
+  UnitDelete get getUnitDelete =>
+      UnitDelete.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromUnitDelete(List<UnitDeleteAction> actions) {
+    return ToClientMessage()
+      ..message = OnClientAction.unitDelete
+      ..content = json.encode((UnitDelete()..actions = actions).toJson());
+  }
+  // ---
+
+  CancelOnField get getCancelOnField =>
+      CancelOnField.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromTaleStateUpdate(List<CancelOnFieldAction> actions) {
+    return ToClientMessage()
+      ..message = OnClientAction.cancelOnField
+      ..content = json.encode((CancelOnField()..actions = actions).toJson());
   }
 
   // ---
@@ -122,8 +142,12 @@ enum OnClientAction {
   openedLobbyData,
   @JsonValue('taleData')
   taleData,
-  @JsonValue('taleStateUpdate')
-  taleStateUpdate,
+  @JsonValue('unitCreateOrUpdate')
+  unitCreateOrUpdate,
+  @JsonValue('unitDelete')
+  unitDelete,
+  @JsonValue('cancelOnField')
+  cancelOnField,
   @JsonValue('intentionUpdate')
   intentionUpdate,
 }
@@ -203,14 +227,38 @@ class TaleData extends MessageContent {
 }
 
 @JsonSerializable()
-class TaleStateUpdate extends MessageContent {
-  List<UnitManipulateAction> actions;
+class UnitCreateOrUpdate extends MessageContent {
+  List<UnitCreateOrUpdateAction> actions;
 
-  static TaleStateUpdate fromJson(Map<String, dynamic> json) =>
-      _$TaleStateUpdateFromJson(json);
+  static UnitCreateOrUpdate fromJson(Map<String, dynamic> json) =>
+      _$UnitCreateOrUpdateFromJson(json);
 
   Map<String, dynamic> toJson() {
-    return _$TaleStateUpdateToJson(this);
+    return _$UnitCreateOrUpdateToJson(this);
+  }
+}
+
+@JsonSerializable()
+class UnitDelete extends MessageContent {
+  List<UnitDeleteAction> actions;
+
+  static UnitDelete fromJson(Map<String, dynamic> json) =>
+      _$UnitDeleteFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$UnitDeleteToJson(this);
+  }
+}
+
+@JsonSerializable()
+class CancelOnField extends MessageContent {
+  List<CancelOnFieldAction> actions;
+
+  static CancelOnField fromJson(Map<String, dynamic> json) =>
+      _$CancelOnFieldFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$CancelOnFieldToJson(this);
   }
 }
 

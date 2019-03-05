@@ -223,7 +223,9 @@ export type OnClientAction =
     | 'setCurrentUser'
     | 'openedLobbyData'
     | 'taleData'
-    | 'taleStateUpdate'
+    | 'unitCreateOrUpdate'
+    | 'unitDelete'
+    | 'cancelOnField'
     | 'intentionUpdate';
 
 export type OnServerAction =

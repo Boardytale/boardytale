@@ -2,11 +2,35 @@ part of model;
 
 @JsonSerializable()
 class LiveUnitState {
+  @JsonKey(includeIfNull: false)
   int far;
+
+  @JsonKey(includeIfNull: false)
   int steps;
+
+  @JsonKey(includeIfNull: false)
   int health;
+
+  @JsonKey(includeIfNull: false)
   List<Buff> buffs = [];
+
+  @JsonKey(includeIfNull: false)
   int actions;
+
+  @JsonKey(includeIfNull: false)
+  String changeToTypeName;
+
+  @JsonKey(includeIfNull: false)
+  String moveToFieldId;
+
+  @JsonKey(includeIfNull: false)
+  String transferToPlayerId;
+
+  @JsonKey(includeIfNull: false)
+  String transferToAiGroupId;
+
+  @JsonKey(includeIfNull: false)
+  AnimationName useAnimationName;
 
   static LiveUnitState fromJson(Map data) {
     return _$LiveUnitStateFromJson(data);
@@ -27,28 +51,50 @@ class LiveUnitState {
 }
 
 @JsonSerializable()
-class UnitManipulateAction {
-  bool isCreate = false;
-  bool isDelete = false;
-  bool isUpdate = false;
-  bool isCancel = false;
-  String unitTypeName;
-  String fieldId;
-  String unitId;
-  LiveUnitState state;
-  String playerId;
-  String aiGroupId;
-
+class UnitCreateOrUpdateAction {
   /// playerId_clientManagedActionId
   String actionId;
-  AnimationName animationName;
+  String unitId;
+  LiveUnitState state;
 
-  static UnitManipulateAction fromJson(Map data) {
-    return _$UnitManipulateActionFromJson(data);
+  static UnitCreateOrUpdateAction fromJson(Map data) {
+    return _$UnitCreateOrUpdateActionFromJson(data);
   }
 
   Map<String, dynamic> toJson() {
-    return _$UnitManipulateActionToJson(this);
+    return _$UnitCreateOrUpdateActionToJson(this);
+  }
+}
+
+@JsonSerializable()
+class UnitDeleteAction {
+  /// playerId_clientManagedActionId
+  String actionId;
+  String unitId;
+  AnimationName animationName;
+
+  static UnitDeleteAction fromJson(Map data) {
+    return _$UnitDeleteActionFromJson(data);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$UnitDeleteActionToJson(this);
+  }
+}
+
+@JsonSerializable()
+class CancelOnFieldAction {
+  /// playerId_clientManagedActionId
+  String actionId;
+  String fieldId;
+  AnimationName animationName;
+
+  static CancelOnFieldAction fromJson(Map data) {
+    return _$CancelOnFieldActionFromJson(data);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$CancelOnFieldActionToJson(this);
   }
 }
 
@@ -62,7 +108,7 @@ class UnitUpdateReport {
   int deltaActions;
   List<String> removedBuffIds;
   List<Buff> buffsAdded;
-  UnitManipulateAction action;
+  UnitCreateOrUpdateAction action;
 }
 
 @Typescript()

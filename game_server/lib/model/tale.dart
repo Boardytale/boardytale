@@ -80,45 +80,44 @@ class ServerTale {
   void sendInitialUnits() {
     // TODO: implement line of sight here
 
-    List<shared.UnitManipulateAction> actions = [];
+    List<shared.UnitCreateOrUpdateAction> actions = [];
     units.forEach((id, unit) {
-      actions.add(shared.UnitManipulateAction()
-        ..isCreate = true
+      actions.add(shared.UnitCreateOrUpdateAction()
         ..unitId = unit.id
-        ..unitTypeName = unit.type.name
-        ..fieldId = unit.field.id
-        ..playerId = unit.player?.id
-        ..aiGroupId = unit.aiGroupId
-        ..state = unit.getState()
+        ..state = (unit.getState()
+        ..moveToFieldId = unit.field.id
+            ..transferToPlayerId = unit.player?.id
+            ..transferToAiGroupId = unit.aiGroupId
+            ..changeToTypeName = unit.type.name
+        )
       );
     });
 
     players.values.forEach((player) {
       gateway.sendMessage(
-          shared.ToClientMessage.fromTaleStateUpdate(actions), player);
+          shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
     });
   }
 
-  void sendNewState(shared.UnitManipulateAction action) {
+  void sendNewState(shared.UnitCreateOrUpdateAction action) {
     players.values.forEach((player) {
       gateway.sendMessage(
-          shared.ToClientMessage.fromTaleStateUpdate([action]), player);
+          shared.ToClientMessage.fromUnitCreateOrUpdate([action]), player);
     });
   }
 
   void endOfTurn(MessageWithConnection message) {
-    List<shared.UnitManipulateAction> actions = [];
+    List<shared.UnitCreateOrUpdateAction> actions = [];
     units.forEach((key, unit) {
       if (unit.newTurn()) {
-        actions.add(shared.UnitManipulateAction()
+        actions.add(shared.UnitCreateOrUpdateAction()
           ..unitId = unit.id
-          ..isUpdate = true
           ..state = (shared.LiveUnitState()..fromUnit(unit)));
       }
     });
     players.values.forEach((player) {
       gateway.sendMessage(
-          shared.ToClientMessage.fromTaleStateUpdate(actions), player);
+          shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
     });
   }
 }

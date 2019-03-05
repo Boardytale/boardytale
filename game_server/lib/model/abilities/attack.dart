@@ -6,15 +6,14 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       ServerUnit unit, shared.Track track, shared.UnitTrackAction action, ServerTale tale) {
     bool isValid = super.validate(invoker, track);
 
-    shared.UnitManipulateAction action = shared.UnitManipulateAction();
+    shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
     action
       ..unitId = unit.id
       ..actionId = action.actionId;
 
     if (!isValid) {
-      action.isCancel = true;
       gateway.sendMessage(
-          shared.ToClientMessage.fromTaleStateUpdate([action]), unit.player);
+          shared.ToClientMessage.fromUnitCreateOrUpdate([action]), unit.player);
       return;
     }
 //    unit.move(track);

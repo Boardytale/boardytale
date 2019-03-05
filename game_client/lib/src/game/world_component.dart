@@ -63,8 +63,8 @@ class WorldComponent implements OnDestroy {
     gameService.onWorldLoaded.listen(modelLoaded);
     gateway.handlers[shared.OnClientAction.intentionUpdate] =
         handleIntentionUpdate;
-    gateway.handlers[shared.OnClientAction.taleStateUpdate] =
-        handleTaleStateUpdate;
+    gateway.handlers[shared.OnClientAction.unitCreateOrUpdate] =
+        handleUnitCreateOrUpdate;
   }
 
   @ViewChild("world")
@@ -85,9 +85,9 @@ class WorldComponent implements OnDestroy {
     unitManager.addIntention(_clientWorldService.fields[activeFieldId], color);
   }
 
-  void handleTaleStateUpdate(shared.ToClientMessage message) {
-    shared.TaleStateUpdate state = message.getTaleStateUpdate;
-    _clientWorldService.updateState(state.actions);
+  void handleUnitCreateOrUpdate(shared.ToClientMessage message) {
+    shared.UnitCreateOrUpdate state = message.getUnitCreateOrUpdate;
+    _clientWorldService.createOrUpdateUnits(state.actions);
   }
 
   void detectChanges([dynamic _]) {

@@ -18,7 +18,7 @@ class Unit {
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
   String aiGroupId;
-  List<UnitManipulateAction> actionLog = [];
+  List<UnitCreateOrUpdateAction> actionLog = [];
 
   /// called on health change with previous health state
   BehaviorSubject onTypeChanged = BehaviorSubject();
@@ -100,7 +100,6 @@ class Unit {
 
   bool get isAlive => _health > 0;
 
-  // TODO: rethink redundancy in field with applyUpdateAction
   void fromUnitType(UnitType unitType, Field field, String id) {
     this.id = id;
     type = unitType;
@@ -112,6 +111,16 @@ class Unit {
     _field?.removeUnit(this);
     _field = field;
     field.addUnit(this);
+  }
+
+  void fromCreateAction(UnitCreateOrUpdateAction action, Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types){
+    fromUnitType(types[action.state.changeToTypeName], fields[action.state.moveToFieldId], action.unitId);
+    if(action.state.transferToPlayerId != null){
+      player = players[action.state.transferToPlayerId];
+    }else{
+      aiGroupId = action.state.transferToAiGroupId;
+    }
+    addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
   }
 
   /// Type change cause nullation of abilities pseudostates.
@@ -161,7 +170,7 @@ class Unit {
           orElse: () => null);
 
   UnitUpdateReport addUnitUpdateAction(
-      UnitManipulateAction action, Field newField) {
+      UnitCreateOrUpdateAction action, Field newField) {
     UnitUpdateReport report = UnitUpdateReport();
     print("unit action ${id} ${action.toJson()}");
     report.action = action;
@@ -213,7 +222,7 @@ class Unit {
       changed = true;
     }
 
-    if (action.fieldId != null && field.id != action.fieldId) {
+    if (state.moveToFieldId != null && field.id != state.moveToFieldId) {
       _field?.removeUnit(this);
       _field = newField;
       _field.addUnit(this);
