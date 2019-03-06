@@ -34,6 +34,9 @@ class MoveAbility extends Ability {
   AbilityReach get reach => AbilityReach.move;
 
   bool validate(Unit invoker, Track track) {
+    if (track.fields.length == 1) {
+      return false;
+    }
     /**
      *  use null to inherit invoker speed
      *  use "+1" "-1" to modify invoker steps
@@ -57,10 +60,14 @@ class MoveAbility extends Ability {
       currentSteps = 0;
     }
 
-    if (currentSteps < track.fields.length - 1) {
+    if (!track.isFreeWay(invoker.player)) {
       return false;
     }
-    return track.isFreeWay(invoker.player);
+
+    if (currentSteps < track.getMoveCostOfFreeWay()) {
+      return false;
+    }
+    return true;
   }
 
   fromEnvelope(MoveAbilityEnvelope move) {

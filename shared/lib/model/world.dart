@@ -31,7 +31,8 @@ class World {
 
 //  Field operator [](String fieldId) => fields[fieldId];
 
-  void fromEnvelope(WorldCreateEnvelope envelope, Field Function(String key, World world) fieldInstanceGenerator) {
+  void fromEnvelope(WorldCreateEnvelope envelope,
+      Field Function(String key, World world) fieldInstanceGenerator) {
     width = envelope.width;
     height = envelope.height;
     fields.clear();
@@ -55,7 +56,8 @@ class World {
     }
   }
 
-  Map<String, FieldCreateEnvelope> createFieldsData(WorldCreateEnvelope envelope){
+  Map<String, FieldCreateEnvelope> createFieldsData(
+      WorldCreateEnvelope envelope) {
     Map<String, FieldCreateEnvelope> fieldsData = envelope.fields;
     Map<String, FieldCreateEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
@@ -65,12 +67,67 @@ class World {
         }
         if (v is Map<String, dynamic>) {
           indexedFieldsData[k] = FieldCreateEnvelope()
-            ..terrain = envelope.baseTerrain
-          ;
+            ..terrain = envelope.baseTerrain;
         }
       });
     }
     return fieldsData;
   }
 
+  List<Field> getShortestPathWithTerrain(Field fromField, Field toField) {
+    if (fromField == toField) {
+      return [fromField];
+    }
+    Set<Field> reachedFields = Set();
+    List<List<Field>> paths = [
+      [fromField]
+    ];
+    int generation = 0;
+    Map<int, List<List<Field>>> waitingPaths = {};
+
+    while (++generation < 10000) {
+      List<List<Field>> nextGenPaths = [];
+      for (int i = 0; i < paths.length; i++) {
+        List<Field> currentGenPath = paths[i];
+        for (int i = 0; i < 6; i++) {
+          Field nextField = fields[currentGenPath.last.stepToDirection(i)];
+          // out of map
+          if (nextField == null) {
+            continue;
+          }
+          if (nextField == toField) {
+            if (nextField.terrain == Terrain.rock ||
+                nextField.terrain == Terrain.water) {
+              return [];
+            }
+            return currentGenPath.toList()
+              ..add(nextField);
+          }
+          if (reachedFields.contains(nextField)) {
+            continue;
+          }
+          if (nextField.terrain == Terrain.rock ||
+              nextField.terrain == Terrain.water) {
+            continue;
+          }
+          if (nextField.terrain == Terrain.forest) {
+            if (waitingPaths[generation + 1] == null) {
+              waitingPaths[generation + 1 ] = [];
+            }
+            waitingPaths[generation + 1 ].add(currentGenPath.toList()
+              ..add(nextField));
+            continue;
+          }
+          reachedFields.add(nextField);
+          nextGenPaths.add(currentGenPath.toList()
+            ..add(nextField));
+        }
+      }
+      if (waitingPaths.containsKey(generation)){
+        nextGenPaths.addAll(waitingPaths[generation]);
+      }
+      paths = nextGenPaths;
+    }
+    return null;
+  }
 }

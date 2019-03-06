@@ -9,6 +9,9 @@ export let world: WorldCreateEnvelope = {
         '4_4': {
             terrain: 'forest',
         },
+        '5_4': {
+            terrain: 'forest',
+        },
         '5_5': {
             terrain: 'water',
         },

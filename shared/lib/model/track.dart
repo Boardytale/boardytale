@@ -63,6 +63,18 @@ class Track {
     return true;
   }
 
+  int getMoveCostOfFreeWay(){
+    int cost = 0;
+    for(int i = 1;i<fields.length;i++){
+      if(fields[i].terrain == Terrain.forest){
+        cost +=2;
+      }else{
+        cost +=1;
+      }
+    }
+    return cost;
+  }
+
   bool isHandMove(Player ofPlayer) {
     if (fields.length >= 3) {
       Field toGo = fields[fields.length - 2];

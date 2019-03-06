@@ -155,8 +155,8 @@ class WorldComponent implements OnDestroy {
     if (_draggedUnit != null) {
       ClientField field =
           _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
-      List<String> path = _draggedUnit.field.getShortestPath(field);
-      shared.Track track = shared.Track.fromIds(path, _clientWorldService);
+      List<shared.Field> path = _clientWorldService.getShortestPathWithTerrain(_draggedUnit.field, field);
+      shared.Track track = shared.Track(path);
       shared.Ability ability = _draggedUnit.getAbility(
           track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
@@ -171,8 +171,6 @@ class WorldComponent implements OnDestroy {
         appService.alertError(
             "No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }
-//      _draggedUnit.unit.move(track);
-//      _draggedUnit.field = field;
     }
     _moving = false;
     _draggedUnit = null;
@@ -187,8 +185,8 @@ class WorldComponent implements OnDestroy {
       if (field != _lastActiveField) {
         _lastActiveField = field;
         if (_draggedUnit != null) {
-          List<String> path = _draggedUnit.field.getShortestPath(field);
-          shared.Track track = shared.Track.fromIds(path, _clientWorldService);
+          List<shared.Field> path = _clientWorldService.getShortestPathWithTerrain(_draggedUnit.field, field);
+          shared.Track track = shared.Track(path);
           ClientAbility ability = _draggedUnit.getAbility(
                   track, event.shiftKey, event.altKey, event.ctrlKey)
               as ClientAbility;
@@ -199,6 +197,7 @@ class WorldComponent implements OnDestroy {
             _clientWorldService.onUnitAssistanceChanged.add(null);
           }
           gateway.sendIntention(track.fields);
+//          unitManager.setActiveField(null);
         } else {
           unitManager.setActiveField(field);
           gateway.sendIntention(field == null ? null : [field]);

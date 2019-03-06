@@ -23,7 +23,7 @@ class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
     shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
 
     shared.LiveUnitState state = shared.LiveUnitState()
-      ..steps = unit.steps - track.fields.length + 1
+      ..steps = unit.steps - track.getMoveCostOfFreeWay()
       ..far = unit.far + track.fields.length - 1
       ..moveToFieldId = track.last.id;
 
