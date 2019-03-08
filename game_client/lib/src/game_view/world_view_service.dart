@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:html';
 import 'dart:math' as math;
 import 'package:game_client/src/services/app_service.dart';
+import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
@@ -20,6 +21,7 @@ part 'package:game_client/src/game_view/paintables/unit_paintable.dart';
 part 'package:game_client/src/game_view/paintables/active_field_paintable.dart';
 
 part 'package:game_client/src/game_view/paintables/user_intention_paintable.dart';
+
 part 'package:game_client/src/game_view/paintables/move_paintable.dart';
 
 @Injectable()
@@ -31,18 +33,19 @@ class WorldViewService {
   Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
   final AppService appService;
+  final GameService gameService;
 
-  WorldViewService(this.appService) {
+  WorldViewService(this.appService, this.gameService) {
     Map<shared.Terrain, ImageElement> resources = {};
     Map<shared.Terrain, String> paths = {
-    shared.Terrain.grass: "img/map_tiles/grass.png",
-    shared.Terrain.rock: "img/map_tiles/rock.png",
-    shared.Terrain.water: "img/map_tiles/water.png",
-    shared.Terrain.forest: "img/map_tiles/forest2.png",
+      shared.Terrain.grass: "img/map_tiles/grass.png",
+      shared.Terrain.rock: "img/map_tiles/rock.png",
+      shared.Terrain.water: "img/map_tiles/water.png",
+      shared.Terrain.forest: "img/map_tiles/forest2.png",
     };
     List<Future<Event>> imageLoads = [];
 
-    paths.forEach((terrain, path){
+    paths.forEach((terrain, path) {
       ImageElement image = ImageElement(src: path);
       resources[terrain] = image;
       imageLoads.add(image.onLoad.first);
@@ -53,6 +56,8 @@ class WorldViewService {
       createBitmapsByTerrain(resources);
       init();
     });
+
+    gameService.showCoordinateLabels.listen(repaint);
   }
 
   void construct(worldStage, model) {
@@ -88,23 +93,30 @@ class WorldViewService {
   }
 
   void init() {
-    Stopwatch stopwatch = Stopwatch();
-    stopwatch.start();
     fields.forEach((key, ViewField field) {
-      if (field.terrain == null) {
-        stage_lib.Bitmap terrain = stage_lib.Bitmap(
-            fieldBitmaps[field.original.terrain].bitmapData.clone());
-        if (field.label == null) {
+      bool showLabel = gameService.showCoordinateLabels.value;
+      String state = field.getStateLabel(showLabel);
+      if (!field.bitmapsByState.containsKey(state)) {
+        stage_lib.BitmapData terrainData =
+            fieldBitmaps[field.original.terrain].bitmapData.clone();
+        if (showLabel) {
           var textField = stage_lib.TextField(field.original.id,
               stage_lib.TextFormat('Spicy Rice', 18, stage_lib.Color.Black));
           stage_lib.BitmapData labelBitmap =
               stage_lib.BitmapData(60, 30, stage_lib.Color.Transparent);
           labelBitmap.draw(textField);
-          terrain.bitmapData.drawPixels(labelBitmap,
-              stage_lib.Rectangle(0, 0, 60, 30), stage_lib.Point(20, 20));
+          terrainData.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, 60, 30),
+              stage_lib.Point(20, 3));
         }
-        worldStage.addChild(terrain);
-        field.terrain = terrain;
+        field.bitmapsByState[state] = terrainData;
+        if (field.terrain == null) {
+          field.terrain = stage_lib.Bitmap(terrainData);
+          worldStage.addChild(field.terrain);
+        } else {
+          field.setState(state);
+        }
+      } else {
+        field.setState(state);
       }
       field.terrain.x = field.original.offset.x;
       field.terrain.y = field.original.offset.y;
@@ -112,10 +124,9 @@ class WorldViewService {
       field.terrain.height = clientWorldService.fieldHeight;
     });
     worldStage.materialize(0.0, 0.0);
-//    print(stopwatch.elapsedMilliseconds);
   }
 
-  void repaint() {
+  void repaint([_]) {
     if (!_imageLoaded) {
       return;
     }
@@ -126,8 +137,17 @@ class WorldViewService {
 
 class ViewField {
   ClientField original;
+  Map<String, stage_lib.BitmapData> bitmapsByState = {};
   stage_lib.Bitmap terrain;
   stage_lib.TextField label;
 
   ViewField(this.original) {}
+
+  void setState(String state) {
+    terrain.bitmapData = bitmapsByState[state];
+  }
+
+  String getStateLabel(bool showLabel) {
+    return "${showLabel ? "s" : "n"}_${original.terrainStateShortcuts[original.terrain]}";
+  }
 }

@@ -16,8 +16,13 @@ class ServerTale {
   Map<String, shared.UnitType> unitTypes = {};
   Map<String, ServerUnit> units = {};
   int _lastUnitId = 0;
+  shared.AiGroup aiGroupOnMove = null;
+  List<shared.Player> playersOnMove = [];
 
   ServerTale(this.room) {
+    onReport.listen((onData){
+      print("report unit:${onData.unit.id} deltaHealth:${onData.deltaHealth}");
+    });
     int index = 0;
     sharedTale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
     taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
@@ -31,6 +36,8 @@ class ServerTale {
     });
 
     taleData.players = gamePlayers;
+    taleData.aiGroups = sharedTale.aiGroups;
+    taleData.playerOnMoveIds = gamePlayers.map((p)=>p.id).toList();
 
     players.values.forEach((player) {
       taleData.playerIdOnThisClientMachine = player.id;
@@ -107,17 +114,29 @@ class ServerTale {
   }
 
   void endOfTurn(MessageWithConnection message) {
-    List<shared.UnitCreateOrUpdateAction> actions = [];
-    units.forEach((key, unit) {
-      if (unit.newTurn()) {
-        actions.add(shared.UnitCreateOrUpdateAction()
-          ..unitId = unit.id
-          ..state = (shared.LiveUnitState()..fromUnit(unit)));
-      }
-    });
     players.values.forEach((player) {
       gateway.sendMessage(
-          shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
+          shared.ToClientMessage.fromPlayersOnMove(null, taleData.aiGroups.values.first.id), player);
+    });
+    Future.delayed(Duration(milliseconds: 2000)).then((_){
+      List<shared.UnitCreateOrUpdateAction> actions = [];
+      units.forEach((key, unit) {
+        if (unit.newTurn()) {
+          actions.add(shared.UnitCreateOrUpdateAction()
+            ..unitId = unit.id
+            ..state = (shared.LiveUnitState()..fromUnit(unit)));
+        }
+      });
+      players.values.forEach((player) {
+        gateway.sendMessage(
+            shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
+      });
+      Future.delayed(Duration(milliseconds: 2000)).then((_){
+        players.values.forEach((player) {
+          gateway.sendMessage(
+              shared.ToClientMessage.fromPlayersOnMove(players.values.map((p)=>p.id).toList(), null), player);
+        });
+      });
     });
   }
 }

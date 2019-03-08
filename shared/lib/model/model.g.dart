@@ -667,7 +667,13 @@ ClientTaleData _$ClientTaleDataFromJson(Map<String, dynamic> json) {
             e == null ? null : Player.fromJson(e as Map<String, dynamic>))
         ?.toList()
     ..playerIdOnThisClientMachine =
-        json['playerIdOnThisClientMachine'] as String;
+        json['playerIdOnThisClientMachine'] as String
+    ..aiGroups = (json['aiGroups'] as Map<String, dynamic>)?.map((k, e) =>
+        MapEntry(
+            k, e == null ? null : AiGroup.fromJson(e as Map<String, dynamic>)))
+    ..playerOnMoveIds =
+        (json['playerOnMoveIds'] as List)?.map((e) => e as String)?.toList()
+    ..aiGroupOnMove = json['aiGroupOnMove'] as String;
 }
 
 Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
@@ -679,7 +685,10 @@ Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
       'world': instance.world?.toJson(),
       'assets': instance.assets?.toJson(),
       'players': instance.players?.map((e) => e?.toJson())?.toList(),
-      'playerIdOnThisClientMachine': instance.playerIdOnThisClientMachine
+      'playerIdOnThisClientMachine': instance.playerIdOnThisClientMachine,
+      'aiGroups': instance.aiGroups?.map((k, e) => MapEntry(k, e?.toJson())),
+      'playerOnMoveIds': instance.playerOnMoveIds,
+      'aiGroupOnMove': instance.aiGroupOnMove
     };
 
 Buff _$BuffFromJson(Map<String, dynamic> json) {
@@ -736,7 +745,8 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.unitCreateOrUpdate: 'unitCreateOrUpdate',
   OnClientAction.unitDelete: 'unitDelete',
   OnClientAction.cancelOnField: 'cancelOnField',
-  OnClientAction.intentionUpdate: 'intentionUpdate'
+  OnClientAction.intentionUpdate: 'intentionUpdate',
+  OnClientAction.playersOnMove: 'playersOnMove'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -867,6 +877,19 @@ Map<String, dynamic> _$IntentionUpdateToJson(IntentionUpdate instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'trackFieldsId': instance.trackFieldsId
+    };
+
+PlayersOnMove _$PlayersOnMoveFromJson(Map<String, dynamic> json) {
+  return PlayersOnMove()
+    ..playerOnMoveIds =
+        (json['playerOnMoveIds'] as List)?.map((e) => e as String)?.toList()
+    ..aiGroupOnMove = json['aiGroupOnMove'] as String;
+}
+
+Map<String, dynamic> _$PlayersOnMoveToJson(PlayersOnMove instance) =>
+    <String, dynamic>{
+      'playerOnMoveIds': instance.playerOnMoveIds,
+      'aiGroupOnMove': instance.aiGroupOnMove
     };
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {

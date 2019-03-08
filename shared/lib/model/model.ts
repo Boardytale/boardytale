@@ -226,7 +226,8 @@ export type OnClientAction =
     | 'unitCreateOrUpdate'
     | 'unitDelete'
     | 'cancelOnField'
-    | 'intentionUpdate';
+    | 'intentionUpdate'
+    | 'playersOnMove';
 
 export type OnServerAction =
     | 'goToState'

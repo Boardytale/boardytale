@@ -126,6 +126,21 @@ class ToClientMessage {
             ..trackFieldsId = trackFieldsId)
           .toJson());
   }
+  // ---
+
+  PlayersOnMove get getPlayersOnMove =>
+      PlayersOnMove.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromPlayersOnMove(
+  List<String> playerOnMoveIds,
+  String aiGroupOnMove) {
+    return ToClientMessage()
+      ..message = OnClientAction.playersOnMove
+      ..content = json.encode((PlayersOnMove()
+            ..playerOnMoveIds = playerOnMoveIds
+            ..aiGroupOnMove = aiGroupOnMove)
+          .toJson());
+  }
 }
 
 @Typescript()
@@ -150,6 +165,8 @@ enum OnClientAction {
   cancelOnField,
   @JsonValue('intentionUpdate')
   intentionUpdate,
+  @JsonValue('playersOnMove')
+  playersOnMove,
 }
 
 abstract class MessageContent {}
@@ -272,5 +289,18 @@ class IntentionUpdate extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$IntentionUpdateToJson(this);
+  }
+}
+
+@JsonSerializable()
+class PlayersOnMove extends MessageContent {
+  List<String> playerOnMoveIds;
+  String aiGroupOnMove;
+
+  static PlayersOnMove fromJson(Map<String, dynamic> json) =>
+      _$PlayersOnMoveFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$PlayersOnMoveToJson(this);
   }
 }

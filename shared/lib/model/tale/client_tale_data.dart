@@ -9,6 +9,9 @@ class ClientTaleData {
   TaleCompiledAssets assets;
   List<Player> players;
   String playerIdOnThisClientMachine;
+  Map<String, AiGroup> aiGroups = {};
+  List<String> playerOnMoveIds;
+  String aiGroupOnMove;
 
   ClientTaleData();
 
@@ -18,6 +21,7 @@ class ClientTaleData {
     langName = compiled.langName;
     world = compiled.world;
     assets = compiled.assets;
+    aiGroups = compiled.aiGroups;
   }
 
   static ClientTaleData fromJson(Map json) {

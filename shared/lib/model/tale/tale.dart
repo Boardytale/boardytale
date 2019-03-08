@@ -7,6 +7,7 @@ class Tale {
   int humanPlayersTeam;
   covariant World world;
   covariant Map<String, Player> players = {};
+  Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};
@@ -18,30 +19,8 @@ class Tale {
       ..fromEnvelope(tale.world, (key, world) => Field(key, world));
     events = tale.events;
     dialogs = tale.dialogs;
+    aiGroups = tale.aiGroups;
   }
-
-//  void update(Map<String, dynamic> state) {
-//    List<Map<String, dynamic>> unitMapList = state["units"];
-//    Map<String, Unit> oldUnits = units;
-//    units = {};
-//    for (Map<String, dynamic> unitMap in unitMapList) {
-//      Unit unit = oldUnits[unitMap["id"]];
-//      if (unit == null) {
-//        UnitType type = resources.unitTypes[unitMap["type"]];
-//        if (type == null) {
-//          print("ERROR - missing unitType");
-//          continue;
-//        }
-//        unit = resources.generator.unit(unitMap["id"]);
-//      }
-//      units[unit.id] = unit..fromMap(unitMap, this);
-//    }
-//    List<Map<String, dynamic>> playerMapList = state["players"];
-//    for (Map<String, dynamic> playerMap in playerMapList) {
-//      Player player = players[playerMap["id"]];
-//      player?.fromMap(playerMap);
-//    }
-//  }
 }
 
 @Typescript()

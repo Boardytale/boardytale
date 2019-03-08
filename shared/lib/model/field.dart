@@ -19,6 +19,12 @@ class Field {
   String id;
   World world;
   Terrain terrain;
+  Map<Terrain, String> terrainStateShortcuts = {
+    Terrain.forest: "f",
+    Terrain.water: "w",
+    Terrain.rock: "r",
+    Terrain.grass: "g",
+  };
   int x;
   int y;
 

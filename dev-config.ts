@@ -67,7 +67,7 @@ export let config: BoardytaleConfiguration = {
     gameStaticDev: {
         active: true,
         route: '/game',
-        port: 4200,
+        port: 4201,
     },
     heroesServer: {
         innerRoute: '/innerHeroes',
