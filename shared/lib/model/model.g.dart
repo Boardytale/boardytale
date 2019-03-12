@@ -491,7 +491,8 @@ TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
     ..units = (json['units'] as List)
         ?.map((e) =>
             e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..startingFieldIds = (json['startingFieldIds'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
@@ -505,7 +506,8 @@ Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
       'aiGroups': instance.aiGroups?.map((k, e) => MapEntry(k, e?.toJson())),
       'events': instance.events?.map((k, e) => MapEntry(k, e?.toJson())),
       'dialogs': instance.dialogs?.map((k, e) => MapEntry(k, e?.toJson())),
-      'units': instance.units?.map((e) => e?.toJson())?.toList()
+      'units': instance.units?.map((e) => e?.toJson())?.toList(),
+      'startingFieldIds': instance.startingFieldIds
     };
 
 TaleInnerCompiled _$TaleInnerCompiledFromJson(Map<String, dynamic> json) {

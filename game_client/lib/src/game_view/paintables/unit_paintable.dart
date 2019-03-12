@@ -8,12 +8,8 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(
-      this.unit,
-      stage_lib.Stage stage,
-      WorldViewService view,
-      ClientField field,
-      this.settings)
+  UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view,
+      ClientField field, this.settings)
       : super(view, field, stage) {
     leftOffset = 0;
     topOffset = 0;
@@ -81,11 +77,25 @@ class UnitPaintable extends Paintable {
         data.drawPixels(getStepsBar(), getLifeBarRect(),
             stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
       }
+      data.drawPixels(getPlayerColor(unit), getPlayerColorRect(),
+          stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - 3));
     } else {
       data = unitGlobalCache[state];
     }
     bitmap = stage_lib.Bitmap(data);
     return;
+  }
+
+  stage_lib.Rectangle getPlayerColorRect() {
+    double width = view.clientWorldService.fieldWidth / 2;
+    return stage_lib.Rectangle(0, 0, width, 3);
+  }
+
+  stage_lib.BitmapData getPlayerColor(ClientUnit unit) {
+    double width = rectWidth / 2;
+    stage_lib.BitmapData data = stage_lib.BitmapData(width, 3);
+    data.fillRect(getPlayerColorRect(), unit.getStagePlayerColor());
+    return data;
   }
 
   stage_lib.BitmapData getLifeBar() {
@@ -134,8 +144,7 @@ class UnitPaintable extends Paintable {
 
   stage_lib.BitmapData getStepsBar() {
     int resolutionLevel = view.clientWorldService.resolutionLevel;
-    String description =
-        "${unit.speed}_${unit.steps}_${resolutionLevel}";
+    String description = "${unit.speed}_${unit.steps}_${resolutionLevel}";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.speed < 10) {
       bitSpace = 1.0;

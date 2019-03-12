@@ -113,13 +113,14 @@ class Unit {
     field.addUnit(this);
   }
 
-  void fromCreateAction(UnitCreateOrUpdateAction action, Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types){
+  void fromCreateAction(UnitCreateOrUpdateAction action, Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types, void Function(Unit unit) onAfterCreate){
     fromUnitType(types[action.state.changeToTypeName], fields[action.state.moveToFieldId], action.unitId);
     if(action.state.transferToPlayerId != null){
       player = players[action.state.transferToPlayerId];
     }else{
       aiGroupId = action.state.transferToAiGroupId;
     }
+    onAfterCreate(this);
     addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
   }
 
@@ -245,6 +246,7 @@ class Unit {
     if (stepsChanged) {
       onStepsChanged.add(_steps);
     }
+    report.unit = this;
     return report;
   }
 

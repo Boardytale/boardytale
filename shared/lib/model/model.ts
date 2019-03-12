@@ -147,6 +147,7 @@ export interface TaleInnerEnvelope extends Object {
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateEnvelope>;
+    startingFieldIds: Array<string>;
 }
 
 export interface TaleInnerCompiled extends Object {

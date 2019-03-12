@@ -13,7 +13,12 @@ import 'package:shared/model/model.dart' as shared;
       <div class='game-controls-cont'>
         <button (click)='endTurn()'>End turn</button>
         <button (click)='switchShowCoordinates()'>{{gameService.showCoordinateLabels.value?"Hide coordinate labels": "Show coordinate labels"}}</button>
-        <span>Players on move: {{getPlayersOnMoveLabel()}}</span>
+        <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
+          <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player.getHtmlColor()}">
+            {{player.name}}
+          </span>
+        </span>
+        <span *ngIf='gameService.aiGroupOnMove.value != null'>Players on move: {{getPlayersOnMoveLabel()}}</span>
       </div>
     """,
     changeDetection: ChangeDetectionStrategy.OnPush)

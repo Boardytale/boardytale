@@ -49,12 +49,13 @@ class ClientWorldService extends shared.World {
 
   ClientWorldService(this.settings, this.appService) : super();
 
-  void fromCreateEnvelope(
-      shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
+  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope,
+      ClientTaleService tale) {
     this.clientTaleService = tale;
     super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     defaultFieldWidth = settings.defaultFieldWidth;
-    defaultFieldHeight = (settings.defaultFieldWidth * widthHeightRatio).toInt();
+    defaultFieldHeight =
+        (settings.defaultFieldWidth * widthHeightRatio).toInt();
     defaultHex = HexaBorders(this);
     recalculate();
   }
@@ -81,7 +82,7 @@ class ClientWorldService extends shared.World {
       // segments are rectangles where 0 & 2 are folded by two triangles from different fields, so we have to calculate which one is focused0
       // resolving field by corner
       ClientField main =
-          _getMainFieldBySegments(verticalSegment, horizontalSegment);
+      _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
       double deltaLeft = x - main.left.x;
 
@@ -100,8 +101,8 @@ class ClientWorldService extends shared.World {
     }
   }
 
-  ClientField _getMainFieldBySegments(
-      int verticalSegment, int horizontalSegment) {
+  ClientField _getMainFieldBySegments(int verticalSegment,
+      int horizontalSegment) {
     int fx;
     int fy;
     if (verticalSegment < 0 || horizontalSegment < 0)
@@ -118,12 +119,16 @@ class ClientWorldService extends shared.World {
 
   void createOrUpdateUnits(List<shared.UnitCreateOrUpdateAction> actions) {
     actions.forEach((action) {
-      if(clientTaleService.units.containsKey(action.unitId)){
+      if (clientTaleService.units.containsKey(action.unitId)) {
         ClientUnit unit = clientTaleService.units[action.unitId];
         unit.addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
-      }else{
+      } else {
         ClientUnit unit = ClientUnit()
-          ..fromCreateAction(action, fields, appService.players, clientTaleService.unitTypes);
+          ..fromCreateAction(
+              action, fields, appService.players, clientTaleService.unitTypes, (
+              shared.Unit unit) {
+            (unit as ClientUnit).aiGroup = appService.aiGroups[unit.aiGroupId];
+          });
         clientTaleService.units[unit.id] = unit;
         onUnitAdded.add(unit);
       }

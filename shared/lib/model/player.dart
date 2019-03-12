@@ -10,6 +10,18 @@ class Player {
   int color;
   bool gameMaster;
 
+  String getHtmlColor() {
+    return "rgba($red, $green,$blue,$alpha)";
+  }
+
+  int get alpha => (0xff000000 & color) >> 24;
+
+  int get blue => (0x000000ff & color) >> 0;
+
+  int get green => (0x0000ff00 & color) >> 8;
+
+  int get red => (0x00ff0000 & color) >> 16;
+
   static Player fromJson(Map json) {
     return _$PlayerFromJson(json);
   }
@@ -18,7 +30,6 @@ class Player {
     return _$PlayerToJson(this);
   }
 }
-
 
 //@Typescript()
 //enum PlayerHandler {

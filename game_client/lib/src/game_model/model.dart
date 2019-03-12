@@ -9,6 +9,7 @@ import 'package:utils/utils.dart';
 import 'package:angular/core.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:game_client/src/services/app_service.dart';
+import 'package:fff/parser.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 
 part 'package:game_client/src/game_model/field.dart';

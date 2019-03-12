@@ -32,6 +32,7 @@ class AppService {
   };
 
   Map<String, ClientPlayer> players = {};
+  Map<String, shared.AiGroup> aiGroups = {};
   ClientPlayer currentPlayer;
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();

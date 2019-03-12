@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
-import 'package:game_client/src/game_model/model.dart';
 import 'package:shared/model/model.dart' as shared;
 import 'package:game_client/project_settings.dart';
 

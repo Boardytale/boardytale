@@ -138,7 +138,7 @@ class WorldComponent implements OnDestroy {
     ClientField field =
         _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
     ClientUnit unit = field.getFirstPlayableUnitOnField();
-    if (unit != null) {
+    if (unit != null && gameService.playersOnMove.value.any((player)=>player.id == unit.handlerId)) {
       _draggedUnit = unit;
     } else {
       _moving = true;
@@ -197,7 +197,6 @@ class WorldComponent implements OnDestroy {
             _clientWorldService.onUnitAssistanceChanged.add(null);
           }
           gateway.sendIntention(track.fields);
-//          unitManager.setActiveField(null);
         } else {
           unitManager.setActiveField(field);
           gateway.sendIntention(field == null ? null : [field]);

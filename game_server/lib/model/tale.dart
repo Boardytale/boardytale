@@ -21,13 +21,14 @@ class ServerTale {
 
   ServerTale(this.room) {
     onReport.listen((onData){
-      print("report unit:${onData.unit.id} deltaHealth:${onData.deltaHealth}");
+      print("report unit:${onData?.unit?.id} deltaHealth:${onData?.deltaHealth} delta steps: ${onData?.deltaSteps}");
     });
     int index = 0;
     sharedTale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
     taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
     players.values.forEach((player) {
       player.color = ServerTale.colors[index++];
+      print("create player ${player.name} ${player.color.toRadixString(16)}");
     });
 
     List<shared.Player> gamePlayers = [];
