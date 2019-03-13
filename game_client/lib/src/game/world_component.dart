@@ -138,7 +138,7 @@ class WorldComponent implements OnDestroy {
     ClientField field =
         _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
     ClientUnit unit = field.getFirstPlayableUnitOnField();
-    if (unit != null && gameService.playersOnMove.value.any((player)=>player.id == unit.handlerId)) {
+    if (unit != null && gameService.currentPlayer == unit.player && gameService.playersOnMove.value.any((player)=>player.id == unit.handlerId)) {
       _draggedUnit = unit;
     } else {
       _moving = true;

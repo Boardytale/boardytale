@@ -26,5 +26,7 @@ enum Races {
   @JsonValue('elf')
   elf,
   @JsonValue('animal')
-  animal
+  animal,
+  @JsonValue('dragon')
+  dragon
 }

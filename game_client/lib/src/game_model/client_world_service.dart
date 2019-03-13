@@ -49,13 +49,11 @@ class ClientWorldService extends shared.World {
 
   ClientWorldService(this.settings, this.appService) : super();
 
-  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope,
-      ClientTaleService tale) {
+  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
     this.clientTaleService = tale;
     super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     defaultFieldWidth = settings.defaultFieldWidth;
-    defaultFieldHeight =
-        (settings.defaultFieldWidth * widthHeightRatio).toInt();
+    defaultFieldHeight = (settings.defaultFieldWidth * widthHeightRatio).toInt();
     defaultHex = HexaBorders(this);
     recalculate();
   }
@@ -81,8 +79,7 @@ class ClientWorldService extends shared.World {
       // vertical segments of sixtagram where left top/bottom == 0, middle top/bottom == 1 and right top/bottom == 2.
       // segments are rectangles where 0 & 2 are folded by two triangles from different fields, so we have to calculate which one is focused0
       // resolving field by corner
-      ClientField main =
-      _getMainFieldBySegments(verticalSegment, horizontalSegment);
+      ClientField main = _getMainFieldBySegments(verticalSegment, horizontalSegment);
       if (main == null) return null;
       double deltaLeft = x - main.left.x;
 
@@ -101,16 +98,13 @@ class ClientWorldService extends shared.World {
     }
   }
 
-  ClientField _getMainFieldBySegments(int verticalSegment,
-      int horizontalSegment) {
+  ClientField _getMainFieldBySegments(int verticalSegment, int horizontalSegment) {
     int fx;
     int fy;
-    if (verticalSegment < 0 || horizontalSegment < 0)
-      return null; // if Segment doesn't exist
+    if (verticalSegment < 0 || horizontalSegment < 0) return null; // if Segment doesn't exist
     fx = verticalSegment ~/ 3;
     if (fx % 2 == 1) {
-      if (horizontalSegment < 1)
-        return null; // every second column is starting one segment later (because of
+      if (horizontalSegment < 1) return null; // every second column is starting one segment later (because of
       horizontalSegment--;
     }
     fy = horizontalSegment ~/ 2;
@@ -119,14 +113,16 @@ class ClientWorldService extends shared.World {
 
   void createOrUpdateUnits(List<shared.UnitCreateOrUpdateAction> actions) {
     actions.forEach((action) {
+      if (action.newUnitTypeToTale != null) {
+        clientTaleService.unitTypes[action.newUnitTypeToTale.name] = shared.UnitType()
+          ..fromCompiledUnitType(action.newUnitTypeToTale);
+      }
       if (clientTaleService.units.containsKey(action.unitId)) {
         ClientUnit unit = clientTaleService.units[action.unitId];
         unit.addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
       } else {
         ClientUnit unit = ClientUnit()
-          ..fromCreateAction(
-              action, fields, appService.players, clientTaleService.unitTypes, (
-              shared.Unit unit) {
+          ..fromCreateAction(action, fields, appService.players, clientTaleService.unitTypes, (shared.Unit unit) {
             (unit as ClientUnit).aiGroup = appService.aiGroups[unit.aiGroupId];
           });
         clientTaleService.units[unit.id] = unit;

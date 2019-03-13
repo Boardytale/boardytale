@@ -56,6 +56,8 @@ class UnitCreateOrUpdateAction {
   String actionId;
   String unitId;
   LiveUnitState state;
+  @JsonKey(includeIfNull: false)
+  UnitTypeCompiled newUnitTypeToTale;
 
   static UnitCreateOrUpdateAction fromJson(Map data) {
     return _$UnitCreateOrUpdateActionFromJson(data);

@@ -86,21 +86,24 @@ class ToClientMessage {
   UnitCreateOrUpdate get getUnitCreateOrUpdate =>
       UnitCreateOrUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions) {
+  factory ToClientMessage.fromUnitCreateOrUpdate(
+      List<UnitCreateOrUpdateAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.unitCreateOrUpdate
-      ..content = json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
+      ..content =
+          json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
   }
+
   // ---
 
-  UnitDelete get getUnitDelete =>
-      UnitDelete.fromJson(json.decode(content));
+  UnitDelete get getUnitDelete => UnitDelete.fromJson(json.decode(content));
 
   factory ToClientMessage.fromUnitDelete(List<UnitDeleteAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.unitDelete
       ..content = json.encode((UnitDelete()..actions = actions).toJson());
   }
+
   // ---
 
   CancelOnField get getCancelOnField =>
@@ -126,20 +129,30 @@ class ToClientMessage {
             ..trackFieldsId = trackFieldsId)
           .toJson());
   }
+
   // ---
 
   PlayersOnMove get getPlayersOnMove =>
       PlayersOnMove.fromJson(json.decode(content));
 
   factory ToClientMessage.fromPlayersOnMove(
-  List<String> playerOnMoveIds,
-  String aiGroupOnMove) {
+      List<String> playerOnMoveIds, String aiGroupOnMove) {
     return ToClientMessage()
       ..message = OnClientAction.playersOnMove
       ..content = json.encode((PlayersOnMove()
             ..playerOnMoveIds = playerOnMoveIds
             ..aiGroupOnMove = aiGroupOnMove)
           .toJson());
+  }
+
+  // ---
+
+  AddUnitType get getAddUnitType => AddUnitType.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromAddUnitType(UnitTypeCompiled type) {
+    return ToClientMessage()
+      ..message = OnClientAction.addUnitType
+      ..content = json.encode((AddUnitType()..type = type).toJson());
   }
 }
 
@@ -167,6 +180,8 @@ enum OnClientAction {
   intentionUpdate,
   @JsonValue('playersOnMove')
   playersOnMove,
+  @JsonValue('addUnitType')
+  addUnitType
 }
 
 abstract class MessageContent {}
@@ -302,5 +317,17 @@ class PlayersOnMove extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$PlayersOnMoveToJson(this);
+  }
+}
+
+@JsonSerializable()
+class AddUnitType extends MessageContent {
+  UnitTypeCompiled type;
+
+  static AddUnitType fromJson(Map<String, dynamic> json) =>
+      _$AddUnitTypeFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$AddUnitTypeToJson(this);
   }
 }

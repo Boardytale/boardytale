@@ -78,7 +78,7 @@ class UnitPaintable extends Paintable {
             stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
       }
       data.drawPixels(getPlayerColor(unit), getPlayerColorRect(),
-          stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - 3));
+          stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
     } else {
       data = unitGlobalCache[state];
     }
@@ -87,14 +87,22 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.Rectangle getPlayerColorRect() {
-    double width = view.clientWorldService.fieldWidth / 2;
-    return stage_lib.Rectangle(0, 0, width, 3);
+    return stage_lib.Rectangle(0, 0, 10, 10);
   }
 
   stage_lib.BitmapData getPlayerColor(ClientUnit unit) {
-    double width = rectWidth / 2;
-    stage_lib.BitmapData data = stage_lib.BitmapData(width, 3);
-    data.fillRect(getPlayerColorRect(), unit.getStagePlayerColor());
+    var shape = stage_lib.Shape();
+    stage_lib.Graphics graphics = shape.graphics;
+    graphics.beginPath();
+    graphics.arc(5, 5, 3, 0, 2 * math.pi);
+    graphics.closePath();
+    graphics.fillColor(unit.getStagePlayerColor());
+    graphics.beginPath();
+    graphics.arc(5, 5, 4, 0, 2 * math.pi);
+    graphics.closePath();
+    graphics.strokeColor(stage_lib.Color.Black);
+    stage_lib.BitmapData data = stage_lib.BitmapData(10, 10, stage_lib.Color.Transparent);
+    data.draw(shape);
     return data;
   }
 

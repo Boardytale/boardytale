@@ -75,7 +75,7 @@ export interface UnitTypeCompiled extends UnitTypeCommons {
     bigImage: Image;
 }
 
-export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal';
+export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal' | 'dragon';
 
 export interface Race extends Object {
     id: Races;
@@ -93,7 +93,7 @@ export interface WorldCreateEnvelope extends Object {
     height: number;
     baseTerrain: Terrain;
     fields: { [key: string]: FieldCreateEnvelope };
-    startFieldId: string;
+    startingFieldIds: Array<string>;
 }
 
 export interface Player extends Object {
@@ -147,7 +147,6 @@ export interface TaleInnerEnvelope extends Object {
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateEnvelope>;
-    startingFieldIds: Array<string>;
 }
 
 export interface TaleInnerCompiled extends Object {
@@ -160,6 +159,7 @@ export interface TaleInnerCompiled extends Object {
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateEnvelope>;
+    startingFieldIds: Array<string>;
     assets: TaleCompiledAssets;
 }
 
@@ -228,7 +228,8 @@ export type OnClientAction =
     | 'unitDelete'
     | 'cancelOnField'
     | 'intentionUpdate'
-    | 'playersOnMove';
+    | 'playersOnMove'
+    | 'addUnitType';
 
 export type OnServerAction =
     | 'goToState'
@@ -241,6 +242,8 @@ export type OnServerAction =
     | 'controlsAction';
 
 export type ControlsActionName = 'andOfTurn';
+
+export type OnHeroServerAction = 'getHeroesOfPlayer';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

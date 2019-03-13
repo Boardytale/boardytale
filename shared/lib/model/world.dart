@@ -7,7 +7,7 @@ class WorldCreateEnvelope {
   int height;
   Terrain baseTerrain = Terrain.grass;
   Map<String, FieldCreateEnvelope> fields = {};
-  String startFieldId;
+  List<String> startingFieldIds = [];
 
   WorldCreateEnvelope();
 
@@ -24,7 +24,7 @@ class World {
   int height;
   Terrain baseTerrain = Terrain.grass;
   Map<String, Field> fields = {};
-  Field startField;
+  List<String> startingFieldIds = [];
   Tale clientTaleService;
 
   World();
@@ -48,12 +48,7 @@ class World {
         fields[key] = field;
       }
     }
-    dynamic __startFieldId = envelope.startFieldId;
-    if (__startFieldId is String) {
-      startField = fields[__startFieldId];
-    } else {
-      throw "Start field must be set";
-    }
+    startingFieldIds = envelope.startingFieldIds;
   }
 
   Map<String, FieldCreateEnvelope> createFieldsData(

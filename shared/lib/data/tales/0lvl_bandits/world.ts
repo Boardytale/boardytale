@@ -2,6 +2,28 @@ import { WorldCreateEnvelope } from '../../../model/model';
 
 export let world: WorldCreateEnvelope = {
     baseTerrain: 'grass',
+    startingFieldIds: [
+        '0_1',
+        '0_2',
+        '0_3',
+        '0_4',
+        '1_0',
+        '1_1',
+        '1_2',
+        '1_3',
+        '2_1',
+        '2_2',
+        '2_3',
+        '2_4',
+        '3_1',
+        '3_2',
+        '3_3',
+        '3_4',
+        '4_1',
+        '4_2',
+        '4_3',
+        '4_4',
+    ],
     fields: {
         '0_21': { terrain: 'forest' },
         '0_24': { terrain: 'forest' },
@@ -262,5 +284,4 @@ export let world: WorldCreateEnvelope = {
     },
     height: 30,
     width: 30,
-    startFieldId: '2_2',
 };

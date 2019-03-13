@@ -24,6 +24,8 @@ class GameService {
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
   BehaviorSubject<shared.AiGroup> aiGroupOnMove = BehaviorSubject(seedValue: null);
 
+  ClientPlayer get currentPlayer => appService.currentPlayer;
+
   GameService(this.gatewayService, this.settings, this.appService, this.tale) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
     gatewayService.handlers[shared.OnClientAction.playersOnMove] = handlePlayersOnMove;

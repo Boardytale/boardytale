@@ -1,5 +1,5 @@
-name: game_server
-description: Server side for Boardytale game
+name: hero_server
+description: Hero service for Boardytale game
 version: 0.0.1
 author: Zdeněk Mlčoch <mlcoch.zdenek@gmail.com>
 
@@ -9,7 +9,6 @@ environment:
 dependencies:
   uuid: any
   shelf: any
-  http: any
   shelf_web_socket: any
   shared:
     path: ../shared

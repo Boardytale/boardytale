@@ -12,7 +12,7 @@ class ClientUnit extends shared.Unit {
     return int.parse("0xFF${color.red.toRadixString(16)}${color.green.toRadixString(16)}${color.blue.toRadixString(16)}");
   }
 
-  get handlerId => (player != null?(player as ClientPlayer).meId:aiGroupId).substring(0,1);
+  get handlerId => (player != null?player.id:aiGroupId).substring(0,1);
 
   shared.Ability getAbility(
       shared.Track track, bool shift, bool alt, bool ctrl) {

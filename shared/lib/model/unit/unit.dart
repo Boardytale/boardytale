@@ -113,11 +113,17 @@ class Unit {
     field.addUnit(this);
   }
 
-  void fromCreateAction(UnitCreateOrUpdateAction action, Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types, void Function(Unit unit) onAfterCreate){
-    fromUnitType(types[action.state.changeToTypeName], fields[action.state.moveToFieldId], action.unitId);
-    if(action.state.transferToPlayerId != null){
+  void fromCreateAction(
+      UnitCreateOrUpdateAction action,
+      Map<String, Field> fields,
+      Map<String, Player> players,
+      Map<String, UnitType> types,
+      void Function(Unit unit) onAfterCreate) {
+    fromUnitType(types[action.state.changeToTypeName],
+        fields[action.state.moveToFieldId], action.unitId);
+    if (action.state.transferToPlayerId != null) {
       player = players[action.state.transferToPlayerId];
-    }else{
+    } else {
       aiGroupId = action.state.transferToAiGroupId;
     }
     onAfterCreate(this);
@@ -252,9 +258,19 @@ class Unit {
 
   LiveUnitState getState() {
     return LiveUnitState()
-        ..health = _health
-        ..actions = _actions
-        ..steps = _steps
-        ..buffs = _buffs;
+      ..health = _health
+      ..actions = _actions
+      ..steps = _steps
+      ..buffs = _buffs;
+  }
+
+  UnitCreateOrUpdateAction getUnitCreateOrUpdateAction() {
+    return UnitCreateOrUpdateAction()
+      ..unitId = id
+      ..state = (getState()
+        ..moveToFieldId = field.id
+        ..transferToPlayerId = player?.id
+        ..transferToAiGroupId = aiGroupId
+        ..changeToTypeName = type.name);
   }
 }

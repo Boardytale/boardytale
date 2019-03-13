@@ -49,7 +49,6 @@ class TaleInnerEnvelope {
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   List<UnitCreateEnvelope> units = [];
-  List<String> startingFieldIds = [];
 
   static TaleInnerEnvelope fromJson(Map json) {
     return _$TaleInnerEnvelopeFromJson(json);
@@ -72,6 +71,7 @@ class TaleInnerCompiled {
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   List<UnitCreateEnvelope> units = [];
+  List<String> startingFieldIds = [];
   TaleCompiledAssets assets;
 
   static TaleInnerCompiled fromJson(Map json) {
