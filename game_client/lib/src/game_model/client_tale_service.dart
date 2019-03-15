@@ -23,9 +23,6 @@ class ClientTaleService extends shared.Tale {
         appService.players[player.id] = ClientPlayer()..fromSharedPlayer(player);
       }
     });
-    clientTaleData.aiGroups.forEach((key, value){
-        appService.aiGroups[key] = value;
-    });
     clientTaleData.assets.unitTypes
         .forEach((String name, shared.UnitTypeCompiled unitType) {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);

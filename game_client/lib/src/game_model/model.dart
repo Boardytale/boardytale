@@ -9,7 +9,6 @@ import 'package:utils/utils.dart';
 import 'package:angular/core.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:game_client/src/services/app_service.dart';
-import 'package:fff/parser.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 
 part 'package:game_client/src/game_model/field.dart';
@@ -17,4 +16,4 @@ part 'package:game_client/src/game_model/hexa_borders.dart';
 part 'package:game_client/src/game_model/client_unit.dart';
 part 'package:game_client/src/game_model/client_tale_service.dart';
 part 'package:game_client/src/game_model/client_world_service.dart';
-part 'package:game_client/src/game_model/player.dart';
+part 'package:game_client/src/game_model/client_player.dart';

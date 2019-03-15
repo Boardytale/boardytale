@@ -97,12 +97,25 @@ export interface WorldCreateEnvelope extends Object {
 }
 
 export interface Player extends Object {
-    portrait: Image;
-    id: string;
-    name: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    id?: string;
+    taleId: string;
     team: string;
-    color: number;
-    gameMaster: boolean;
+    color: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    humanPlayer?: HumanPlayer;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    aiGroup?: AiGroup;
+}
+
+export interface HumanPlayer extends Object {
+    name: string;
+    isGameMaster: boolean;
+    portrait: Image;
+}
+
+export interface AiGroup extends Object {
+    langName: { [key in Lang]?: string };
 }
 
 export interface Event extends Object {
@@ -143,10 +156,11 @@ export interface TaleInnerEnvelope extends Object {
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    aiGroups: { [key: string]: AiGroup };
+    aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateEnvelope>;
+    humanPlayerIds: Array<string>;
 }
 
 export interface TaleInnerCompiled extends Object {
@@ -155,31 +169,23 @@ export interface TaleInnerCompiled extends Object {
     langName: { [key in Lang]?: string };
     taleVersion: number;
     world: WorldCreateEnvelope;
-    aiGroups: { [key: string]: AiGroup };
+    aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateEnvelope>;
-    startingFieldIds: Array<string>;
+    humanPlayerIds: Array<string>;
     assets: TaleCompiledAssets;
 }
 
 export interface UnitCreateEnvelope extends Object {
     fieldId: string;
     unitTypeName: string;
-    aiGroupId: string;
     playerId: string;
 }
 
 export interface TaleCompiledAssets extends Object {
     images: { [key: string]: Image };
     unitTypes: { [key: string]: UnitTypeCompiled };
-}
-
-export interface AiGroup extends Object {
-    id: string;
-    name: { [key in Lang]?: string };
-    team: string;
-    color: string;
 }
 
 export interface LobbyTale extends Object {
@@ -289,7 +295,7 @@ export interface MoveAbilityEnvelope extends Object {
 
 export interface AttackAbilityEnvelope extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
-    range?: string;
+    steps?: string;
     // annotation @TypescriptOptional() → TypescriptOptional
     attack?: string;
 }

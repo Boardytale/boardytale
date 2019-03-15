@@ -6,7 +6,7 @@ class IntentionService {
   }
 
   void handle(MessageWithConnection message) {
-    message.player.tale.players.forEach((email, player) {
+    message.player.tale.humanPlayers.forEach((email, player) {
       if (player != message.player) {
         gateway.sendMessage(
             shared.ToClientMessage.fromIntentionUpdate(

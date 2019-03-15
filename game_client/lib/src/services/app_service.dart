@@ -12,6 +12,7 @@ import 'package:shared/model/model.dart' as shared;
 
 @Injectable()
 class AppService {
+  shared.Lang language = shared.Lang.en;
   BehaviorSubject<shared.User> currentUser = BehaviorSubject<shared.User>(seedValue: null);
   Map<shared.GameNavigationState, ClientGameState> states = {
     shared.GameNavigationState.loading: ClientGameState()

@@ -3,31 +3,67 @@ part of model;
 @Typescript()
 @JsonSerializable()
 class Player {
-  Image portrait;
+  @TypescriptOptional()
   String id;
-  String name;
-  String team;
-  int color;
-  bool gameMaster;
+  String taleId;
+  String team = "0";
+  String color;
+  @TypescriptOptional()
+  HumanPlayer humanPlayer;
+  @TypescriptOptional()
+  AiGroup aiGroup;
 
-  String getHtmlColor() {
-    return "rgba($red, $green,$blue,$alpha)";
-  }
+  get isHumanPlayer => humanPlayer != null;
 
-  int get alpha => (0xff000000 & color) >> 24;
+  get isAiPlayer => aiGroup != null;
 
-  int get blue => (0x000000ff & color) >> 0;
+  get isGameMaster => isHumanPlayer && humanPlayer.isGameMaster;
 
-  int get green => (0x0000ff00 & color) >> 8;
-
-  int get red => (0x00ff0000 & color) >> 16;
+  String get name => isHumanPlayer?humanPlayer.name: aiGroup.langName.values.first;
 
   static Player fromJson(Map json) {
     return _$PlayerFromJson(json);
   }
 
+  int getStageColor() {
+    var color = ColorParser(this.color);
+    return int.parse(
+        "0xFF${color.red.toRadixString(16)}${color.green.toRadixString(16)}${color.blue.toRadixString(16)}");
+  }
+
   Map<String, dynamic> toJson() {
     return _$PlayerToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class HumanPlayer {
+  String name;
+  bool isGameMaster;
+  Image portrait;
+
+  static HumanPlayer fromJson(Map<String, dynamic> json) {
+    return _$HumanPlayerFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$HumanPlayerToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class AiGroup {
+  Map<Lang, String> langName;
+
+  static AiGroup fromJson(Map<String, dynamic> json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["langName"]);
+    return _$AiGroupFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$AiGroupToJson(this);
   }
 }
 

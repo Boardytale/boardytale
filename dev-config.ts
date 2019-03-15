@@ -79,8 +79,8 @@ export let config: BoardytaleConfiguration = {
             }
         ],
         executableType: 'dart',
-        pathToExecutable: 'heroes_service/bin/main.dart',
-        pathToWorkingDirectory: 'heroes_service'
+        pathToExecutable: 'hero_server/bin/hero_server_start.dart',
+        pathToWorkingDirectory: 'hero_server'
     },
     proxyServer: {
         innerRoute: '/',

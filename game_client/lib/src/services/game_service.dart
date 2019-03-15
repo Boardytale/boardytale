@@ -22,8 +22,6 @@ class GameService {
   StreamController<ClientWorldService> _onWorldLoaded = StreamController();
   ClientTaleService tale;
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
-  BehaviorSubject<shared.AiGroup> aiGroupOnMove = BehaviorSubject(seedValue: null);
-
   ClientPlayer get currentPlayer => appService.currentPlayer;
 
   GameService(this.gatewayService, this.settings, this.appService, this.tale) {
@@ -41,16 +39,13 @@ class GameService {
         appService.currentPlayer = newPlayer;
       }
     });
-    aiGroups = clientTaleData.aiGroups;
     setPlayersOnMoveByIds(clientTaleData.playerOnMoveIds);
-    setAiGroupOnMoveById(clientTaleData.aiGroupOnMove);
     world = tale.world;
     this._onWorldLoaded.add(world);
   }
 
   void handlePlayersOnMove(shared.ToClientMessage message) {
     setPlayersOnMoveByIds(message.getPlayersOnMove.playerOnMoveIds);
-    setAiGroupOnMoveById(message.getPlayersOnMove.aiGroupOnMove);
   }
 
   void setPlayersOnMoveByIds(List<String> ids){
@@ -61,9 +56,5 @@ class GameService {
         return appService.players[playerId];
       }).toList());
     }
-  }
-
-  void setAiGroupOnMoveById(String aiGroupId) {
-    aiGroupOnMove.add(aiGroups[aiGroupId]);
   }
 }

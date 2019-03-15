@@ -45,10 +45,11 @@ class TaleInnerEnvelope {
   int taleVersion;
 
   WorldCreateEnvelope world;
-  Map<String, AiGroup> aiGroups = {};
+  Map<String, Player> aiPlayers = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   List<UnitCreateEnvelope> units = [];
+  List<String> humanPlayerIds = [];
 
   static TaleInnerEnvelope fromJson(Map json) {
     return _$TaleInnerEnvelopeFromJson(json);
@@ -67,11 +68,11 @@ class TaleInnerCompiled {
   Map<Lang, String> langName;
   int taleVersion;
   WorldCreateEnvelope world;
-  Map<String, AiGroup> aiGroups = {};
+  Map<String, Player> aiPlayers = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   List<UnitCreateEnvelope> units = [];
-  List<String> startingFieldIds = [];
+  List<String> humanPlayerIds = [];
   TaleCompiledAssets assets;
 
   static TaleInnerCompiled fromJson(Map json) {
@@ -89,8 +90,6 @@ class TaleInnerCompiled {
 class UnitCreateEnvelope {
   String fieldId;
   String unitTypeName;
-  // used aiGroupId if not null
-  String aiGroupId;
   String playerId;
   static UnitCreateEnvelope fromJson(Map json) {
     return _$UnitCreateEnvelopeFromJson(json);
@@ -113,22 +112,5 @@ class TaleCompiledAssets {
 
   Map<String, dynamic> toJson() {
     return _$TaleCompiledAssetsToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
-class AiGroup {
-  String id;
-  Map<Lang, String> name;
-  String team;
-  String color;
-  static AiGroup fromJson(Map<String, dynamic> json) {
-    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
-    return _$AiGroupFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$AiGroupToJson(this);
   }
 }

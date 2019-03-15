@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:game_client/src/game_model/model.dart';
+import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:shared/model/model.dart' as shared;
@@ -14,22 +15,21 @@ import 'package:shared/model/model.dart' as shared;
         <button (click)='endTurn()'>End turn</button>
         <button (click)='switchShowCoordinates()'>{{gameService.showCoordinateLabels.value?"Hide coordinate labels": "Show coordinate labels"}}</button>
         <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
-          <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player.getHtmlColor()}">
+          <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player.color}">
             {{player.name}}
           </span>
         </span>
-        <span *ngIf='gameService.aiGroupOnMove.value != null'>Players on move: {{getPlayersOnMoveLabel()}}</span>
       </div>
     """,
     changeDetection: ChangeDetectionStrategy.OnPush)
 class GameControlsComponent {
   GameService gameService;
+  AppService appService;
   GatewayService gateway;
   final ChangeDetectorRef changeDetector;
-  GameControlsComponent(this.gameService, this.gateway, this.changeDetector){
+  GameControlsComponent(this.gameService, this.gateway, this.changeDetector, this.appService){
     this.gameService.showCoordinateLabels.listen((_)=>changeDetector.markForCheck());
     this.gameService.playersOnMove.listen((_)=>changeDetector.markForCheck());
-    this.gameService.aiGroupOnMove.listen((_)=>changeDetector.markForCheck());
   }
 
   void endTurn(){
@@ -43,11 +43,8 @@ class GameControlsComponent {
   String getPlayersOnMoveLabel(){
     if(gameService.playersOnMove.value != null){
       return gameService.playersOnMove.value.map((ClientPlayer player){
-        return player.name;
+        return player.humanPlayer != null? player.humanPlayer.name : player.aiGroup.langName[appService.language];
       }).join(", ");
-    }
-    if(gameService.aiGroupOnMove.value != null){
-      return "${gameService.aiGroupOnMove.value.id} TODO: some loading wheel or something like that";
     }
     return "";
   }

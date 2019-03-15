@@ -77,6 +77,32 @@ abstract class Ability {
   void setInvoker(Unit invoker) {
     this.invoker = invoker;
   }
+
+  /**
+   *  use null to inherit invoker speed
+   *  use "+1" "-1" to modify invoker steps
+   *  use "5" to set specific value
+   *  every value about 7 is cut
+   */
+  int _resolveCurrentSteps(Unit invoker, String steps) {
+    int currentSteps = invoker.steps;
+    if (steps != null) {
+      if (steps.contains("+")) {
+        currentSteps += int.parse(steps.replaceAll("+", ""));
+      } else if (steps.contains("-")) {
+        currentSteps -= int.parse(steps.replaceAll("-", ""));
+      } else {
+        currentSteps = int.parse(steps) - invoker.far;
+      }
+    }
+    if (currentSteps > 7) {
+      currentSteps = 7;
+    }
+    if (currentSteps < 0) {
+      currentSteps = 0;
+    }
+    return currentSteps;
+  }
 }
 
 //

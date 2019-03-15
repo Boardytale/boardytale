@@ -9,19 +9,21 @@ class ClientTaleData {
   TaleCompiledAssets assets;
   List<Player> players;
   String playerIdOnThisClientMachine;
-  Map<String, AiGroup> aiGroups = {};
   List<String> playerOnMoveIds;
   String aiGroupOnMove;
+  List<String> humanPlayerIds = [];
+
+  List<Player> get aiPlayers => players.where((p) => p.isAiPlayer);
 
   ClientTaleData();
 
-  ClientTaleData.fromCompiledTale(TaleInnerCompiled compiled){
+  ClientTaleData.fromCompiledTale(TaleInnerCompiled compiled) {
     name = compiled.name;
     langs = compiled.langs;
     langName = compiled.langName;
     world = compiled.world;
     assets = compiled.assets;
-    aiGroups = compiled.aiGroups;
+    humanPlayerIds = compiled.humanPlayerIds;
   }
 
   static ClientTaleData fromJson(Map json) {

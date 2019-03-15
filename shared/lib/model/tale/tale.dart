@@ -7,7 +7,6 @@ class Tale {
   int humanPlayersTeam;
   covariant World world;
   covariant Map<String, Player> players = {};
-  Map<String, AiGroup> aiGroups = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
   Map<String, Unit> units = {};
@@ -19,7 +18,9 @@ class Tale {
       ..fromEnvelope(tale.world, (key, world) => Field(key, world));
     events = tale.events;
     dialogs = tale.dialogs;
-    aiGroups = tale.aiGroups;
+    tale.aiPlayers.forEach((key, ai){
+      players[key] = ai;
+    });
   }
 }
 

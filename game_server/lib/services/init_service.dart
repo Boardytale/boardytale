@@ -31,6 +31,7 @@ class InitGameService {
       player = ServerPlayer()
         ..id = "${playerService.lastPlayerId++}"
         ..user = user
+        ..humanPlayer = (shared.HumanPlayer()..name = user.name)
         ..navigationState = shared.GameNavigationState.findLobby;
 
       playerService.setPlayer(player, messageWithConnection.connection);

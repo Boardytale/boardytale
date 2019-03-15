@@ -41,7 +41,7 @@ class LobbyService {
   Future<LobbyRoom> createLobbyRoom(
       ServerPlayer player, String taleName, String name) async {
     var lobbyPlayer = player.createGamePlayer();
-    lobbyPlayer.gameMaster = true;
+    lobbyPlayer.humanPlayer.isGameMaster = true;
 
     shared.TaleCompiled tale = await getTaleByName(taleName);
 

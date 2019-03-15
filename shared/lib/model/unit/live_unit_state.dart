@@ -27,9 +27,6 @@ class LiveUnitState {
   String transferToPlayerId;
 
   @JsonKey(includeIfNull: false)
-  String transferToAiGroupId;
-
-  @JsonKey(includeIfNull: false)
   AnimationName useAnimationName;
 
   static LiveUnitState fromJson(Map data) {

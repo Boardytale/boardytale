@@ -4,14 +4,13 @@ part of model;
 @JsonSerializable()
 class AttackAbilityEnvelope {
   /**
-   *  use null to use invoker range
-   *  use "+1" "-1" to change invoker original
-   *  use "4" to set specific range
-   *  use "0" for face-to-face units
-   *  any range above 7 will be set to 7
+   *  use null to inherit invoker speed
+   *  use "+1" "-1" to modify invoker steps
+   *  use "5" to set specific value
+   *  every value about 7 is cut
    */
   @TypescriptOptional()
-  String range;
+  String steps;
 
   /**
    *  use 6 expressions separated by space
@@ -46,47 +45,48 @@ class AttackAbility extends Ability {
    *  example: "0 0 1 +1 +2 -1"
    *  every value above 9 will be 9
    */
+  @TypescriptOptional()
   String attack;
 
   /**
-   *  use null to use invoker range
-   *  use "+1" "-1" to change invoker original
-   *  use "4" to set specific range
-   *  use "0" for face-to-face units
-   *  any range above 7 will be set to 7
+   *  use null to inherit invoker speed
+   *  use "+1" "-1" to modify invoker steps
+   *  use "5" to set specific value
+   *  every value about 7 is cut
    */
-  String range;
+  @TypescriptOptional()
+  String steps;
 
   bool validate(Unit invoker, Track track) {
-//    int currentSteps = invoker.steps;
-//    if (steps != null) {
-//      if (steps.contains("+")) {
-//        currentSteps += int.parse(steps.replaceAll("+", ""));
-//      } else if (steps.contains("-")) {
-//        currentSteps -= int.parse(steps.replaceAll("-", ""));
-//      } else {
-//        currentSteps = int.parse(steps) - invoker.far;
-//      }
-//    }
-//    if (currentSteps > 7) {
-//      currentSteps = 7;
-//    }
-//    if (currentSteps < 0) {
-//      currentSteps = 0;
-//    }
-//
-//    if (currentSteps < track.fields.length - 1) {
-//      return false;
-//    }
-    return track.isFreeWay(invoker.player);
+    if (track.fields.length == 1) {
+      return false;
+    }
+    int currentSteps = _resolveCurrentSteps(invoker, steps);
+
+    if(!track.last.isEnemyOf(invoker.player)){
+      return false;
+    }
+
+    if (!Track.shorten(track, 1).isFreeWay(invoker.player)) {
+      return false;
+    }
+
+    if (currentSteps <= track.getMoveCostOfFreeWay()) {
+      return false;
+    }
+    return true;
   }
+
+//  List<int> _resolveCurrentAttack(){
+//    return invoker.attack;
+//  }
 
   fromEnvelope(AttackAbilityEnvelope envelope) {
     if(envelope.attack != null) {
       attack = envelope.attack;
     }
-    if(envelope.range != null){
-      range = envelope.range;
+    if(envelope.steps != null){
+      steps = envelope.steps;
     }
   }
 }

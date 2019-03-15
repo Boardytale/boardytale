@@ -18,6 +18,7 @@ class Unit {
   List<Buff> _buffs = [];
   Set<String> tags = new Set<String>();
   String aiGroupId;
+  AiGroup aiGroup;
   List<UnitCreateOrUpdateAction> actionLog = [];
 
   /// called on health change with previous health state
@@ -117,16 +118,12 @@ class Unit {
       UnitCreateOrUpdateAction action,
       Map<String, Field> fields,
       Map<String, Player> players,
-      Map<String, UnitType> types,
-      void Function(Unit unit) onAfterCreate) {
+      Map<String, UnitType> types) {
     fromUnitType(types[action.state.changeToTypeName],
         fields[action.state.moveToFieldId], action.unitId);
     if (action.state.transferToPlayerId != null) {
       player = players[action.state.transferToPlayerId];
-    } else {
-      aiGroupId = action.state.transferToAiGroupId;
     }
-    onAfterCreate(this);
     addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
   }
 
@@ -269,8 +266,7 @@ class Unit {
       ..unitId = id
       ..state = (getState()
         ..moveToFieldId = field.id
-        ..transferToPlayerId = player?.id
-        ..transferToAiGroupId = aiGroupId
+        ..transferToPlayerId = player.id
         ..changeToTypeName = type.name);
   }
 }

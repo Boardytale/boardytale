@@ -122,9 +122,7 @@ class ClientWorldService extends shared.World {
         unit.addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
       } else {
         ClientUnit unit = ClientUnit()
-          ..fromCreateAction(action, fields, appService.players, clientTaleService.unitTypes, (shared.Unit unit) {
-            (unit as ClientUnit).aiGroup = appService.aiGroups[unit.aiGroupId];
-          });
+          ..fromCreateAction(action, fields, appService.players, clientTaleService.unitTypes);
         clientTaleService.units[unit.id] = unit;
         onUnitAdded.add(unit);
       }

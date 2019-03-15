@@ -1,12 +1,13 @@
 part of game_server;
 
-class ServerPlayer extends shared.Player{
+class ServerPlayer extends shared.Player {
   String id;
   Connection connection;
   shared.GameNavigationState navigationState;
   shared.User user;
   ServerTale tale;
-  int color = Color.Red;
+  String color = "#ff0000";
+
   String get email => user.email;
 
   String get innerToken => user.innerToken;
@@ -37,15 +38,34 @@ class ServerPlayer extends shared.Player{
   void enterGame(ServerTale tale) {
     this.tale = tale;
     navigationState = shared.GameNavigationState.inGame;
-    gateway.sendMessage(
-        shared.ToClientMessage.fromSetNavigationState(navigationState), this);
+    gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState), this);
   }
 
   shared.Player createGamePlayer() {
-    return shared.Player()
-      ..name = user.name
-      ..color = color
-      ..id = id
-    ;
+    shared.Player gamePlayer = shared.Player()
+        ..color = color
+        ..taleId = taleId
+        ..id = id;
+    if(isHumanPlayer){
+      return gamePlayer
+        ..humanPlayer = (shared.HumanPlayer()..name = user.name);
+    }else{
+      return gamePlayer
+        ..aiGroup = (shared.AiGroup()..langName = aiGroup.langName);
+    }
+
+  }
+
+  void fromSharedPlayer(shared.Player input) {
+    color = input.color;
+    id = input.id;
+    taleId = input.taleId;
+    if (input.isAiPlayer) {
+      aiGroup = input.aiGroup;
+    } else if(input.isHumanPlayer){
+      humanPlayer = input.humanPlayer;
+    }else{
+      throw "player have to be human or ai";
+    }
   }
 }

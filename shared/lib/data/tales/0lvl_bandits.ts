@@ -1,11 +1,14 @@
-import { TaleCreateEnvelope, AiGroup } from '../../model/model';
+import { TaleCreateEnvelope, Player } from '../../model/model';
 import { world } from './0lvl_bandits/world';
 
-const bandits: AiGroup = {
+const bandits: Player = {
     color: '#555555',
     id: 'bandits',
-    name: {
-        en: 'Bandits',
+    taleId: 'bandits',
+    aiGroup: {
+        langName: {
+            en: 'Bandits',
+        },
     },
     team: 'bandits',
 };
@@ -39,11 +42,12 @@ export let data: TaleCreateEnvelope = {
     },
     authorEmail: 'mlcoch.zdenek@gmail.com',
     tale: {
+        humanPlayerIds: ['0', '1', '2', '3'],
         dialogs: {},
         events: {},
         name: '0lvl_bandits',
         langs: { en: {} },
-        aiGroups: {
+        aiPlayers: {
             bandits: bandits,
         },
         langName: {
@@ -54,15 +58,13 @@ export let data: TaleCreateEnvelope = {
         units: [
             {
                 fieldId: '10_10',
-                aiGroupId: 'bandits',
                 unitTypeName: 'pikeman',
-                playerId: null,
+                playerId: 'bandits',
             },
             {
                 fieldId: '7_5',
-                aiGroupId: 'bandits',
                 unitTypeName: 'pikeman',
-                playerId: null,
+                playerId: 'bandits',
             },
         ],
         world: world,

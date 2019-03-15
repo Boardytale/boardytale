@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:typescript_reporter/typescript_reporter.dart';
 import 'package:utils/utils.dart' as utils;
 import 'package:rxdart/rxdart.dart';
+import 'package:fff/parser.dart';
 part 'image.dart';
 part 'user.dart';
 part 'unit/unit.dart';

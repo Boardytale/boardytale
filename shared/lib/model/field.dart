@@ -107,6 +107,11 @@ class Field {
     return units.first.player == player;
   }
 
+  bool isEnemyOf(Player player) {
+    if (units.isEmpty) return false;
+    return units.first.player.team != player.team;
+  }
+
   bool isCorpseOnField() {
     for (Unit unit in units) {
       if (!unit.isAlive) return true;

@@ -33,6 +33,8 @@ main() async {
 
   runServerByServerConfiguration(config.editorServer);
 
+  runServerByServerConfiguration(config.heroesServer);
+
 //  Process.start(dartExecutable, ["lib/server.dart"], workingDirectory: projectDirectoryPath + "/server")
 //      .then((Process process) {
 //    printFromOutputStreams(process, "Shelf proxy", "light_cyan");

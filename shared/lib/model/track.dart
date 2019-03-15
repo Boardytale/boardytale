@@ -10,9 +10,9 @@ class Track {
   Track.fromIds(List<String> path, World world)
       : fields = _fieldsFromIds(path, world);
 
-  Track.shorten(Track previous, int removeLast)
+  Track.shorten(Track previous, int removeLastCount)
       : fields =
-  previous.fields.sublist(0, previous.fields.length - removeLast);
+  previous.fields.sublist(0, previous.fields.length - removeLastCount);
 
   List<String> toIds() {
     return this.fields.map((f)=>f.id).toList();

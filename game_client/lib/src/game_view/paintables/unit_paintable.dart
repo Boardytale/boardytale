@@ -96,7 +96,7 @@ class UnitPaintable extends Paintable {
     graphics.beginPath();
     graphics.arc(5, 5, 3, 0, 2 * math.pi);
     graphics.closePath();
-    graphics.fillColor(unit.getStagePlayerColor());
+    graphics.fillColor(unit.player.getStageColor());
     graphics.beginPath();
     graphics.arc(5, 5, 4, 0, 2 * math.pi);
     graphics.closePath();
@@ -190,7 +190,7 @@ class UnitPaintable extends Paintable {
     if (!unit.isAlive) {
       return "u${unit.type.name}h${unit.actualHealth}";
     }
-    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${unit.handlerId}";
+    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${unit.player.id}";
   }
 
   shared.Image getPrimaryImage() {

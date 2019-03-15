@@ -9,7 +9,6 @@ import 'package:shared/model/model.dart' as shared;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:shared/configuration/configuration.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:stagexl/src/ui/color.dart';
 
 part 'server_gateway.dart';
 
