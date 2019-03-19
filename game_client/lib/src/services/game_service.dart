@@ -12,43 +12,30 @@ import 'package:shared/model/model.dart' as shared;
 
 @Injectable()
 class GameService {
-  ClientWorldService world;
   SettingsService settings;
   AppService appService;
   GatewayService gatewayService;
   BehaviorSubject<bool> showCoordinateLabels = BehaviorSubject<bool>(seedValue: false);
   Map<String, shared.AiGroup> aiGroups = {};
-  Stream<ClientWorldService> get onWorldLoaded => _onWorldLoaded.stream;
-  StreamController<ClientWorldService> _onWorldLoaded = StreamController();
-  ClientTaleService tale;
+  BehaviorSubject<ClientWorldService> onWorldLoaded = BehaviorSubject();
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
   ClientPlayer get currentPlayer => appService.currentPlayer;
+  shared.ClientTaleData clientTaleData;
 
-  GameService(this.gatewayService, this.settings, this.appService, this.tale) {
+  GameService(this.gatewayService, this.settings, this.appService) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
     gatewayService.handlers[shared.OnClientAction.playersOnMove] = handlePlayersOnMove;
   }
 
   void handleTaleData(shared.ToClientMessage message) {
-    shared.ClientTaleData clientTaleData = message.getTaleDataMessage.data;
-    tale.fromClientTaleData(clientTaleData);
-    tale.players.forEach((String id, shared.Player player) {
-      ClientPlayer newPlayer = ClientPlayer()..fromSharedPlayer(player);
-      appService.players[id] = newPlayer;
-      if (newPlayer.id == clientTaleData.playerIdOnThisClientMachine) {
-        appService.currentPlayer = newPlayer;
-      }
-    });
-    setPlayersOnMoveByIds(clientTaleData.playerOnMoveIds);
-    world = tale.world;
-    this._onWorldLoaded.add(world);
+    clientTaleData = message.getTaleDataMessage.data;
   }
 
   void handlePlayersOnMove(shared.ToClientMessage message) {
     setPlayersOnMoveByIds(message.getPlayersOnMove.playerOnMoveIds);
   }
 
-  void setPlayersOnMoveByIds(List<String> ids){
+  void setPlayersOnMoveByIds(Iterable<String> ids){
     if(ids == null){
       playersOnMove.add(null);
     }else{

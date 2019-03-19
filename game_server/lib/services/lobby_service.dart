@@ -49,6 +49,7 @@ class LobbyService {
     lobby.players.add(lobbyPlayer);
     lobby.lobbyName = name;
     lobby.id = (lobbyId++).toString();
+    print("creating lobby room ${lobby.id}");
 
     LobbyRoom room = LobbyRoom();
     room.compiledTale = tale;

@@ -8,8 +8,7 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
 
-  UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view,
-      ClientField field, this.settings)
+  UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view, ClientField field, this.settings)
       : super(view, field, stage) {
     leftOffset = 0;
     topOffset = 0;
@@ -48,8 +47,7 @@ class UnitPaintable extends Paintable {
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
       shared.Image primaryImage = getPrimaryImage();
-      data = stage_lib.BitmapData(
-          rectWidth, rectHeight, stage_lib.Color.Transparent);
+      data = stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
       if (primaryImage == unit.type.bigImage) {
         imageElement = await getBigImageData();
@@ -58,27 +56,19 @@ class UnitPaintable extends Paintable {
         await Future.delayed(Duration.zero);
       }
       data.drawPixels(
-          stage_lib.BitmapData.fromImageElement(
-              imageElement, 1 / pixelRatio * primaryImage.multiply),
-          stage_lib.Rectangle(
-              0,
-              0,
-              primaryImage.width * pixelRatio / primaryImage.multiply,
+          stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
+          stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
               primaryImage.height * pixelRatio / primaryImage.multiply),
-          stage_lib.Point(
-              primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
+          stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
       if (!unit.isAlive) {
         data.applyFilter(stage_lib.ColorMatrixFilter.grayscale());
       }
       unitGlobalCache[state] = data;
       if (unit.isAlive) {
-        data.drawPixels(
-            getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
-        data.drawPixels(getStepsBar(), getLifeBarRect(),
-            stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
+        data.drawPixels(getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
+        data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
       }
-      data.drawPixels(getPlayerColor(unit), getPlayerColorRect(),
-          stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
+      data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
     } else {
       data = unitGlobalCache[state];
     }
@@ -93,23 +83,28 @@ class UnitPaintable extends Paintable {
   stage_lib.BitmapData getPlayerColor(ClientUnit unit) {
     var shape = stage_lib.Shape();
     stage_lib.Graphics graphics = shape.graphics;
-    graphics.beginPath();
-    graphics.arc(5, 5, 3, 0, 2 * math.pi);
-    graphics.closePath();
-    graphics.fillColor(unit.player.getStageColor());
-    graphics.beginPath();
-    graphics.arc(5, 5, 4, 0, 2 * math.pi);
-    graphics.closePath();
-    graphics.strokeColor(stage_lib.Color.Black);
+
     stage_lib.BitmapData data = stage_lib.BitmapData(10, 10, stage_lib.Color.Transparent);
+    if (unit.player.id == view.appService.currentPlayer.id) {
+      data.fillRect(getPlayerColorRect(), stage_lib.Color.Black);
+      data.fillRect(stage_lib.Rectangle(1, 1, 8, 8), unit.player.getStageColor());
+    } else {
+      graphics.beginPath();
+      graphics.arc(5, 5, 3, 0, 2 * math.pi);
+      graphics.closePath();
+      graphics.fillColor(unit.player.getStageColor());
+      graphics.beginPath();
+      graphics.arc(5, 5, 4, 0, 2 * math.pi);
+      graphics.closePath();
+      graphics.strokeColor(stage_lib.Color.Black);
     data.draw(shape);
+    }
     return data;
   }
 
   stage_lib.BitmapData getLifeBar() {
     int resolutionLevel = view.clientWorldService.resolutionLevel;
-    String description =
-        "${unit.type.health}_${unit.actualHealth}_$resolutionLevel";
+    String description = "${unit.type.health}_${unit.actualHealth}_$resolutionLevel";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.type.health < 10) {
       bitSpace = 1.0;
@@ -120,14 +115,10 @@ class UnitPaintable extends Paintable {
       double width = rectWidth / 2;
       stage_lib.BitmapData data = stage_lib.BitmapData(width, lifeBarHeight);
       data.fillRect(getLifeBarRect(), stage_lib.Color.Black);
-      double bitWidth =
-          (width - (unit.type.health + 1) * bitSpace) / unit.type.health;
+      double bitWidth = (width - (unit.type.health + 1) * bitSpace) / unit.type.health;
       for (int i = 0; i < unit.type.health; i++) {
-        stage_lib.Rectangle bitRectangle = stage_lib.Rectangle(
-            i * bitWidth + (i + 1) * bitSpace,
-            bitSpace,
-            bitWidth,
-            lifeBarHeight - 2 * bitSpace);
+        stage_lib.Rectangle bitRectangle =
+            stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.actualHealth) {
           data.fillRect(bitRectangle, stage_lib.Color.Green);
         } else {
@@ -139,16 +130,8 @@ class UnitPaintable extends Paintable {
     }
   }
 
-  Map<String, int> activeStepColors = {
-    "me": 0xFF00D2FF,
-    "team": 0xFFFFFF00,
-    "enemy": 0xFFFF0000
-  };
-  Map<String, int> usedStepColors = {
-    "me": 0xFF007088,
-    "team": 0xFF787700,
-    "enemy": 0xFF780000
-  };
+  Map<String, int> activeStepColors = {"me": 0xFF00D2FF, "team": 0xFFFFFF00, "enemy": 0xFFFF0000};
+  Map<String, int> usedStepColors = {"me": 0xFF007088, "team": 0xFF787700, "enemy": 0xFF780000};
 
   stage_lib.BitmapData getStepsBar() {
     int resolutionLevel = view.clientWorldService.resolutionLevel;
@@ -165,11 +148,8 @@ class UnitPaintable extends Paintable {
       data.fillRect(getLifeBarRect(), stage_lib.Color.Black);
       double bitWidth = (width - (unit.speed + 1) * bitSpace) / unit.speed;
       for (int i = 0; i < unit.speed; i++) {
-        stage_lib.Rectangle bitRectangle = stage_lib.Rectangle(
-            i * bitWidth + (i + 1) * bitSpace,
-            bitSpace,
-            bitWidth,
-            lifeBarHeight - 2 * bitSpace);
+        stage_lib.Rectangle bitRectangle =
+            stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.steps) {
           data.fillRect(bitRectangle, 0xFF00D2FF);
         } else {
@@ -214,8 +194,7 @@ class UnitPaintable extends Paintable {
     Completer<ImageElement> completer = Completer<ImageElement>();
     ImageElement imageElement;
     if (unit.type.bigImage != null) {
-      imageElement =
-          ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
+      imageElement = ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
     } else {
       imageElement = ImageElement(src: unit.type.image.data);
     }

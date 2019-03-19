@@ -1,13 +1,13 @@
 part of client_model;
 
 class ClientUnit extends shared.Unit {
-  ClientUnit() : super(createClientAbilityList);
-  shared.Ability getAbility(
-      shared.Track track, bool shift, bool alt, bool ctrl) {
+  ClientUnit(shared.UnitCreateOrUpdateAction action, Map<String, shared.Field> fields,
+      Map<String, shared.Player> players, Map<String, shared.UnitType> types)
+      : super(createClientAbilityList, action, fields, players, types);
+
+  shared.Ability getAbility(shared.Track track, bool shift, bool alt, bool ctrl) {
     List<shared.Ability> possibles = abilities.toList();
-    possibles
-      ..removeWhere(
-          (shared.Ability ability) => !ability.validate(this, track));
+    possibles..removeWhere((shared.Ability ability) => !ability.validate(this, track));
 
     int used = 0;
     if (possibles.isEmpty) {
@@ -32,8 +32,7 @@ class ClientUnit extends shared.Unit {
 
   List<String> whyNoAbility(shared.Track track) {
     return abilities
-        .map((shared.Ability ability) =>
-            "${ability.name}: ${ability.validate(this, track)}")
+        .map((shared.Ability ability) => "${ability.name}: ${ability.validate(this, track)}")
         .toList(growable: false);
   }
 }

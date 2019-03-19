@@ -147,7 +147,11 @@ UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
     ..newUnitTypeToTale = json['newUnitTypeToTale'] == null
         ? null
         : UnitTypeCompiled.fromJson(
-            json['newUnitTypeToTale'] as Map<String, dynamic>);
+            json['newUnitTypeToTale'] as Map<String, dynamic>)
+    ..newPlayerToTale = json['newPlayerToTale'] == null
+        ? null
+        : Player.fromJson(json['newPlayerToTale'] as Map<String, dynamic>)
+    ..isNewPlayerOnMove = json['isNewPlayerOnMove'] as bool;
 }
 
 Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
@@ -165,6 +169,8 @@ Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
   }
 
   writeNotNull('newUnitTypeToTale', instance.newUnitTypeToTale?.toJson());
+  writeNotNull('newPlayerToTale', instance.newPlayerToTale?.toJson());
+  writeNotNull('isNewPlayerOnMove', instance.isNewPlayerOnMove);
   return val;
 }
 
@@ -934,11 +940,11 @@ Map<String, dynamic> _$IntentionUpdateToJson(IntentionUpdate instance) =>
 PlayersOnMove _$PlayersOnMoveFromJson(Map<String, dynamic> json) {
   return PlayersOnMove()
     ..playerOnMoveIds =
-        (json['playerOnMoveIds'] as List)?.map((e) => e as String)?.toList();
+        (json['playerOnMoveIds'] as List)?.map((e) => e as String);
 }
 
 Map<String, dynamic> _$PlayersOnMoveToJson(PlayersOnMove instance) =>
-    <String, dynamic>{'playerOnMoveIds': instance.playerOnMoveIds};
+    <String, dynamic>{'playerOnMoveIds': instance.playerOnMoveIds?.toList()};
 
 AddUnitType _$AddUnitTypeFromJson(Map<String, dynamic> json) {
   return AddUnitType()

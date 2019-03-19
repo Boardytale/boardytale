@@ -27,8 +27,7 @@ class Player {
 
   int getStageColor() {
     var color = ColorParser(this.color);
-    return int.parse(
-        "0xFF${color.red.toRadixString(16)}${color.green.toRadixString(16)}${color.blue.toRadixString(16)}");
+    return 256*256*256*255 + 256*256*color.red + 256*color.green + color.blue;
   }
 
   Map<String, dynamic> toJson() {
@@ -40,7 +39,7 @@ class Player {
 @JsonSerializable()
 class HumanPlayer {
   String name;
-  bool isGameMaster;
+  bool isGameMaster = false;
   Image portrait;
 
   static HumanPlayer fromJson(Map<String, dynamic> json) {

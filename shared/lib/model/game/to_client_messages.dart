@@ -136,7 +136,7 @@ class ToClientMessage {
       PlayersOnMove.fromJson(json.decode(content));
 
   factory ToClientMessage.fromPlayersOnMove(
-      List<String> playerOnMoveIds) {
+      Iterable<String> playerOnMoveIds) {
     return ToClientMessage()
       ..message = OnClientAction.playersOnMove
       ..content = json.encode((PlayersOnMove()
@@ -309,7 +309,7 @@ class IntentionUpdate extends MessageContent {
 
 @JsonSerializable()
 class PlayersOnMove extends MessageContent {
-  List<String> playerOnMoveIds;
+  Iterable<String> playerOnMoveIds;
 
   static PlayersOnMove fromJson(Map<String, dynamic> json) =>
       _$PlayersOnMoveFromJson(json);

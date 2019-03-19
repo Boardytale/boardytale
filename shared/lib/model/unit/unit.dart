@@ -27,7 +27,7 @@ class Unit {
   BehaviorSubject<int> onHealthChanged = BehaviorSubject<int>();
   BehaviorSubject<Field> onFieldChanged = BehaviorSubject<Field>();
 
-//  Stream get onActionStateChanged => _onActionStateChanged.stream;
+  //  Stream get onActionStateChanged => _onActionStateChanged.stream;
 
   bool get isUndead => tags.contains(UnitTypeTag.undead);
 
@@ -45,13 +45,8 @@ class Unit {
 
   List<Ability> Function(AbilitiesEnvelope envelope) _createClientAbilityList;
 
-  Unit(List<Ability> this._createClientAbilityList(AbilitiesEnvelope envelope));
-
   static List<int> _parseAttack(String input) {
-    return input
-        .split(" ")
-        .map((segment) => int.parse(segment))
-        .toList(growable: false);
+    return input.split(" ").map((segment) => int.parse(segment)).toList(growable: false);
   }
 
   // called on buffs and type change
@@ -101,29 +96,22 @@ class Unit {
 
   bool get isAlive => _health > 0;
 
-  void fromUnitType(UnitType unitType, Field field, String id) {
-    this.id = id;
-    type = unitType;
+  Unit(List<Ability> this._createClientAbilityList(AbilitiesEnvelope envelope), UnitCreateOrUpdateAction action,
+      Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types) {
+    player = players[action.state.transferToPlayerId];
+    if (player == null) {
+      throw "player has to be defined during unit creation";
+    }
+    id = action.unitId;
+    type = types[action.state.changeToTypeName];
     _health = type.health;
     _steps = type.speed;
     _actions = type.actions;
     _recalculate();
-    _setType(unitType);
+    _setType(type);
     _field?.removeUnit(this);
-    _field = field;
+    _field = fields[action.state.moveToFieldId];
     field.addUnit(this);
-  }
-
-  void fromCreateAction(
-      UnitCreateOrUpdateAction action,
-      Map<String, Field> fields,
-      Map<String, Player> players,
-      Map<String, UnitType> types) {
-    fromUnitType(types[action.state.changeToTypeName],
-        fields[action.state.moveToFieldId], action.unitId);
-    if (action.state.transferToPlayerId != null) {
-      player = players[action.state.transferToPlayerId];
-    }
     addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
   }
 
@@ -132,8 +120,7 @@ class Unit {
   void _setType(UnitType type) {
     // health is transformed by new maximum. If unit is alive, type change cannot kill it
     bool alive = isAlive;
-    int newActualHealth =
-        ((type.health / this.type.health) * actualHealth).floor();
+    int newActualHealth = ((type.health / this.type.health) * actualHealth).floor();
     this.type = type;
     if (alive && actualHealth == 0) {
       newActualHealth = 1;
@@ -158,23 +145,10 @@ class Unit {
     onTypeChanged.add(null);
   }
 
-  Map toSimpleJson() {
-    Map<String, dynamic> out = <String, dynamic>{};
-    out["id"] = id;
-    out["field"] = field.id;
-    out["health"] = _health;
-    out["player"] = player.id;
-    out["steps"] = _steps;
-    out["name"] = _name;
-    return out;
-  }
-
   Ability getAbilityByName(String name) =>
-      abilities.firstWhere((Ability ability) => ability.name == name,
-          orElse: () => null);
+      abilities.firstWhere((Ability ability) => ability.name == name, orElse: () => null);
 
-  UnitUpdateReport addUnitUpdateAction(
-      UnitCreateOrUpdateAction action, Field newField) {
+  UnitUpdateReport addUnitUpdateAction(UnitCreateOrUpdateAction action, Field newField) {
     UnitUpdateReport report = UnitUpdateReport();
     print("unit action ${id} ${action.toJson()}");
     report.action = action;

@@ -7,15 +7,13 @@ class Track {
 
   Track(this.fields) {}
 
-  Track.fromIds(List<String> path, World world)
-      : fields = _fieldsFromIds(path, world);
+  Track.fromIds(List<String> path, World world) : fields = _fieldsFromIds(path, world);
 
   Track.shorten(Track previous, int removeLastCount)
-      : fields =
-  previous.fields.sublist(0, previous.fields.length - removeLastCount);
+      : fields = previous.fields.sublist(0, previous.fields.length - removeLastCount);
 
   List<String> toIds() {
-    return this.fields.map((f)=>f.id).toList();
+    return this.fields.map((f) => f.id).toList();
   }
 
   static List<Field> _fieldsFromIds(List<String> path, World world) {
@@ -24,8 +22,7 @@ class Track {
 
   bool get isEmpty => fields.isEmpty;
 
-  List<String> get path =>
-      fields.map((Field field) => field.id).toList(growable: false);
+  List<String> get path => fields.map((Field field) => field.id).toList(growable: false);
 
   bool get isConnected {
     Field previous;
@@ -48,28 +45,25 @@ class Track {
   }
 
   bool isFreeWay(Player ofPlayer) {
-    if (fields.length >= 2) {
-      Field toGo = fields[fields.length - 2];
-      if (!toGo.units.isEmpty && toGo.units.first.player != ofPlayer)
-        return false;
+    if (fields.last.units.isNotEmpty && fields.last.units.first.player != ofPlayer) {
+      return false;
     }
-    if (fields.length >= 3) {
-      for (var i = 1; i < fields.length - 2; i++) {
-        Field f = fields[i];
-        if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team)
-          return false;
+    for (var i = 1; i < fields.length; i++) {
+      Field field = fields[i];
+      if (field.units.isNotEmpty && field.units.first.player.team != ofPlayer.team) {
+        return false;
       }
     }
     return true;
   }
 
-  int getMoveCostOfFreeWay(){
+  int getMoveCostOfFreeWay() {
     int cost = 0;
-    for(int i = 1;i<fields.length;i++){
-      if(fields[i].terrain == Terrain.forest){
-        cost +=2;
-      }else{
-        cost +=1;
+    for (int i = 1; i < fields.length; i++) {
+      if (fields[i].terrain == Terrain.forest) {
+        cost += 2;
+      } else {
+        cost += 1;
       }
     }
     return cost;
@@ -78,14 +72,12 @@ class Track {
   bool isHandMove(Player ofPlayer) {
     if (fields.length >= 3) {
       Field toGo = fields[fields.length - 2];
-      if (!toGo.units.isEmpty && toGo.units.first.player != ofPlayer)
-        return false;
+      if (!toGo.units.isEmpty && toGo.units.first.player != ofPlayer) return false;
     }
     if (fields.length >= 4) {
       for (var i = 1; i < fields.length - 2; i++) {
         Field f = fields[i];
-        if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team)
-          return false;
+        if (!f.units.isEmpty && f.units.first.player.team != ofPlayer.team) return false;
       }
     }
     return true;

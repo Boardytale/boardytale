@@ -1,7 +1,6 @@
 part of game_server;
 
 class ServerPlayer extends shared.Player {
-  String id;
   Connection connection;
   shared.GameNavigationState navigationState;
   shared.User user;
@@ -37,6 +36,7 @@ class ServerPlayer extends shared.Player {
 
   void enterGame(ServerTale tale) {
     this.tale = tale;
+//    tale.players[tale.]
     navigationState = shared.GameNavigationState.inGame;
     gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState), this);
   }
@@ -60,6 +60,7 @@ class ServerPlayer extends shared.Player {
     color = input.color;
     id = input.id;
     taleId = input.taleId;
+    team = input.team;
     if (input.isAiPlayer) {
       aiGroup = input.aiGroup;
     } else if(input.isHumanPlayer){

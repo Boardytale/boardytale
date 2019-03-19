@@ -11,7 +11,7 @@ import 'package:game_client/src/services/app_service.dart';
     <div class="players">
       <div 
       *ngFor="let player of players" 
-      [class.is-me]="player==me" [class.is-done]='player.isDone' style="color:{{player.color}}">
+      [class.is-me]="player==me" style="color:{{player.color}}">
         {{player.name}}
       </div>
     </div>

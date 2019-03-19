@@ -13,7 +13,7 @@ class ClientTaleData {
   String aiGroupOnMove;
   List<String> humanPlayerIds = [];
 
-  List<Player> get aiPlayers => players.where((p) => p.isAiPlayer);
+  Iterable<Player> get aiPlayers => players.where((p) => p.isAiPlayer);
 
   ClientTaleData();
 

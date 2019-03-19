@@ -10,6 +10,8 @@ import 'package:angular/core.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
+import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/game_service.dart';
 
 part 'package:game_client/src/game_model/field.dart';
 part 'package:game_client/src/game_model/hexa_borders.dart';

@@ -55,6 +55,10 @@ class UnitCreateOrUpdateAction {
   LiveUnitState state;
   @JsonKey(includeIfNull: false)
   UnitTypeCompiled newUnitTypeToTale;
+  @JsonKey(includeIfNull: false)
+  Player newPlayerToTale;
+  @JsonKey(includeIfNull: false)
+  bool isNewPlayerOnMove;
 
   static UnitCreateOrUpdateAction fromJson(Map data) {
     return _$UnitCreateOrUpdateActionFromJson(data);

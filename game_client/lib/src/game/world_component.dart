@@ -12,6 +12,7 @@ import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
+import 'package:rxdart/rxdart.dart';
 
 @Component(
     selector: 'world',
@@ -56,15 +57,15 @@ class WorldComponent implements OnDestroy {
   int _lastActionId = 0;
   ClientField _lastActiveField;
   ClientWorldService _clientWorldService;
+  ReplaySubject<shared.ToClientMessage> unitCreateOrUpdate = ReplaySubject();
 
-  WorldComponent(this.changeDetector, this.settings, this.appService,
-      this.gateway, this.gameService, this.view) {
+  WorldComponent(this.changeDetector, this.settings, this.appService, this.gateway, this.gameService, this.view) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     gameService.onWorldLoaded.listen(modelLoaded);
-    gateway.handlers[shared.OnClientAction.intentionUpdate] =
-        handleIntentionUpdate;
-    gateway.handlers[shared.OnClientAction.unitCreateOrUpdate] =
-        handleUnitCreateOrUpdate;
+    gateway.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
+    gateway.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
+      unitCreateOrUpdate.add(message);
+    };
   }
 
   @ViewChild("world")
@@ -83,17 +84,7 @@ class WorldComponent implements OnDestroy {
     ClientPlayer player = appService.players[playerId];
     int color = player.getStageColor();
     unitManager.addIntention(
-        activeFieldIds == null
-            ? null
-            : activeFieldIds
-                .map((id) => _clientWorldService.fields[id])
-                .toList(),
-        color);
-  }
-
-  void handleUnitCreateOrUpdate(shared.ToClientMessage message) {
-    shared.UnitCreateOrUpdate state = message.getUnitCreateOrUpdate;
-    _clientWorldService.createOrUpdateUnits(state.actions);
+        activeFieldIds == null ? null : activeFieldIds.map((id) => _clientWorldService.fields[id]).toList(), color);
   }
 
   void detectChanges([dynamic _]) {
@@ -107,6 +98,7 @@ class WorldComponent implements OnDestroy {
 
   void modelLoaded(ClientWorldService input) {
     _clientWorldService = input;
+    unitCreateOrUpdate.listen(_clientWorldService.handleUnitCreateOrUpdate);
     worldStage = stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,
@@ -135,11 +127,14 @@ class WorldComponent implements OnDestroy {
   void onMouseDown(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    ClientField field =
-        _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+    ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
     ClientUnit unit = field.getFirstPlayableUnitOnField();
-    if (unit != null && gameService.currentPlayer == unit.player && gameService.playersOnMove.value.any((player)=>player.id == unit.player.id)) {
-      _draggedUnit = unit;
+    if (unit != null) {
+      bool isMe = gameService.currentPlayer == unit.player;
+      bool isOnMove = gameService.playersOnMove.value.any((player) => player.id == unit.player.id);
+      if (isMe && isOnMove) {
+        _draggedUnit = unit;
+      }
     } else {
       _moving = true;
       _start = event.page;
@@ -153,23 +148,19 @@ class WorldComponent implements OnDestroy {
     event.stopPropagation();
     _clientWorldService.onUnitAssistanceChanged.add(null);
     if (_draggedUnit != null) {
-      ClientField field =
-          _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
       List<shared.Field> path = _clientWorldService.getShortestPathWithTerrain(_draggedUnit.field, field);
       shared.Track track = shared.Track(path);
-      shared.Ability ability = _draggedUnit.getAbility(
-          track, event.shiftKey, event.altKey, event.ctrlKey);
+      shared.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
-        gateway.sendMessage(
-            shared.ToGameServerMessage.unitTrackAction(shared.UnitTrackAction()
-              ..abilityName = ability.name
-              ..unitId = _draggedUnit.id
-              ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
-              ..track = track.toIds()));
+        gateway.sendMessage(shared.ToGameServerMessage.unitTrackAction(shared.UnitTrackAction()
+          ..abilityName = ability.name
+          ..unitId = _draggedUnit.id
+          ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
+          ..track = track.toIds()));
         gateway.sendIntention(field == null ? null : [field]);
       } else {
-        appService.alertError(
-            "No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
+        appService.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }
     }
     _moving = false;
@@ -180,16 +171,14 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      ClientField field =
-          _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
       if (field != _lastActiveField) {
         _lastActiveField = field;
         if (_draggedUnit != null) {
           List<shared.Field> path = _clientWorldService.getShortestPathWithTerrain(_draggedUnit.field, field);
           shared.Track track = shared.Track(path);
-          ClientAbility ability = _draggedUnit.getAbility(
-                  track, event.shiftKey, event.altKey, event.ctrlKey)
-              as ClientAbility;
+          ClientAbility ability =
+              _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey) as ClientAbility;
           if (ability != null) {
             ability.show(_draggedUnit, track);
             _clientWorldService.onUnitAssistanceChanged.add(ability);
@@ -227,12 +216,9 @@ class WorldComponent implements OnDestroy {
       _clientWorldService.zoom = 0.3;
     } else {
       int topOfMap = (event.page.y + _clientWorldService.userTopOffset).toInt();
-      int leftOfMap =
-          (event.page.x + _clientWorldService.userLeftOffset).toInt();
-      _clientWorldService.userLeftOffset +=
-          (leftOfMap * zoomMultiply - leftOfMap).toInt();
-      _clientWorldService.userTopOffset +=
-          (topOfMap * zoomMultiply - topOfMap).toInt();
+      int leftOfMap = (event.page.x + _clientWorldService.userLeftOffset).toInt();
+      _clientWorldService.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
+      _clientWorldService.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
     }
     _clientWorldService.recalculate();
     view.repaint();

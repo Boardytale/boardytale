@@ -4,92 +4,77 @@ class ServerTale {
   static const colors = const ["#ff0000", "#0000ff", "#00ff00", "#00ffff"];
   LobbyRoom room;
   int _lastHeroId = 0;
-  int _lastUsedStartingField = 0;
+  int lastUsedStartingField = 0;
   BehaviorSubject<shared.UnitUpdateReport> onReport = BehaviorSubject<shared.UnitUpdateReport>();
   shared.ClientTaleData taleData;
-  shared.Tale sharedTale;
   Map<String, shared.UnitType> unitTypes = {};
   Map<String, ServerUnit> units = {};
-  int _lastUnitId = 0;
+  int lastUnitId = 0;
   shared.AiGroup aiGroupOnMove = null;
-  List<shared.Player> playersOnMove = [];
+  bool _humansOnMove = true;
 
+  Iterable<shared.Player> get playersOnMove => _humansOnMove ? humanPlayers.values : aiPlayers.values;
+
+  Iterable<String> get playersOnMoveIds => playersOnMove.map((p) => p.id);
+  shared.World world;
   Map<String, ServerPlayer> players = {};
-
   Map<String, ServerPlayer> humanPlayers = {};
+  Map<String, ServerPlayer> aiPlayers = {};
+  int _lastAddedHumanPlayerIndex = 0;
 
   ServerTale(this.room) {
     onReport.listen((onData) {
       print("report unit:${onData?.unit?.id} deltaHealth:${onData?.deltaHealth} delta steps: ${onData?.deltaSteps}");
     });
-    sharedTale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
+    shared.Tale _tale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
+    world = _tale.clientWorldService;
     taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
-    int index = 0;
-    room.connectedPlayers.forEach((key, player){
-      player.color = ServerTale.colors[index];
-      if (taleData.humanPlayerIds.length > index) {
-        player.taleId = taleData.humanPlayerIds[index];
-      } else {
-        player.taleId = player.id;
-      }
-      players[player.id] = player;
-      humanPlayers[player.id] = player;
-      index++;
-    });
-    sharedTale.players.forEach((key, player){
-      if(player.taleId == null){
+    room.connectedPlayers.values.forEach(addHumanPlayer);
+    _tale.aiPlayers.forEach((key, player) {
+      if (player.taleId == null) {
         player.taleId = player.id;
       }
       players[player.taleId] = ServerPlayer()..fromSharedPlayer(player);
+      aiPlayers[player.taleId] = players[player.taleId];
     });
-
-    List<shared.Player> gamePlayers = [];
-    players.values.forEach((player) {
-      gamePlayers.add(player.createGamePlayer());
-    });
-
-    taleData.players = gamePlayers;
-    taleData.playerOnMoveIds = gamePlayers.map((p) => p.id).toList();
-
-    humanPlayers.values.forEach((player) {
-      taleData.playerIdOnThisClientMachine = player.id;
-      gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
-    });
-
+    taleData.players = players.values.map((p) => p.createGamePlayer()).toList();
+    humanPlayers.values.forEach(sendTaleDataToPlayer);
     room.compiledTale.tale.assets.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
 
-    room.compiledTale.tale.units.forEach((unitCreateEnvelope) {
-      shared.UnitType unitType = unitTypes[unitCreateEnvelope.unitTypeName];
-      String unitId = "${_lastUnitId++}";
-      ServerUnit unit = ServerUnit()
-        ..fromUnitType(unitType, sharedTale.world.fields[unitCreateEnvelope.fieldId], unitId);
-      unit.player = players[unitCreateEnvelope.playerId];
-      units[unitId] = unit;
+    room.compiledTale.tale.units.forEach((shared.UnitCreateEnvelope unitCreateEnvelope) {
+      ServerUnit unit =
+          ServerUnit(unitCreateActionFromCreateEnvelope(unitCreateEnvelope), world.fields, players, unitTypes);
+      units[unit.id] = unit;
     });
 
     Future.delayed(Duration(milliseconds: 10)).then((onValue) {
-      sendInitialUnits();
+      sendInitialUnits(humanPlayers.values);
     });
-    getHeroes();
+    HeroesHelper.getHeroes(humanPlayers.values, humanPlayers.values, this);
   }
 
   void sendInitTaleDataToPlayer(ServerPlayer player) {
+    sendTaleDataToPlayer(player);
+    sendInitialUnits([player]);
+  }
+
+  void sendTaleDataToPlayer(ServerPlayer player) {
     taleData.playerIdOnThisClientMachine = player.id;
+    taleData.playerOnMoveIds = playersOnMoveIds.toList();
     gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
-    sendInitialUnits();
   }
 
   void handleUnitTrack(MessageWithConnection message) {
     shared.UnitTrackAction action = message.message.unitTrackActionMessage;
     ServerUnit unit = units[action.unitId];
-    shared.Track track = shared.Track(action.track.map((f) => sharedTale.world.fields[f]).toList());
+    shared.Track track = shared.Track(action.track.map((f) => world.fields[f]).toList());
     shared.AbilityName name = action.abilityName;
     unit.perform(name, track, action, this);
   }
 
-  void sendInitialUnits() {
+  void sendInitialUnits(Iterable<ServerPlayer> players) {
     // TODO: implement line of sight here
 
     List<shared.UnitCreateOrUpdateAction> actions = [];
@@ -97,7 +82,7 @@ class ServerTale {
       actions.add(unit.getUnitCreateOrUpdateAction());
     });
 
-    humanPlayers.values.forEach((player) {
+    players.forEach((player) {
       gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
     });
   }
@@ -109,9 +94,8 @@ class ServerTale {
   }
 
   void endOfTurn(MessageWithConnection message) {
-    humanPlayers.values.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromPlayersOnMove([taleData.aiPlayers.first.id]), player);
-    });
+    _humansOnMove = false;
+    sendPlayersOnMove();
     Future.delayed(Duration(milliseconds: 50)).then((_) {
       List<shared.UnitCreateOrUpdateAction> actions = [];
       units.forEach((key, unit) {
@@ -124,45 +108,41 @@ class ServerTale {
       humanPlayers.values.forEach((player) {
         gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
       });
-      Future.delayed(Duration(milliseconds: 800)).then((_) {
-        humanPlayers.values.forEach((player) {
-          gateway.sendMessage(
-              shared.ToClientMessage.fromPlayersOnMove(players.values.map((p) => p.id).toList()), player);
-        });
-      });
+
+      Future.delayed(Duration(milliseconds: 800)).then(sendHumanPlayersAreOnMove);
     });
   }
 
-  Future getHeroes() async {
-    List<Future<ResponseWithPlayer>> responses = [];
-    humanPlayers.forEach((key, player) {
-      var url = "http://localhost:${config.heroesServer.uris.first.port}/";
-      var message = shared.ToHeroServerMessage.fromPlayerEmail(player.email);
-      responses.add(http.post(url, body: json.encode(message.toJson())).asStream().map((convert) {
-        return ResponseWithPlayer(convert, player);
-      }).first);
-    });
-    List<ResponseWithPlayer> data = await Future.wait(responses);
-    List<shared.UnitCreateOrUpdateAction> actions = [];
-    data.forEach((item) {
-      var hero = shared.ToHeroServerMessage.fromJson(json.decode(item.response.body));
-      var heroEnvelope = hero.getHeroesOfPlayerMessage.responseHeroes.first;
-      var compiledType = heroEnvelope.type;
-      compiledType.name = "hero${_lastHeroId++}";
-      shared.UnitType type = shared.UnitType()..fromCompiledUnitType(compiledType);
-      ;
-      var startingField = sharedTale.world.fields[sharedTale.world.startingFieldIds[_lastUsedStartingField++]];
-      ServerUnit unit = ServerUnit()..fromUnitType(type, startingField, "${_lastUnitId++}");
-      unitTypes[compiledType.name] = type;
-      taleData.assets.unitTypes[compiledType.name] = compiledType;
-      unit.player = item.player;
-      units[unit.id] = unit;
-      shared.UnitCreateOrUpdateAction action = unit.getUnitCreateOrUpdateAction();
-      action.newUnitTypeToTale = compiledType;
-      actions.add(action);
-    });
-    humanPlayers.forEach((key, player) {
-      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
+  shared.UnitCreateOrUpdateAction unitCreateActionFromCreateEnvelope(shared.UnitCreateEnvelope unitCreateEnvelope) {
+    return shared.UnitCreateOrUpdateAction()
+      ..unitId = "${lastUnitId++}"
+      ..state = (shared.LiveUnitState()
+        ..moveToFieldId = unitCreateEnvelope.fieldId
+        ..transferToPlayerId = unitCreateEnvelope.playerId
+        ..changeToTypeName = unitCreateEnvelope.unitTypeName);
+  }
+
+  void addHumanPlayer(ServerPlayer player) {
+    player.color = ServerTale.colors[_lastAddedHumanPlayerIndex];
+    if (taleData.humanPlayerIds.length > _lastAddedHumanPlayerIndex) {
+      player.taleId = taleData.humanPlayerIds[_lastAddedHumanPlayerIndex];
+    } else {
+      player.taleId = player.id;
+    }
+    players[player.id] = player;
+    humanPlayers[player.id] = player;
+    taleData.players = players.values.map((p) => p.createGamePlayer()).toList();
+    _lastAddedHumanPlayerIndex++;
+  }
+
+  void sendHumanPlayersAreOnMove([_]) {
+    _humansOnMove = true;
+    sendPlayersOnMove();
+  }
+
+  void sendPlayersOnMove() {
+    humanPlayers.values.forEach((player) {
+      gateway.sendMessage(shared.ToClientMessage.fromPlayersOnMove(playersOnMoveIds), player);
     });
   }
 }
