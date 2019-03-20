@@ -1,9 +1,10 @@
 part of world_view;
 
-class MovePaintable extends Paintable {
+class ImagePaintable extends Paintable {
   ImageElement image;
+  final String imagePath;
 
-  MovePaintable(WorldViewService view, ClientField field, stage_lib.Stage stage)
+  ImagePaintable(WorldViewService view, ClientField field, stage_lib.Stage stage, this.imagePath)
       : super(view, field, stage) {
     createBitmap();
     _transformBitmap();
@@ -11,7 +12,7 @@ class MovePaintable extends Paintable {
 
   @override
   Future createBitmapInner() async {
-    image = ImageElement(src: "img/track.png");
+    image = ImageElement(src: imagePath);
     await image.onLoad.first;
     stage_lib.BitmapData data =
     stage_lib.BitmapData.fromImageElement(image);

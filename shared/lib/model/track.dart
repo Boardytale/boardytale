@@ -1,13 +1,58 @@
 part of model;
 
 class Track {
-  final List<Field> fields;
+  List<Field> fields;
 
   Field get last => fields.last;
 
   Track(this.fields) {}
 
   Track.fromIds(List<String> path, World world) : fields = _fieldsFromIds(path, world);
+
+  Track.clean(List<Field> fields, Map<String, Field> allFields){
+    // shorten on duplicity
+    List<String> lastIds = [];
+    for(var i = 0;i<fields.length;i++){
+      int index = lastIds.indexOf(fields[i].id);
+      if(index != -1){
+        fields.length = index + 1;
+        break;
+      }
+      lastIds.add(fields[i].id);
+    }
+
+    if(fields.isEmpty){
+      this.fields = [];
+      return;
+    }
+    // fill missing
+    List<Field> out = [fields.first];
+    for(var i = 0;i<fields.length -1;i++){
+      Field f1 = fields[i];
+      Field f2 = fields[i+1];
+      if(!Field.fieldsAreNextEachOther(f1, f2)){
+        List<String> shortestPath = f1.getShortestPath(f2);
+        for(var j = 1;j<shortestPath.length -1;j++){
+          out.add(allFields[shortestPath[j]]);
+        }
+      }
+      out.add(f2);
+    }
+    // remove triangles
+    for(var i = 2;i<out.length;){
+      Field f1 = out[i];
+      Field f2 = out[i-1];
+      Field f3 = out[i-2];
+      List<String> f1Circle1 = f1.getCircle1Ids();
+      if(f1Circle1.contains(f2.id) && f1Circle1.contains(f3.id)){
+        out.remove(f2);
+        i = 2;
+      }else{
+        i++;
+      }
+    }
+    this.fields = out;
+  }
 
   Track.shorten(Track previous, int removeLastCount)
       : fields = previous.fields.sublist(0, previous.fields.length - removeLastCount);

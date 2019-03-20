@@ -201,6 +201,9 @@ class Unit {
     }
 
     if (state.moveToFieldId != null && field.id != state.moveToFieldId) {
+      if(newField.id != state.moveToFieldId){
+        throw "this is not the field you want to move to";
+      }
       _field?.removeUnit(this);
       _field = newField;
       _field.addUnit(this);

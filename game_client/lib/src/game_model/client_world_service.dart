@@ -3,7 +3,7 @@ part of client_model;
 @Injectable()
 class ClientWorldService extends shared.World {
   SettingsService settings;
-  covariant ClientTaleService clientTaleService;
+  final ClientTaleService clientTaleService;
   covariant Map<String, ClientField> fields = {};
   StreamController _onDimensionsChanged = StreamController.broadcast();
 
@@ -49,17 +49,17 @@ class ClientWorldService extends shared.World {
   final GatewayService gateway;
   final GameService gameService;
 
-  ClientWorldService(this.gameService, this.settings, this.appService, this.gateway) : super() {
-
-  }
-
-  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope, ClientTaleService tale) {
-    this.clientTaleService = tale;
-    super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
+  ClientWorldService(this.gameService, this.settings, this.appService, this.gateway, this.clientTaleService) : super() {
     defaultFieldWidth = settings.defaultFieldWidth;
     defaultFieldHeight = (settings.defaultFieldWidth * widthHeightRatio).toInt();
     defaultHex = HexaBorders(this);
+    gameService.onTaleLoaded.listen(fromCreateEnvelope);
+  }
+
+  void fromCreateEnvelope(shared.WorldCreateEnvelope envelope) {
+    super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     recalculate();
+    gameService.onWorldLoaded.add(null);
   }
 
   void recalculate() {
@@ -121,7 +121,7 @@ class ClientWorldService extends shared.World {
       if (action.newPlayerToTale != null && !appService.players.containsKey(action.newPlayerToTale.id)) {
         ClientPlayer newPlayer = ClientPlayer()..fromSharedPlayer(action.newPlayerToTale);
         appService.players[newPlayer.id] = newPlayer;
-        if(action.isNewPlayerOnMove){
+        if (action.isNewPlayerOnMove) {
           gameService.playersOnMove.add(gameService.playersOnMove.value..add(newPlayer));
         }
       }

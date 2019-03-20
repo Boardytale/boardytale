@@ -25,7 +25,7 @@ class World {
   Terrain baseTerrain = Terrain.grass;
   Map<String, Field> fields = {};
   List<String> startingFieldIds = [];
-  Tale clientTaleService;
+  covariant Tale clientTaleService;
 
   World();
 

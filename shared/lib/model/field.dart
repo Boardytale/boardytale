@@ -36,12 +36,6 @@ class Field {
     y = int.parse(xy[1]);
   }
 
-  Field.anotherConstructor(this.id, this.world) {
-    List<String> xy = id.split("_");
-    x = int.parse(xy[0]);
-    y = int.parse(xy[1]);
-  }
-
   // TODO: explain
   int get yt => y - (x / 2).floor();
 
@@ -124,13 +118,6 @@ class Field {
       if (unit.isAlive) return false;
     }
     return !units.isEmpty;
-  }
-
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> out = <String, dynamic>{};
-    out["id"] = id;
-    out["terrain"] = terrain;
-    return out;
   }
 
   int distance(Field field) {
@@ -285,7 +272,6 @@ class Field {
     double toY = target.posY;
     double slope = (toY - posY) / (tx - x);
     double y0 = toY - slope * tx;
-//    print("[$tx,$ty] => [$toX,$toY]  y0=$y0 slope=$slope");
     List<String> result = [id];
     while (mx != tx || my != ty) {
       List<int> primary = stepToDirectionInt(mx, my, primaryDirection);
@@ -294,9 +280,6 @@ class Field {
       double sPosY = secondary[1] + (secondary[0] % 2) / 2;
       double primaryDistance = pPosY - y0 - slope * primary[0];
       double secondaryDistance = sPosY - y0 - slope * secondary[0];
-//      double primaryToTarget=Math.pow(primary[0]-toX,2)+Math.pow(primary[1]+(primary[0]%2)/2-toY,2);
-//      double secondaryToTarget=Math.pow(secondary[0]-toX,2)+Math.pow(secondary[1]+(secondary[0]%2)/2-toY,2);
-//      print("$primary => $primaryDistance ($primaryToTarget)   $secondary => $secondaryDistance ($secondaryToTarget)");
       if (primaryDistance.abs() <= secondaryDistance.abs()) {
         mx = primary[0];
         my = primary[1];
@@ -306,8 +289,26 @@ class Field {
       }
       result.add("${mx}_${my}");
     }
-//    result.add(target.id);
     return result;
+  }
+
+  static List<List<int>> evenCircle1 = [[0,-1],[1,-1],[1,0],[0,1],[-1,0],[-1,-1],];
+  static List<List<int>> oddCircle1 = [[0,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],];
+
+  static bool fieldsAreNextEachOther(Field f1, Field f2){
+    return f1.getCircle1Ids().contains(f2.id);
+  }
+
+  List<String> getCircle1Ids(){
+    if(x.isEven){
+      return Field.evenCircle1.map((circleItem){
+        return "${x + circleItem[0]}_${y+circleItem[1]}";
+      }).toList();
+    }else{
+      return Field.oddCircle1.map((circleItem){
+        return "${x + circleItem[0]}_${y+circleItem[1]}";
+      }).toList();
+    }
   }
 }
 

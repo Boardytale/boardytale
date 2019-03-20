@@ -59,6 +59,8 @@ class UnitCreateOrUpdateAction {
   Player newPlayerToTale;
   @JsonKey(includeIfNull: false)
   bool isNewPlayerOnMove;
+  @JsonKey(includeIfNull: false)
+  int diceNumber;
 
   static UnitCreateOrUpdateAction fromJson(Map data) {
     return _$UnitCreateOrUpdateActionFromJson(data);

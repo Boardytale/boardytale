@@ -22,5 +22,6 @@ class FieldHighlight {
 }
 
 enum HighlightName{
-  track
+  track,
+  attack
 }

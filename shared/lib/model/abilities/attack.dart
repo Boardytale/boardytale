@@ -61,6 +61,11 @@ class AttackAbility extends Ability {
     if (track.fields.length == 1) {
       return false;
     }
+
+    if(invoker.actions == 0){
+      return false;
+    }
+
     int currentSteps = _resolveCurrentSteps(invoker, steps);
 
     if(!track.last.isEnemyOf(invoker.player)){
@@ -71,7 +76,7 @@ class AttackAbility extends Ability {
       return false;
     }
 
-    if (currentSteps <= track.getMoveCostOfFreeWay()) {
+    if (currentSteps < track.getMoveCostOfFreeWay()) {
       return false;
     }
     return true;

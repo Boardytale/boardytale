@@ -10,15 +10,13 @@ class UnitManager {
   List<UserIntentionPaintable> intentions = [];
   List<Paintable> abilityAssistance = [];
 
-  ClientWorldService get clientWorldService =>
-      worldViewService.clientWorldService;
+  ClientWorldService get clientWorldService => worldViewService.clientWorldService;
 
   UnitManager(this.stage, this.worldViewService, this.settings) {
     tale = clientWorldService.clientTaleService;
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
     tale.units.forEach((id, unit) {
-      paintables.add(
-          UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+      paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
     });
     clientWorldService.onUnitAdded.listen((unit) {
       addUnit(unit);
@@ -32,16 +30,18 @@ class UnitManager {
       ability.highlights.forEach((highlight) {
         switch (highlight.highlightName) {
           case HighlightName.track:
-            abilityAssistance
-                .add(MovePaintable(worldViewService, highlight.field, stage));
+            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/track.png"));
+            break;
+          case HighlightName.attack:
+            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/attack.png"));
+            break;
         }
       });
     });
   }
 
   void addUnit(shared.Unit unit) {
-    paintables.add(
-        UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+    paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
   }
 
   void removeUnit(shared.Unit unit) {
@@ -74,17 +74,15 @@ class UnitManager {
       paintable.destroy();
     });
     intentions.removeWhere(test);
-    if(fields != null){
+    if (fields != null) {
       var lastField = null;
-      fields.forEach((field){
-        if(field == null){
+      fields.forEach((field) {
+        if (field == null) {
           return;
         }
-        intentions
-            .add(UserIntentionPaintable(worldViewService, field, stage, color));
-        if(lastField != null){
-          intentions
-              .add(UserIntentionConnectorPaintable(worldViewService, lastField, field, stage, color));
+        intentions.add(UserIntentionPaintable(worldViewService, field, stage, color));
+        if (lastField != null) {
+          intentions.add(UserIntentionConnectorPaintable(worldViewService, lastField, field, stage, color));
         }
         lastField = field;
       });

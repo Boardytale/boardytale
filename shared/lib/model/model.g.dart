@@ -151,7 +151,8 @@ UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
     ..newPlayerToTale = json['newPlayerToTale'] == null
         ? null
         : Player.fromJson(json['newPlayerToTale'] as Map<String, dynamic>)
-    ..isNewPlayerOnMove = json['isNewPlayerOnMove'] as bool;
+    ..isNewPlayerOnMove = json['isNewPlayerOnMove'] as bool
+    ..diceNumber = json['diceNumber'] as int;
 }
 
 Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
@@ -171,6 +172,7 @@ Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
   writeNotNull('newUnitTypeToTale', instance.newUnitTypeToTale?.toJson());
   writeNotNull('newPlayerToTale', instance.newPlayerToTale?.toJson());
   writeNotNull('isNewPlayerOnMove', instance.isNewPlayerOnMove);
+  writeNotNull('diceNumber', instance.diceNumber);
   return val;
 }
 

@@ -22,20 +22,20 @@ part 'package:game_client/src/game_view/paintables/active_field_paintable.dart';
 
 part 'package:game_client/src/game_view/paintables/user_intention_paintable.dart';
 
-part 'package:game_client/src/game_view/paintables/move_paintable.dart';
+part 'package:game_client/src/game_view/paintables/image_paintable.dart';
 
 @Injectable()
 class WorldViewService {
-  ClientWorldService clientWorldService;
+  final ClientWorldService clientWorldService;
+  final AppService appService;
+  final GameService gameService;
   stage_lib.Stage worldStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
   Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
-  final AppService appService;
-  final GameService gameService;
 
-  WorldViewService(this.appService, this.gameService) {
+  WorldViewService(this.appService, this.gameService, this.clientWorldService) {
     Map<shared.Terrain, ImageElement> resources = {};
     Map<shared.Terrain, String> paths = {
       shared.Terrain.grass: "img/map_tiles/grass.png",
@@ -60,12 +60,12 @@ class WorldViewService {
     gameService.showCoordinateLabels.listen(repaint);
   }
 
-  void construct(worldStage, model) {
+  void onWorldLoaded(worldStage) {
     this.worldStage = worldStage;
-    this.clientWorldService = model;
-    model.fields.forEach((key, ClientField field) {
+    clientWorldService.fields.forEach((key, ClientField field) {
       fields[key] = ViewField(field);
     });
+    init();
   }
 
   void createBitmapsByTerrain(Map<shared.Terrain, ImageElement> resources) {
@@ -93,6 +93,9 @@ class WorldViewService {
   }
 
   void init() {
+    if(!_imageLoaded || worldStage == null){
+      return;
+    }
     fields.forEach((key, ViewField field) {
       bool showLabel = gameService.showCoordinateLabels.value;
       String state = field.getStateLabel(showLabel);

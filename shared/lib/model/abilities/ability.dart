@@ -68,14 +68,8 @@ abstract class Ability {
   @TypescriptOptional()
   AbilityReach get reach;
 
-  covariant Unit invoker;
-
   bool validate(Unit invoker, Track track) {
     throw "not implemented";
-  }
-
-  void setInvoker(Unit invoker) {
-    this.invoker = invoker;
   }
 
   /**

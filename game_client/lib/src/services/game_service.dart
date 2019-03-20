@@ -1,7 +1,5 @@
 library tale_service;
 
-import 'dart:async';
-
 import 'package:angular/core.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/app_service.dart';
@@ -17,10 +15,11 @@ class GameService {
   GatewayService gatewayService;
   BehaviorSubject<bool> showCoordinateLabels = BehaviorSubject<bool>(seedValue: false);
   Map<String, shared.AiGroup> aiGroups = {};
-  BehaviorSubject<ClientWorldService> onWorldLoaded = BehaviorSubject();
+  BehaviorSubject<Null> onWorldLoaded = BehaviorSubject();
+  BehaviorSubject<shared.WorldCreateEnvelope> onTaleLoaded = BehaviorSubject();
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
   ClientPlayer get currentPlayer => appService.currentPlayer;
-  shared.ClientTaleData clientTaleData;
+  BehaviorSubject<shared.ClientTaleData> clientTaleData = BehaviorSubject();
 
   GameService(this.gatewayService, this.settings, this.appService) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
@@ -28,7 +27,7 @@ class GameService {
   }
 
   void handleTaleData(shared.ToClientMessage message) {
-    clientTaleData = message.getTaleDataMessage.data;
+    clientTaleData.add(message.getTaleDataMessage.data);
   }
 
   void handlePlayersOnMove(shared.ToClientMessage message) {

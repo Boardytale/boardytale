@@ -7,7 +7,9 @@ class ClientUnit extends shared.Unit {
 
   shared.Ability getAbility(shared.Track track, bool shift, bool alt, bool ctrl) {
     List<shared.Ability> possibles = abilities.toList();
-    possibles..removeWhere((shared.Ability ability) => !ability.validate(this, track));
+    possibles..removeWhere((shared.Ability ability){
+      return !ability.validate(this, track);
+    });
 
     int used = 0;
     if (possibles.isEmpty) {

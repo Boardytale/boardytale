@@ -45,6 +45,7 @@ class ServerPlayer extends shared.Player {
     shared.Player gamePlayer = shared.Player()
         ..color = color
         ..taleId = taleId
+        ..team = team
         ..id = id;
     if(isHumanPlayer){
       return gamePlayer
