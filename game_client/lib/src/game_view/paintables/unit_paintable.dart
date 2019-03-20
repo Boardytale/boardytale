@@ -7,9 +7,17 @@ class UnitPaintable extends Paintable {
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
   static Map<String, stage_lib.BitmapData> lifeGlobalCache = {};
+  int _damageHeight = 14;
+  int _armorHeight = 21;
+  int _armorWidth = 15;
+  static ImageElement _armorImage = ImageElement(
+      src:
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAVCAYAAACZm7S3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKGSURBVDhPnZLdS9NhFMd/YhdFQhjlXHPLqZu692nq3hQq0E2F6Coi6EbowiiCsMALC8yguyCqKy8i6E1IerEoayhT0VaZrYv+hILITN3MTU/fc/abOlOQHvhyzrbz+Z7znD1K09FI4eEj8w5LzQBtJK2xYyNFS6w9GsXuGUpkChtal6m+JQmlRLsLQmS03CCz6x45fOPk9I2RrrSL9KYrYqI4A5MqsLQ57L5PtrpBctd/JJPzLlVUP/4/uNz9kAzmq1uDS2y3ATwimycM+JN01Zt7tgaX2XsB9JPdO0xVDTHZjd685s6BlkUVWFLzJGKSdMVnyOS4Q5UHnmJho+QKvCcrxs+6c6D5jxSzgeTNiyKGedOWmhey6crqJ4R/Jxv2hxIqlES+ILkfYpjva619TU7/BExeYoKxVRgLmfKH4quQ5AkRwxVV/Rj1LeAo4huJDEIpRW/q7vMF51VggSQPxhHjVFR2Cfd9hk0PiYHdE8nAKYELdMcv+4KzUuwPJhDnxIDFsKXmFTY9IjC/Mlf9FF5ZJxsMKHpzdwU6LXtVyNv0G3EWcVbgdMeRdNfABzHAdaYBmxQ+RWVdg1zsbZojb+OMGLAYttUNwyAMaAKPJEba4vPQuV7AOQoRKfuMF3aaXQ/GGfY0/oJmRNK5NoyxR9F1Uj7vLTp1HY8nhzmBWRrD6XwY/OAivhd34WIe2eGLpsct7fwC5WWYFZiFcYIwABzDU/wqsMP3TkDk3wAeXFufBbMA97EBi2Gj5SYZyq9NAzyxK18r42aUBbIOtX7O1Rjanxfub1fhWz8BtuVuy8sCWXLWf3ms7XvuHt3JCMMAOxRlxz8ga+Ws/8FgOrsd8MXNQUX5C6rsmLieQIf6AAAAAElFTkSuQmCC");
 
   UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view, ClientField field, this.settings)
       : super(view, field, stage) {
+    // trigger preload
+    UnitPaintable._armorImage;
     leftOffset = 0;
     topOffset = 0;
     height = world.fieldHeight.toInt();
@@ -69,11 +77,47 @@ class UnitPaintable extends Paintable {
         data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
       }
       data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
+      if (resolutionLevel == 2 && unit.isAlive) {
+        data.drawPixels(getDamage(unit), getDamageCont(),
+            stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - _damageHeight));
+        if (unit.armor > 0) {
+          data.drawPixels(getArmor(unit), getArmorCont(), stage_lib.Point(rectWidth / 4, lifeBarHeight));
+        }
+      }
     } else {
       data = unitGlobalCache[state];
     }
     bitmap = stage_lib.Bitmap(data);
     return;
+  }
+
+  stage_lib.Rectangle getArmorCont() {
+    return stage_lib.Rectangle(0, 0, rectWidth / 2, _armorHeight);
+  }
+
+  stage_lib.BitmapData getArmor(ClientUnit unit) {
+    stage_lib.BitmapData armorItemData = stage_lib.BitmapData.fromImageElement(UnitPaintable._armorImage);
+    stage_lib.BitmapData data = stage_lib.BitmapData(rectWidth / 2, _armorHeight, 0x00FFFFFF);
+    var itemRect = stage_lib.Rectangle(0, 0, _armorWidth, _armorHeight);
+    for (int i = 0; i < unit.armor; i++) {
+      data.drawPixels(armorItemData, itemRect, stage_lib.Point(i * (_armorWidth + 10), 0));
+    }
+    return data;
+  }
+
+  stage_lib.Rectangle getDamageCont() {
+    return stage_lib.Rectangle(0, 0, rectWidth / 2, _damageHeight);
+  }
+
+  stage_lib.BitmapData getDamage(ClientUnit unit) {
+    // TODO: one bitmap data might be reduced
+    stage_lib.BitmapData data = stage_lib.BitmapData(rectWidth / 2, _damageHeight, 0x55FFFFFF);
+    var textField =
+        stage_lib.TextField(unit.attack.join(" "), stage_lib.TextFormat('Spicy Rice', 12, stage_lib.Color.Black));
+    stage_lib.BitmapData labelBitmap = stage_lib.BitmapData(rectWidth / 2, _damageHeight, stage_lib.Color.Transparent);
+    labelBitmap.draw(textField);
+    data.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, rectWidth / 2, _damageHeight), stage_lib.Point(10, 0));
+    return data;
   }
 
   stage_lib.Rectangle getPlayerColorRect() {
@@ -97,7 +141,7 @@ class UnitPaintable extends Paintable {
       graphics.arc(5, 5, 4, 0, 2 * math.pi);
       graphics.closePath();
       graphics.strokeColor(stage_lib.Color.Black);
-    data.draw(shape);
+      data.draw(shape);
     }
     return data;
   }

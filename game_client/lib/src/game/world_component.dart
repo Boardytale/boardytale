@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:angular/angular.dart';
+import 'package:game_client/src/game/action_feedback.dart';
 import 'package:game_client/src/game/game_controls_component.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:game_client/src/game_model/model.dart';
@@ -18,9 +19,10 @@ import 'package:rxdart/rxdart.dart';
     selector: 'world',
     template: r'''
         <game-controls></game-controls>
-        <canvas id="worldMap" #world [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
-        <canvas id="mapObjects" #objects [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
-        <div id="eventOverlay" [ngStyle]="{'width': widthString, 'height': heightString}"
+        <canvas  style="z-index: 10" id="worldMap" #world [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
+        <canvas  style="z-index: 20" id="mapObjects" #objects [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
+        <action-feedback style="z-index: 25"></action-feedback>
+        <div  style="z-index: 30" id="eventOverlay" [ngStyle]="{'width': widthString, 'height': heightString}"
         (mousedown)="onMouseDown($event)"
         (mouseup)="onMouseUp($event)"
         (mousemove)="onMouseMove($event)"
@@ -29,11 +31,11 @@ import 'package:rxdart/rxdart.dart';
 
         ></div>
       ''',
-    directives: [coreDirectives, GameControlsComponent],
+    directives: [coreDirectives, GameControlsComponent, ActionsFeedback],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   final SettingsService settings;
-  final GatewayService gateway;
+  final GatewayService gatewayService;
   final WorldViewService view;
   final AppService appService;
   final GameService gameService;
@@ -53,20 +55,21 @@ class WorldComponent implements OnDestroy {
   int _lastActionId = 0;
   ClientField _lastActiveField;
   ClientWorldService _clientWorldService;
-  ReplaySubject<shared.ToClientMessage> unitCreateOrUpdate = ReplaySubject();
   List<shared.Field> trackFields;
+  // Helper for async loader of the game. Source of Actions is in gameService.
+  ReplaySubject<List<shared.UnitCreateOrUpdateAction>> _unitCreateOrUpdateAction = ReplaySubject();
 
   String get widthString => "${window.innerWidth}px";
 
   String get heightString => "${window.innerHeight}px";
 
-  WorldComponent(this.changeDetector, this.settings, this.appService, this.gateway, this.gameService, this.view,
+  WorldComponent(this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view,
       this._clientWorldService) {
     onResizeSubscription = window.onResize.listen(detectChanges);
     gameService.onWorldLoaded.listen(modelLoaded);
-    gateway.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
-    gateway.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
-      unitCreateOrUpdate.add(message);
+    gatewayService.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
+    gatewayService.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
+      _unitCreateOrUpdateAction.add(message.getUnitCreateOrUpdate.actions);
     };
   }
 
@@ -99,7 +102,7 @@ class WorldComponent implements OnDestroy {
   }
 
   void modelLoaded([_]) {
-    unitCreateOrUpdate.listen(_clientWorldService.handleUnitCreateOrUpdate);
+    _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
     worldStage = stage_lib.Stage(worldElement,
         width: window.innerWidth,
         height: window.innerHeight,
@@ -156,12 +159,12 @@ class WorldComponent implements OnDestroy {
       shared.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
         print(ability.name);
-        gateway.sendMessage(shared.ToGameServerMessage.unitTrackAction(shared.UnitTrackAction()
+        gatewayService.sendMessage(shared.ToGameServerMessage.unitTrackAction(shared.UnitTrackAction()
           ..abilityName = ability.name
           ..unitId = _draggedUnit.id
           ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
           ..track = track.toIds()));
-        gateway.sendIntention(field == null ? null : [field]);
+        gatewayService.sendIntention(field == null ? null : [field]);
       } else {
         appService.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
       }
@@ -189,10 +192,10 @@ class WorldComponent implements OnDestroy {
           } else {
             _clientWorldService.onUnitAssistanceChanged.add(null);
           }
-          gateway.sendIntention(track.fields);
+          gatewayService.sendIntention(track.fields);
         } else {
           unitManager.setActiveField(field);
-          gateway.sendIntention(field == null ? null : [field]);
+          gatewayService.sendIntention(field == null ? null : [field]);
         }
       }
       return;

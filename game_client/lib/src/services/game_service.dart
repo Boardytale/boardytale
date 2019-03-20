@@ -20,10 +20,12 @@ class GameService {
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
   ClientPlayer get currentPlayer => appService.currentPlayer;
   BehaviorSubject<shared.ClientTaleData> clientTaleData = BehaviorSubject();
+  ReplaySubject<EnhancedUnitCreateOrUpdateAction> unitCreateOrUpdateAction = ReplaySubject();
 
   GameService(this.gatewayService, this.settings, this.appService) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
     gatewayService.handlers[shared.OnClientAction.playersOnMove] = handlePlayersOnMove;
+
   }
 
   void handleTaleData(shared.ToClientMessage message) {
@@ -43,4 +45,9 @@ class GameService {
       }).toList());
     }
   }
+}
+
+class EnhancedUnitCreateOrUpdateAction{
+  shared.UnitCreateOrUpdateAction action;
+  ClientUnit unit;
 }

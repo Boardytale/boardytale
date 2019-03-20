@@ -33,24 +33,35 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       ..unitId = unit.id
       ..actionId = action.actionId
       ..state = state
-      ..diceNumber = diceNumber;
+      ..diceNumbers = [diceNumber]
+      ..explain = shared.ActionExplanation.unitAttacked;
 
     shared.UnitUpdateReport report = unit.addUnitUpdateAction(action, track.fields[track.fields.length - 2]);
     tale.onReport.add(report);
     tale.sendNewState(action);
 
     int damage = unit.attack[diceNumber];
+    int secondDiceNumber;
+    if (diceNumber == 5) {
+      secondDiceNumber = math.Random.secure().nextInt(6);
+      damage += secondDiceNumber + 1;
+    }
+
+
     // target actions
+    // TODO: rethink enhance incoming damage by buff from zero damage
     if (damage > 0) {
       track.fields.last.units.forEach((shared.Unit targetUnit) {
+        int damageForTargetUnit = targetUnit.resolveIncomingDamage(damage);
         shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
-        shared.LiveUnitState state = shared.LiveUnitState()..health = targetUnit.actualHealth - damage;
-
+        shared.LiveUnitState state = shared.LiveUnitState()..health = targetUnit.actualHealth - damageForTargetUnit;
         action
           ..unitId = targetUnit.id
           ..actionId = action.actionId
           ..state = state
-          ..diceNumber = diceNumber;
+          ..diceNumbers = secondDiceNumber == null ? [diceNumber] : [diceNumber, secondDiceNumber]
+          ..explain = shared.ActionExplanation.unitGotDamage
+          ..explainFirstValue = damageForTargetUnit.toString();
         shared.UnitUpdateReport report = targetUnit.addUnitUpdateAction(action, null);
         tale.onReport.add(report);
         tale.sendNewState(action);

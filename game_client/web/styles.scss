@@ -82,6 +82,7 @@ world{
   game-controls{
     position: fixed;
     z-index: 100;
+    height: 30px;
   }
 }
 
@@ -101,4 +102,18 @@ world{
 }
 .game-controls-cont{
   background-color: silver;
+}
+
+action-feedback{
+  display: block;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  .row {
+    background-color: #ffffff36;
+  }
+  .col{
+    font-weight: bold;
+    white-space: nowrap
+  }
 }

@@ -60,7 +60,11 @@ class UnitCreateOrUpdateAction {
   @JsonKey(includeIfNull: false)
   bool isNewPlayerOnMove;
   @JsonKey(includeIfNull: false)
-  int diceNumber;
+  List<int> diceNumbers;
+  @JsonKey(includeIfNull: false)
+  ActionExplanation explain;
+  @JsonKey(includeIfNull: false)
+  String explainFirstValue;
 
   static UnitCreateOrUpdateAction fromJson(Map data) {
     return _$UnitCreateOrUpdateActionFromJson(data);
@@ -120,4 +124,12 @@ class UnitUpdateReport {
 enum AnimationName {
   @JsonValue('move')
   move,
+}
+
+@Typescript()
+enum ActionExplanation {
+  @JsonValue('unitAttacked')
+  unitAttacked,
+  @JsonValue('unitGotDamage')
+  unitGotDamage,
 }

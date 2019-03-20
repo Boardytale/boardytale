@@ -33,7 +33,7 @@ class Unit {
 
   bool get isEthernal => tags.contains(UnitTypeTag.ethernal);
 
-  String get name => _name;
+  String get name => _name == null ? type.name : _name;
 
   int get armor => _armor;
 
@@ -71,6 +71,10 @@ class Unit {
       }
     }
     _limitAttributes();
+  }
+
+  int resolveIncomingDamage(int damage){
+    return damage - _armor;
   }
 
   void _limitAttributes() {
@@ -201,7 +205,7 @@ class Unit {
     }
 
     if (state.moveToFieldId != null && field.id != state.moveToFieldId) {
-      if(newField.id != state.moveToFieldId){
+      if (newField.id != state.moveToFieldId) {
         throw "this is not the field you want to move to";
       }
       _field?.removeUnit(this);

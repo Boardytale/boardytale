@@ -40,6 +40,8 @@ export interface User extends Object {
 
 export type AnimationName = 'move';
 
+export type ActionExplanation = 'unitAttacked' | 'unitGotDamage';
+
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {

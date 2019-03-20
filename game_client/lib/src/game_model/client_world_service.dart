@@ -115,8 +115,8 @@ class ClientWorldService extends shared.World {
     return fields["${fx}_$fy"];
   }
 
-  void handleUnitCreateOrUpdate(shared.ToClientMessage message) {
-    List<shared.UnitCreateOrUpdateAction> actions = message.getUnitCreateOrUpdate.actions;
+  // TODO: rethink to move to tale
+  void handleUnitCreateOrUpdate(List<shared.UnitCreateOrUpdateAction> actions) {
     actions.forEach((action) {
       if (action.newPlayerToTale != null && !appService.players.containsKey(action.newPlayerToTale.id)) {
         ClientPlayer newPlayer = ClientPlayer()..fromSharedPlayer(action.newPlayerToTale);
@@ -129,14 +129,18 @@ class ClientWorldService extends shared.World {
         clientTaleService.unitTypes[action.newUnitTypeToTale.name] = shared.UnitType()
           ..fromCompiledUnitType(action.newUnitTypeToTale);
       }
+      ClientUnit unit;
       if (clientTaleService.units.containsKey(action.unitId)) {
-        ClientUnit unit = clientTaleService.units[action.unitId];
+        unit = clientTaleService.units[action.unitId];
         unit.addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
       } else {
-        ClientUnit unit = ClientUnit(action, fields, appService.players, clientTaleService.unitTypes);
+        unit = ClientUnit(action, fields, appService.players, clientTaleService.unitTypes);
         clientTaleService.units[unit.id] = unit;
         onUnitAdded.add(unit);
       }
+      gameService.unitCreateOrUpdateAction.add(EnhancedUnitCreateOrUpdateAction()
+        ..unit = unit
+        ..action = action);
     });
   }
 }

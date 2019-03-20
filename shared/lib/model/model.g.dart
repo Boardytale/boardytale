@@ -152,7 +152,11 @@ UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
         ? null
         : Player.fromJson(json['newPlayerToTale'] as Map<String, dynamic>)
     ..isNewPlayerOnMove = json['isNewPlayerOnMove'] as bool
-    ..diceNumber = json['diceNumber'] as int;
+    ..diceNumbers =
+        (json['diceNumbers'] as List)?.map((e) => e as int)?.toList()
+    ..explain =
+        _$enumDecodeNullable(_$ActionExplanationEnumMap, json['explain'])
+    ..explainFirstValue = json['explainFirstValue'] as String;
 }
 
 Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
@@ -172,9 +176,16 @@ Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
   writeNotNull('newUnitTypeToTale', instance.newUnitTypeToTale?.toJson());
   writeNotNull('newPlayerToTale', instance.newPlayerToTale?.toJson());
   writeNotNull('isNewPlayerOnMove', instance.isNewPlayerOnMove);
-  writeNotNull('diceNumber', instance.diceNumber);
+  writeNotNull('diceNumbers', instance.diceNumbers);
+  writeNotNull('explain', _$ActionExplanationEnumMap[instance.explain]);
+  writeNotNull('explainFirstValue', instance.explainFirstValue);
   return val;
 }
+
+const _$ActionExplanationEnumMap = <ActionExplanation, dynamic>{
+  ActionExplanation.unitAttacked: 'unitAttacked',
+  ActionExplanation.unitGotDamage: 'unitGotDamage'
+};
 
 UnitDeleteAction _$UnitDeleteActionFromJson(Map<String, dynamic> json) {
   return UnitDeleteAction()
