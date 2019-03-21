@@ -1,6 +1,7 @@
 part of model;
 
 @JsonSerializable()
+@Typescript()
 class LiveUnitState {
   @JsonKey(includeIfNull: false)
   int far;
@@ -47,6 +48,7 @@ class LiveUnitState {
   }
 }
 
+@Typescript()
 @JsonSerializable()
 class UnitCreateOrUpdateAction {
   /// playerId_clientManagedActionId

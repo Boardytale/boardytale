@@ -88,134 +88,52 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 
 LiveUnitState _$LiveUnitStateFromJson(Map<String, dynamic> json) {
   return LiveUnitState()
+    ..id = json['id'] as String
     ..far = json['far'] as int
-    ..steps = json['steps'] as int
     ..health = json['health'] as int
     ..buffs = (json['buffs'] as List)
         ?.map(
             (e) => e == null ? null : Buff.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..actions = json['actions'] as int
-    ..changeToTypeName = json['changeToTypeName'] as String
-    ..moveToFieldId = json['moveToFieldId'] as String
-    ..transferToPlayerId = json['transferToPlayerId'] as String
-    ..useAnimationName =
-        _$enumDecodeNullable(_$AnimationNameEnumMap, json['useAnimationName']);
+    ..actions = json['actions'] as int;
 }
 
-Map<String, dynamic> _$LiveUnitStateToJson(LiveUnitState instance) {
-  final val = <String, dynamic>{};
+Map<String, dynamic> _$LiveUnitStateToJson(LiveUnitState instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'far': instance.far,
+      'health': instance.health,
+      'buffs': instance.buffs?.map((e) => e?.toJson())?.toList(),
+      'actions': instance.actions
+    };
 
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('far', instance.far);
-  writeNotNull('steps', instance.steps);
-  writeNotNull('health', instance.health);
-  writeNotNull('buffs', instance.buffs?.map((e) => e?.toJson())?.toList());
-  writeNotNull('actions', instance.actions);
-  writeNotNull('changeToTypeName', instance.changeToTypeName);
-  writeNotNull('moveToFieldId', instance.moveToFieldId);
-  writeNotNull('transferToPlayerId', instance.transferToPlayerId);
-  writeNotNull(
-      'useAnimationName', _$AnimationNameEnumMap[instance.useAnimationName]);
-  return val;
-}
-
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source);
-}
-
-const _$AnimationNameEnumMap = <AnimationName, dynamic>{
-  AnimationName.move: 'move'
-};
-
-UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
-    Map<String, dynamic> json) {
-  return UnitCreateOrUpdateAction()
-    ..actionId = json['actionId'] as String
+UnitManipulateAction _$UnitManipulateActionFromJson(Map<String, dynamic> json) {
+  return UnitManipulateAction()
+    ..isCreate = json['isCreate'] as bool
+    ..isDelete = json['isDelete'] as bool
+    ..isUpdate = json['isUpdate'] as bool
+    ..unitTypeName = json['unitTypeName'] as String
+    ..fieldId = json['fieldId'] as String
     ..unitId = json['unitId'] as String
     ..state = json['state'] == null
         ? null
         : LiveUnitState.fromJson(json['state'] as Map<String, dynamic>)
-    ..newUnitTypeToTale = json['newUnitTypeToTale'] == null
-        ? null
-        : UnitTypeCompiled.fromJson(
-            json['newUnitTypeToTale'] as Map<String, dynamic>)
-    ..newPlayerToTale = json['newPlayerToTale'] == null
-        ? null
-        : Player.fromJson(json['newPlayerToTale'] as Map<String, dynamic>)
-    ..isNewPlayerOnMove = json['isNewPlayerOnMove'] as bool
-    ..diceNumbers =
-        (json['diceNumbers'] as List)?.map((e) => e as int)?.toList()
-    ..explain =
-        _$enumDecodeNullable(_$ActionExplanationEnumMap, json['explain'])
-    ..explainFirstValue = json['explainFirstValue'] as String;
+    ..playerId = json['playerId'] as String
+    ..aiGroupId = json['aiGroupId'] as String;
 }
 
-Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
-    UnitCreateOrUpdateAction instance) {
-  final val = <String, dynamic>{
-    'actionId': instance.actionId,
-    'unitId': instance.unitId,
-    'state': instance.state?.toJson(),
-  };
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('newUnitTypeToTale', instance.newUnitTypeToTale?.toJson());
-  writeNotNull('newPlayerToTale', instance.newPlayerToTale?.toJson());
-  writeNotNull('isNewPlayerOnMove', instance.isNewPlayerOnMove);
-  writeNotNull('diceNumbers', instance.diceNumbers);
-  writeNotNull('explain', _$ActionExplanationEnumMap[instance.explain]);
-  writeNotNull('explainFirstValue', instance.explainFirstValue);
-  return val;
-}
-
-const _$ActionExplanationEnumMap = <ActionExplanation, dynamic>{
-  ActionExplanation.unitAttacked: 'unitAttacked',
-  ActionExplanation.unitGotDamage: 'unitGotDamage'
-};
-
-UnitDeleteAction _$UnitDeleteActionFromJson(Map<String, dynamic> json) {
-  return UnitDeleteAction()
-    ..actionId = json['actionId'] as String
-    ..unitId = json['unitId'] as String
-    ..animationName =
-        _$enumDecodeNullable(_$AnimationNameEnumMap, json['animationName']);
-}
-
-Map<String, dynamic> _$UnitDeleteActionToJson(UnitDeleteAction instance) =>
+Map<String, dynamic> _$UnitManipulateActionToJson(
+        UnitManipulateAction instance) =>
     <String, dynamic>{
-      'actionId': instance.actionId,
-      'unitId': instance.unitId,
-      'animationName': _$AnimationNameEnumMap[instance.animationName]
-    };
-
-CancelOnFieldAction _$CancelOnFieldActionFromJson(Map<String, dynamic> json) {
-  return CancelOnFieldAction()
-    ..actionId = json['actionId'] as String
-    ..fieldId = json['fieldId'] as String
-    ..animationName =
-        _$enumDecodeNullable(_$AnimationNameEnumMap, json['animationName']);
-}
-
-Map<String, dynamic> _$CancelOnFieldActionToJson(
-        CancelOnFieldAction instance) =>
-    <String, dynamic>{
-      'actionId': instance.actionId,
+      'isCreate': instance.isCreate,
+      'isDelete': instance.isDelete,
+      'isUpdate': instance.isUpdate,
+      'unitTypeName': instance.unitTypeName,
       'fieldId': instance.fieldId,
-      'animationName': _$AnimationNameEnumMap[instance.animationName]
+      'unitId': instance.unitId,
+      'state': instance.state?.toJson(),
+      'playerId': instance.playerId,
+      'aiGroupId': instance.aiGroupId
     };
 
 UnitTypeCreateEnvelope _$UnitTypeCreateEnvelopeFromJson(
@@ -272,13 +190,19 @@ Map<String, dynamic> _$UnitTypeCreateEnvelopeToJson(
       'bigImageName': instance.bigImageName
     };
 
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source);
+}
+
 const _$RacesEnumMap = <Races, dynamic>{
   Races.human: 'human',
   Races.undead: 'undead',
   Races.gultam: 'gultam',
   Races.elf: 'elf',
-  Races.animal: 'animal',
-  Races.dragon: 'dragon'
+  Races.animal: 'animal'
 };
 
 const _$UnitTypeTagEnumMap = <UnitTypeTag, dynamic>{
@@ -345,29 +269,6 @@ Map<String, dynamic> _$UnitTypeCompiledToJson(UnitTypeCompiled instance) =>
       'bigImage': instance.bigImage?.toJson()
     };
 
-GameHeroCreateEnvelope _$GameHeroCreateEnvelopeFromJson(
-    Map<String, dynamic> json) {
-  return GameHeroCreateEnvelope()
-    ..level = json['level'] as int
-    ..name = json['name'] as String
-    ..type = json['type'] == null
-        ? null
-        : UnitTypeCompiled.fromJson(json['type'] as Map<String, dynamic>)
-    ..unit = json['unit'] == null
-        ? null
-        : UnitCreateOrUpdateAction.fromJson(
-            json['unit'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$GameHeroCreateEnvelopeToJson(
-        GameHeroCreateEnvelope instance) =>
-    <String, dynamic>{
-      'level': instance.level,
-      'name': instance.name,
-      'type': instance.type?.toJson(),
-      'unit': instance.unit?.toJson()
-    };
-
 Race _$RaceFromJson(Map<String, dynamic> json) {
   return Race()
     ..id = _$enumDecodeNullable(_$RacesEnumMap, json['id'])
@@ -406,8 +307,7 @@ WorldCreateEnvelope _$WorldCreateEnvelopeFromJson(Map<String, dynamic> json) {
         e == null
             ? null
             : FieldCreateEnvelope.fromJson(e as Map<String, dynamic>)))
-    ..startingFieldIds =
-        (json['startingFieldIds'] as List)?.map((e) => e as String)?.toList();
+    ..startFieldId = json['startFieldId'] as String;
 }
 
 Map<String, dynamic> _$WorldCreateEnvelopeToJson(
@@ -417,57 +317,28 @@ Map<String, dynamic> _$WorldCreateEnvelopeToJson(
       'height': instance.height,
       'baseTerrain': _$TerrainEnumMap[instance.baseTerrain],
       'fields': instance.fields?.map((k, e) => MapEntry(k, e?.toJson())),
-      'startingFieldIds': instance.startingFieldIds
+      'startFieldId': instance.startFieldId
     };
 
 Player _$PlayerFromJson(Map<String, dynamic> json) {
   return Player()
+    ..portrait = json['portrait'] == null
+        ? null
+        : Image.fromJson(json['portrait'] as Map<String, dynamic>)
     ..id = json['id'] as String
-    ..taleId = json['taleId'] as String
+    ..name = json['name'] as String
     ..team = json['team'] as String
-    ..color = json['color'] as String
-    ..humanPlayer = json['humanPlayer'] == null
-        ? null
-        : HumanPlayer.fromJson(json['humanPlayer'] as Map<String, dynamic>)
-    ..aiGroup = json['aiGroup'] == null
-        ? null
-        : AiGroup.fromJson(json['aiGroup'] as Map<String, dynamic>);
+    ..color = json['color'] as int
+    ..gameMaster = json['gameMaster'] as bool;
 }
 
 Map<String, dynamic> _$PlayerToJson(Player instance) => <String, dynamic>{
+      'portrait': instance.portrait?.toJson(),
       'id': instance.id,
-      'taleId': instance.taleId,
+      'name': instance.name,
       'team': instance.team,
       'color': instance.color,
-      'humanPlayer': instance.humanPlayer?.toJson(),
-      'aiGroup': instance.aiGroup?.toJson()
-    };
-
-HumanPlayer _$HumanPlayerFromJson(Map<String, dynamic> json) {
-  return HumanPlayer()
-    ..name = json['name'] as String
-    ..isGameMaster = json['isGameMaster'] as bool
-    ..portrait = json['portrait'] == null
-        ? null
-        : Image.fromJson(json['portrait'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$HumanPlayerToJson(HumanPlayer instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'isGameMaster': instance.isGameMaster,
-      'portrait': instance.portrait?.toJson()
-    };
-
-AiGroup _$AiGroupFromJson(Map<String, dynamic> json) {
-  return AiGroup()
-    ..langName = (json['langName'] as Map<String, dynamic>)?.map((k, e) =>
-        MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String));
-}
-
-Map<String, dynamic> _$AiGroupToJson(AiGroup instance) => <String, dynamic>{
-      'langName':
-          instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e))
+      'gameMaster': instance.gameMaster
     };
 
 Event _$EventFromJson(Map<String, dynamic> json) {
@@ -566,19 +437,17 @@ TaleInnerEnvelope _$TaleInnerEnvelopeFromJson(Map<String, dynamic> json) {
     ..world = json['world'] == null
         ? null
         : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
-    ..aiPlayers = (json['aiPlayers'] as Map<String, dynamic>)?.map((k, e) =>
+    ..aiGroups = (json['aiGroups'] as Map<String, dynamic>)?.map((k, e) =>
         MapEntry(
-            k, e == null ? null : Player.fromJson(e as Map<String, dynamic>)))
+            k, e == null ? null : AiGroup.fromJson(e as Map<String, dynamic>)))
     ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
-    ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) =>
-        MapEntry(
-            k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
+    ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
     ..units = (json['units'] as List)
-        ?.map(
-            (e) => e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..humanPlayerIds = (json['humanPlayerIds'] as List)?.map((e) => e as String)?.toList();
+        ?.map((e) =>
+            e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
@@ -589,11 +458,10 @@ Map<String, dynamic> _$TaleInnerEnvelopeToJson(TaleInnerEnvelope instance) =>
       'langs': instance.langs?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'taleVersion': instance.taleVersion,
       'world': instance.world?.toJson(),
-      'aiPlayers': instance.aiPlayers?.map((k, e) => MapEntry(k, e?.toJson())),
+      'aiGroups': instance.aiGroups?.map((k, e) => MapEntry(k, e?.toJson())),
       'events': instance.events?.map((k, e) => MapEntry(k, e?.toJson())),
       'dialogs': instance.dialogs?.map((k, e) => MapEntry(k, e?.toJson())),
-      'units': instance.units?.map((e) => e?.toJson())?.toList(),
-      'humanPlayerIds': instance.humanPlayerIds
+      'units': instance.units?.map((e) => e?.toJson())?.toList()
     };
 
 TaleInnerCompiled _$TaleInnerCompiledFromJson(Map<String, dynamic> json) {
@@ -608,19 +476,19 @@ TaleInnerCompiled _$TaleInnerCompiledFromJson(Map<String, dynamic> json) {
     ..world = json['world'] == null
         ? null
         : WorldCreateEnvelope.fromJson(json['world'] as Map<String, dynamic>)
-    ..aiPlayers = (json['aiPlayers'] as Map<String, dynamic>)?.map((k, e) =>
-        MapEntry(
-            k, e == null ? null : Player.fromJson(e as Map<String, dynamic>)))
+    ..aiGroups = (json['aiGroups'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
+        k, e == null ? null : AiGroup.fromJson(e as Map<String, dynamic>)))
     ..events = (json['events'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Event.fromJson(e as Map<String, dynamic>)))
     ..dialogs = (json['dialogs'] as Map<String, dynamic>)?.map((k, e) => MapEntry(
         k, e == null ? null : Dialog.fromJson(e as Map<String, dynamic>)))
     ..units = (json['units'] as List)
-        ?.map((e) =>
-            e == null ? null : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : UnitCreateEnvelope.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..humanPlayerIds = (json['humanPlayerIds'] as List)?.map((e) => e as String)?.toList()
-    ..assets = json['assets'] == null ? null : TaleCompiledAssets.fromJson(json['assets'] as Map<String, dynamic>);
+    ..assets =
+        json['assets'] == null ? null : TaleCompiledAssets.fromJson(json['assets'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$TaleInnerCompiledToJson(TaleInnerCompiled instance) =>
@@ -631,11 +499,10 @@ Map<String, dynamic> _$TaleInnerCompiledToJson(TaleInnerCompiled instance) =>
           instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'taleVersion': instance.taleVersion,
       'world': instance.world?.toJson(),
-      'aiPlayers': instance.aiPlayers?.map((k, e) => MapEntry(k, e?.toJson())),
+      'aiGroups': instance.aiGroups?.map((k, e) => MapEntry(k, e?.toJson())),
       'events': instance.events?.map((k, e) => MapEntry(k, e?.toJson())),
       'dialogs': instance.dialogs?.map((k, e) => MapEntry(k, e?.toJson())),
       'units': instance.units?.map((e) => e?.toJson())?.toList(),
-      'humanPlayerIds': instance.humanPlayerIds,
       'assets': instance.assets?.toJson()
     };
 
@@ -643,6 +510,7 @@ UnitCreateEnvelope _$UnitCreateEnvelopeFromJson(Map<String, dynamic> json) {
   return UnitCreateEnvelope()
     ..fieldId = json['fieldId'] as String
     ..unitTypeName = json['unitTypeName'] as String
+    ..aiGroupId = json['aiGroupId'] as String
     ..playerId = json['playerId'] as String;
 }
 
@@ -650,6 +518,7 @@ Map<String, dynamic> _$UnitCreateEnvelopeToJson(UnitCreateEnvelope instance) =>
     <String, dynamic>{
       'fieldId': instance.fieldId,
       'unitTypeName': instance.unitTypeName,
+      'aiGroupId': instance.aiGroupId,
       'playerId': instance.playerId
     };
 
@@ -669,6 +538,22 @@ Map<String, dynamic> _$TaleCompiledAssetsToJson(TaleCompiledAssets instance) =>
     <String, dynamic>{
       'images': instance.images?.map((k, e) => MapEntry(k, e?.toJson())),
       'unitTypes': instance.unitTypes?.map((k, e) => MapEntry(k, e?.toJson()))
+    };
+
+AiGroup _$AiGroupFromJson(Map<String, dynamic> json) {
+  return AiGroup()
+    ..id = json['id'] as String
+    ..name = (json['name'] as Map<String, dynamic>)?.map(
+        (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String))
+    ..team = json['team'] as String
+    ..color = json['color'] as String;
+}
+
+Map<String, dynamic> _$AiGroupToJson(AiGroup instance) => <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+      'team': instance.team,
+      'color': instance.color
     };
 
 LobbyTale _$LobbyTaleFromJson(Map<String, dynamic> json) {
@@ -736,14 +621,7 @@ ClientTaleData _$ClientTaleDataFromJson(Map<String, dynamic> json) {
     ..players = (json['players'] as List)
         ?.map((e) =>
             e == null ? null : Player.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..playerIdOnThisClientMachine =
-        json['playerIdOnThisClientMachine'] as String
-    ..playerOnMoveIds =
-        (json['playerOnMoveIds'] as List)?.map((e) => e as String)?.toList()
-    ..aiGroupOnMove = json['aiGroupOnMove'] as String
-    ..humanPlayerIds =
-        (json['humanPlayerIds'] as List)?.map((e) => e as String)?.toList();
+        ?.toList();
 }
 
 Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
@@ -754,11 +632,7 @@ Map<String, dynamic> _$ClientTaleDataToJson(ClientTaleData instance) =>
           instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
       'world': instance.world?.toJson(),
       'assets': instance.assets?.toJson(),
-      'players': instance.players?.map((e) => e?.toJson())?.toList(),
-      'playerIdOnThisClientMachine': instance.playerIdOnThisClientMachine,
-      'playerOnMoveIds': instance.playerOnMoveIds,
-      'aiGroupOnMove': instance.aiGroupOnMove,
-      'humanPlayerIds': instance.humanPlayerIds
+      'players': instance.players?.map((e) => e?.toJson())?.toList()
     };
 
 Buff _$BuffFromJson(Map<String, dynamic> json) {
@@ -812,12 +686,8 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.setCurrentUser: 'setCurrentUser',
   OnClientAction.openedLobbyData: 'openedLobbyData',
   OnClientAction.taleData: 'taleData',
-  OnClientAction.unitCreateOrUpdate: 'unitCreateOrUpdate',
-  OnClientAction.unitDelete: 'unitDelete',
-  OnClientAction.cancelOnField: 'cancelOnField',
-  OnClientAction.intentionUpdate: 'intentionUpdate',
-  OnClientAction.playersOnMove: 'playersOnMove',
-  OnClientAction.addUnitType: 'addUnitType'
+  OnClientAction.taleStateUpdate: 'taleStateUpdate',
+  OnClientAction.intentionUpdate: 'intentionUpdate'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -895,44 +765,16 @@ TaleData _$TaleDataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$TaleDataToJson(TaleData instance) =>
     <String, dynamic>{'data': instance.data?.toJson()};
 
-UnitCreateOrUpdate _$UnitCreateOrUpdateFromJson(Map<String, dynamic> json) {
-  return UnitCreateOrUpdate()
+TaleStateUpdate _$TaleStateUpdateFromJson(Map<String, dynamic> json) {
+  return TaleStateUpdate()
     ..actions = (json['actions'] as List)
         ?.map((e) => e == null
             ? null
-            : UnitCreateOrUpdateAction.fromJson(e as Map<String, dynamic>))
+            : UnitManipulateAction.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
-Map<String, dynamic> _$UnitCreateOrUpdateToJson(UnitCreateOrUpdate instance) =>
-    <String, dynamic>{
-      'actions': instance.actions?.map((e) => e?.toJson())?.toList()
-    };
-
-UnitDelete _$UnitDeleteFromJson(Map<String, dynamic> json) {
-  return UnitDelete()
-    ..actions = (json['actions'] as List)
-        ?.map((e) => e == null
-            ? null
-            : UnitDeleteAction.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-}
-
-Map<String, dynamic> _$UnitDeleteToJson(UnitDelete instance) =>
-    <String, dynamic>{
-      'actions': instance.actions?.map((e) => e?.toJson())?.toList()
-    };
-
-CancelOnField _$CancelOnFieldFromJson(Map<String, dynamic> json) {
-  return CancelOnField()
-    ..actions = (json['actions'] as List)
-        ?.map((e) => e == null
-            ? null
-            : CancelOnFieldAction.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-}
-
-Map<String, dynamic> _$CancelOnFieldToJson(CancelOnField instance) =>
+Map<String, dynamic> _$TaleStateUpdateToJson(TaleStateUpdate instance) =>
     <String, dynamic>{
       'actions': instance.actions?.map((e) => e?.toJson())?.toList()
     };
@@ -940,34 +782,14 @@ Map<String, dynamic> _$CancelOnFieldToJson(CancelOnField instance) =>
 IntentionUpdate _$IntentionUpdateFromJson(Map<String, dynamic> json) {
   return IntentionUpdate()
     ..playerId = json['playerId'] as String
-    ..trackFieldsId =
-        (json['trackFieldsId'] as List)?.map((e) => e as String)?.toList();
+    ..activeFieldId = json['activeFieldId'] as String;
 }
 
 Map<String, dynamic> _$IntentionUpdateToJson(IntentionUpdate instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
-      'trackFieldsId': instance.trackFieldsId
+      'activeFieldId': instance.activeFieldId
     };
-
-PlayersOnMove _$PlayersOnMoveFromJson(Map<String, dynamic> json) {
-  return PlayersOnMove()
-    ..playerOnMoveIds =
-        (json['playerOnMoveIds'] as List)?.map((e) => e as String);
-}
-
-Map<String, dynamic> _$PlayersOnMoveToJson(PlayersOnMove instance) =>
-    <String, dynamic>{'playerOnMoveIds': instance.playerOnMoveIds?.toList()};
-
-AddUnitType _$AddUnitTypeFromJson(Map<String, dynamic> json) {
-  return AddUnitType()
-    ..type = json['type'] == null
-        ? null
-        : UnitTypeCompiled.fromJson(json['type'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$AddUnitTypeToJson(AddUnitType instance) =>
-    <String, dynamic>{'type': instance.type?.toJson()};
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
   return ToGameServerMessage()
@@ -988,9 +810,8 @@ const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
   OnServerAction.createLobby: 'createLobby',
   OnServerAction.enterLobby: 'enterLobby',
   OnServerAction.enterGame: 'enterGame',
-  OnServerAction.unitTrackAction: 'unitTrackAction',
-  OnServerAction.playerGameIntention: 'playerGameIntention',
-  OnServerAction.controlsAction: 'controlsAction'
+  OnServerAction.playerGameAction: 'playerGameAction',
+  OnServerAction.playerGameIntention: 'playerGameIntention'
 };
 
 GoToState _$GoToStateFromJson(Map<String, dynamic> json) {
@@ -1038,16 +859,14 @@ UnitTrackAction _$UnitTrackActionFromJson(Map<String, dynamic> json) {
     ..abilityName =
         _$enumDecodeNullable(_$AbilityNameEnumMap, json['abilityName'])
     ..unitId = json['unitId'] as String
-    ..track = (json['track'] as List)?.map((e) => e as String)?.toList()
-    ..actionId = json['actionId'] as String;
+    ..track = (json['track'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$UnitTrackActionToJson(UnitTrackAction instance) =>
     <String, dynamic>{
       'abilityName': _$AbilityNameEnumMap[instance.abilityName],
       'unitId': instance.unitId,
-      'track': instance.track,
-      'actionId': instance.actionId
+      'track': instance.track
     };
 
 const _$AbilityNameEnumMap = <AbilityName, dynamic>{
@@ -1071,63 +890,12 @@ const _$AbilityNameEnumMap = <AbilityName, dynamic>{
 };
 
 PlayerGameIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
-  return PlayerGameIntention()
-    ..fieldsId = (json['fieldsId'] as List)?.map((e) => e as String)?.toList();
+  return PlayerGameIntention()..fieldId = json['fieldId'] as String;
 }
 
 Map<String, dynamic> _$PlayerGameIntentionToJson(
         PlayerGameIntention instance) =>
-    <String, dynamic>{'fieldsId': instance.fieldsId};
-
-ControlsAction _$ControlsActionFromJson(Map<String, dynamic> json) {
-  return ControlsAction()
-    ..actionName =
-        _$enumDecodeNullable(_$ControlsActionNameEnumMap, json['actionName']);
-}
-
-Map<String, dynamic> _$ControlsActionToJson(ControlsAction instance) =>
-    <String, dynamic>{
-      'actionName': _$ControlsActionNameEnumMap[instance.actionName]
-    };
-
-const _$ControlsActionNameEnumMap = <ControlsActionName, dynamic>{
-  ControlsActionName.andOfTurn: 'andOfTurn'
-};
-
-ToHeroServerMessage _$ToHeroServerMessageFromJson(Map<String, dynamic> json) {
-  return ToHeroServerMessage()
-    ..message =
-        _$enumDecodeNullable(_$OnHeroServerActionEnumMap, json['message'])
-    ..content = json['content'] as String;
-}
-
-Map<String, dynamic> _$ToHeroServerMessageToJson(
-        ToHeroServerMessage instance) =>
-    <String, dynamic>{
-      'message': _$OnHeroServerActionEnumMap[instance.message],
-      'content': instance.content
-    };
-
-const _$OnHeroServerActionEnumMap = <OnHeroServerAction, dynamic>{
-  OnHeroServerAction.getHeroesOfPlayer: 'getHeroesOfPlayer'
-};
-
-GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
-  return GetHeroesOfPlayer()
-    ..requestPlayerEmail = json['requestPlayerEmail'] as String
-    ..responseHeroes = (json['responseHeroes'] as List)
-        ?.map((e) => e == null
-            ? null
-            : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-}
-
-Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
-    <String, dynamic>{
-      'requestPlayerEmail': instance.requestPlayerEmail,
-      'responseHeroes':
-          instance.responseHeroes?.map((e) => e?.toJson())?.toList()
-    };
+    <String, dynamic>{'fieldId': instance.fieldId};
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()
@@ -1154,13 +922,22 @@ Map<String, dynamic> _$MoveAbilityEnvelopeToJson(
         MoveAbilityEnvelope instance) =>
     <String, dynamic>{'steps': instance.steps};
 
+MoveAction _$MoveActionFromJson(Map<String, dynamic> json) {
+  return MoveAction()
+    ..unitId = json['unitId'] as String
+    ..track = (json['track'] as List)?.map((e) => e as String)?.toList();
+}
+
+Map<String, dynamic> _$MoveActionToJson(MoveAction instance) =>
+    <String, dynamic>{'unitId': instance.unitId, 'track': instance.track};
+
 AttackAbilityEnvelope _$AttackAbilityEnvelopeFromJson(
     Map<String, dynamic> json) {
   return AttackAbilityEnvelope()
-    ..steps = json['steps'] as String
+    ..range = json['range'] as String
     ..attack = json['attack'] as String;
 }
 
 Map<String, dynamic> _$AttackAbilityEnvelopeToJson(
         AttackAbilityEnvelope instance) =>
-    <String, dynamic>{'steps': instance.steps, 'attack': instance.attack};
+    <String, dynamic>{'range': instance.range, 'attack': instance.attack};
