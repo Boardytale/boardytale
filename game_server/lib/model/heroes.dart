@@ -2,7 +2,9 @@ part of game_server;
 
 class HeroesHelper {
   static int _lastHeroId = 0;
-  static Future getHeroes(Iterable<ServerPlayer> forPlayer, Iterable<ServerPlayer> emitToPlayers, ServerTale tale) async {
+
+  static Future getHeroes(
+      Iterable<ServerPlayer> forPlayer, Iterable<ServerPlayer> emitToPlayers, ServerTale tale) async {
     List<Future<ResponseWithPlayer>> responses = [];
     forPlayer.forEach((player) {
       var url = "http://localhost:${config.heroesServer.uris.first.port}/";
@@ -24,15 +26,14 @@ class HeroesHelper {
 
       var startingField = tale.world.fields[tale.world.startingFieldIds[tale.lastUsedStartingField++]];
 
-      shared.UnitCreateOrUpdateAction action =  shared.UnitCreateOrUpdateAction()
+      shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction()
         ..unitId = "${tale.lastUnitId++}"
-        ..state = (shared.LiveUnitState()
-          ..moveToFieldId = startingField.id
-          ..transferToPlayerId = item.player.id
-          ..changeToTypeName = type.name);
+        ..moveToFieldId = startingField.id
+        ..transferToPlayerId = item.player.id
+        ..changeToTypeName = type.name;
       action.newUnitTypeToTale = compiledType;
 
-      ServerUnit unit = ServerUnit(action, tale.world.fields, tale.players, tale.unitTypes);
+      ServerUnit unit = ServerUnit(tale, action, tale.world.fields, tale.players, tale.unitTypes);
       tale.units[unit.id] = unit;
       action.newPlayerToTale = item.player;
       action.isNewPlayerOnMove = tale.playersOnMoveIds.contains(item.player.id);

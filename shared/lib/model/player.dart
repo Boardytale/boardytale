@@ -55,6 +55,7 @@ class HumanPlayer {
 @JsonSerializable()
 class AiGroup {
   Map<Lang, String> langName;
+  AiEngine aiEngine;
 
   static AiGroup fromJson(Map<String, dynamic> json) {
     utils.retypeMapInJsonToStringDynamic(json, ["langName"]);
@@ -66,14 +67,12 @@ class AiGroup {
   }
 }
 
-//@Typescript()
-//enum PlayerHandler {
-//  @JsonValue('firstHuman')
-//  firstHuman,
-//  @JsonValue('ai')
-//  ai,
-//  @JsonValue('passive')
-//  passive,
-//  @JsonValue('everyHuman')
-//  everyHuman,
-//}
+@Typescript()
+enum AiEngine {
+  @JsonValue('passive')
+  passive,
+  @JsonValue('standard')
+  standard,
+  @JsonValue('panic')
+  panic,
+}

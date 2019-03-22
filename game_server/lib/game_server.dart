@@ -26,6 +26,8 @@ part 'package:game_server/model/heroes.dart';
 part 'package:game_server/model/abilities/ability.dart';
 part 'package:game_server/model/abilities/move.dart';
 part 'package:game_server/model/abilities/attack.dart';
+part 'package:game_server/model/server_triggers.dart';
+part 'package:game_server/model/server_tale_events.dart';
 
 part 'package:game_server/services/player_service.dart';
 

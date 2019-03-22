@@ -1,20 +1,33 @@
 part of model;
 
-@JsonSerializable()
 @Typescript()
-class LiveUnitState {
+@JsonSerializable()
+class UnitCreateOrUpdateAction {
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String unitId;
+
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String actionId;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   int far;
 
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   int steps;
 
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   int health;
 
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   List<Buff> buffs = [];
 
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   int actions;
 
@@ -27,44 +40,32 @@ class LiveUnitState {
   @JsonKey(includeIfNull: false)
   String transferToPlayerId;
 
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   AnimationName useAnimationName;
 
-  static LiveUnitState fromJson(Map data) {
-    return _$LiveUnitStateFromJson(data);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$LiveUnitStateToJson(this);
-  }
-
-  void fromUnit(Unit unit) {
-    // action not triggered directly by user action
-    far = unit.far;
-    health = unit.actualHealth;
-    actions = unit.actions;
-    buffs = unit._buffs;
-    steps = unit.steps;
-  }
-}
-
-@Typescript()
-@JsonSerializable()
-class UnitCreateOrUpdateAction {
   /// playerId_clientManagedActionId
-  String actionId;
-  String unitId;
-  LiveUnitState state;
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   UnitTypeCompiled newUnitTypeToTale;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   Player newPlayerToTale;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   bool isNewPlayerOnMove;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   List<int> diceNumbers;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   ActionExplanation explain;
+
+  @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   String explainFirstValue;
 
@@ -74,6 +75,15 @@ class UnitCreateOrUpdateAction {
 
   Map<String, dynamic> toJson() {
     return _$UnitCreateOrUpdateActionToJson(this);
+  }
+
+  void fromUnit(Unit unit) {
+    // action not triggered directly by user action
+    far = unit.far;
+    health = unit.actualHealth;
+    actions = unit.actions;
+    buffs = unit._buffs;
+    steps = unit.steps;
   }
 }
 

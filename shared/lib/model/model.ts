@@ -42,6 +42,57 @@ export type AnimationName = 'move';
 
 export type ActionExplanation = 'unitAttacked' | 'unitGotDamage';
 
+export interface UnitCreateOrUpdateAction extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    unitId?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    actionId?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    far?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    steps?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    health?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    buffs?: Array<Buff>;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    actions?: number;
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    changeToTypeName: string;
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    moveToFieldId: string;
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    transferToPlayerId: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    useAnimationName?: AnimationName;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    newUnitTypeToTale?: UnitTypeCompiled;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    newPlayerToTale?: Player;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    isNewPlayerOnMove?: boolean;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    diceNumbers?: Array<number>;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    explain?: ActionExplanation;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    explainFirstValue?: string;
+}
+
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
 
 export interface UnitTypeCommons extends Object {
@@ -98,6 +149,8 @@ export interface WorldCreateEnvelope extends Object {
     startingFieldIds: Array<string>;
 }
 
+export type AiEngine = 'passive' | 'standard' | 'panic';
+
 export interface Player extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
     id?: string;
@@ -118,6 +171,7 @@ export interface HumanPlayer extends Object {
 
 export interface AiGroup extends Object {
     langName: { [key in Lang]?: string };
+    aiEngine: AiEngine;
 }
 
 export interface Event extends Object {
@@ -125,19 +179,8 @@ export interface Event extends Object {
     triggers: Array<Trigger>;
 }
 
-export interface Trigger extends Object {
-    event: Call;
-    action: Call;
-}
-
 export interface Dialog extends Object {
     name: string;
-    image: Call;
-}
-
-export interface Call extends Object {
-    name: string;
-    arguments: Array<any>;
 }
 
 export interface TaleCreateEnvelope extends Object {
@@ -161,8 +204,10 @@ export interface TaleInnerEnvelope extends Object {
     aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
-    units: Array<UnitCreateEnvelope>;
+    units: Array<UnitCreateOrUpdateAction>;
     humanPlayerIds: Array<string>;
+    taleAttributes: { [key: string]: any };
+    triggers: Triggers;
 }
 
 export interface TaleInnerCompiled extends Object {
@@ -174,15 +219,10 @@ export interface TaleInnerCompiled extends Object {
     aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
-    units: Array<UnitCreateEnvelope>;
+    units: Array<UnitCreateOrUpdateAction>;
     humanPlayerIds: Array<string>;
     assets: TaleCompiledAssets;
-}
-
-export interface UnitCreateEnvelope extends Object {
-    fieldId: string;
-    unitTypeName: string;
-    playerId: string;
+    triggers: Triggers;
 }
 
 export interface TaleCompiledAssets extends Object {
@@ -216,6 +256,66 @@ export interface Buff extends Object {
     buffType: string;
     stackStrength: number;
     doesNotStackWith: Array<string>;
+}
+
+export interface Triggers extends Object {
+    onInit: Array<Trigger>;
+    onUnitDies: Array<UnitTrigger>;
+}
+
+export interface Trigger extends Object {
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @TypescriptOptional() → TypescriptOptional
+    condition?: Condition;
+    action: Action;
+}
+
+export interface UnitTrigger extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    condition?: Condition;
+    action: Action;
+}
+
+export interface Condition extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    andCondition?: AndCondition;
+}
+
+export interface AndCondition extends Object {
+    condition1: Condition;
+    condition2: Condition;
+}
+
+export interface EqualCondition extends Object {
+    value: string;
+    equalsTo: any;
+}
+
+export interface Action extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    unitAction?: UnitCreateOrUpdateAction;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    victoryCheckAction?: VictoryCheckAction;
+}
+
+export interface VictoryCheckAction extends Object {}
+
+export type AiAction =
+    | 'attackAllOnRoad'
+    | 'attackAllNearTarget'
+    | 'attack'
+    | 'move';
+
+export interface AiInstruction extends Object {
+    unitAction: UnitCreateOrUpdateAction;
+}
+
+export interface AiInstructionSetUnitTarget extends Object {
+    unitTaleId: string;
+    actionOnTarget: AiAction;
 }
 
 export type GameNavigationState =

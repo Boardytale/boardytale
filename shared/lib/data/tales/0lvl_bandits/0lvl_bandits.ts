@@ -1,11 +1,12 @@
-import { TaleCreateEnvelope, Player } from '../../model/model';
-import { world } from './0lvl_bandits/world';
+import { TaleCreateEnvelope, Player } from '../../../model/model';
+import { world } from './world';
 
 const bandits: Player = {
     color: '#555555',
     id: 'bandits',
     taleId: 'bandits',
     aiGroup: {
+        aiEngine: 'standard',
         langName: {
             en: 'Bandits',
         },
@@ -57,16 +58,27 @@ export let data: TaleCreateEnvelope = {
         taleVersion: 0,
         units: [
             {
-                fieldId: '10_10',
-                unitTypeName: 'pikeman',
-                playerId: 'bandits',
+                moveToFieldId: '10_10',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'bandits',
             },
             {
-                fieldId: '7_5',
-                unitTypeName: 'pikeman',
-                playerId: 'bandits',
+                moveToFieldId: '7_5',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'bandits',
             },
         ],
         world: world,
+        triggers: {
+            onInit: [],
+            onUnitDies: [
+                {
+                    action: {
+                        victoryCheckAction: {},
+                    },
+                },
+            ],
+        },
+        taleAttributes: {},
     },
 };

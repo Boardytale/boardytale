@@ -132,7 +132,7 @@ class ClientWorldService extends shared.World {
       ClientUnit unit;
       if (clientTaleService.units.containsKey(action.unitId)) {
         unit = clientTaleService.units[action.unitId];
-        unit.addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
+        unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
       } else {
         unit = ClientUnit(action, fields, appService.players, clientTaleService.unitTypes);
         clientTaleService.units[unit.id] = unit;

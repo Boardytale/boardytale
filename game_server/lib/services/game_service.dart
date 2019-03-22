@@ -30,7 +30,7 @@ class GameService {
   }
 
   void handleUnitTrackAction(MessageWithConnection message) {
-    message.player.tale.handleUnitTrack(message);
+    message.player.tale.handleUnitTrackAction(message);
   }
 
   void handleControlsAction(MessageWithConnection message) {

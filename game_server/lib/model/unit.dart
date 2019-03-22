@@ -13,8 +13,9 @@ List<shared.Ability> createServerAbilityList(shared.AbilitiesEnvelope envelope) 
 
 class ServerUnit extends shared.Unit {
   ServerPlayer player;
+  final ServerTale tale;
 
-  ServerUnit(shared.UnitCreateOrUpdateAction action, Map<String, shared.Field> fields,
+  ServerUnit(this.tale, shared.UnitCreateOrUpdateAction action, Map<String, shared.Field> fields,
       Map<String, shared.Player> players, Map<String, shared.UnitType> types)
       : super(createServerAbilityList, action, fields, players, types);
 
@@ -25,6 +26,14 @@ class ServerUnit extends shared.Unit {
         ability.perform(this, track, action, tale);
       }
     }
+  }
+
+  shared.UnitUpdateReport addUnitUpdateAction(shared.UnitCreateOrUpdateAction action, shared.Field newField) {
+    shared.UnitUpdateReport report = super.addUnitUpdateAction(action, newField);
+    if (report != null) {
+      tale.events.setUnitReport(report);
+    }
+    return report;
   }
 
   //
@@ -50,10 +59,9 @@ class ServerUnit extends shared.Unit {
   bool newTurn() {
     shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction()
       ..unitId = id
-      ..state = (shared.LiveUnitState()
-        ..steps = type.speed
-        ..actions = type.actions
-        ..far = 0);
+      ..steps = type.speed
+      ..actions = type.actions
+      ..far = 0;
     return addUnitUpdateAction(action, null) != null;
   }
 }

@@ -19,25 +19,21 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
 
     // invoker action
     shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
-    shared.LiveUnitState state = shared.LiveUnitState()
+    action
       ..steps = 0
       ..far = unit.far + track.fields.length - 2
       ..actions = unit.actions - 1
-      ..moveToFieldId = track.fields[track.fields.length - 2].id;
-
-    if (steps == 0) {
-      state.actions = 0;
-    }
-
-    action
+      ..moveToFieldId = track.fields[track.fields.length - 2].id
       ..unitId = unit.id
       ..actionId = action.actionId
-      ..state = state
       ..diceNumbers = [diceNumber]
       ..explain = shared.ActionExplanation.unitAttacked;
 
-    shared.UnitUpdateReport report = unit.addUnitUpdateAction(action, track.fields[track.fields.length - 2]);
-    tale.onReport.add(report);
+    if (steps == 0) {
+      action.actions = 0;
+    }
+
+    unit.addUnitUpdateAction(action, track.fields[track.fields.length - 2]);
     tale.sendNewState(action);
 
     int damage = unit.attack[diceNumber];
@@ -54,16 +50,14 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       track.fields.last.units.forEach((shared.Unit targetUnit) {
         int damageForTargetUnit = targetUnit.resolveIncomingDamage(damage);
         shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
-        shared.LiveUnitState state = shared.LiveUnitState()..health = targetUnit.actualHealth - damageForTargetUnit;
         action
+          ..health = targetUnit.actualHealth - damageForTargetUnit
           ..unitId = targetUnit.id
           ..actionId = action.actionId
-          ..state = state
           ..diceNumbers = secondDiceNumber == null ? [diceNumber] : [diceNumber, secondDiceNumber]
           ..explain = shared.ActionExplanation.unitGotDamage
           ..explainFirstValue = damageForTargetUnit.toString();
-        shared.UnitUpdateReport report = targetUnit.addUnitUpdateAction(action, null);
-        tale.onReport.add(report);
+        targetUnit.addUnitUpdateAction(action, null);
         tale.sendNewState(action);
       });
     }

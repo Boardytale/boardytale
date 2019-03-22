@@ -5,7 +5,6 @@ class ServerTale {
   LobbyRoom room;
   int _lastHeroId = 0;
   int lastUsedStartingField = 0;
-  BehaviorSubject<shared.UnitUpdateReport> onReport = BehaviorSubject<shared.UnitUpdateReport>();
   shared.ClientTaleData taleData;
   Map<String, shared.UnitType> unitTypes = {};
   Map<String, ServerUnit> units = {};
@@ -21,11 +20,11 @@ class ServerTale {
   Map<String, ServerPlayer> humanPlayers = {};
   Map<String, ServerPlayer> aiPlayers = {};
   int _lastAddedHumanPlayerIndex = 0;
+  ServerTriggers triggers;
+  ServerTaleEvents events;
 
   ServerTale(this.room) {
-    onReport.listen((onData) {
-      print("report unit:${onData?.unit?.id} deltaHealth:${onData?.deltaHealth} delta steps: ${onData?.deltaSteps}");
-    });
+    events = ServerTaleEvents(this);
     shared.Tale _tale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
     world = _tale.clientWorldService;
     taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
@@ -43,9 +42,11 @@ class ServerTale {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
 
-    room.compiledTale.tale.units.forEach((shared.UnitCreateEnvelope unitCreateEnvelope) {
-      ServerUnit unit =
-          ServerUnit(unitCreateActionFromCreateEnvelope(unitCreateEnvelope), world.fields, players, unitTypes);
+    room.compiledTale.tale.units.forEach((shared.UnitCreateOrUpdateAction action) {
+      if(action.unitId == null){
+        action.unitId = "${lastUnitId++}";
+      }
+      ServerUnit unit = ServerUnit(this, action, world.fields, players, unitTypes);
       units[unit.id] = unit;
     });
 
@@ -53,6 +54,8 @@ class ServerTale {
       sendInitialUnits(humanPlayers.values);
     });
     HeroesHelper.getHeroes(humanPlayers.values, humanPlayers.values, this);
+
+    triggers = ServerTriggers(this, room.compiledTale.tale.triggers);
   }
 
   void sendInitTaleDataToPlayer(ServerPlayer player) {
@@ -66,7 +69,7 @@ class ServerTale {
     gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
   }
 
-  void handleUnitTrack(MessageWithConnection message) {
+  void handleUnitTrackAction(MessageWithConnection message) {
     shared.UnitTrackAction action = message.message.unitTrackActionMessage;
     ServerUnit unit = units[action.unitId];
     shared.Track track = shared.Track(action.track.map((f) => world.fields[f]).toList());
@@ -101,8 +104,8 @@ class ServerTale {
       units.forEach((key, unit) {
         if (unit.newTurn()) {
           actions.add(shared.UnitCreateOrUpdateAction()
-            ..unitId = unit.id
-            ..state = (shared.LiveUnitState()..fromUnit(unit)));
+            ..fromUnit(unit)
+            ..unitId = unit.id);
         }
       });
       humanPlayers.values.forEach((player) {
@@ -111,15 +114,6 @@ class ServerTale {
 
       Future.delayed(Duration(milliseconds: 800)).then(sendHumanPlayersAreOnMove);
     });
-  }
-
-  shared.UnitCreateOrUpdateAction unitCreateActionFromCreateEnvelope(shared.UnitCreateEnvelope unitCreateEnvelope) {
-    return shared.UnitCreateOrUpdateAction()
-      ..unitId = "${lastUnitId++}"
-      ..state = (shared.LiveUnitState()
-        ..moveToFieldId = unitCreateEnvelope.fieldId
-        ..transferToPlayerId = unitCreateEnvelope.playerId
-        ..changeToTypeName = unitCreateEnvelope.unitTypeName);
   }
 
   void addHumanPlayer(ServerPlayer player) {

@@ -102,21 +102,21 @@ class Unit {
 
   Unit(List<Ability> this._createClientAbilityList(AbilitiesEnvelope envelope), UnitCreateOrUpdateAction action,
       Map<String, Field> fields, Map<String, Player> players, Map<String, UnitType> types) {
-    player = players[action.state.transferToPlayerId];
+    player = players[action.transferToPlayerId];
     if (player == null) {
       throw "player has to be defined during unit creation";
     }
     id = action.unitId;
-    type = types[action.state.changeToTypeName];
+    type = types[action.changeToTypeName];
     _health = type.health;
     _steps = type.speed;
     _actions = type.actions;
     _recalculate();
     _setType(type);
     _field?.removeUnit(this);
-    _field = fields[action.state.moveToFieldId];
+    _field = fields[action.moveToFieldId];
     field.addUnit(this);
-    addUnitUpdateAction(action, fields[action.state.moveToFieldId]);
+    addUnitUpdateAction(action, fields[action.moveToFieldId]);
   }
 
   /// Type change cause nullation of abilities pseudostates.
@@ -156,21 +156,20 @@ class Unit {
     UnitUpdateReport report = UnitUpdateReport();
     print("unit action ${id} ${action.toJson()}");
     report.action = action;
-    LiveUnitState state = action.state;
     bool changed = false;
     bool stepsChanged = false;
     bool healthChanged = false;
     bool fieldChanged = false;
 
-    if (state.far != null && _far != state.far) {
-      report.deltaFar = _far - state.far;
-      _far = state.far;
+    if (action.far != null && _far != action.far) {
+      report.deltaFar = _far - action.far;
+      _far = action.far;
       changed = true;
     }
 
-    if (state.steps != null && state.steps != steps) {
+    if (action.steps != null && action.steps != steps) {
       int originalSteps = _steps;
-      _steps = state.steps;
+      _steps = action.steps;
       if (_steps <= 0) {
         _steps = 0;
         _actions = 0;
@@ -180,9 +179,9 @@ class Unit {
       stepsChanged = true;
     }
 
-    if (state.actions != null && _actions != state.actions) {
+    if (action.actions != null && _actions != action.actions) {
       int originalActions = _actions;
-      _actions = state.actions;
+      _actions = action.actions;
       if (_actions <= 0) {
         _steps = 0;
       }
@@ -190,10 +189,10 @@ class Unit {
       changed = true;
     }
 
-    if (state.health != null && _health != state.health) {
+    if (action.health != null && _health != action.health) {
       int originalHealth = _health;
-      _health = state.health;
-      report.deltaHealth = originalHealth - _health;
+      _health = action.health;
+      report.deltaHealth = _health - originalHealth;
       changed = true;
       healthChanged = true;
     }
@@ -204,8 +203,8 @@ class Unit {
       changed = true;
     }
 
-    if (state.moveToFieldId != null && field.id != state.moveToFieldId) {
-      if (newField.id != state.moveToFieldId) {
+    if (action.moveToFieldId != null && field.id != action.moveToFieldId) {
+      if (newField.id != action.moveToFieldId) {
         throw "this is not the field you want to move to";
       }
       _field?.removeUnit(this);
@@ -234,20 +233,15 @@ class Unit {
     return report;
   }
 
-  LiveUnitState getState() {
-    return LiveUnitState()
+  UnitCreateOrUpdateAction getUnitCreateOrUpdateAction() {
+    return UnitCreateOrUpdateAction()
+      ..transferToPlayerId = player.id
+      ..moveToFieldId = field.id
+      ..changeToTypeName = type.name
+      ..unitId = id
       ..health = _health
       ..actions = _actions
       ..steps = _steps
       ..buffs = _buffs;
-  }
-
-  UnitCreateOrUpdateAction getUnitCreateOrUpdateAction() {
-    return UnitCreateOrUpdateAction()
-      ..unitId = id
-      ..state = (getState()
-        ..moveToFieldId = field.id
-        ..transferToPlayerId = player.id
-        ..changeToTypeName = type.name);
   }
 }

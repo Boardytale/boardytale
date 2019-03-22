@@ -43,25 +43,8 @@ class Event {
 
 @Typescript()
 @JsonSerializable()
-class Trigger {
-  Call event;
-  Call action;
-
-  static Trigger fromJson(Map data) {
-    return _$TriggerFromJson(data);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$TriggerToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
 class Dialog {
   String name;
-  Call image;
-
   static Dialog fromJson(Map<String, dynamic> json) {
     return _$DialogFromJson(json);
   }
@@ -71,23 +54,3 @@ class Dialog {
   }
 }
 
-@Typescript()
-@JsonSerializable()
-class Call {
-  String name;
-  List arguments;
-
-  static Call fromJson(Map<String, dynamic> json) {
-    return _$CallFromJson(json);
-  }
-
-  Map toJson() {
-    return _$CallToJson(this);
-  }
-
-  @override
-  String toString() {
-    return '';
-//     return "$name(${arguments.join(",")})";
-  }
-}

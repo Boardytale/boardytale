@@ -43,13 +43,14 @@ class TaleInnerEnvelope {
   Map<Lang, String> langName;
   Map<Lang, Map<String, String>> langs;
   int taleVersion;
-  List<Team> teams = [];
   WorldCreateEnvelope world;
   Map<String, Player> aiPlayers = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
-  List<UnitCreateEnvelope> units = [];
+  List<UnitCreateOrUpdateAction> units = [];
   List<String> humanPlayerIds = [];
+  Map<String, dynamic> taleAttributes = {};
+  Triggers triggers;
 
   static TaleInnerEnvelope fromJson(Map json) {
     return _$TaleInnerEnvelopeFromJson(json);
@@ -71,9 +72,10 @@ class TaleInnerCompiled {
   Map<String, Player> aiPlayers = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
-  List<UnitCreateEnvelope> units = [];
+  List<UnitCreateOrUpdateAction> units = [];
   List<String> humanPlayerIds = [];
   TaleCompiledAssets assets;
+  Triggers triggers;
 
   static TaleInnerCompiled fromJson(Map json) {
     utils.retypeMapInJsonToStringDynamic(json, ["langs", "langName"]);
@@ -82,24 +84,6 @@ class TaleInnerCompiled {
 
   Map<String, dynamic> toJson() {
     return _$TaleInnerCompiledToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
-class UnitCreateEnvelope {
-  String fieldId;
-  String unitTypeName;
-  String playerId;
-  @TypescriptOptional()
-  int health;
-
-  static UnitCreateEnvelope fromJson(Map json) {
-    return _$UnitCreateEnvelopeFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$UnitCreateEnvelopeToJson(this);
   }
 }
 
@@ -117,22 +101,24 @@ class TaleCompiledAssets {
     return _$TaleCompiledAssetsToJson(this);
   }
 }
-
-@Typescript()
-@JsonSerializable()
-class Team {
-  String id;
-  List<String> allies;
-  List<String> hostiles;
-  Map<Lang, String> name;
-  String color;
-
-  static Team fromJson(Map<String, dynamic> json) {
-    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
-    return _$TeamFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$TeamToJson(this);
-  }
-}
+//
+//
+// created by Pavel Veselý .. waiting for major team refactor
+//@Typescript()
+//@JsonSerializable()
+//class Team {
+//  String id;
+//  List<String> allies;
+//  List<String> hostiles;
+//  Map<Lang, String> name;
+//  String color;
+//
+//  static Team fromJson(Map<String, dynamic> json) {
+//    utils.retypeMapInJsonToStringDynamic(json, ["name"]);
+//    return _$TeamFromJson(json);
+//  }
+//
+//  Map<String, dynamic> toJson() {
+//    return _$TeamToJson(this);
+//  }
+//}
