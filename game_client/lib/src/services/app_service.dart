@@ -14,6 +14,7 @@ import 'package:shared/model/model.dart' as shared;
 class AppService {
   shared.Lang language = shared.Lang.en;
   BehaviorSubject<shared.User> currentUser = BehaviorSubject<shared.User>(seedValue: null);
+  BehaviorSubject<Null> destroyCurrentTale = BehaviorSubject<Null>();
   Map<shared.GameNavigationState, ClientGameState> states = {
     shared.GameNavigationState.loading: ClientGameState()
       ..name = shared.GameNavigationState.loading
@@ -58,6 +59,9 @@ class AppService {
 
   void setState(shared.ToClientMessage message) {
     navigationState.add(states[message.navigationStateMessage.newState]);
+    if(message.navigationStateMessage.destroyCurrentTale){
+      destroyCurrentTale.add(null);
+    }
   }
 
   void setUser(shared.ToClientMessage message) {

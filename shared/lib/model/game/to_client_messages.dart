@@ -7,8 +7,7 @@ class ToClientMessage {
 
   ToClientMessage();
 
-  static ToClientMessage fromJson(Map<String, dynamic> json) =>
-      _$ToClientMessageFromJson(json);
+  static ToClientMessage fromJson(Map<String, dynamic> json) => _$ToClientMessageFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$ToClientMessageToJson(this);
@@ -16,32 +15,30 @@ class ToClientMessage {
 
   // ---
 
-  RefreshLobbyList get refreshLobbyListMessage =>
-      RefreshLobbyList.fromJson(json.decode(content));
+  RefreshLobbyList get refreshLobbyListMessage => RefreshLobbyList.fromJson(json.decode(content));
 
   factory ToClientMessage.fromLobbyList(List<OpenedLobby> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.refreshLobbyList
-      ..content =
-          json.encode((RefreshLobbyList()..lobbies = lobbyList).toJson());
+      ..content = json.encode((RefreshLobbyList()..lobbies = lobbyList).toJson());
   }
 
   // ---
 
-  SetNavigationState get navigationStateMessage =>
-      SetNavigationState.fromJson(json.decode(content));
+  SetNavigationState get navigationStateMessage => SetNavigationState.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromSetNavigationState(GameNavigationState newState) {
+  factory ToClientMessage.fromSetNavigationState(GameNavigationState newState, {bool destroyCurrentTale: false}) {
     return ToClientMessage()
       ..message = OnClientAction.setNavigationState
-      ..content =
-          json.encode((SetNavigationState()..newState = newState).toJson());
+      ..content = json.encode((SetNavigationState()
+            ..newState = newState
+            ..destroyCurrentTale = destroyCurrentTale)
+          .toJson());
   }
 
   // ---
 
-  GetGamesToCreate get getGamesToCreateMessage =>
-      GetGamesToCreate.fromJson(json.decode(content));
+  GetGamesToCreate get getGamesToCreateMessage => GetGamesToCreate.fromJson(json.decode(content));
 
   factory ToClientMessage.fromGamesToCreateMessage(List<LobbyTale> lobbyList) {
     return ToClientMessage()
@@ -51,8 +48,7 @@ class ToClientMessage {
 
   // ---
 
-  SetCurrentUser get getCurrentUser =>
-      SetCurrentUser.fromJson(json.decode(content));
+  SetCurrentUser get getCurrentUser => SetCurrentUser.fromJson(json.decode(content));
 
   factory ToClientMessage.fromCurrentUser(User user) {
     return ToClientMessage()
@@ -62,8 +58,7 @@ class ToClientMessage {
 
   // ---
 
-  OpenedLobbyData get getOpenedLobbyData =>
-      OpenedLobbyData.fromJson(json.decode(content));
+  OpenedLobbyData get getOpenedLobbyData => OpenedLobbyData.fromJson(json.decode(content));
 
   factory ToClientMessage.fromOpenedLobby(OpenedLobby lobby) {
     return ToClientMessage()
@@ -83,15 +78,12 @@ class ToClientMessage {
 
   // ---
 
-  UnitCreateOrUpdate get getUnitCreateOrUpdate =>
-      UnitCreateOrUpdate.fromJson(json.decode(content));
+  UnitCreateOrUpdate get getUnitCreateOrUpdate => UnitCreateOrUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitCreateOrUpdate(
-      List<UnitCreateOrUpdateAction> actions) {
+  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.unitCreateOrUpdate
-      ..content =
-          json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
+      ..content = json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
   }
 
   // ---
@@ -106,8 +98,7 @@ class ToClientMessage {
 
   // ---
 
-  CancelOnField get getCancelOnField =>
-      CancelOnField.fromJson(json.decode(content));
+  CancelOnField get getCancelOnField => CancelOnField.fromJson(json.decode(content));
 
   factory ToClientMessage.fromCancelOnField(List<CancelOnFieldAction> actions) {
     return ToClientMessage()
@@ -117,11 +108,9 @@ class ToClientMessage {
 
   // ---
 
-  IntentionUpdate get getIntentionUpdate =>
-      IntentionUpdate.fromJson(json.decode(content));
+  IntentionUpdate get getIntentionUpdate => IntentionUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromIntentionUpdate(
-      String playerId, List<String> trackFieldsId) {
+  factory ToClientMessage.fromIntentionUpdate(String playerId, List<String> trackFieldsId) {
     return ToClientMessage()
       ..message = OnClientAction.intentionUpdate
       ..content = json.encode((IntentionUpdate()
@@ -132,17 +121,12 @@ class ToClientMessage {
 
   // ---
 
-  PlayersOnMove get getPlayersOnMove =>
-      PlayersOnMove.fromJson(json.decode(content));
+  PlayersOnMove get getPlayersOnMove => PlayersOnMove.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromPlayersOnMove(
-      Iterable<String> playerOnMoveIds) {
+  factory ToClientMessage.fromPlayersOnMove(Iterable<String> playerOnMoveIds) {
     return ToClientMessage()
       ..message = OnClientAction.playersOnMove
-      ..content = json.encode((PlayersOnMove()
-            ..playerOnMoveIds = playerOnMoveIds
-      )
-          .toJson());
+      ..content = json.encode((PlayersOnMove()..playerOnMoveIds = playerOnMoveIds).toJson());
   }
 
   // ---
@@ -153,6 +137,16 @@ class ToClientMessage {
     return ToClientMessage()
       ..message = OnClientAction.addUnitType
       ..content = json.encode((AddUnitType()..type = type).toJson());
+  }
+
+  // ---
+
+  Banter get getBanter => Banter.fromJson(json.decode(content));
+
+  factory ToClientMessage.fromBanter(Banter banter) {
+    return ToClientMessage()
+      ..message = OnClientAction.showBanter
+      ..content = json.encode(banter.toJson());
   }
 }
 
@@ -181,7 +175,9 @@ enum OnClientAction {
   @JsonValue('playersOnMove')
   playersOnMove,
   @JsonValue('addUnitType')
-  addUnitType
+  addUnitType,
+  @JsonValue('showBanter')
+  showBanter
 }
 
 abstract class MessageContent {}
@@ -189,9 +185,9 @@ abstract class MessageContent {}
 @JsonSerializable()
 class SetNavigationState extends MessageContent {
   GameNavigationState newState;
+  bool destroyCurrentTale = false;
 
-  static SetNavigationState fromJson(Map<String, dynamic> json) =>
-      _$SetNavigationStateFromJson(json);
+  static SetNavigationState fromJson(Map<String, dynamic> json) => _$SetNavigationStateFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$SetNavigationStateToJson(this);
@@ -202,8 +198,7 @@ class SetNavigationState extends MessageContent {
 class RefreshLobbyList extends MessageContent {
   List<OpenedLobby> lobbies;
 
-  static RefreshLobbyList fromJson(Map<String, dynamic> json) =>
-      _$RefreshLobbyListFromJson(json);
+  static RefreshLobbyList fromJson(Map<String, dynamic> json) => _$RefreshLobbyListFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$RefreshLobbyListToJson(this);
@@ -214,8 +209,7 @@ class RefreshLobbyList extends MessageContent {
 class GetGamesToCreate extends MessageContent {
   List<LobbyTale> games;
 
-  static GetGamesToCreate fromJson(Map<String, dynamic> json) =>
-      _$GetGamesToCreateFromJson(json);
+  static GetGamesToCreate fromJson(Map<String, dynamic> json) => _$GetGamesToCreateFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$GetGamesToCreateToJson(this);
@@ -226,8 +220,7 @@ class GetGamesToCreate extends MessageContent {
 class SetCurrentUser extends MessageContent {
   User user;
 
-  static SetCurrentUser fromJson(Map<String, dynamic> json) =>
-      _$SetCurrentUserFromJson(json);
+  static SetCurrentUser fromJson(Map<String, dynamic> json) => _$SetCurrentUserFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$SetCurrentUserToJson(this);
@@ -238,8 +231,7 @@ class SetCurrentUser extends MessageContent {
 class OpenedLobbyData extends MessageContent {
   OpenedLobby lobby;
 
-  static OpenedLobbyData fromJson(Map<String, dynamic> json) =>
-      _$OpenedLobbyDataFromJson(json);
+  static OpenedLobbyData fromJson(Map<String, dynamic> json) => _$OpenedLobbyDataFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$OpenedLobbyDataToJson(this);
@@ -250,8 +242,7 @@ class OpenedLobbyData extends MessageContent {
 class TaleData extends MessageContent {
   ClientTaleData data;
 
-  static TaleData fromJson(Map<String, dynamic> json) =>
-      _$TaleDataFromJson(json);
+  static TaleData fromJson(Map<String, dynamic> json) => _$TaleDataFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$TaleDataToJson(this);
@@ -262,8 +253,7 @@ class TaleData extends MessageContent {
 class UnitCreateOrUpdate extends MessageContent {
   List<UnitCreateOrUpdateAction> actions;
 
-  static UnitCreateOrUpdate fromJson(Map<String, dynamic> json) =>
-      _$UnitCreateOrUpdateFromJson(json);
+  static UnitCreateOrUpdate fromJson(Map<String, dynamic> json) => _$UnitCreateOrUpdateFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$UnitCreateOrUpdateToJson(this);
@@ -274,8 +264,7 @@ class UnitCreateOrUpdate extends MessageContent {
 class UnitDelete extends MessageContent {
   List<UnitDeleteAction> actions;
 
-  static UnitDelete fromJson(Map<String, dynamic> json) =>
-      _$UnitDeleteFromJson(json);
+  static UnitDelete fromJson(Map<String, dynamic> json) => _$UnitDeleteFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$UnitDeleteToJson(this);
@@ -286,8 +275,7 @@ class UnitDelete extends MessageContent {
 class CancelOnField extends MessageContent {
   List<CancelOnFieldAction> actions;
 
-  static CancelOnField fromJson(Map<String, dynamic> json) =>
-      _$CancelOnFieldFromJson(json);
+  static CancelOnField fromJson(Map<String, dynamic> json) => _$CancelOnFieldFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$CancelOnFieldToJson(this);
@@ -299,8 +287,7 @@ class IntentionUpdate extends MessageContent {
   String playerId;
   List<String> trackFieldsId;
 
-  static IntentionUpdate fromJson(Map<String, dynamic> json) =>
-      _$IntentionUpdateFromJson(json);
+  static IntentionUpdate fromJson(Map<String, dynamic> json) => _$IntentionUpdateFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$IntentionUpdateToJson(this);
@@ -311,8 +298,7 @@ class IntentionUpdate extends MessageContent {
 class PlayersOnMove extends MessageContent {
   Iterable<String> playerOnMoveIds;
 
-  static PlayersOnMove fromJson(Map<String, dynamic> json) =>
-      _$PlayersOnMoveFromJson(json);
+  static PlayersOnMove fromJson(Map<String, dynamic> json) => _$PlayersOnMoveFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$PlayersOnMoveToJson(this);
@@ -323,10 +309,22 @@ class PlayersOnMove extends MessageContent {
 class AddUnitType extends MessageContent {
   UnitTypeCompiled type;
 
-  static AddUnitType fromJson(Map<String, dynamic> json) =>
-      _$AddUnitTypeFromJson(json);
+  static AddUnitType fromJson(Map<String, dynamic> json) => _$AddUnitTypeFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$AddUnitTypeToJson(this);
+  }
+}
+
+@JsonSerializable()
+class Banter extends MessageContent {
+  int milliseconds;
+  Image image;
+  String text;
+
+  static Banter fromJson(Map<String, dynamic> json) => _$BanterFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$BanterToJson(this);
   }
 }

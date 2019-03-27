@@ -120,6 +120,11 @@ class Action {
 @Typescript()
 @JsonSerializable()
 class VictoryCheckAction {
+  List<String> allTeamsEliminatedForWin;
+  List<String> anyOfTeamsEliminatedForWin;
+  List<String> anyOfTeamsEliminatedForLost;
+  List<String> allOfTeamsEliminatedForLost;
+  List<String> unitsEliminatedForLost;
   static VictoryCheckAction fromJson(Map<String, dynamic> json) {
     return _$VictoryCheckActionFromJson(json);
   }

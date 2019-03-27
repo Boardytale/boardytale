@@ -17,20 +17,7 @@ import 'package:rxdart/rxdart.dart';
 
 @Component(
     selector: 'world',
-    template: r'''
-        <game-controls></game-controls>
-        <canvas  style="z-index: 10" id="worldMap" #world [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
-        <canvas  style="z-index: 20" id="mapObjects" #objects [ngStyle]="{'width': widthString, 'height': heightString}"></canvas>
-        <action-feedback style="z-index: 25"></action-feedback>
-        <div  style="z-index: 30" id="eventOverlay" [ngStyle]="{'width': widthString, 'height': heightString}"
-        (mousedown)="onMouseDown($event)"
-        (mouseup)="onMouseUp($event)"
-        (mousemove)="onMouseMove($event)"
-        (mouseout)="onMouseOut($event)"
-        (mousewheel)="onMouseWheel($event)"
-
-        ></div>
-      ''',
+    templateUrl: 'world_component.html',
     directives: [coreDirectives, GameControlsComponent, ActionsFeedback],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
@@ -44,7 +31,7 @@ class WorldComponent implements OnDestroy {
   stage_lib.Stage unitStage;
   CanvasElement worldElement;
   CanvasElement mapObjectsElement;
-  StreamSubscription onResizeSubscription;
+  StreamSubscription _onResizeSubscription;
   ChangeDetectorRef changeDetector;
   UnitManager unitManager;
   bool _moving = false;
@@ -56,8 +43,12 @@ class WorldComponent implements OnDestroy {
   ClientField _lastActiveField;
   ClientWorldService _clientWorldService;
   List<shared.Field> trackFields;
+
   // Helper for async loader of the game. Source of Actions is in gameService.
   ReplaySubject<List<shared.UnitCreateOrUpdateAction>> _unitCreateOrUpdateAction = ReplaySubject();
+  StreamSubscription _destroySubscription;
+  StreamSubscription _unitCreateOrUpdateActionSubscription;
+  StreamSubscription _onWorldLoadedSubscription;
 
   String get widthString => "${window.innerWidth}px";
 
@@ -65,12 +56,14 @@ class WorldComponent implements OnDestroy {
 
   WorldComponent(this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view,
       this._clientWorldService) {
-    onResizeSubscription = window.onResize.listen(detectChanges);
-    gameService.onWorldLoaded.listen(modelLoaded);
+    print("world component construct");
+    _onResizeSubscription = window.onResize.listen(detectChanges);
+    _onWorldLoadedSubscription = gameService.onWorldLoaded.listen(modelLoaded);
     gatewayService.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
     gatewayService.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
       _unitCreateOrUpdateAction.add(message.getUnitCreateOrUpdate.actions);
     };
+    _destroySubscription = appService.destroyCurrentTale.listen(clear);
   }
 
   @ViewChild("world")
@@ -101,30 +94,40 @@ class WorldComponent implements OnDestroy {
     changeDetector.detectChanges();
   }
 
-  void modelLoaded([_]) {
-    _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
-    worldStage = stage_lib.Stage(worldElement,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        options: stage_lib.StageOptions()
-          ..antialias = true
-          ..backgroundColor = stage_lib.Color.Transparent);
-    worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
-    worldStage.align = stage_lib.StageAlign.TOP_LEFT;
+  void modelLoaded(bool isLoad) {
+    if(!isLoad){
+      return;
+    }
+    _unitCreateOrUpdateActionSubscription = _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
+    if(worldStage == null){
+      worldStage = stage_lib.Stage(worldElement,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          options: stage_lib.StageOptions()
+            ..antialias = true
+            ..backgroundColor = stage_lib.Color.Transparent);
+      worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
+      worldStage.align = stage_lib.StageAlign.TOP_LEFT;
+    }
     view.onWorldLoaded(worldStage);
 
-    unitStage = stage_lib.Stage(mapObjectsElement,
-        width: window.innerWidth,
-        height: window.innerHeight,
-        options: stage_lib.StageOptions()
-          ..antialias = true
-          ..backgroundColor = 0
-          ..transparent = true);
-    unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
-    unitStage.align = stage_lib.StageAlign.TOP_LEFT;
-    unitManager = UnitManager(unitStage, view, settings);
-    var renderLoop = stage_lib.RenderLoop();
-    renderLoop.addStage(unitStage);
+    if(unitStage == null){
+      unitStage = stage_lib.Stage(mapObjectsElement,
+          width: window.innerWidth,
+          height: window.innerHeight,
+          options: stage_lib.StageOptions()
+            ..antialias = true
+            ..backgroundColor = 0
+            ..transparent = true);
+      unitStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
+      unitStage.align = stage_lib.StageAlign.TOP_LEFT;
+      var renderLoop = stage_lib.RenderLoop();
+      renderLoop.addStage(unitStage);
+    }
+    if(unitManager == null){
+      unitManager = UnitManager(unitStage, view, settings);
+    }
+    unitManager.addInitialUnits();
     detectChanges();
   }
 
@@ -239,7 +242,40 @@ class WorldComponent implements OnDestroy {
 
   @override
   void ngOnDestroy() {
+    print("world component destroyed");
     destroyed = true;
-    onResizeSubscription.cancel();
+    if (_onWorldLoadedSubscription != null) {
+      _onWorldLoadedSubscription.cancel();
+      _onWorldLoadedSubscription = null;
+    }
+    if (_onResizeSubscription != null) {
+      _onResizeSubscription.cancel();
+      _onResizeSubscription = null;
+    }
+    if (_destroySubscription != null) {
+      _destroySubscription.cancel();
+      _destroySubscription = null;
+    }
+    worldStage = null;
+    unitStage = null;
+    worldElement = null;
+    mapObjectsElement = null;
+    unitManager.clear();
+    unitManager = null;
+    _lastActiveField = null;
+    _clientWorldService = null;
+    trackFields = null;
+    _unitCreateOrUpdateAction.close();
+  }
+
+  void clear([_]) {
+    print("world component clear");
+    // TODO: clear destroy process
+    window.location.reload();
+    unitManager.clear();
+    _lastActiveField = null;
+    trackFields = null;
+    _unitCreateOrUpdateActionSubscription.cancel();
+    _unitCreateOrUpdateActionSubscription = null;
   }
 }

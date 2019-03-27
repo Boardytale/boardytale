@@ -10,37 +10,37 @@ Image _$ImageFromJson(Map<String, dynamic> json) {
   return Image()
     ..name = json['name'] as String
     ..data = json['data'] as String
-    ..multiply = (json['multiply'] as num).toDouble()
     ..width = json['width'] as int
     ..height = json['height'] as int
-    ..top = json['top'] as int
-    ..left = json['left'] as int
     ..type = _$enumDecode(_$ImageTypeEnumMap, json['type'])
     ..authorEmail = json['authorEmail'] as String
     ..imageVersion = json['imageVersion'] as int
     ..dataModelVersion = json['dataModelVersion'] as int
-    ..origin = json['origin'] as String
     ..created = DateTime.parse(json['created'] as String)
     ..tags = (json['tags'] as List)
         .map((e) => _$enumDecode(_$ImageTagEnumMap, e))
-        .toList();
+        .toList()
+    ..origin = json['origin'] as String
+    ..multiply = (json['multiply'] as num).toDouble()
+    ..top = json['top'] as int
+    ..left = json['left'] as int;
 }
 
 Map<String, dynamic> _$ImageToJson(Image instance) => <String, dynamic>{
       'name': instance.name,
       'data': instance.data,
-      'multiply': instance.multiply,
       'width': instance.width,
       'height': instance.height,
-      'top': instance.top,
-      'left': instance.left,
       'type': _$ImageTypeEnumMap[instance.type],
       'authorEmail': instance.authorEmail,
       'imageVersion': instance.imageVersion,
       'dataModelVersion': instance.dataModelVersion,
-      'origin': instance.origin,
       'created': instance.created.toIso8601String(),
-      'tags': instance.tags.map((e) => _$ImageTagEnumMap[e]).toList()
+      'tags': instance.tags.map((e) => _$ImageTagEnumMap[e]).toList(),
+      'origin': instance.origin,
+      'multiply': instance.multiply,
+      'top': instance.top,
+      'left': instance.left
     };
 
 T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
@@ -871,11 +871,34 @@ Map<String, dynamic> _$ActionToJson(Action instance) {
 }
 
 VictoryCheckAction _$VictoryCheckActionFromJson(Map<String, dynamic> json) {
-  return VictoryCheckAction();
+  return VictoryCheckAction()
+    ..allTeamsEliminatedForWin = (json['allTeamsEliminatedForWin'] as List)
+        ?.map((e) => e as String)
+        ?.toList()
+    ..anyOfTeamsEliminatedForWin = (json['anyOfTeamsEliminatedForWin'] as List)
+        ?.map((e) => e as String)
+        ?.toList()
+    ..anyOfTeamsEliminatedForLost =
+        (json['anyOfTeamsEliminatedForLost'] as List)
+            ?.map((e) => e as String)
+            ?.toList()
+    ..allOfTeamsEliminatedForLost =
+        (json['allOfTeamsEliminatedForLost'] as List)
+            ?.map((e) => e as String)
+            ?.toList()
+    ..unitsEliminatedForLost = (json['unitsEliminatedForLost'] as List)
+        ?.map((e) => e as String)
+        ?.toList();
 }
 
 Map<String, dynamic> _$VictoryCheckActionToJson(VictoryCheckAction instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'allTeamsEliminatedForWin': instance.allTeamsEliminatedForWin,
+      'anyOfTeamsEliminatedForWin': instance.anyOfTeamsEliminatedForWin,
+      'anyOfTeamsEliminatedForLost': instance.anyOfTeamsEliminatedForLost,
+      'allOfTeamsEliminatedForLost': instance.allOfTeamsEliminatedForLost,
+      'unitsEliminatedForLost': instance.unitsEliminatedForLost
+    };
 
 AiInstruction _$AiInstructionFromJson(Map<String, dynamic> json) {
   return AiInstruction()
@@ -934,18 +957,21 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.cancelOnField: 'cancelOnField',
   OnClientAction.intentionUpdate: 'intentionUpdate',
   OnClientAction.playersOnMove: 'playersOnMove',
-  OnClientAction.addUnitType: 'addUnitType'
+  OnClientAction.addUnitType: 'addUnitType',
+  OnClientAction.showBanter: 'showBanter'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
   return SetNavigationState()
     ..newState =
-        _$enumDecodeNullable(_$GameNavigationStateEnumMap, json['newState']);
+        _$enumDecodeNullable(_$GameNavigationStateEnumMap, json['newState'])
+    ..destroyCurrentTale = json['destroyCurrentTale'] as bool;
 }
 
 Map<String, dynamic> _$SetNavigationStateToJson(SetNavigationState instance) =>
     <String, dynamic>{
-      'newState': _$GameNavigationStateEnumMap[instance.newState]
+      'newState': _$GameNavigationStateEnumMap[instance.newState],
+      'destroyCurrentTale': instance.destroyCurrentTale
     };
 
 const _$GameNavigationStateEnumMap = <GameNavigationState, dynamic>{
@@ -1085,6 +1111,21 @@ AddUnitType _$AddUnitTypeFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AddUnitTypeToJson(AddUnitType instance) =>
     <String, dynamic>{'type': instance.type?.toJson()};
+
+Banter _$BanterFromJson(Map<String, dynamic> json) {
+  return Banter()
+    ..milliseconds = json['milliseconds'] as int
+    ..image = json['image'] == null
+        ? null
+        : Image.fromJson(json['image'] as Map<String, dynamic>)
+    ..text = json['text'] as String;
+}
+
+Map<String, dynamic> _$BanterToJson(Banter instance) => <String, dynamic>{
+      'milliseconds': instance.milliseconds,
+      'image': instance.image?.toJson(),
+      'text': instance.text
+    };
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {
   return ToGameServerMessage()

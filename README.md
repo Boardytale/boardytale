@@ -16,6 +16,9 @@ wait until finished
 run 
 dart runner/run.dart
 
+between `generate shared` and `initial-data-to-database` editor server must be restarted! (using old version of fromJson and toJson)
+
+
 
 GLOBAL TODOs:
  - Write test on serialization and deserialization all tales

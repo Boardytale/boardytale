@@ -30,6 +30,15 @@ class LobbyRoom {
   void sendUpdateToAllPlayers() {
     connectedPlayers.values.forEach(sendUpdateToPlayer);
   }
+
+  void destroy() {
+    connectedPlayers.forEach((key, player){
+      player.leaveRoom();
+    });
+    connectedPlayers = null;
+    lobbyService.removeLobbyRoom(this);
+    print("destroyed lobby room ${id}");
+  }
 }
 
 final LobbyList lobbyList = new LobbyList._private();

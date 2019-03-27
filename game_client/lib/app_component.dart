@@ -68,17 +68,17 @@ class AppComponent {
   AppComponent(this.appService, this.changeDetector, this.gameService,
       this.lobbyService, this.gateway) {
     appService.navigationState.listen((navigation) {
-      if (navigation.name == GameNavigationState.findLobby) {
-        lobbyService.lobbies.listen((onData) {
-          if (onData != null && onData.isNotEmpty) {
-            gateway.sendMessage(
-                shared.ToGameServerMessage.enterLobby(onData.first.id));
-          }
-          if (onData.isEmpty) {
-            appService.goToState(GameNavigationState.createGame);
-          }
-        });
-      }
+//      if (navigation.name == GameNavigationState.findLobby) {
+//        lobbyService.lobbies.listen((onData) {
+//          if (onData != null && onData.isNotEmpty) {
+//            gateway.sendMessage(
+//                shared.ToGameServerMessage.enterLobby(onData.first.id));
+//          }
+//          if (onData.isEmpty) {
+//            appService.goToState(GameNavigationState.createGame);
+//          }
+//        });
+//      }
       changeDetector.markForCheck();
     });
     window.onResize.listen(resizeBody);

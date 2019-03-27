@@ -3,7 +3,6 @@ part of world_view;
 class UnitManager {
   stage_lib.Stage stage;
   WorldViewService worldViewService;
-  ClientTaleService tale;
   SettingsService settings;
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
@@ -13,11 +12,7 @@ class UnitManager {
   ClientWorldService get clientWorldService => worldViewService.clientWorldService;
 
   UnitManager(this.stage, this.worldViewService, this.settings) {
-    tale = clientWorldService.clientTaleService;
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
-    tale.units.forEach((id, unit) {
-      paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
-    });
     clientWorldService.onUnitAdded.listen((unit) {
       addUnit(unit);
     });
@@ -38,6 +33,10 @@ class UnitManager {
         }
       });
     });
+  }
+
+  void addInitialUnits(){
+    clientWorldService.clientTaleService.units.values.forEach(addUnit);
   }
 
   void addUnit(shared.Unit unit) {
@@ -87,5 +86,13 @@ class UnitManager {
         lastField = field;
       });
     }
+  }
+
+  void clear() {
+    activeField = null;
+    intentions.forEach((paintable)=>paintable.destroy());
+    abilityAssistance.forEach((paintable)=>paintable.destroy());
+    intentions.clear();
+    abilityAssistance.clear();
   }
 }

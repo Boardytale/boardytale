@@ -17,7 +17,7 @@ part 'arrow_disk.dart';
   coreDirectives
 ], template: '''
       <div 
-      *ngIf="lobbyService.openedLobby.value != null"
+      *ngIf="lobby != null"
       class="lobby-room"> 
         <h1>lobby {{lobby.lobbyName}}</h1>
         <img [src]="lobby.image.data">
@@ -37,9 +37,9 @@ class LobbyComponent {
   LobbyComponent(this.lobbyService, this.changeDetector, this.gateway) {
     lobbyService.openedLobby.listen((onData){
       changeDetector.markForCheck();
-      if(onData.id != null){
-        gateway.sendMessage(shared.ToGameServerMessage.enterGame(onData.id));
-      }
+//      if(onData.id != null){
+//        gateway.sendMessage(shared.ToGameServerMessage.enterGame(onData.id));
+//      }
     });
   }
 

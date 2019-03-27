@@ -61,6 +61,11 @@ class LobbyService {
     return room;
   }
 
+  void removeLobbyRoom(LobbyRoom room){
+    openedLobbyRooms.value.remove(room);
+    openedLobbyRooms.add(openedLobbyRooms.value);
+  }
+
   Future<shared.TaleCompiled> getTaleByName(String name) async {
     String uri =
         makeAddressFromUri(config.editorServer.uris.first) + "inner/taleByName";

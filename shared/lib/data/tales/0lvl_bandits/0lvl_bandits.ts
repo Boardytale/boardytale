@@ -58,12 +58,7 @@ export let data: TaleCreateEnvelope = {
         taleVersion: 0,
         units: [
             {
-                moveToFieldId: '10_10',
-                changeToTypeName: 'pikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '7_5',
+                moveToFieldId: '3_3',
                 changeToTypeName: 'pikeman',
                 transferToPlayerId: 'bandits',
             },
@@ -74,7 +69,13 @@ export let data: TaleCreateEnvelope = {
             onUnitDies: [
                 {
                     action: {
-                        victoryCheckAction: {},
+                        victoryCheckAction: {
+                            allOfTeamsEliminatedForLost: null,
+                            anyOfTeamsEliminatedForLost: ['players'],
+                            allTeamsEliminatedForWin: ['bandits'],
+                            anyOfTeamsEliminatedForWin: null,
+                            unitsEliminatedForLost: null,
+                        },
                     },
                 },
             ],

@@ -5,24 +5,29 @@ part of model;
 class Image {
   String name;
   String data;
-  double multiply = 1;
   int width;
   int height;
-  int top = 0; // option to possible make smaller images
-  int left = 0;
   ImageType type;
   String authorEmail;
   int imageVersion = 0;
   int dataModelVersion = 0;
-
-  /// The place where the image comes from. Expected is URL or just "direct"
-  String origin;
   DateTime created;
   List<ImageTag> tags;
+  /// The place where the image comes from. Expected is URL or just "direct"
+  String origin;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  double multiply = 1;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  int top = 0; // option to possible make smaller images
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  int left = 0;
 
   static Image fromJson(Map<String, dynamic> json) {
     Image out = _$ImageFromJson(json);
-    if(out.multiply == 0){
+    if (out.multiply == 0) {
       out.multiply = 1;
     }
     return out;

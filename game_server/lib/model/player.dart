@@ -36,7 +36,6 @@ class ServerPlayer extends shared.Player {
 
   void enterGame(ServerTale tale) {
     this.tale = tale;
-//    tale.players[tale.]
     navigationState = shared.GameNavigationState.inGame;
     gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState), this);
   }
@@ -69,5 +68,15 @@ class ServerPlayer extends shared.Player {
     }else{
       throw "player have to be human or ai";
     }
+  }
+
+  void leaveGame() {
+    tale = null;
+    navigationState = shared.GameNavigationState.findLobby;
+    gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState, destroyCurrentTale: true), this);
+  }
+
+  void leaveRoom() {
+    unsubscribeFromOpenedLobbiesChanges();
   }
 }

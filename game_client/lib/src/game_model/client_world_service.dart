@@ -54,12 +54,15 @@ class ClientWorldService extends shared.World {
     defaultFieldHeight = (settings.defaultFieldWidth * widthHeightRatio).toInt();
     defaultHex = HexaBorders(this);
     gameService.onTaleLoaded.listen(fromCreateEnvelope);
+    appService.destroyCurrentTale.listen((_){
+      gameService.onWorldLoaded.add(false);
+    });
   }
 
   void fromCreateEnvelope(shared.WorldCreateEnvelope envelope) {
     super.fromEnvelope(envelope, (key, world) => ClientField(key, this));
     recalculate();
-    gameService.onWorldLoaded.add(null);
+    gameService.onWorldLoaded.add(true);
   }
 
   void recalculate() {

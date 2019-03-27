@@ -18,18 +18,24 @@ export type ImageTag = 'grass' | 'forest' | 'water' | 'rock';
 export interface Image extends Object {
     name: string;
     data: string;
-    multiply: number;
     width: number;
     height: number;
-    top: number;
-    left: number;
     type: ImageType;
     authorEmail: string;
     imageVersion: number;
     dataModelVersion: number;
-    origin: string;
     created: string;
     tags: Array<ImageTag>;
+    origin: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    multiply?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    top?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    left?: number;
 }
 
 export interface User extends Object {
@@ -301,7 +307,13 @@ export interface Action extends Object {
     victoryCheckAction?: VictoryCheckAction;
 }
 
-export interface VictoryCheckAction extends Object {}
+export interface VictoryCheckAction extends Object {
+    allTeamsEliminatedForWin: Array<string>;
+    anyOfTeamsEliminatedForWin: Array<string>;
+    anyOfTeamsEliminatedForLost: Array<string>;
+    allOfTeamsEliminatedForLost: Array<string>;
+    unitsEliminatedForLost: Array<string>;
+}
 
 export type AiAction =
     | 'attackAllOnRoad'
@@ -337,7 +349,8 @@ export type OnClientAction =
     | 'cancelOnField'
     | 'intentionUpdate'
     | 'playersOnMove'
-    | 'addUnitType';
+    | 'addUnitType'
+    | 'showBanter';
 
 export type OnServerAction =
     | 'goToState'

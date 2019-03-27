@@ -27,9 +27,9 @@ class TaleController extends ResourceController {
         return i.name;
       }).equalTo(taleWrap.content.tale.name);
     List<Tale> existingTale = await query.fetch();
+    var lobbyTale = taleWrap.content.lobby;
+    var tale = taleWrap.content.tale;
     if (existingTale.isEmpty) {
-      var lobbyTale = taleWrap.content.lobby;
-      var tale = taleWrap.content.tale;
       final query = Query<Tale>(context)
         ..values.name = tale.name
         ..values.authorEmail = taleWrap.content.authorEmail
@@ -39,11 +39,6 @@ class TaleController extends ResourceController {
       Tale created = await query.insert();
       return Response.ok(created);
     } else {
-
-      // TODO: rethink tal update
-
-      var lobbyTale = taleWrap.content.lobby;
-      var tale = taleWrap.content.tale;
       query
         ..values.name = tale.name
         ..values.authorEmail = taleWrap.content.authorEmail
@@ -52,8 +47,6 @@ class TaleController extends ResourceController {
         ..values.taleData = Document(tale.toJson());
       Tale created = await query.updateOne();
       return Response.ok(created);
-
-//      return Response.conflict(body: "tale name is alredy used");
     }
   }
 
@@ -71,15 +64,12 @@ class TaleController extends ResourceController {
     Tale taleData = (await notCompiledQuery.fetch()).first;
 
     // get images
-    var taleInnerDataEnvelope = model.TaleInnerEnvelope.fromJson(
-        taleData.taleData.data as Map<String, dynamic>);
+    var taleInnerDataEnvelope = model.TaleInnerEnvelope.fromJson(taleData.taleData.data as Map<String, dynamic>);
 
     model.TaleCompiled taleCompiled = model.TaleCompiled();
     taleCompiled.authorEmail = taleData.authorEmail;
-    taleCompiled.tale =
-        model.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
-    taleCompiled.lobby =
-        model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
+    taleCompiled.tale = model.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
+    taleCompiled.lobby = model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
 
     model.TaleInnerCompiled innerCompiled = taleCompiled.tale;
     innerCompiled.assets = model.TaleCompiledAssets();
@@ -88,23 +78,19 @@ class TaleController extends ResourceController {
 
     for (var envelope in innerCompiled.units) {
       String unitName = envelope.changeToTypeName;
-      var query = Query<UnitType>(context)
-        ..where((u) => u.name).equalTo("${unitName}Compiled");
+      var query = Query<UnitType>(context)..where((u) => u.name).equalTo("${unitName}Compiled");
       List<UnitType> result = await query.fetch();
       if (result.isNotEmpty) {
         // compiled unit ready
-        assets.unitTypes[unitName] = model.UnitTypeCompiled.fromJson(
-            result.first.unitTypeData.data as Map<String, dynamic>);
+        assets.unitTypes[unitName] =
+            model.UnitTypeCompiled.fromJson(result.first.unitTypeData.data as Map<String, dynamic>);
       } else {
         // check if not compiled ready
-        var query = Query<UnitType>(context)
-          ..where((u) => u.name).equalTo(unitName);
+        var query = Query<UnitType>(context)..where((u) => u.name).equalTo(unitName);
         List<UnitType> result = await query.fetch();
         if (result.isNotEmpty) {
           // compile
-          return Response.serverError(
-              body:
-                  "unit compilation during tale compilation is not impelemnted yet");
+          return Response.serverError(body: "unit compilation during tale compilation is not impelemnted yet");
         } else {
           return Response.badRequest(body: "Unit ${unitName} does not exist");
         }

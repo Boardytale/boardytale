@@ -123,6 +123,7 @@ class ServerTale {
     } else {
       player.taleId = player.id;
     }
+    player.team = "players";
     players[player.id] = player;
     humanPlayers[player.id] = player;
     taleData.players = players.values.map((p) => p.createGamePlayer()).toList();
@@ -138,6 +139,44 @@ class ServerTale {
     humanPlayers.values.forEach((player) {
       gateway.sendMessage(shared.ToClientMessage.fromPlayersOnMove(playersOnMoveIds), player);
     });
+  }
+
+  void victory(){
+    shared.Banter banter = shared.Banter()
+    ..image = null
+    ..milliseconds = 3000
+    ..text = "Victory";
+    humanPlayers.values.forEach((player) {
+      gateway.sendMessage(shared.ToClientMessage.fromBanter(banter), player);
+    });
+    Future.delayed(Duration(milliseconds: 3000)).then(endGame);
+  }
+
+  void lost(){
+    shared.Banter banter = shared.Banter()
+      ..image = null
+      ..milliseconds = 3000
+      ..text = "Lost";
+    humanPlayers.values.forEach((player) {
+      gateway.sendMessage(shared.ToClientMessage.fromBanter(banter), player);
+    });
+    Future.delayed(Duration(milliseconds: 3000)).then(endGame);
+  }
+
+  void endGame([_]){
+    humanPlayers.values.forEach((player){
+      player.leaveGame();
+    });
+    destroy();
+  }
+
+  void destroy(){
+    units = null;
+    unitTypes = null;
+    taleData = null;
+    triggers = null;
+    room.destroy();
+    room = null;
   }
 }
 

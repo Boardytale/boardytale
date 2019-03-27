@@ -27,7 +27,6 @@ class GatewayService {
     _socket = WebSocket(
         '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
-      print("got message");
       Map<String, dynamic> message = json.decode(e.data.toString());
       handleMessages(shared.ToClientMessage.fromJson(message));
     });
@@ -52,7 +51,6 @@ class GatewayService {
 
   void handleMessages(shared.ToClientMessage message) {
     if (handlers.containsKey(message.message)) {
-      print("handle message ${message.message}");
       handlers[message.message](message);
     } else {
       throw "missing handler for ${jsonEncode(message.toJson())}";
