@@ -4,8 +4,7 @@ class Tale {
   String name;
   Map<Lang, Map<String, String>> langs;
   Map<Lang, String> langName;
-  int humanPlayersTeam;
-  covariant World clientWorldService;
+  covariant World world;
   covariant Map<String, Player> aiPlayers = {};
   Map<String, Event> events = {};
   Map<String, Dialog> dialogs = {};
@@ -14,7 +13,7 @@ class Tale {
   void fromCompiledTale(TaleInnerCompiled tale) {
     name = tale.name;
     langs = tale.langs;
-    clientWorldService = World()
+    world = World()
       ..fromEnvelope(tale.world, (key, world) => Field(key, world));
     events = tale.events;
     dialogs = tale.dialogs;

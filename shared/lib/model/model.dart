@@ -33,6 +33,7 @@ part 'game/state.dart';
 part 'game/to_client_messages.dart';
 part 'game/to_game_server_messages.dart';
 part 'game/to_hero_server_message.dart';
+part 'game/to_ai_server_message.dart';
 part "abilities/ability.dart";
 part "abilities/move.dart";
 part "abilities/attack.dart";

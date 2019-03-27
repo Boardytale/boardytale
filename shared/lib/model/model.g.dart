@@ -1287,6 +1287,70 @@ Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
           instance.responseHeroes?.map((e) => e?.toJson())?.toList()
     };
 
+ToAiServerMessage _$ToAiServerMessageFromJson(Map<String, dynamic> json) {
+  return ToAiServerMessage()
+    ..message = _$enumDecodeNullable(_$OnAiServerActionEnumMap, json['message'])
+    ..content = json['content'] as String;
+}
+
+Map<String, dynamic> _$ToAiServerMessageToJson(ToAiServerMessage instance) =>
+    <String, dynamic>{
+      'message': _$OnAiServerActionEnumMap[instance.message],
+      'content': instance.content
+    };
+
+const _$OnAiServerActionEnumMap = <OnAiServerAction, dynamic>{
+  OnAiServerAction.getNextMoveByState: 'getNextMoveByState',
+  OnAiServerAction.getNextMoveByUpdate: 'getNextMoveByUpdate'
+};
+
+GetNextMoveByState _$GetNextMoveByStateFromJson(Map<String, dynamic> json) {
+  return GetNextMoveByState()
+    ..responseAction = json['responseAction'] == null
+        ? null
+        : UnitTrackAction.fromJson(
+            json['responseAction'] as Map<String, dynamic>)
+    ..requestData = json['requestData'] == null
+        ? null
+        : ClientTaleData.fromJson(json['requestData'] as Map<String, dynamic>)
+    ..requestEngine =
+        _$enumDecodeNullable(_$AiEngineEnumMap, json['requestEngine'])
+    ..idOfAiPlayerOnMove = json['idOfAiPlayerOnMove'] as String
+    ..units = (json['units'] as List)
+        ?.map((e) => e == null
+            ? null
+            : UnitCreateOrUpdateAction.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$GetNextMoveByStateToJson(GetNextMoveByState instance) =>
+    <String, dynamic>{
+      'responseAction': instance.responseAction?.toJson(),
+      'requestData': instance.requestData?.toJson(),
+      'requestEngine': _$AiEngineEnumMap[instance.requestEngine],
+      'idOfAiPlayerOnMove': instance.idOfAiPlayerOnMove,
+      'units': instance.units?.map((e) => e?.toJson())?.toList()
+    };
+
+GetNextMoveByUpdate _$GetNextMoveByUpdateFromJson(Map<String, dynamic> json) {
+  return GetNextMoveByUpdate()
+    ..responseAction = json['responseAction'] == null
+        ? null
+        : UnitTrackAction.fromJson(
+            json['responseAction'] as Map<String, dynamic>)
+    ..requestUpdateData = json['requestUpdateData'] == null
+        ? null
+        : UnitCreateOrUpdate.fromJson(
+            json['requestUpdateData'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$GetNextMoveByUpdateToJson(
+        GetNextMoveByUpdate instance) =>
+    <String, dynamic>{
+      'responseAction': instance.responseAction?.toJson(),
+      'requestUpdateData': instance.requestUpdateData?.toJson()
+    };
+
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()
     ..move = json['move'] == null

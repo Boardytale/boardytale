@@ -366,6 +366,8 @@ export type ControlsActionName = 'andOfTurn';
 
 export type OnHeroServerAction = 'getHeroesOfPlayer';
 
+export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
+
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 
 export type TargetModificators = 'wounded' | 'notUndead' | 'undead';

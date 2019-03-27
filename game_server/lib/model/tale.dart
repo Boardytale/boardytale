@@ -26,7 +26,7 @@ class ServerTale {
   ServerTale(this.room) {
     events = ServerTaleEvents(this);
     shared.Tale _tale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
-    world = _tale.clientWorldService;
+    world = _tale.world;
     taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
     room.connectedPlayers.values.forEach(addHumanPlayer);
     _tale.aiPlayers.forEach((key, player) {

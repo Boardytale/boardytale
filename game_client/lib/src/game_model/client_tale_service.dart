@@ -17,7 +17,6 @@ class ClientTaleService extends shared.Tale {
   void handleTaleData(shared.ClientTaleData clientTaleData) {
     name = clientTaleData.name;
     langName = clientTaleData.langName;
-    name = clientTaleData.name;
     clientTaleData.players.forEach((player) {
       if (appService.players.containsKey(player.id)) {
         appService.players[player.id].fromSharedPlayer(player);
