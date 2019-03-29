@@ -21,11 +21,12 @@ class ToAiServerMessage {
     content = json.encode(getNextMoveByState..responseAction = action);
   }
 
-  factory ToAiServerMessage.fromState(ClientTaleData state, AiEngine engine) {
+  factory ToAiServerMessage.fromState(InitialTaleData state, AiEngine engine, String idOfAiPlayerOnMove) {
     return ToAiServerMessage()
       ..message = OnAiServerAction.getNextMoveByState
       ..content = json.encode((GetNextMoveByState()
             ..requestData = state
+            ..idOfAiPlayerOnMove = idOfAiPlayerOnMove
             ..requestEngine = engine)
           .toJson());
   }
@@ -58,10 +59,9 @@ enum OnAiServerAction {
 @JsonSerializable()
 class GetNextMoveByState extends MessageContent {
   UnitTrackAction responseAction;
-  ClientTaleData requestData;
+  InitialTaleData requestData;
   AiEngine requestEngine;
   String idOfAiPlayerOnMove;
-  List<UnitCreateOrUpdateAction> units;
 
   static GetNextMoveByState fromJson(Map<String, dynamic> json) => _$GetNextMoveByStateFromJson(json);
 

@@ -5,7 +5,7 @@ class ServerTale {
   LobbyRoom room;
   int _lastHeroId = 0;
   int lastUsedStartingField = 0;
-  shared.ClientTaleData taleData;
+  shared.InitialTaleData taleData;
   Map<String, shared.UnitType> unitTypes = {};
   Map<String, ServerUnit> units = {};
   int lastUnitId = 0;
@@ -22,12 +22,13 @@ class ServerTale {
   int _lastAddedHumanPlayerIndex = 0;
   ServerTriggers triggers;
   ServerTaleEvents events;
+  io.Socket currentAiPlayerSocket;
 
   ServerTale(this.room) {
     events = ServerTaleEvents(this);
     shared.Tale _tale = shared.Tale()..fromCompiledTale(room.compiledTale.tale);
     world = _tale.world;
-    taleData = shared.ClientTaleData.fromCompiledTale(room.compiledTale.tale);
+    taleData = shared.InitialTaleData.fromCompiledTale(room.compiledTale.tale);
     room.connectedPlayers.values.forEach(addHumanPlayer);
     _tale.aiPlayers.forEach((key, player) {
       if (player.taleId == null) {
@@ -38,12 +39,12 @@ class ServerTale {
     });
     taleData.players = players.values.map((p) => p.createGamePlayer()).toList();
     humanPlayers.values.forEach(sendTaleDataToPlayer);
-    room.compiledTale.tale.assets.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
+    room.compiledTale.tale.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
 
     room.compiledTale.tale.units.forEach((shared.UnitCreateOrUpdateAction action) {
-      if(action.unitId == null){
+      if (action.unitId == null) {
         action.unitId = "${lastUnitId++}";
       }
       ServerUnit unit = ServerUnit(this, action, world.fields, players, unitTypes);
@@ -69,8 +70,7 @@ class ServerTale {
     gateway.sendMessage(shared.ToClientMessage.fromTaleData(taleData), player);
   }
 
-  void handleUnitTrackAction(MessageWithConnection message) {
-    shared.UnitTrackAction action = message.message.unitTrackActionMessage;
+  void handleUnitTrackAction(shared.UnitTrackAction action) {
     ServerUnit unit = units[action.unitId];
     shared.Track track = shared.Track(action.track.map((f) => world.fields[f]).toList());
     shared.AbilityName name = action.abilityName;
@@ -86,33 +86,33 @@ class ServerTale {
     });
 
     players.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
+      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions, playersOnMoveIds), player);
     });
   }
 
   void sendNewState(shared.UnitCreateOrUpdateAction action) {
     humanPlayers.values.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate([action]), player);
+      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate([action], playersOnMoveIds), player);
     });
+    if (currentAiPlayerSocket != null) {
+      currentAiPlayerSocket.write(
+          json.encode(shared.ToAiServerMessage.fromUpdate(shared.UnitCreateOrUpdate()..actions = [action]).toJson()));
+    }
   }
 
   void endOfTurn(MessageWithConnection message) {
     _humansOnMove = false;
-    sendPlayersOnMove();
-    Future.delayed(Duration(milliseconds: 50)).then((_) {
-      List<shared.UnitCreateOrUpdateAction> actions = [];
-      units.forEach((key, unit) {
-        if (unit.newTurn()) {
-          actions.add(shared.UnitCreateOrUpdateAction()
-            ..fromUnit(unit)
-            ..unitId = unit.id);
-        }
-      });
-      humanPlayers.values.forEach((player) {
-        gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
-      });
-
-      Future.delayed(Duration(milliseconds: 800)).then(sendHumanPlayersAreOnMove);
+    List<shared.UnitCreateOrUpdateAction> actions = [];
+    units.forEach((key, unit) {
+      if (unit.newTurn()) {
+        actions.add(shared.UnitCreateOrUpdateAction()
+          ..fromUnit(unit)
+          ..unitId = unit.id);
+      }
+    });
+    aiPlay();
+    humanPlayers.values.forEach((player) {
+      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions, playersOnMoveIds), player);
     });
   }
 
@@ -130,29 +130,48 @@ class ServerTale {
     _lastAddedHumanPlayerIndex++;
   }
 
-  void sendHumanPlayersAreOnMove([_]) {
-    _humansOnMove = true;
-    sendPlayersOnMove();
-  }
-
   void sendPlayersOnMove() {
     humanPlayers.values.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromPlayersOnMove(playersOnMoveIds), player);
+      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate([], playersOnMoveIds), player);
     });
   }
 
-  void victory(){
+  void aiPlay() {
+    io.Socket.connect("localhost", config.aiServer.uris.first.port).then((io.Socket socket) {
+      currentAiPlayerSocket = socket;
+      taleData.units = units.values.map((ServerUnit unit) => unit.getUnitCreateOrUpdateAction()).toList();
+      socket.write(json.encode(
+          shared.ToAiServerMessage.fromState(taleData, shared.AiEngine.standard, aiPlayers.values.first.id).toJson()));
+      socket.listen((List<int> aiServerData) {
+        shared.ToGameServerMessage message =
+            shared.ToGameServerMessage.fromJson(json.decode(String.fromCharCodes(aiServerData).trim()));
+        if (message.message == shared.OnServerAction.controlsAction) {
+          if (message.controlsActionMessage.actionName == shared.ControlsActionName.andOfTurn) {
+            socket.close();
+            socket.destroy();
+            currentAiPlayerSocket = null;
+            // TODO: refresh only units currently beginning their move
+            sendPlayersOnMove();
+          }
+        } else if (message.message == shared.OnServerAction.unitTrackAction) {
+          handleUnitTrackAction(message.unitTrackActionMessage);
+        }
+      });
+    });
+  }
+
+  void victory() {
     shared.Banter banter = shared.Banter()
-    ..image = null
-    ..milliseconds = 3000
-    ..text = "Victory";
+      ..image = null
+      ..milliseconds = 3000
+      ..text = "Victory";
     humanPlayers.values.forEach((player) {
       gateway.sendMessage(shared.ToClientMessage.fromBanter(banter), player);
     });
     Future.delayed(Duration(milliseconds: 3000)).then(endGame);
   }
 
-  void lost(){
+  void lost() {
     shared.Banter banter = shared.Banter()
       ..image = null
       ..milliseconds = 3000
@@ -163,14 +182,14 @@ class ServerTale {
     Future.delayed(Duration(milliseconds: 3000)).then(endGame);
   }
 
-  void endGame([_]){
-    humanPlayers.values.forEach((player){
+  void endGame([_]) {
+    humanPlayers.values.forEach((player) {
       player.leaveGame();
     });
     destroy();
   }
 
-  void destroy(){
+  void destroy() {
     units = null;
     unitTypes = null;
     taleData = null;

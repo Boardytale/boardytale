@@ -70,7 +70,7 @@ class ToClientMessage {
 
   TaleData get getTaleDataMessage => TaleData.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleData(ClientTaleData data) {
+  factory ToClientMessage.fromTaleData(InitialTaleData data) {
     return ToClientMessage()
       ..message = OnClientAction.taleData
       ..content = json.encode((TaleData()..data = data).toJson());
@@ -80,10 +80,13 @@ class ToClientMessage {
 
   UnitCreateOrUpdate get getUnitCreateOrUpdate => UnitCreateOrUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions) {
+  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions, Iterable<String> playerOnMoveIds) {
     return ToClientMessage()
       ..message = OnClientAction.unitCreateOrUpdate
-      ..content = json.encode((UnitCreateOrUpdate()..actions = actions).toJson());
+      ..content = json.encode((UnitCreateOrUpdate()
+            ..playerOnMoveIds = playerOnMoveIds
+            ..actions = actions)
+          .toJson());
   }
 
   // ---
@@ -120,24 +123,24 @@ class ToClientMessage {
   }
 
   // ---
+  //
+  //  PlayersOnMove get getPlayersOnMove => PlayersOnMove.fromJson(json.decode(content));
+  //
+  //  factory ToClientMessage.fromPlayersOnMove(Iterable<String> playerOnMoveIds) {
+  //    return ToClientMessage()
+  //      ..message = OnClientAction.playersOnMove
+  //      ..content = json.encode((PlayersOnMove()..playerOnMoveIds = playerOnMoveIds).toJson());
+  //  }
 
-  PlayersOnMove get getPlayersOnMove => PlayersOnMove.fromJson(json.decode(content));
-
-  factory ToClientMessage.fromPlayersOnMove(Iterable<String> playerOnMoveIds) {
-    return ToClientMessage()
-      ..message = OnClientAction.playersOnMove
-      ..content = json.encode((PlayersOnMove()..playerOnMoveIds = playerOnMoveIds).toJson());
-  }
-
-  // ---
-
-  AddUnitType get getAddUnitType => AddUnitType.fromJson(json.decode(content));
-
-  factory ToClientMessage.fromAddUnitType(UnitTypeCompiled type) {
-    return ToClientMessage()
-      ..message = OnClientAction.addUnitType
-      ..content = json.encode((AddUnitType()..type = type).toJson());
-  }
+  //  // ---
+  //
+  //  AddUnitType get getAddUnitType => AddUnitType.fromJson(json.decode(content));
+  //
+  //  factory ToClientMessage.fromAddUnitType(UnitTypeCompiled type) {
+  //    return ToClientMessage()
+  //      ..message = OnClientAction.addUnitType
+  //      ..content = json.encode((AddUnitType()..type = type).toJson());
+  //  }
 
   // ---
 
@@ -240,7 +243,7 @@ class OpenedLobbyData extends MessageContent {
 
 @JsonSerializable()
 class TaleData extends MessageContent {
-  ClientTaleData data;
+  InitialTaleData data;
 
   static TaleData fromJson(Map<String, dynamic> json) => _$TaleDataFromJson(json);
 
@@ -252,6 +255,7 @@ class TaleData extends MessageContent {
 @JsonSerializable()
 class UnitCreateOrUpdate extends MessageContent {
   List<UnitCreateOrUpdateAction> actions;
+  Iterable<String> playerOnMoveIds;
 
   static UnitCreateOrUpdate fromJson(Map<String, dynamic> json) => _$UnitCreateOrUpdateFromJson(json);
 
@@ -294,27 +298,27 @@ class IntentionUpdate extends MessageContent {
   }
 }
 
-@JsonSerializable()
-class PlayersOnMove extends MessageContent {
-  Iterable<String> playerOnMoveIds;
-
-  static PlayersOnMove fromJson(Map<String, dynamic> json) => _$PlayersOnMoveFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$PlayersOnMoveToJson(this);
-  }
-}
-
-@JsonSerializable()
-class AddUnitType extends MessageContent {
-  UnitTypeCompiled type;
-
-  static AddUnitType fromJson(Map<String, dynamic> json) => _$AddUnitTypeFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$AddUnitTypeToJson(this);
-  }
-}
+//@JsonSerializable()
+//class PlayersOnMove extends MessageContent {
+//  Iterable<String> playerOnMoveIds;
+//
+//  static PlayersOnMove fromJson(Map<String, dynamic> json) => _$PlayersOnMoveFromJson(json);
+//
+//  Map<String, dynamic> toJson() {
+//    return _$PlayersOnMoveToJson(this);
+//  }
+//}
+//
+//@JsonSerializable()
+//class AddUnitType extends MessageContent {
+//  UnitTypeCompiled type;
+//
+//  static AddUnitType fromJson(Map<String, dynamic> json) => _$AddUnitTypeFromJson(json);
+//
+//  Map<String, dynamic> toJson() {
+//    return _$AddUnitTypeToJson(this);
+//  }
+//}
 
 @JsonSerializable()
 class Banter extends MessageContent {

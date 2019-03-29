@@ -61,7 +61,9 @@ class WorldComponent implements OnDestroy {
     _onWorldLoadedSubscription = gameService.onWorldLoaded.listen(modelLoaded);
     gatewayService.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
     gatewayService.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
-      _unitCreateOrUpdateAction.add(message.getUnitCreateOrUpdate.actions);
+      var action = message.getUnitCreateOrUpdate;
+      _unitCreateOrUpdateAction.add(action.actions);
+      gameService.setPlayersOnMoveByIds(action.playerOnMoveIds);
     };
     _destroySubscription = appService.destroyCurrentTale.listen(clear);
   }

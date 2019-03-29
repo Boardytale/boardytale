@@ -44,6 +44,120 @@ export interface User extends Object {
     innerToken: string;
 }
 
+export type Lang = 'en' | 'cz';
+
+export interface Buff extends Object {
+    speedDelta: number;
+    armorDelta: number;
+    rangeDelta: number;
+    healthDelta: number;
+    attackDelta: Array<number>;
+    extraTags: any;
+    bannedTags: any;
+    expiration: number;
+    buffType: string;
+    stackStrength: number;
+    doesNotStackWith: Array<string>;
+}
+
+export interface Triggers extends Object {
+    onInit: Array<Trigger>;
+    onUnitDies: Array<UnitTrigger>;
+}
+
+export interface Trigger extends Object {
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @TypescriptOptional() → TypescriptOptional
+    condition?: Condition;
+    action: Action;
+}
+
+export interface UnitTrigger extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    condition?: Condition;
+    action: Action;
+}
+
+export interface Condition extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    andCondition?: AndCondition;
+}
+
+export interface AndCondition extends Object {
+    condition1: Condition;
+    condition2: Condition;
+}
+
+export interface EqualCondition extends Object {
+    value: string;
+    equalsTo: any;
+}
+
+export interface Action extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    unitAction?: UnitCreateOrUpdateAction;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    victoryCheckAction?: VictoryCheckAction;
+}
+
+export interface VictoryCheckAction extends Object {
+    allTeamsEliminatedForWin: Array<string>;
+    anyOfTeamsEliminatedForWin: Array<string>;
+    anyOfTeamsEliminatedForLost: Array<string>;
+    allOfTeamsEliminatedForLost: Array<string>;
+    unitsEliminatedForLost: Array<string>;
+}
+
+export type AiAction =
+    | 'attackAllOnRoad'
+    | 'attackAllNearTarget'
+    | 'attack'
+    | 'move';
+
+export interface AiInstruction extends Object {
+    unitAction: UnitCreateOrUpdateAction;
+}
+
+export interface AiInstructionSetUnitTarget extends Object {
+    unitTaleId: string;
+    actionOnTarget: AiAction;
+}
+
+export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal' | 'dragon';
+
+export interface Race extends Object {
+    id: Races;
+    name: { [key in Lang]?: string };
+}
+
+export type AiEngine = 'passive' | 'standard' | 'panic';
+
+export interface Player extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    id?: string;
+    taleId: string;
+    team: string;
+    color: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    humanPlayer?: HumanPlayer;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    aiGroup?: AiGroup;
+}
+
+export interface HumanPlayer extends Object {
+    name: string;
+    isGameMaster: boolean;
+    portrait: Image;
+}
+
+export interface AiGroup extends Object {
+    langName: { [key in Lang]?: string };
+    aiEngine: AiEngine;
+}
+
 export type AnimationName = 'move';
 
 export type ActionExplanation = 'unitAttacked' | 'unitGotDamage';
@@ -134,13 +248,6 @@ export interface UnitTypeCompiled extends UnitTypeCommons {
     bigImage: Image;
 }
 
-export type Races = 'human' | 'undead' | 'gultam' | 'elf' | 'animal' | 'dragon';
-
-export interface Race extends Object {
-    id: Races;
-    name: { [key in Lang]?: string };
-}
-
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
 export interface FieldCreateEnvelope extends Object {
@@ -153,31 +260,6 @@ export interface WorldCreateEnvelope extends Object {
     baseTerrain: Terrain;
     fields: { [key: string]: FieldCreateEnvelope };
     startingFieldIds: Array<string>;
-}
-
-export type AiEngine = 'passive' | 'standard' | 'panic';
-
-export interface Player extends Object {
-    // annotation @TypescriptOptional() → TypescriptOptional
-    id?: string;
-    taleId: string;
-    team: string;
-    color: string;
-    // annotation @TypescriptOptional() → TypescriptOptional
-    humanPlayer?: HumanPlayer;
-    // annotation @TypescriptOptional() → TypescriptOptional
-    aiGroup?: AiGroup;
-}
-
-export interface HumanPlayer extends Object {
-    name: string;
-    isGameMaster: boolean;
-    portrait: Image;
-}
-
-export interface AiGroup extends Object {
-    langName: { [key in Lang]?: string };
-    aiEngine: AiEngine;
 }
 
 export interface Event extends Object {
@@ -227,13 +309,9 @@ export interface TaleInnerCompiled extends Object {
     dialogs: { [key: string]: Dialog };
     units: Array<UnitCreateOrUpdateAction>;
     humanPlayerIds: Array<string>;
-    assets: TaleCompiledAssets;
-    triggers: Triggers;
-}
-
-export interface TaleCompiledAssets extends Object {
     images: { [key: string]: Image };
     unitTypes: { [key: string]: UnitTypeCompiled };
+    triggers: Triggers;
 }
 
 export interface LobbyTale extends Object {
@@ -246,88 +324,6 @@ export interface LobbyTale extends Object {
 export interface OpenedLobby extends LobbyTale {
     lobbyName: string;
     players: Array<Player>;
-}
-
-export type Lang = 'en' | 'cz';
-
-export interface Buff extends Object {
-    speedDelta: number;
-    armorDelta: number;
-    rangeDelta: number;
-    healthDelta: number;
-    attackDelta: Array<number>;
-    extraTags: any;
-    bannedTags: any;
-    expiration: number;
-    buffType: string;
-    stackStrength: number;
-    doesNotStackWith: Array<string>;
-}
-
-export interface Triggers extends Object {
-    onInit: Array<Trigger>;
-    onUnitDies: Array<UnitTrigger>;
-}
-
-export interface Trigger extends Object {
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
-    // annotation @TypescriptOptional() → TypescriptOptional
-    condition?: Condition;
-    action: Action;
-}
-
-export interface UnitTrigger extends Object {
-    // annotation @TypescriptOptional() → TypescriptOptional
-    condition?: Condition;
-    action: Action;
-}
-
-export interface Condition extends Object {
-    // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
-    andCondition?: AndCondition;
-}
-
-export interface AndCondition extends Object {
-    condition1: Condition;
-    condition2: Condition;
-}
-
-export interface EqualCondition extends Object {
-    value: string;
-    equalsTo: any;
-}
-
-export interface Action extends Object {
-    // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
-    unitAction?: UnitCreateOrUpdateAction;
-    // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
-    victoryCheckAction?: VictoryCheckAction;
-}
-
-export interface VictoryCheckAction extends Object {
-    allTeamsEliminatedForWin: Array<string>;
-    anyOfTeamsEliminatedForWin: Array<string>;
-    anyOfTeamsEliminatedForLost: Array<string>;
-    allOfTeamsEliminatedForLost: Array<string>;
-    unitsEliminatedForLost: Array<string>;
-}
-
-export type AiAction =
-    | 'attackAllOnRoad'
-    | 'attackAllNearTarget'
-    | 'attack'
-    | 'move';
-
-export interface AiInstruction extends Object {
-    unitAction: UnitCreateOrUpdateAction;
-}
-
-export interface AiInstructionSetUnitTarget extends Object {
-    unitTaleId: string;
-    actionOnTarget: AiAction;
 }
 
 export type GameNavigationState =

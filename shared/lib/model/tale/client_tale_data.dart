@@ -1,37 +1,40 @@
 part of model;
 
 @JsonSerializable()
-class ClientTaleData {
+class InitialTaleData {
   String name;
   Map<Lang, Map<String, String>> langs;
   Map<Lang, String> langName;
   WorldCreateEnvelope world;
-  TaleCompiledAssets assets;
+  Map<String, Image> images = {};
+  Map<String, UnitTypeCompiled> unitTypes = {};
   List<Player> players;
   String playerIdOnThisClientMachine;
   List<String> playerOnMoveIds;
   String aiGroupOnMove;
   List<String> humanPlayerIds = [];
+  List<UnitCreateOrUpdateAction> units;
 
   Iterable<Player> get aiPlayers => players.where((p) => p.isAiPlayer);
 
-  ClientTaleData();
+  InitialTaleData();
 
-  ClientTaleData.fromCompiledTale(TaleInnerCompiled compiled) {
+  InitialTaleData.fromCompiledTale(TaleInnerCompiled compiled) {
     name = compiled.name;
     langs = compiled.langs;
     langName = compiled.langName;
     world = compiled.world;
-    assets = compiled.assets;
+    unitTypes = compiled.unitTypes;
+    images = compiled.images;
     humanPlayerIds = compiled.humanPlayerIds;
   }
 
-  static ClientTaleData fromJson(Map json) {
+  static InitialTaleData fromJson(Map json) {
     utils.retypeMapInJsonToStringDynamic(json, ["langs", "langName"]);
-    return _$ClientTaleDataFromJson(json);
+    return _$InitialTaleDataFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
-    return _$ClientTaleDataToJson(this);
+    return _$InitialTaleDataToJson(this);
   }
 }

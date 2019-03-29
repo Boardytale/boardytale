@@ -22,7 +22,7 @@ class HeroesHelper {
       compiledType.name = "hero${_lastHeroId++}";
       shared.UnitType type = shared.UnitType()..fromCompiledUnitType(compiledType);
       tale.unitTypes[compiledType.name] = type;
-      tale.taleData.assets.unitTypes[compiledType.name] = compiledType;
+      tale.taleData.unitTypes[compiledType.name] = compiledType;
 
       var startingField = tale.world.fields[tale.world.startingFieldIds[tale.lastUsedStartingField++]];
 
@@ -40,7 +40,7 @@ class HeroesHelper {
       actions.add(action);
     });
     emitToPlayers.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions), player);
+      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions, tale.playersOnMoveIds), player);
     });
   }
 }

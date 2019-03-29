@@ -14,7 +14,7 @@ class ClientTaleService extends shared.Tale {
     gameService.clientTaleData.listen(handleTaleData);
   }
 
-  void handleTaleData(shared.ClientTaleData clientTaleData) {
+  void handleTaleData(shared.InitialTaleData clientTaleData) {
     name = clientTaleData.name;
     langName = clientTaleData.langName;
     clientTaleData.players.forEach((player) {
@@ -24,7 +24,7 @@ class ClientTaleService extends shared.Tale {
         appService.players[player.id] = ClientPlayer()..fromSharedPlayer(player);
       }
     });
-    clientTaleData.assets.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
+    clientTaleData.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
       unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
     });
     aiPlayers.forEach((String id, shared.Player player) {

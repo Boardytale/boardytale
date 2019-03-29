@@ -22,14 +22,14 @@ class GameService {
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
 
   ClientPlayer get currentPlayer => appService.currentPlayer;
-  BehaviorSubject<shared.ClientTaleData> clientTaleData = BehaviorSubject();
+  BehaviorSubject<shared.InitialTaleData> clientTaleData = BehaviorSubject();
   ReplaySubject<EnhancedUnitCreateOrUpdateAction> unitCreateOrUpdateAction = ReplaySubject();
   BehaviorSubject<shared.Banter> currentBanter = BehaviorSubject();
   List<shared.Banter> _banterQueue = [];
 
   GameService(this.gatewayService, this.settings, this.appService) {
     gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
-    gatewayService.handlers[shared.OnClientAction.playersOnMove] = handlePlayersOnMove;
+//    gatewayService.handlers[shared.OnClientAction.playersOnMove] = handlePlayersOnMove;
     gatewayService.handlers[shared.OnClientAction.showBanter] = handleShowBanter;
   }
 
@@ -59,11 +59,12 @@ class GameService {
     clientTaleData.add(message.getTaleDataMessage.data);
   }
 
-  void handlePlayersOnMove(shared.ToClientMessage message) {
-    setPlayersOnMoveByIds(message.getPlayersOnMove.playerOnMoveIds);
-  }
+//  void handlePlayersOnMove(shared.ToClientMessage message) {
+//    setPlayersOnMoveByIds(message.getPlayersOnMove.playerOnMoveIds);
+//  }
 
   void setPlayersOnMoveByIds(Iterable<String> ids) {
+    // TODO: handle identical player set
     if (ids == null) {
       playersOnMove.add(null);
     } else {

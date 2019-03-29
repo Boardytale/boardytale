@@ -3,7 +3,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/tale.dart';
 import 'package:editor_server/model/unit.dart';
 import 'package:io_utils/aqueduct/wraps.dart';
-import 'package:shared/model/model.dart' as model;
+import 'package:shared/model/model.dart' as shared;
 
 class TaleController extends ResourceController {
   TaleController(this.context);
@@ -64,17 +64,17 @@ class TaleController extends ResourceController {
     Tale taleData = (await notCompiledQuery.fetch()).first;
 
     // get images
-    var taleInnerDataEnvelope = model.TaleInnerEnvelope.fromJson(taleData.taleData.data as Map<String, dynamic>);
+    var taleInnerDataEnvelope = shared.TaleInnerEnvelope.fromJson(taleData.taleData.data as Map<String, dynamic>);
 
-    model.TaleCompiled taleCompiled = model.TaleCompiled();
+    shared.TaleCompiled taleCompiled = shared.TaleCompiled();
     taleCompiled.authorEmail = taleData.authorEmail;
-    taleCompiled.tale = model.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
-    taleCompiled.lobby = model.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
+    taleCompiled.tale = shared.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
+    taleCompiled.lobby = shared.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
 
-    model.TaleInnerCompiled innerCompiled = taleCompiled.tale;
-    innerCompiled.assets = model.TaleCompiledAssets();
+    shared.TaleInnerCompiled innerCompiled = taleCompiled.tale;
 
-    model.TaleCompiledAssets assets = innerCompiled.assets;
+    innerCompiled.images = {};
+    innerCompiled.unitTypes = {};
 
     for (var envelope in innerCompiled.units) {
       String unitName = envelope.changeToTypeName;
@@ -82,8 +82,8 @@ class TaleController extends ResourceController {
       List<UnitType> result = await query.fetch();
       if (result.isNotEmpty) {
         // compiled unit ready
-        assets.unitTypes[unitName] =
-            model.UnitTypeCompiled.fromJson(result.first.unitTypeData.data as Map<String, dynamic>);
+        innerCompiled.unitTypes[unitName] =
+            shared.UnitTypeCompiled.fromJson(result.first.unitTypeData.data as Map<String, dynamic>);
       } else {
         // check if not compiled ready
         var query = Query<UnitType>(context)..where((u) => u.name).equalTo(unitName);
@@ -116,7 +116,7 @@ class TaleController extends ResourceController {
 }
 
 class TaleWrap implements Serializable {
-  model.TaleCreateEnvelope content;
+  shared.TaleCreateEnvelope content;
 
   @override
   Map<String, dynamic> asMap() {
@@ -125,7 +125,7 @@ class TaleWrap implements Serializable {
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    content = model.TaleCreateEnvelope.fromJson(requestBody);
+    content = shared.TaleCreateEnvelope.fromJson(requestBody);
   }
 
   @override

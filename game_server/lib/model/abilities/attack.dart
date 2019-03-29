@@ -15,7 +15,10 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       return;
     }
 
-    int diceNumber = math.Random.secure().nextInt(6);
+    List<int> diceNumbers = [math.Random.secure().nextInt(6)];
+    if (diceNumbers[0] == 5) {
+      diceNumbers.add(math.Random.secure().nextInt(6));
+    }
 
     // invoker action
     shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
@@ -26,7 +29,7 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       ..moveToFieldId = track.fields[track.fields.length - 2].id
       ..unitId = unit.id
       ..actionId = action.actionId
-      ..diceNumbers = [diceNumber]
+      ..diceNumbers = diceNumbers
       ..explain = shared.ActionExplanation.unitAttacked;
 
     if (steps == 0) {
@@ -36,13 +39,11 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
     unit.addUnitUpdateAction(action, track.fields[track.fields.length - 2]);
     tale.sendNewState(action);
 
-    int damage = unit.attack[diceNumber];
-    int secondDiceNumber;
-    if (diceNumber == 5) {
-      secondDiceNumber = math.Random.secure().nextInt(6);
-      damage += secondDiceNumber + 1;
-    }
+    int damage = unit.attack[diceNumbers[0]];
 
+    if(diceNumbers.length > 1){
+      damage += diceNumbers[1] + 1;
+    }
 
     // target actions
     // TODO: rethink enhance incoming damage by buff from zero damage
@@ -54,7 +55,7 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
           ..health = targetUnit.actualHealth - damageForTargetUnit
           ..unitId = targetUnit.id
           ..actionId = action.actionId
-          ..diceNumbers = secondDiceNumber == null ? [diceNumber] : [diceNumber, secondDiceNumber]
+          ..diceNumbers = diceNumbers
           ..explain = shared.ActionExplanation.unitGotDamage
           ..explainFirstValue = damageForTargetUnit.toString();
         targetUnit.addUnitUpdateAction(action, null);

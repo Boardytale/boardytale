@@ -3,13 +3,13 @@ part of ai_server;
 class ServerGateway {
   Map<String, AiTale> tales = {};
 
-  void sendMessage(shared.ToClientMessage message, Connection connection) {
+  void sendMessage(shared.ToGameServerMessage message, Connection connection) {
     connection.socket.write(json.encode(message.toJson()));
   }
 
   void incomingMessage(MessageWithConnection messageWithConnection) async {
     if(messageWithConnection.message.message == shared.OnAiServerAction.getNextMoveByState){
-      tales[messageWithConnection.connection.id.toString()] = AiTale(messageWithConnection.message.getNextMoveByState);
+      tales[messageWithConnection.connection.id.toString()] = AiTale(messageWithConnection.message.getNextMoveByState, messageWithConnection.connection)..nextMove();
     }
   }
 }

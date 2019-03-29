@@ -74,7 +74,8 @@ class TaleInnerCompiled {
   Map<String, Dialog> dialogs = {};
   List<UnitCreateOrUpdateAction> units = [];
   List<String> humanPlayerIds = [];
-  TaleCompiledAssets assets;
+  Map<String, Image> images = {};
+  Map<String, UnitTypeCompiled> unitTypes = {};
   Triggers triggers;
 
   static TaleInnerCompiled fromJson(Map json) {
@@ -87,20 +88,6 @@ class TaleInnerCompiled {
   }
 }
 
-@Typescript()
-@JsonSerializable()
-class TaleCompiledAssets {
-  Map<String, Image> images = {};
-  Map<String, UnitTypeCompiled> unitTypes = {};
-
-  static TaleCompiledAssets fromJson(Map json) {
-    return _$TaleCompiledAssetsFromJson(json);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$TaleCompiledAssetsToJson(this);
-  }
-}
 //
 //
 // created by Pavel Veselý .. waiting for major team refactor

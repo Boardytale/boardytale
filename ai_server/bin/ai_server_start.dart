@@ -7,7 +7,7 @@ import 'package:shared/model/model.dart' as shared;
 
 main() async {
   final BoardytaleConfiguration config = getConfiguration();
-  final port = config.gameServer.uris.first.port.toInt();
+  final port = config.aiServer.uris.first.port.toInt();
   int connectionId = 0;
   ServerGateway gateway = initServer(config);
   io.ServerSocket.bind("localhost", port).then((io.ServerSocket server) {
