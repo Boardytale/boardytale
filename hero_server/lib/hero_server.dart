@@ -37,6 +37,7 @@ class HeroServer {
     if (message.message == shared.OnHeroServerAction.getHeroesOfPlayer) {
 //      shared.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
       message.addHeroes([mockedHeroes[counter]]);
+      counter++;
       return shelf.Response.ok(json.encode(message.toJson()));
     }
     return shelf.Response.notFound('Request for "${request.url}"');

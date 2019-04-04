@@ -15,6 +15,10 @@ class IdWrap implements Serializable {
     id = requestBody["id"] as String;
   }
 
+  void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
+    readFromMap(object);
+  }
+
   @override
   APISchemaObject documentSchema(APIDocumentContext context) {
     // TODO: implement documentSchema
@@ -40,9 +44,15 @@ class InnerTokenWrap implements Serializable {
     innerToken = requestBody["innerToken"] as String;
   }
 
+  void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
+    readFromMap(object);
+  }
+
   @override
   APISchemaObject documentSchema(APIDocumentContext context) {
     // TODO: implement documentSchema
     return null;
   }
 }
+
+

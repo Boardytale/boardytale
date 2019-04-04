@@ -9,28 +9,26 @@ import 'package:editor_server/editor_server.dart';
 
 import 'editor_server.dart';
 
+shared.BoardytaleConfiguration boardytaleConfiguration;
+shared.DatabaseConfiguration database;
+ManagedDataModel dataModel;
+
+ManagedContext generateContext(){
+  final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
+      database.username, database.password, database.host, database.port, database.databaseName);
+  return ManagedContext(dataModel, psc);
+}
+
 class EditorServerChannel extends ApplicationChannel {
   ManagedContext context;
 
   @override
   Future prepare() async {
-    final shared.BoardytaleConfiguration boardytaleConfiguration =
-        getConfiguration();
-    shared.DatabaseConfiguration database =
-        boardytaleConfiguration.editorDatabase;
-    logger.onRecord.listen(
-        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final ManagedDataModel dataModel =
-        ManagedDataModel.fromCurrentMirrorSystem();
-    final PostgreSQLPersistentStore psc =
-        PostgreSQLPersistentStore.fromConnectionInfo(
-            database.username,
-            database.password,
-            database.host,
-            database.port,
-            database.databaseName);
-
-    context = ManagedContext(dataModel, psc);
+    boardytaleConfiguration = getConfiguration();
+    database = boardytaleConfiguration.editorDatabase;
+    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    context = generateContext();
   }
 
   @override
@@ -40,9 +38,7 @@ class EditorServerChannel extends ApplicationChannel {
     router.route("/tales/[:operation]").link(() => TaleController(context));
     router.route("/units/[:operation]").link(() => UnitController(context));
     router.route("/inner/lobbyList").link(() => LobbyDataController(context));
-    router
-        .route("/inner/taleByName")
-        .link(() => CompiledTaleController(context));
+    router.route("/inner/taleByName").link(() => CompiledTaleController(context));
     return router;
   }
 }

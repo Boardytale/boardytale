@@ -8,6 +8,9 @@ class CreateGameService {
     http.Response response =
         await http.get(uri, headers: {"Content-Type": "application/json"});
     List<shared.LobbyTale> lobbies = [];
+    if(response.body.isEmpty){
+      throw "editor server not responding correctly";
+    }
     (jsonDecode(response.body) as List).forEach((lobbyTaleData) {
       shared.LobbyTale lobbyTale = shared.LobbyTale.fromJson(lobbyTaleData);
       lobbies.add(lobbyTale);
