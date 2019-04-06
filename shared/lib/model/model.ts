@@ -358,7 +358,7 @@ export type OnServerAction =
     | 'playerGameIntention'
     | 'controlsAction';
 
-export type ControlsActionName = 'andOfTurn';
+export type ControlsActionName = 'endOfTurn';
 
 export type OnHeroServerAction = 'getHeroesOfPlayer';
 

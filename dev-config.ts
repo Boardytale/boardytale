@@ -8,7 +8,7 @@ export let config: BoardytaleConfiguration = {
         }],
         route: null,
         executableType: "dart",
-        pathToExecutable: 'ai_server/bin/main.dart',
+        pathToExecutable: 'ai_server/bin/ai_server_start.dart',
         pathToWorkingDirectory: 'ai_server'
     },
     editorServer: {

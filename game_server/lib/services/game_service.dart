@@ -34,7 +34,7 @@ class GameService {
   }
 
   void handleControlsAction(MessageWithConnection message) {
-    if (message.message.controlsActionMessage.actionName == shared.ControlsActionName.andOfTurn) {
+    if (message.message.controlsActionMessage.actionName == shared.ControlsActionName.endOfTurn) {
       message.player.tale.endOfTurn(message);
     }
   }

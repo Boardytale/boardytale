@@ -30,7 +30,7 @@ class AiTale extends shared.Tale {
 
   void nextMove() {
     shared.Unit unitOnMove = getFirstPlayCapableUnitOfMine();
-    if(unitOnMove == null){
+    if (unitOnMove == null) {
       endAiTurn();
       return;
     }
@@ -54,7 +54,7 @@ class AiTale extends shared.Tale {
     shared.Track track = shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, world.fields));
     int terrainLength = track.getMoveCostOfFreeWay();
     shared.UnitTrackAction action = shared.UnitTrackAction()..unitId = unitOnMove.id;
-    if (terrainLength - 1 > unitOnMove.steps) {
+    if (terrainLength + 1 > unitOnMove.steps) {
       action.abilityName = shared.AbilityName.move;
       action.track = track.subTrack(0, track.getEndIndexWithSteps(unitOnMove.steps)).toIds();
     } else {
@@ -68,7 +68,10 @@ class AiTale extends shared.Tale {
     var unitList = units.values.toList();
     for (var i = 0; i < unitList.length; i++) {
       var unit = unitList[i];
-      if (unit.player.id == initialRequest.idOfAiPlayerOnMove && unit.actions > 0 && !playedUnits.contains(unit)) {
+      if (unit.player.id == initialRequest.idOfAiPlayerOnMove &&
+          unit.actions > 0 &&
+          !playedUnits.contains(unit) &&
+          unit.isAlive) {
         return unit;
       }
     }
@@ -76,7 +79,14 @@ class AiTale extends shared.Tale {
   }
 
   void endAiTurn() {
-    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.andOfTurn), connection);
+    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.endOfTurn), connection);
+  }
+
+  void applyPatch(shared.GetNextMoveByUpdate update) {
+    update.requestUpdateData.actions.forEach((action) {
+      units[action.unitId]
+          .addUnitUpdateAction(action, action.moveToFieldId != null ? world.fields[action.moveToFieldId] : null);
+    });
   }
 }
 

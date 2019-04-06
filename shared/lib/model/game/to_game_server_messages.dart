@@ -228,6 +228,6 @@ class ControlsAction extends MessageContent {
 
 @Typescript()
 enum ControlsActionName {
-@JsonValue('andOfTurn')
-andOfTurn,
+@JsonValue('endOfTurn')
+endOfTurn,
 }

@@ -35,49 +35,7 @@ main() async {
 
   runServerByServerConfiguration(config.heroesServer);
 
-//  Process.start(dartExecutable, ["lib/server.dart"], workingDirectory: projectDirectoryPath + "/server")
-//      .then((Process process) {
-//    printFromOutputStreams(process, "Shelf proxy", "light_cyan");
-//  });
-
-//  childProcess.execFile('ts-node', [
-//    'proxy_server/index.ts'
-//  ], function(err, stdout, stderr) {
-//      // Node.js will invoke this callback when the
-//      console.log(stdout);
-//});
-//
-//  childProcess.execFile('proxy_server/index.ts', [
-//  ], function(err, stdout, stderr) {
-//  // Node.js will invoke this callback when the
-//  console.log(stdout);
-//  });
-//
-//
-//  print("OPEN BROWSER ON http://localhost:8080");
-//  Process.start(dartExecutable,
-//      ["lib/server.dart"],
-//      workingDirectory: projectDirectoryPath + "/server")
-//      .then((Process process) {
-//    printFromOutputStreams(process, "Shelf proxy", "light_cyan");
-//  });
-//
-//  Process.start(pubExecutable,
-//      ["serve", "--port=8085"],
-//    workingDirectory: projectDirectoryPath + "/client"
-//  ).then((Process process) {
-//    printFromOutputStreams(process, "Pub serve", "gold");
-//  });
-//
-//  Process.start(dartExecutable,
-//      ["web_server.dart"],
-//      workingDirectory: projectDirectoryPath + "/runner")
-//      .then((Process process) {
-//        process.stdout.listen((_){
-//          // have to be listened or process will end
-//        });
-////    printFromOutputStreams(process, "web_server", "green");
-//  });
+  runServerByServerConfiguration(config.aiServer);
 }
 
 void runServerByServerConfiguration(ServerConfiguration config) {
@@ -97,13 +55,15 @@ void runServerByServerConfiguration(ServerConfiguration config) {
       slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
   String workingDirectory =
       slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
-
   Process.start(executable, [executableFile],
       workingDirectory: workingDirectory, runInShell: true)
     ..then((Process process) {
       print(
           "running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");
       printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
-    });
+    })
+  ..catchError((onError){
+    print(onError);
+  });
   ;
 }

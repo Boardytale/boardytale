@@ -33,7 +33,7 @@ class GameControlsComponent {
   }
 
   void endTurn(){
-    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.andOfTurn));
+    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.endOfTurn));
   }
 
   void switchShowCoordinates(){

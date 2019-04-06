@@ -62,6 +62,26 @@ export let data: TaleCreateEnvelope = {
                 changeToTypeName: 'pikeman',
                 transferToPlayerId: 'bandits',
             },
+            {
+                moveToFieldId: '5_5',
+                changeToTypeName: 'banditPikeman',
+                transferToPlayerId: 'bandits',
+            },
+            {
+                moveToFieldId: '5_6',
+                changeToTypeName: 'banditPikeman',
+                transferToPlayerId: 'bandits',
+            },
+            {
+                moveToFieldId: '6_6',
+                changeToTypeName: 'banditMaceman',
+                transferToPlayerId: 'bandits',
+            },
+            {
+                moveToFieldId: '7_6',
+                changeToTypeName: 'banditMaceman',
+                transferToPlayerId: 'bandits',
+            },
         ],
         world: world,
         triggers: {

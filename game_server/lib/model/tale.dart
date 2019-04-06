@@ -137,6 +137,7 @@ class ServerTale {
   }
 
   void aiPlay() {
+    //TODO: more ai players
     io.Socket.connect("localhost", config.aiServer.uris.first.port).then((io.Socket socket) {
       currentAiPlayerSocket = socket;
       taleData.units = units.values.map((ServerUnit unit) => unit.getUnitCreateOrUpdateAction()).toList();
@@ -146,10 +147,11 @@ class ServerTale {
         shared.ToGameServerMessage message =
             shared.ToGameServerMessage.fromJson(json.decode(String.fromCharCodes(aiServerData).trim()));
         if (message.message == shared.OnServerAction.controlsAction) {
-          if (message.controlsActionMessage.actionName == shared.ControlsActionName.andOfTurn) {
+          if (message.controlsActionMessage.actionName == shared.ControlsActionName.endOfTurn) {
             socket.close();
             socket.destroy();
             currentAiPlayerSocket = null;
+            _humansOnMove = true;
             // TODO: refresh only units currently beginning their move
             sendPlayersOnMove();
           }
