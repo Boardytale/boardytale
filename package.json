@@ -6,6 +6,7 @@
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
     "ts2dart": "ts2dart",
     "generate-shared": "cd shared && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\"",
+    "generate-inner": "cd libs/io_utils && pub run build_runner build --delete-conflicting-outputs && prettier --write \"**/*.ts\"",
     "remove-duplicated-files": "remove-duplicated-files",
     "start-proxy": "nodemon --watch proxy_server --exec ts-node proxy_server/index.ts",
     "start-user-server": "dart user_server/bin/main.dart",

@@ -9,6 +9,7 @@ environment:
 dependencies:
   aqueduct: ^3.0.0
   uuid: any
+  shelf: any
   shared:
     path: ../shared
   io_utils:

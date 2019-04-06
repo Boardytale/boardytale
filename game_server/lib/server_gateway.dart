@@ -8,6 +8,10 @@ class ServerGateway {
     player.connection.webSocket.sink.add(json.encode(message.toJson()));
   }
 
+  void sendMessageByConnection(shared.ToClientMessage message, Connection connection) {
+    connection.webSocket.sink.add(json.encode(message.toJson()));
+  }
+
   void incomingMessage(MessageWithConnection messageWithConnection) async {
     if (messageWithConnection.message.message == shared.OnServerAction.init) {
       handlers[shared.OnServerAction.init](messageWithConnection);

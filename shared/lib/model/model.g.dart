@@ -1324,6 +1324,39 @@ Map<String, dynamic> _$GetNextMoveByUpdateToJson(
       'requestUpdateData': instance.requestUpdateData?.toJson()
     };
 
+ToUserServerMessage _$ToUserServerMessageFromJson(Map<String, dynamic> json) {
+  return ToUserServerMessage()
+    ..message =
+        _$enumDecodeNullable(_$OnUserServerActionEnumMap, json['message'])
+    ..content = json['content'] as String;
+}
+
+Map<String, dynamic> _$ToUserServerMessageToJson(
+        ToUserServerMessage instance) =>
+    <String, dynamic>{
+      'message': _$OnUserServerActionEnumMap[instance.message],
+      'content': instance.content
+    };
+
+const _$OnUserServerActionEnumMap = <OnUserServerAction, dynamic>{
+  OnUserServerAction.getUseresByInnerToken: 'getUseresByInnerToken'
+};
+
+GetUserByInnerToken _$GetUserByInnerTokenFromJson(Map<String, dynamic> json) {
+  return GetUserByInnerToken()
+    ..user = json['user'] == null
+        ? null
+        : User.fromJson(json['user'] as Map<String, dynamic>)
+    ..innerToken = json['innerToken'] as String;
+}
+
+Map<String, dynamic> _$GetUserByInnerTokenToJson(
+        GetUserByInnerToken instance) =>
+    <String, dynamic>{
+      'user': instance.user?.toJson(),
+      'innerToken': instance.innerToken
+    };
+
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()
     ..move = json['move'] == null

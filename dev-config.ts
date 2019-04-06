@@ -7,13 +7,11 @@ export let config: BoardytaleConfiguration = {
             port: 5000,
         }],
         route: null,
-        innerRoute: '/innerApi',
         executableType: "dart",
         pathToExecutable: 'ai_server/bin/main.dart',
         pathToWorkingDirectory: 'ai_server'
     },
     editorServer: {
-        innerRoute: '/innerApi',
         route: '/editorApi',
         uris: [{
             host: 'localhost',
@@ -31,7 +29,6 @@ export let config: BoardytaleConfiguration = {
         databaseName: 'boardytale',
     },
     gameServer: {
-        innerRoute: '/innerApi',
         route: '/gameApi',
         uris: [{
             host: 'localhost',
@@ -49,12 +46,12 @@ export let config: BoardytaleConfiguration = {
         databaseName: 'userdb',
     },
     userServer: {
-        innerRoute: '/innerApi',
         route: '/userApi',
         uris: [{
             host: 'localhost',
             port: 4400,
         }],
+        innerPort: 4500,
         executableType: 'dart',
         pathToExecutable: 'user_server/bin/main.dart',
         pathToWorkingDirectory: 'user_server'
@@ -70,7 +67,6 @@ export let config: BoardytaleConfiguration = {
         port: 4201,
     },
     heroesServer: {
-        innerRoute: '/innerHeroes',
         route: '/heroes',
         uris: [
             {
@@ -83,7 +79,6 @@ export let config: BoardytaleConfiguration = {
         pathToWorkingDirectory: 'hero_server'
     },
     proxyServer: {
-        innerRoute: '/',
         route: '/',
         uris: [
             {

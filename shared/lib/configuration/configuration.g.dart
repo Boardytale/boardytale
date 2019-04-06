@@ -40,8 +40,8 @@ ServerConfiguration _$ServerConfigurationFromJson(Map<String, dynamic> json) {
     ..uris = (json['uris'] as List)
         ?.map((e) => e == null ? null : Uri.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..innerPort = json['innerPort'] as int
     ..route = json['route'] as String
-    ..innerRoute = json['innerRoute'] as String
     ..pathToExecutable = json['pathToExecutable'] as String
     ..pathToWorkingDirectory = json['pathToWorkingDirectory'] as String
     ..executableType =
@@ -52,8 +52,8 @@ Map<String, dynamic> _$ServerConfigurationToJson(
         ServerConfiguration instance) =>
     <String, dynamic>{
       'uris': instance.uris?.map((e) => e?.toJson())?.toList(),
+      'innerPort': instance.innerPort,
       'route': instance.route,
-      'innerRoute': instance.innerRoute,
       'pathToExecutable': instance.pathToExecutable,
       'pathToWorkingDirectory': instance.pathToWorkingDirectory,
       'executableType': _$ExecutableTypeEnumMap[instance.executableType]

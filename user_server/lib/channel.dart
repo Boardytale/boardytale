@@ -27,15 +27,14 @@ class UserServerChannel extends ApplicationChannel {
             database.databaseName);
 
     context = ManagedContext(dataModel, psc);
+
+    UserInnerAuthController(context, boardytaleConfiguration);
   }
 
   @override
   Controller get entryPoint {
     final router = Router();
     router.route("/login").link(() => UserController(context));
-    router
-        .route("/inner/getUserByInnerToken")
-        .link(() => UserInnerAuthController(context));
     router.route("/*").link(() => FileController("../www/"));
     return router;
   }

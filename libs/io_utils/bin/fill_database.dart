@@ -36,6 +36,7 @@ createUnits() async {
                 .encode({"id": model.UnitTypeCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).name}));
         print(
             "compiled unit: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        entity.delete();
       }
     }
   }
@@ -55,6 +56,7 @@ createImages() async {
             await http.post(url, headers: {"Content-Type": "application/json"}, body: entity.readAsStringSync());
         print(
             "uploaded image ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        entity.delete();
       }
     }
   }
@@ -82,6 +84,7 @@ createTale() async {
                 .encode({"id": model.TaleCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).tale.name}));
         print(
             "compiled tale: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
+        entity.delete();
       }
     }
   }

@@ -13,7 +13,7 @@ import 'package:shared/model/model.dart';
     selector: 'user-bar',
     template: '''
       <google-signin 
-      *ngIf="showSignInButton"
+      *ngIf="appService.showSignInButton"
       clientId="499749973436-s5enn1mvt99c8vbjdlcm390l3a5ugna0.apps.googleusercontent.com" width="240"
                theme="dark" longTitle="true" fetchBasicProfile="true"
                (googleSigninSuccess)="onGoogleSigninSuccess"></google-signin>
@@ -37,16 +37,9 @@ class UserBarComponent {
   final http.Client _http;
   final AppService appService;
   final GatewayService gatewayService;
-
-  bool showSignInButton = false;
   final ChangeDetectorRef _cdRef;
 
   UserBarComponent(this._http, this.appService, this.gatewayService, this._cdRef) {
-    if (html.window.localStorage.containsKey("innerToken")) {
-      gatewayService.initMessages(html.window.localStorage["innerToken"]);
-    } else {
-      showSignInButton = true;
-    }
     appService.navigationState.listen((_) => _cdRef.markForCheck());
     appService.currentUser.listen((_) => _cdRef.markForCheck());
   }
@@ -62,7 +55,7 @@ class UserBarComponent {
     appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
-    showSignInButton = false;
+    appService.showSignInButton = false;
   }
 
   void signOut() {

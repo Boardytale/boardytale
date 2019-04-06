@@ -1,6 +1,7 @@
 library state_service;
 
 import 'dart:async';
+import 'dart:html' as html;
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
@@ -12,6 +13,17 @@ import 'package:shared/model/model.dart' as shared;
 
 @Injectable()
 class AppService {
+  AppService(this.settings, this.gatewayService, this.lobbyService, this.createGameService) {
+    if (html.window.localStorage.containsKey("innerToken")) {
+      gatewayService.initMessages(html.window.localStorage["innerToken"]);
+    } else {
+      showSignInButton = true;
+    }
+    navigationState.add(states[shared.GameNavigationState.loading]);
+    this.gatewayService.handlers[shared.OnClientAction.setNavigationState] = setState;
+    this.gatewayService.handlers[shared.OnClientAction.setCurrentUser] = setUser;
+  }
+
   shared.Lang language = shared.Lang.en;
   BehaviorSubject<shared.User> currentUser = BehaviorSubject<shared.User>(seedValue: null);
   BehaviorSubject<Null> destroyCurrentTale = BehaviorSubject<Null>();
@@ -38,34 +50,30 @@ class AppService {
   ClientPlayer currentPlayer;
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();
+
   Stream<Map> get onAlert => _onAlert.stream;
-  BehaviorSubject<ClientGameState> navigationState =
-      BehaviorSubject<ClientGameState>();
+  BehaviorSubject<ClientGameState> navigationState = BehaviorSubject<ClientGameState>();
 
   final GatewayService gatewayService;
+
   // for initialize lobbies handler
   LobbyService lobbyService;
   CreateGameService createGameService;
+  bool showSignInButton = false;
 
-  AppService(
-      this.settings,
-      this.gatewayService,
-      this.lobbyService,
-      this.createGameService) {
-    navigationState.add(states[shared.GameNavigationState.loading]);
-    this.gatewayService.handlers[shared.OnClientAction.setNavigationState] = setState;
-    this.gatewayService.handlers[shared.OnClientAction.setCurrentUser] = setUser;
-  }
 
   void setState(shared.ToClientMessage message) {
     navigationState.add(states[message.navigationStateMessage.newState]);
-    if(message.navigationStateMessage.destroyCurrentTale){
+    if (message.navigationStateMessage.destroyCurrentTale) {
       destroyCurrentTale.add(null);
     }
   }
 
   void setUser(shared.ToClientMessage message) {
     currentUser.add(message.getCurrentUser.user);
+    if (message.getCurrentUser.user == null) {
+      showSignInButton = true;
+    }
   }
 
   void alertError(String text) {

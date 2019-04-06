@@ -21,8 +21,9 @@ export interface DatabaseConfiguration extends Object {
 
 export interface ServerConfiguration extends Object {
     uris: Array<Uri>;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    innerPort?: number;
     route: string;
-    innerRoute: string;
     pathToExecutable: string;
     pathToWorkingDirectory: string;
     executableType: ExecutableType;

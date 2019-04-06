@@ -37,8 +37,9 @@ class DatabaseConfiguration {
 @Typescript()
 class ServerConfiguration {
   List<Uri> uris;
+  @TypescriptOptional()
+  int innerPort;
   String route;
-  String innerRoute;
   String pathToExecutable;
   String pathToWorkingDirectory;
   ExecutableType executableType;

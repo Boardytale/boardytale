@@ -1,4 +1,4 @@
-import { UnitTypeCreateEnvelope } from '../../model/model';
+import { UnitTypeCreateEnvelope } from '../../../model/model';
 
 export let data: UnitTypeCreateEnvelope = {
     authorEmail: 'mlcoch.zdenek@gmail.com',

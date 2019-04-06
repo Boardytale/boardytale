@@ -122,28 +122,6 @@ class ToClientMessage {
           .toJson());
   }
 
-  // ---
-  //
-  //  PlayersOnMove get getPlayersOnMove => PlayersOnMove.fromJson(json.decode(content));
-  //
-  //  factory ToClientMessage.fromPlayersOnMove(Iterable<String> playerOnMoveIds) {
-  //    return ToClientMessage()
-  //      ..message = OnClientAction.playersOnMove
-  //      ..content = json.encode((PlayersOnMove()..playerOnMoveIds = playerOnMoveIds).toJson());
-  //  }
-
-  //  // ---
-  //
-  //  AddUnitType get getAddUnitType => AddUnitType.fromJson(json.decode(content));
-  //
-  //  factory ToClientMessage.fromAddUnitType(UnitTypeCompiled type) {
-  //    return ToClientMessage()
-  //      ..message = OnClientAction.addUnitType
-  //      ..content = json.encode((AddUnitType()..type = type).toJson());
-  //  }
-
-  // ---
-
   Banter get getBanter => Banter.fromJson(json.decode(content));
 
   factory ToClientMessage.fromBanter(Banter banter) {

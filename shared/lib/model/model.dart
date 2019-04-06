@@ -60,6 +60,8 @@ part 'package:shared/model/game/to_hero_server_message.dart';
 
 part 'package:shared/model/game/to_ai_server_message.dart';
 
+part 'package:shared/model/game/to_user_server_message.dart';
+
 part "package:shared/model/abilities/ability.dart";
 
 part "package:shared/model/abilities/move.dart";

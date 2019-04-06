@@ -364,6 +364,8 @@ export type OnHeroServerAction = 'getHeroesOfPlayer';
 
 export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
 
+export type OnUserServerAction = 'getUseresByInnerToken';
+
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 
 export type TargetModificators = 'wounded' | 'notUndead' | 'undead';

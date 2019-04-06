@@ -9,7 +9,6 @@ environment:
 dependencies:
   uuid: any
   shelf: any
-  shelf_web_socket: any
   shared:
     path: ../shared
   io_utils:
