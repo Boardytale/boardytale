@@ -11,7 +11,6 @@ class InitialTaleData {
   List<Player> players;
   String playerIdOnThisClientMachine;
   List<String> playerOnMoveIds;
-  String aiGroupOnMove;
   List<String> humanPlayerIds = [];
   List<UnitCreateOrUpdateAction> units;
 

@@ -68,25 +68,25 @@ abstract class Ability {
   @TypescriptOptional()
   AbilityReach get reach;
 
-  bool validate(Unit invoker, Track track) {
+  bool validate(Unit unitOnMove, Track track) {
     throw "not implemented";
   }
 
   /**
-   *  use null to inherit invoker speed
-   *  use "+1" "-1" to modify invoker steps
+   *  use null to inherit unitOnMove speed
+   *  use "+1" "-1" to modify unitOnMove steps
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
-  int _resolveCurrentSteps(Unit invoker, String steps) {
-    int currentSteps = invoker.steps;
+  int _resolveCurrentSteps(Unit unitOnMove, String steps) {
+    int currentSteps = unitOnMove.steps;
     if (steps != null) {
       if (steps.contains("+")) {
         currentSteps += int.parse(steps.replaceAll("+", ""));
       } else if (steps.contains("-")) {
         currentSteps -= int.parse(steps.replaceAll("-", ""));
       } else {
-        currentSteps = int.parse(steps) - invoker.far;
+        currentSteps = int.parse(steps) - unitOnMove.far;
       }
     }
     if (currentSteps > 7) {

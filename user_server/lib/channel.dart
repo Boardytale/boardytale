@@ -1,5 +1,6 @@
 import 'package:io_utils/io_utils.dart';
 import 'package:shared/configuration/configuration.dart' as shared;
+import 'package:user_server/controller/temporary_user_controller.dart';
 import 'package:user_server/controller/user_controller.dart';
 import 'package:user_server/controller/user_inner_authentication.dart';
 
@@ -35,6 +36,7 @@ class UserServerChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
     router.route("/login").link(() => UserController(context));
+    router.route("/createTemporaryUser").link(() => TemporaryUserController(context));
     router.route("/*").link(() => FileController("../www/"));
     return router;
   }

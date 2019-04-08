@@ -5,6 +5,7 @@ class ServerTale {
   LobbyRoom room;
   int _lastHeroId = 0;
   int lastUsedStartingField = 0;
+  // TODO: split tale to assets and other data
   shared.InitialTaleData taleData;
   Map<String, shared.UnitType> unitTypes = {};
   Map<String, ServerUnit> units = {};
@@ -141,6 +142,8 @@ class ServerTale {
     io.Socket.connect("localhost", config.aiServer.uris.first.port).then((io.Socket socket) {
       currentAiPlayerSocket = socket;
       taleData.units = units.values.map((ServerUnit unit) => unit.getUnitCreateOrUpdateAction()).toList();
+      taleData.playerIdOnThisClientMachine = aiPlayers.values.first.id;
+      taleData.playerOnMoveIds = [aiPlayers.values.first.id];
       socket.write(json.encode(
           shared.ToAiServerMessage.fromState(taleData, shared.AiEngine.standard, aiPlayers.values.first.id).toJson()));
       socket.listen((List<int> aiServerData) {

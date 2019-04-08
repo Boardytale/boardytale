@@ -34,6 +34,7 @@ class AiTale extends shared.Tale {
       endAiTurn();
       return;
     }
+    print("starting next move with unit ${unitOnMove.id}");
     List<shared.Unit> enemies = [];
     List<shared.Unit> allies = [];
     units.forEach((key, oneOfUnits) {
@@ -51,12 +52,16 @@ class AiTale extends shared.Tale {
       endAiTurn();
       return;
     }
-    shared.Track track = shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, world.fields));
+
+    shared.SimpleLogger logger = shared.SimpleLogger();
+    shared.Track track =
+        shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, world.fields, unitOnMove.steps, logger: logger));
+    io.File("lib/log/lastNearestEnemy")..createSync()..writeAsString(logger.log);
     int terrainLength = track.getMoveCostOfFreeWay();
     shared.UnitTrackAction action = shared.UnitTrackAction()..unitId = unitOnMove.id;
-    if (terrainLength + 1 > unitOnMove.steps) {
+    if (terrainLength > unitOnMove.steps) {
       action.abilityName = shared.AbilityName.move;
-      action.track = track.subTrack(0, track.getEndIndexWithSteps(unitOnMove.steps)).toIds();
+      action.track = track.subTrack(0, track.getEndIndexWithSteps(unitOnMove.steps) + 1).toIds();
     } else {
       action.abilityName = shared.AbilityName.attack;
       action.track = track.toIds();

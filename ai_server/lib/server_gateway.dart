@@ -2,14 +2,17 @@ part of ai_server;
 
 class ServerGateway {
   Map<String, AiTale> tales = {};
+  ServerGateway(){
+    print(io.Directory.current.path);
+  }
 
   void sendMessage(shared.ToGameServerMessage message, Connection connection) {
-    print("ai out ${json.encode(message.toJson())}");
+    print("ai out: ${message.content}");
     connection.socket.write(json.encode(message.toJson()));
   }
 
   void incomingMessage(MessageWithConnection messageWithConnection) async {
-    print("ai in ${json.encode(messageWithConnection.message.toJson())}");
+    print("ai in: ${messageWithConnection.message.content}");
     if(messageWithConnection.message.message == shared.OnAiServerAction.getNextMoveByState){
       tales[messageWithConnection.connection.id.toString()] = AiTale(messageWithConnection.message.getNextMoveByState, messageWithConnection.connection)..nextMove();
     }

@@ -89,3 +89,8 @@ part 'package:shared/model/map/track.dart';
 //part "abilities/light.dart";
 
 part 'model.g.dart';
+
+
+class SimpleLogger{
+  String log = "";
+}

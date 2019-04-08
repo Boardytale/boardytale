@@ -22,6 +22,12 @@ import 'package:shared/model/model.dart';
        >
        Logged user: {{appService.currentUser.value?.email}}
        </span>
+       <button
+       *ngIf="appService.showSignInButton"
+       (click)="createTemporaryUser()"
+       >
+         Login as a temporary user
+       </button>
        
        <button
        *ngIf="appService.navigationState.value.showCreateGameButton"
@@ -50,6 +56,18 @@ class UserBarComponent {
     http.Response loginResponse = await _http.post("/userApi/login",
         headers: {"Content-Type": "application/json"},
         body: json.encode({"id": response.id_token}));
+    User currentUser =
+        model.User.fromGoogleJson(json.decode(loginResponse.body));
+    appService.currentUser.add(currentUser);
+    html.window.localStorage["innerToken"] = currentUser.innerToken;
+    gatewayService.initMessages(currentUser.innerToken);
+    appService.showSignInButton = false;
+  }
+
+  void createTemporaryUser() async {
+    http.Response loginResponse = await _http.post("/userApi/createTemporaryUser",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"name": "TODO custom temp name"}));
     User currentUser =
         model.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);

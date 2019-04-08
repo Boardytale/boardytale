@@ -10,7 +10,7 @@ class IntentionService {
       if (player != message.player) {
         gateway.sendMessage(
             shared.ToClientMessage.fromIntentionUpdate(
-                player.id, message.message.playerGameIntentionMessage.fieldsId),
+                message.player.id, message.message.playerGameIntentionMessage.fieldsId),
             player);
       }
     });

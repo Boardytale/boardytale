@@ -43,7 +43,7 @@ class Track {
       out.add(f2);
     }
     // remove triangles
-    for (var i = 2; i < out.length;) {
+    for (var i = 2; i < out.length - 1;) {
       Field f1 = out[i];
       Field f2 = out[i - 1];
       Field f3 = out[i - 2];
@@ -97,13 +97,13 @@ class Track {
     return false;
   }
 
-  bool isFreeWay(Player ofPlayer) {
-    if (fields.last.units.isNotEmpty && fields.last.units.first.player != ofPlayer) {
+  bool isFreeWay(Player unitOnMovePlayer) {
+    if (!MapUtils.standardCanEnd(fields.last, unitOnMovePlayer)) {
       return false;
     }
-    for (var i = 1; i < fields.length; i++) {
+    for (var i = 1; i < fields.length - 1; i++) {
       Field field = fields[i];
-      if (field.units.isNotEmpty && field.units.first.player.team != ofPlayer.team) {
+      if (!MapUtils.standardCanGo(field, unitOnMovePlayer)) {
         return false;
       }
     }

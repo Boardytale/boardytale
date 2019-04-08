@@ -8,9 +8,10 @@ class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
     if (!isValid) {
       shared.CancelOnFieldAction cancelOnFieldAction = shared.CancelOnFieldAction();
       cancelOnFieldAction.fieldId = unit.field.id;
-      if (unit.player != null) {
+      if (unit.player != null && unit.player.connection != null) {
         gateway.sendMessage(shared.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unit.player);
       } else {
+        print("AI move canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI
       }
       return;

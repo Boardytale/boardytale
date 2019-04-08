@@ -33,7 +33,7 @@ class WorldComponent implements OnDestroy {
   CanvasElement mapObjectsElement;
   StreamSubscription _onResizeSubscription;
   ChangeDetectorRef changeDetector;
-  UnitManager unitManager;
+  MapObjectsManager mapObjectsManager;
   bool _moving = false;
   ClientUnit _draggedUnit;
   Point _start;
@@ -83,7 +83,7 @@ class WorldComponent implements OnDestroy {
     String playerId = message.getIntentionUpdate.playerId;
     ClientPlayer player = appService.players[playerId];
     int color = player.getStageColor();
-    unitManager.addIntention(
+    mapObjectsManager.addIntention(
         activeFieldIds == null ? null : activeFieldIds.map((id) => _clientWorldService.fields[id]).toList(), color);
   }
 
@@ -97,11 +97,12 @@ class WorldComponent implements OnDestroy {
   }
 
   void modelLoaded(bool isLoad) {
-    if(!isLoad){
+    if (!isLoad) {
       return;
     }
-    _unitCreateOrUpdateActionSubscription = _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
-    if(worldStage == null){
+    _unitCreateOrUpdateActionSubscription =
+        _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
+    if (worldStage == null) {
       worldStage = stage_lib.Stage(worldElement,
           width: window.innerWidth,
           height: window.innerHeight,
@@ -111,9 +112,8 @@ class WorldComponent implements OnDestroy {
       worldStage.scaleMode = stage_lib.StageScaleMode.NO_SCALE;
       worldStage.align = stage_lib.StageAlign.TOP_LEFT;
     }
-    view.onWorldLoaded(worldStage);
 
-    if(unitStage == null){
+    if (unitStage == null) {
       unitStage = stage_lib.Stage(mapObjectsElement,
           width: window.innerWidth,
           height: window.innerHeight,
@@ -126,10 +126,11 @@ class WorldComponent implements OnDestroy {
       var renderLoop = stage_lib.RenderLoop();
       renderLoop.addStage(unitStage);
     }
-    if(unitManager == null){
-      unitManager = UnitManager(unitStage, view, settings);
+    view.onWorldLoaded(worldStage, unitStage);
+    if (mapObjectsManager == null) {
+      mapObjectsManager = MapObjectsManager(unitStage, view, settings);
     }
-    unitManager.addInitialUnits();
+//    mapObectsManager.addInitialUnits();
     detectChanges();
   }
 
@@ -137,21 +138,23 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
-    ClientUnit unit = field.getFirstPlayableUnitOnField();
-    trackFields = [field];
-    _lastActiveField = field;
-    if (unit != null) {
-      bool isMe = gameService.currentPlayer == unit.player;
-      bool isOnMove = gameService.playersOnMove.value.any((player) => player.id == unit.player.id);
-      if (isMe && isOnMove) {
-        _draggedUnit = unit;
+    if (field != null) {
+      ClientUnit unit = field.getFirstPlayableUnitOnField();
+      trackFields = [field];
+      _lastActiveField = field;
+      if (unit != null) {
+        bool isMe = gameService.currentPlayer == unit.player;
+        bool isOnMove = gameService.playersOnMove.value.any((player) => player.id == unit.player.id);
+        if (isMe && isOnMove) {
+          _draggedUnit = unit;
+        }
+        return;
       }
-    } else {
-      _moving = true;
-      _start = event.page;
-      _startOffsetTop = _clientWorldService.userTopOffset;
-      _startOffsetLeft = _clientWorldService.userLeftOffset;
     }
+    _moving = true;
+    _start = event.page;
+    _startOffsetTop = _clientWorldService.userTopOffset;
+    _startOffsetLeft = _clientWorldService.userLeftOffset;
   }
 
   void onMouseUp(MouseEvent event) {
@@ -199,7 +202,7 @@ class WorldComponent implements OnDestroy {
           }
           gatewayService.sendIntention(track.fields);
         } else {
-          unitManager.setActiveField(field);
+          mapObjectsManager.setActiveField(field);
           gatewayService.sendIntention(field == null ? null : [field]);
         }
       }
@@ -262,8 +265,8 @@ class WorldComponent implements OnDestroy {
     unitStage = null;
     worldElement = null;
     mapObjectsElement = null;
-    unitManager.clear();
-    unitManager = null;
+    mapObjectsManager.clear();
+    mapObjectsManager = null;
     _lastActiveField = null;
     _clientWorldService = null;
     trackFields = null;
@@ -274,7 +277,7 @@ class WorldComponent implements OnDestroy {
     print("world component clear");
     // TODO: clear destroy process
     window.location.reload();
-    unitManager.clear();
+    mapObjectsManager.clear();
     _lastActiveField = null;
     trackFields = null;
     _unitCreateOrUpdateActionSubscription.cancel();

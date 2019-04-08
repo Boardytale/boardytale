@@ -12,9 +12,11 @@ import 'package:shared/model/model.dart' as shared;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 import 'package:angular/core.dart';
 
-part 'unit_manager.dart';
+part 'package:game_client/src/game_view/unit_manager.dart';
 
-part 'paintable.dart';
+part 'package:game_client/src/game_view/paintable.dart';
+
+part 'package:game_client/src/game_view/view_field.dart';
 
 part 'package:game_client/src/game_view/paintables/unit_paintable.dart';
 
@@ -29,13 +31,15 @@ class WorldViewService {
   final ClientWorldService clientWorldService;
   final AppService appService;
   final GameService gameService;
+  final SettingsService settings;
   stage_lib.Stage worldStage;
+  stage_lib.Stage unitStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
   Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
 
-  WorldViewService(this.appService, this.gameService, this.clientWorldService) {
+  WorldViewService(this.appService, this.gameService, this.clientWorldService, this.settings) {
     Map<shared.Terrain, ImageElement> resources = {};
     Map<shared.Terrain, String> paths = {
       shared.Terrain.grass: "img/map_tiles/grass.png",
@@ -60,10 +64,11 @@ class WorldViewService {
     gameService.showCoordinateLabels.listen(repaint);
   }
 
-  void onWorldLoaded(worldStage) {
+  void onWorldLoaded(worldStage, unitStage) {
     this.worldStage = worldStage;
+    this.unitStage = unitStage;
     clientWorldService.fields.forEach((key, ClientField field) {
-      fields[key] = ViewField(field);
+      fields[key] = ViewField(field, this);
     });
     init();
   }
@@ -96,35 +101,9 @@ class WorldViewService {
     if(!_imageLoaded || worldStage == null){
       return;
     }
+    bool showLabel = gameService.showCoordinateLabels.value;
     fields.forEach((key, ViewField field) {
-      bool showLabel = gameService.showCoordinateLabels.value;
-      String state = field.getStateLabel(showLabel);
-      if (!field.bitmapsByState.containsKey(state)) {
-        stage_lib.BitmapData terrainData =
-            fieldBitmaps[field.original.terrain].bitmapData.clone();
-        if (showLabel) {
-          var textField = stage_lib.TextField(field.original.id,
-              stage_lib.TextFormat('Spicy Rice', 18, stage_lib.Color.Black));
-          stage_lib.BitmapData labelBitmap =
-              stage_lib.BitmapData(60, 30, stage_lib.Color.Transparent);
-          labelBitmap.draw(textField);
-          terrainData.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, 60, 30),
-              stage_lib.Point(20, 3));
-        }
-        field.bitmapsByState[state] = terrainData;
-        if (field.terrain == null) {
-          field.terrain = stage_lib.Bitmap(terrainData);
-          worldStage.addChild(field.terrain);
-        } else {
-          field.setState(state);
-        }
-      } else {
-        field.setState(state);
-      }
-      field.terrain.x = field.original.offset.x;
-      field.terrain.y = field.original.offset.y;
-      field.terrain.width = clientWorldService.fieldWidth;
-      field.terrain.height = clientWorldService.fieldHeight;
+      field.refresh(showLabel);
     });
     worldStage.materialize(0.0, 0.0);
   }
@@ -135,22 +114,5 @@ class WorldViewService {
     }
     init();
     worldStage.materialize(0.0, 16.6);
-  }
-}
-
-class ViewField {
-  ClientField original;
-  Map<String, stage_lib.BitmapData> bitmapsByState = {};
-  stage_lib.Bitmap terrain;
-  stage_lib.TextField label;
-
-  ViewField(this.original) {}
-
-  void setState(String state) {
-    terrain.bitmapData = bitmapsByState[state];
-  }
-
-  String getStateLabel(bool showLabel) {
-    return "${showLabel ? "s" : "n"}_${original.terrainStateShortcuts[original.terrain]}";
   }
 }

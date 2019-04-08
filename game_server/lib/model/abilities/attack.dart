@@ -10,7 +10,7 @@ class ServerAttackAbility extends shared.AttackAbility implements ServerAbility 
       if (unit.player != null && unit.player.connection != null) {
         gateway.sendMessage(shared.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unit.player);
       } else {
-        print("AI action canceled ${json.encode(track.toIds())}");
+        print("AI attack canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI
       }
       return;

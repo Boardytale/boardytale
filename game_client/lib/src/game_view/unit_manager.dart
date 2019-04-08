@@ -1,6 +1,6 @@
 part of world_view;
 
-class UnitManager {
+class MapObjectsManager {
   stage_lib.Stage stage;
   WorldViewService worldViewService;
   SettingsService settings;
@@ -11,11 +11,11 @@ class UnitManager {
 
   ClientWorldService get clientWorldService => worldViewService.clientWorldService;
 
-  UnitManager(this.stage, this.worldViewService, this.settings) {
+  MapObjectsManager(this.stage, this.worldViewService, this.settings) {
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
-    clientWorldService.onUnitAdded.listen((unit) {
-      addUnit(unit);
-    });
+//    clientWorldService.onUnitAdded.listen((unit) {
+//      addUnit(unit);
+//    });
     clientWorldService.onUnitAssistanceChanged.listen((ClientAbility ability) {
       abilityAssistance.forEach((p) => p.destroy());
       abilityAssistance.clear();
@@ -35,22 +35,22 @@ class UnitManager {
     });
   }
 
-  void addInitialUnits(){
-    clientWorldService.clientTaleService.units.values.forEach(addUnit);
-  }
-
-  void addUnit(shared.Unit unit) {
-    paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
-  }
-
-  void removeUnit(shared.Unit unit) {
-    paintables.removeWhere((paintable) {
-      if (paintable is UnitPaintable) {
-        return paintable.unit == unit;
-      }
-      return false;
-    });
-  }
+//  void addInitialUnits(){
+//    clientWorldService.clientTaleService.units.values.forEach(addUnit);
+//  }
+//
+//  void addUnit(shared.Unit unit) {
+//    paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
+//  }
+//
+//  void removeUnit(shared.Unit unit) {
+//    paintables.removeWhere((paintable) {
+//      if (paintable is UnitPaintable) {
+//        return paintable.unit == unit;
+//      }
+//      return false;
+//    });
+//  }
 
   void setActiveField(ClientField field) {
     activeField.field = field;

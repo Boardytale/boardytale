@@ -11,7 +11,6 @@ import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:shared/model/model.dart';
 import 'package:angular/core.dart';
 import 'dart:html';
-import 'package:shared/model/model.dart' as shared;
 
 @Component(
     selector: 'my-app',

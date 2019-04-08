@@ -13,7 +13,7 @@ List<shared.Ability> createClientAbilityList(shared.AbilitiesEnvelope envelope){
 
 abstract class ClientAbility {
   List<FieldHighlight> highlights = [];
-  void show(shared.Unit invoker, shared.Track track);
+  void show(shared.Unit unitOnMove, shared.Track track);
 }
 
 class FieldHighlight {

@@ -901,7 +901,6 @@ InitialTaleData _$InitialTaleDataFromJson(Map<String, dynamic> json) {
         json['playerIdOnThisClientMachine'] as String
     ..playerOnMoveIds =
         (json['playerOnMoveIds'] as List)?.map((e) => e as String)?.toList()
-    ..aiGroupOnMove = json['aiGroupOnMove'] as String
     ..humanPlayerIds =
         (json['humanPlayerIds'] as List)?.map((e) => e as String)?.toList()
     ..units = (json['units'] as List)
@@ -923,7 +922,6 @@ Map<String, dynamic> _$InitialTaleDataToJson(InitialTaleData instance) =>
       'players': instance.players?.map((e) => e?.toJson())?.toList(),
       'playerIdOnThisClientMachine': instance.playerIdOnThisClientMachine,
       'playerOnMoveIds': instance.playerOnMoveIds,
-      'aiGroupOnMove': instance.aiGroupOnMove,
       'humanPlayerIds': instance.humanPlayerIds,
       'units': instance.units?.map((e) => e?.toJson())?.toList()
     };

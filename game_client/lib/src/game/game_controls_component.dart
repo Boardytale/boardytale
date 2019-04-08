@@ -15,8 +15,8 @@ import 'package:shared/model/model.dart' as shared;
         <button (click)='endTurn()'>End turn</button>
         <button (click)='switchShowCoordinates()'>{{gameService.showCoordinateLabels.value?"Hide coordinate labels": "Show coordinate labels"}}</button>
         <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
-          <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player.color}">
-            {{player.name}}
+          <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player?.color}">
+            {{player?.name}}({{player?.id}})
           </span>
         </span>
       </div>

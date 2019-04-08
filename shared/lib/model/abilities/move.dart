@@ -4,8 +4,8 @@ part of model;
 @JsonSerializable()
 class MoveAbilityEnvelope {
   /**
-   *  use null to inherit invoker speed
-   *  use "+1" "-1" to modify invoker steps
+   *  use null to inherit unitOnMove speed
+   *  use "+1" "-1" to modify unitOnMove steps
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
@@ -33,13 +33,13 @@ class MoveAbility extends Ability {
   @override
   AbilityReach get reach => AbilityReach.move;
 
-  bool validate(Unit invoker, Track track) {
+  bool validate(Unit unitOnMove, Track track) {
     if (track.fields.length == 1) {
       return false;
     }
-    int currentSteps = _resolveCurrentSteps(invoker, steps);
+    int currentSteps = _resolveCurrentSteps(unitOnMove, steps);
 
-    if (!track.isFreeWay(invoker.player)) {
+    if (!track.isFreeWay(unitOnMove.player)) {
       return false;
     }
 

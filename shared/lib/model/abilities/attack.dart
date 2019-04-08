@@ -4,8 +4,8 @@ part of model;
 @JsonSerializable()
 class AttackAbilityEnvelope {
   /**
-   *  use null to inherit invoker speed
-   *  use "+1" "-1" to modify invoker steps
+   *  use null to inherit unitOnMove speed
+   *  use "+1" "-1" to modify unitOnMove steps
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
@@ -39,7 +39,7 @@ class AttackAbility extends Ability {
 
 
   /**
-   *  use null to use invoker attack
+   *  use null to use unitOnMove attack
    *  use 6 expressions separated by space
    *  rules are aligned with range
    *  example: "0 0 1 +1 +2 -1"
@@ -49,30 +49,30 @@ class AttackAbility extends Ability {
   String attack;
 
   /**
-   *  use null to inherit invoker speed
-   *  use "+1" "-1" to modify invoker steps
+   *  use null to inherit unitOnMove speed
+   *  use "+1" "-1" to modify unitOnMove steps
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
   @TypescriptOptional()
   String steps;
 
-  bool validate(Unit invoker, Track track) {
+  bool validate(Unit unitOnMove, Track track) {
     if (track.fields.length == 1) {
       return false;
     }
 
-    if(invoker.actions == 0){
+    if(unitOnMove.actions == 0){
       return false;
     }
 
-    int currentSteps = _resolveCurrentSteps(invoker, steps);
+    int currentSteps = _resolveCurrentSteps(unitOnMove, steps);
 
-    if(!track.last.isEnemyOf(invoker.player)){
+    if(!track.last.isEnemyOf(unitOnMove.player)){
       return false;
     }
 
-    if (!Track.shorten(track, 1).isFreeWay(invoker.player)) {
+    if (track.fields.length > 2 && !Track.shorten(track, 1).isFreeWay(unitOnMove.player)) {
       return false;
     }
 

@@ -6,8 +6,8 @@
 //}
 
 /**
- *  use null to use invoker range
- *  use "+1" "-1" to change invoker original
+ *  use null to use unitOnMove range
+ *  use "+1" "-1" to change unitOnMove original
  *  use "4" to set specific range
  *  use "0" for face-to-face units
  *  any range above 7 will be set to 7

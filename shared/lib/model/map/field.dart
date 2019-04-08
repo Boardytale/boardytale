@@ -19,6 +19,8 @@ class Field {
   String id;
   World world;
   Terrain terrain;
+  PublishSubject<Unit> onUnitAdded = PublishSubject<Unit>();
+  PublishSubject<Unit> onUnitRemoved = PublishSubject<Unit>();
   Map<Terrain, String> terrainStateShortcuts = {
     Terrain.forest: "f",
     Terrain.water: "w",
@@ -42,7 +44,7 @@ class Field {
   // TODO: explain
   double get posY => y + (x % 2) / 2;
 
-  List<Unit> alivesOnField() {
+  List<Unit> getAliveUnitsOnField() {
     List<Unit> out = [];
     for (Unit unit in units) {
       if (unit.isAlive) {
@@ -62,12 +64,20 @@ class Field {
     return out;
   }
 
-  /// is one or more alive units on field
-  bool isAliveOnField() {
+  bool anyAliveOnField() {
     for (Unit unit in units) {
       if (unit.isAlive) return true;
     }
     return false;
+  }
+
+  Unit getFirstAliveOnField() {
+    for (Unit unit in units) {
+      if (unit.isAlive) {
+        return unit;
+      }
+    }
+    return null;
   }
 
   Field getFieldWithUnitNear() {
@@ -80,7 +90,7 @@ class Field {
   }
 
   Field getFieldWithAliveUnitNear() {
-    if (isAliveOnField()) return this;
+    if (anyAliveOnField()) return this;
 //    var fields = World.instance.getFieldsRound(this);
 //    for (Field field in fields) {
 //      if (field.isAliveOnField()) return field;
@@ -90,20 +100,26 @@ class Field {
 
   void addUnit(Unit unit) {
     units.add(unit);
+    onUnitAdded.add(unit);
   }
 
   void removeUnit(Unit unit) {
     units.remove(unit);
+    onUnitRemoved.add(unit);
   }
 
   bool isAllyOnField(Player player) {
     if (units.isEmpty) return false;
-    return units.first.player == player;
+    return units.first.player.team == player.team;
   }
 
   bool isEnemyOf(Player player) {
     if (units.isEmpty) return false;
-    return units.first.player.team != player.team;
+    Unit firstAlive = getFirstAliveOnField();
+    if(firstAlive == null){
+      return false;
+    }
+    return firstAlive.player.team != player.team;
   }
 
   bool isCorpseOnField() {
