@@ -28,7 +28,6 @@ part 'package:game_client/src/game_view/paintables/image_paintable.dart';
 
 @Injectable()
 class WorldViewService {
-  final ClientWorldService clientWorldService;
   final AppService appService;
   final GameService gameService;
   final SettingsService settings;
@@ -38,8 +37,9 @@ class WorldViewService {
   bool _imageLoaded = false;
   Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
+  shared.Assets assets;
 
-  WorldViewService(this.appService, this.gameService, this.clientWorldService, this.settings) {
+  WorldViewService(this.appService, this.gameService, this.settings) {
     Map<shared.Terrain, ImageElement> resources = {};
     Map<shared.Terrain, String> paths = {
       shared.Terrain.grass: "img/map_tiles/grass.png",
@@ -64,17 +64,18 @@ class WorldViewService {
     gameService.showCoordinateLabels.listen(repaint);
   }
 
-  void onWorldLoaded(worldStage, unitStage) {
+  void onWorldLoaded(worldStage, unitStage, shared.Assets assets) {
+    this.assets = assets;
     this.worldStage = worldStage;
     this.unitStage = unitStage;
-    clientWorldService.fields.forEach((key, ClientField field) {
+    gameService.fields.forEach((key, ClientField field) {
       fields[key] = ViewField(field, this);
     });
     init();
   }
 
   void createBitmapsByTerrain(Map<shared.Terrain, ImageElement> resources) {
-    HexaBorders defaultHex = clientWorldService.defaultHex;
+    HexaBorders defaultHex = gameService.worldParams.defaultHex;
     var path = stage_lib.Shape();
     stage_lib.Graphics graphics = path.graphics;
     graphics

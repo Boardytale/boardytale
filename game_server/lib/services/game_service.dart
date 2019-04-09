@@ -22,7 +22,7 @@ class GameService {
     if (room.gameRunning) {
       message.player.enterGame(room.tale);
       room.tale.addHumanPlayer(message.player);
-      room.tale.sendInitTaleDataToPlayer(message.player);
+      room.tale.sendTaleDataToPlayer(message.player);
       HeroesHelper.getHeroes([message.player], room.connectedPlayers.values, room.tale);
     } else {
       room.gameRunning = true;

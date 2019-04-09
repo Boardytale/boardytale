@@ -47,7 +47,11 @@ class UnitCreateOrUpdateAction {
   /// playerId_clientManagedActionId
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
-  UnitTypeCompiled newUnitTypeToTale;
+  UnitType newUnitTypeToTale;
+
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  Assets newAssetsToTale;
 
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)

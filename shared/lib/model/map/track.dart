@@ -7,7 +7,7 @@ class Track {
 
   Track(this.fields) {}
 
-  Track.fromIds(List<String> path, World world) : fields = _fieldsFromIds(path, world);
+  Track.fromIds(List<String> path, Map<String, Field> fields) : fields = _fieldsFromIds(path, fields);
 
   Track.clean(List<Field> fields, Map<String, Field> allFields) {
     // shorten on duplicity
@@ -69,8 +69,8 @@ class Track {
     return Track(fields.sublist(startIndex, endIndex));
   }
 
-  static List<Field> _fieldsFromIds(List<String> path, World world) {
-    return path.map((String id) => world.fields[id]).toList();
+  static List<Field> _fieldsFromIds(List<String> path, Map<String, Field> fields) {
+    return path.map((String id) => fields[id]).toList();
   }
 
   bool get isEmpty => fields.isEmpty;

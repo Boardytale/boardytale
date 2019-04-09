@@ -20,25 +20,29 @@ class HeroesHelper {
       var heroEnvelope = hero.getHeroesOfPlayerMessage.responseHeroes.first;
       var compiledType = heroEnvelope.type;
       compiledType.name = "hero${_lastHeroId++}";
-      shared.UnitType type = shared.UnitType()..fromCompiledUnitType(compiledType);
+      shared.Assets newAssets = shared.Assets();
+      shared.UnitType type = shared.UnitType()..fromCompiled(compiledType, newAssets);
+      tale.assets.merge(newAssets);
       tale.unitTypes[compiledType.name] = type;
-      tale.taleData.unitTypes[compiledType.name] = compiledType;
+      tale.taleState.unitTypes[compiledType.name] = type;
 
-      var startingField = tale.world.fields[tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+      var startingField = tale.fields[tale.startingFieldIds[tale.lastUsedStartingField++]];
 
       shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction()
         ..unitId = "${tale.lastUnitId++}"
         ..moveToFieldId = startingField.id
         ..transferToPlayerId = item.player.id
-        ..changeToTypeName = type.name;
-      action.newUnitTypeToTale = compiledType;
+        ..changeToTypeName = type.name
+        ..newUnitTypeToTale = type
+        ..newAssetsToTale = newAssets;
 
-      ServerUnit unit = ServerUnit(tale, action, tale.world.fields, tale.players, tale.unitTypes);
+      ServerUnit unit = ServerUnit(tale, action, tale.fields, tale.players, tale.unitTypes);
       tale.units[unit.id] = unit;
       action.newPlayerToTale = item.player;
       action.isNewPlayerOnMove = tale.playersOnMoveIds.contains(item.player.id);
       actions.add(action);
     });
+    tale.taleState.addTaleAction(shared.TaleAction()..newUnitsToTale = actions);
     emitToPlayers.forEach((player) {
       gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions, tale.playersOnMoveIds), player);
     });

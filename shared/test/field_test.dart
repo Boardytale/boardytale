@@ -7,8 +7,8 @@ class DistanceTest {
   int _distance;
 
   DistanceTest(String origin, String target, this._distance) {
-    _origin = new Field(origin, null);
-    _target = new Field(target, null);
+    _origin = new Field(origin);
+    _target = new Field(target);
   }
   String get name => "${_origin.id} => ${_target.id} == $_distance";
   void test() {
@@ -22,8 +22,8 @@ class DirectionToTest {
   int _direction;
 
   DirectionToTest(String origin, String target, this._direction) {
-    _origin = new Field(origin, null);
-    _target = new Field(target, null);
+    _origin = new Field(origin);
+    _target = new Field(target);
   }
   String get name => "${_origin.id} => ${_target.id} == $_direction";
   void test() {
@@ -37,8 +37,8 @@ class GetShortestPathTest {
   List<String> _path;
 
   GetShortestPathTest(String origin, String target, this._path) {
-    _origin = new Field(origin, null);
-    _target = new Field(target, null);
+    _origin = new Field(origin);
+    _target = new Field(target);
   }
   String get name => "${_origin.id} => ${_target.id} == $_path";
   void test() {

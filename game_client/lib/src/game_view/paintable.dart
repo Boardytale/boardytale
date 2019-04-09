@@ -17,11 +17,15 @@ abstract class Paintable {
   bool _createBitmapOrdered = false;
   StreamSubscription _onDimensionChangedSubscription;
 
+  GameService get gameService => view.gameService;
+
+  SettingsService get settings => view.settings;
+
   Paintable(this.view, this._field, this.stage) {
-    width = view.clientWorldService.defaultFieldWidth;
-    height = view.clientWorldService.defaultFieldHeight;
+    width = settings.defaultFieldWidth;
+    height = settings.defaultFieldHeight;
     _onDimensionChangedSubscription =
-        view.clientWorldService.onDimensionsChanged.listen(_transformBitmap);
+        view.gameService.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;
@@ -83,10 +87,11 @@ abstract class Paintable {
 // scale bitmap according to map
   void _transformBitmap([_]) {
     if (bitmap == null || field == null) return;
-    bitmap.x = _field.offset.x + (leftOffset * view.clientWorldService.zoom);
-    bitmap.y = _field.offset.y + (topOffset * view.clientWorldService.zoom);
-    bitmap.width = width * view.clientWorldService.zoom;
-    bitmap.height = height * view.clientWorldService.zoom;
+    double zoom = view.gameService.worldParams.zoom;
+    bitmap.x = _field.offset.x + (leftOffset * zoom);
+    bitmap.y = _field.offset.y + (topOffset * zoom);
+    bitmap.width = width * zoom;
+    bitmap.height = height * zoom;
   }
 
   void destroy() {

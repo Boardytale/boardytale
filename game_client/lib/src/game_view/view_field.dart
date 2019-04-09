@@ -49,7 +49,7 @@ class ViewField {
 
   void addUnit(shared.Unit unit) {
     unitPaintables
-        .add(UnitPaintable(unit, worldViewService.unitStage, worldViewService, unit.field, worldViewService.settings));
+        .add(UnitPaintable(unit, worldViewService.unitStage, worldViewService, unit.field));
   }
 
   void setState(String state) {
@@ -82,7 +82,7 @@ class ViewField {
     }
     terrain.x = original.offset.x;
     terrain.y = original.offset.y;
-    terrain.width = worldViewService.clientWorldService.fieldWidth;
-    terrain.height = worldViewService.clientWorldService.fieldHeight;
+    terrain.width = worldViewService.gameService.worldParams.fieldWidth;
+    terrain.height = worldViewService.gameService.worldParams.fieldHeight;
   }
 }

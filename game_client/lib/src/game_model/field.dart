@@ -8,24 +8,25 @@ class ClientField extends shared.Field {
   FieldPoint left;
   FieldPoint bottomLeft;
   FieldPoint bottomRight;
+  final GameService gameService;
 
-  ClientField(String id, ClientWorldService world) : super(id, world);
+  ClientWorldParams get params => gameService.worldParams;
 
-  ClientWorldService get clientWorld => world as ClientWorldService;
+  ClientField(String id, this.gameService) : super(id);
 
   stageLib.Rectangle<num> get rectangle => stageLib.Rectangle<num>(
-      offset.x, offset.y, clientWorld.fieldWidth, clientWorld.fieldHeight);
+      offset.x, offset.y, params.fieldWidth, params.fieldHeight);
 
   void recalculate() {
-    double fieldWidth = clientWorld.fieldWidth;
-    double fieldHeight = clientWorld.fieldHeight;
+    double fieldWidth = params.fieldWidth;
+    double fieldHeight = params.fieldHeight;
     double halfHeight = fieldHeight / 2;
     double quarterWidth = fieldWidth / 4;
     offset = FieldPoint(
-        x * 3 / 4 * fieldWidth - clientWorld.userLeftOffset,
+        x * 3 / 4 * fieldWidth - params.userLeftOffset,
         y * fieldHeight +
             (x % 2) * fieldHeight / 2 -
-            clientWorld.userTopOffset);
+            params.userTopOffset);
     double bottom = offset.y + fieldHeight;
     double left1 = offset.x + quarterWidth;
     double left2 = offset.x + quarterWidth * 3;

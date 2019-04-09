@@ -1,9 +1,9 @@
 part of ai_server;
 
-class AiTale extends shared.Tale {
+class AiTale {
   final Connection connection;
   shared.GetNextMoveByState initialRequest;
-  shared.InitialTaleData initialTaleData;
+  shared.Tale initialTaleData;
   shared.AiEngine engine;
   Map<String, shared.Player> players = {};
 
@@ -11,19 +11,22 @@ class AiTale extends shared.Tale {
   Map<String, shared.UnitType> unitTypes = {};
   shared.Player me;
   Set<shared.Unit> playedUnits = {};
+  covariant Map<String, shared.Player> aiPlayers = {};
+  Map<String, shared.Field> fields;
+  Map<String, shared.Event> events = {};
+  Map<String, shared.Dialog> dialogs = {};
+  Map<String, shared.Unit> units = {};
 
   AiTale(this.initialRequest, this.connection) {
     initialTaleData = initialRequest.requestData;
     engine = initialRequest.requestEngine;
-    initialTaleData.unitTypes.forEach((String name, shared.UnitTypeCompiled unitType) {
-      unitTypes[name] = shared.UnitType()..fromCompiledUnitType(unitType);
-    });
-    initialTaleData.players.forEach((player) {
+    unitTypes = initialTaleData.unitTypes;
+    initialTaleData.players.forEach((key, player) {
       players[player.id] = player;
     });
-    world = shared.World()..fromEnvelope(initialTaleData.world, (key, world) => shared.Field(key, world));
+    shared.World.createFields(initialTaleData.world, (key) => shared.Field(key));
     initialTaleData.units.forEach((action) {
-      units[action.unitId] = shared.Unit(createAbilityList, action, world.fields, players, unitTypes);
+      units[action.unitId] = shared.Unit(createAbilityList, action, fields, players, unitTypes);
     });
     me = players[initialRequest.idOfAiPlayerOnMove];
   }
@@ -55,7 +58,7 @@ class AiTale extends shared.Tale {
 
     shared.SimpleLogger logger = shared.SimpleLogger();
     shared.Track track =
-        shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, world.fields, unitOnMove.steps, logger: logger));
+        shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, fields, unitOnMove.steps, logger: logger));
     io.File("lib/log/lastNearestEnemy")..createSync()..writeAsString(logger.log);
     int terrainLength = track.getMoveCostOfFreeWay();
     shared.UnitTrackAction action = shared.UnitTrackAction()..unitId = unitOnMove.id;
@@ -90,7 +93,7 @@ class AiTale extends shared.Tale {
   void applyPatch(shared.GetNextMoveByUpdate update) {
     update.requestUpdateData.actions.forEach((action) {
       units[action.unitId]
-          .addUnitUpdateAction(action, action.moveToFieldId != null ? world.fields[action.moveToFieldId] : null);
+          .addUnitUpdateAction(action, action.moveToFieldId != null ? fields[action.moveToFieldId] : null);
     });
   }
 }

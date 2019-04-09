@@ -1,27 +1,74 @@
 part of model;
 
+@JsonSerializable()
 class Tale {
   String name;
   Map<Lang, Map<String, String>> langs;
   Map<Lang, String> langName;
-  covariant World world;
-  covariant Map<String, Player> aiPlayers = {};
-  Map<String, Event> events = {};
-  Map<String, Dialog> dialogs = {};
-  Map<String, Unit> units = {};
+  World world;
+  Map<String, UnitType> unitTypes = {};
+  Map<String, Player> players = {};
+  List<String> playerOnMoveIds;
+  List<String> humanPlayerIds = [];
+  List<UnitCreateOrUpdateAction> units = [];
 
-  void fromCompiledTale(TaleInnerCompiled tale) {
-    name = tale.name;
-    langs = tale.langs;
-    world = World()
-      ..fromEnvelope(tale.world, (key, world) => Field(key, world));
-    events = tale.events;
-    dialogs = tale.dialogs;
-    tale.aiPlayers.forEach((key, ai){
-      aiPlayers[key] = ai;
+  Iterable<Player> get aiPlayers => players.values.where((p) => p.isAiPlayer);
+
+  @JsonKey(ignore: true)
+  List<TaleAction> actionLog = [];
+  Tale();
+
+  Tale.fromCompiledTale(TaleInnerCompiled compiled, Assets assets) {
+    name = compiled.name;
+    langs = compiled.langs;
+    langName = compiled.langName;
+    world = compiled.world;
+    compiled.unitTypes.forEach((key, type){
+      unitTypes[key] = UnitType()..fromCompiled(type, assets);
     });
+    humanPlayerIds = compiled.humanPlayerIds;
+  }
+
+  static Tale fromJson(Map json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["langs", "langName"]);
+    return _$TaleFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$TaleToJson(this);
+  }
+
+  void addTaleAction(TaleAction action){
+    actionLog.add(action);
+    if(action.newPlayerToTale != null){
+      players[action.newPlayerToTale.id] = action.newPlayerToTale;
+    }
+    if(action.playersOnMove != null){
+      playerOnMoveIds = action.playersOnMove;
+    }
+    if(action.newUnitsToTale != null){
+      units.addAll(action.newUnitsToTale);
+    }
   }
 }
+
+@JsonSerializable()
+class Assets {
+  Map<String, Image> images = {};
+
+  static Assets fromJson(Map json) {
+    return _$AssetsFromJson(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$AssetsToJson(this);
+  }
+
+  void merge(Assets newAssets) {
+    images.addAll(newAssets.images);
+  }
+}
+
 
 @Typescript()
 @JsonSerializable()

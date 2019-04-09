@@ -21,7 +21,7 @@ class ToAiServerMessage {
     content = json.encode(getNextMoveByState..responseAction = action);
   }
 
-  factory ToAiServerMessage.fromState(InitialTaleData state, AiEngine engine, String idOfAiPlayerOnMove) {
+  factory ToAiServerMessage.fromState(Tale state, AiEngine engine, String idOfAiPlayerOnMove) {
     return ToAiServerMessage()
       ..message = OnAiServerAction.getNextMoveByState
       ..content = json.encode((GetNextMoveByState()
@@ -59,7 +59,7 @@ enum OnAiServerAction {
 @JsonSerializable()
 class GetNextMoveByState extends MessageContent {
   UnitTrackAction responseAction;
-  InitialTaleData requestData;
+  Tale requestData;
   AiEngine requestEngine;
   String idOfAiPlayerOnMove;
 

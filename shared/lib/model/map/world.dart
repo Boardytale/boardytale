@@ -2,57 +2,42 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class WorldCreateEnvelope {
+class World {
   int width;
   int height;
   Terrain baseTerrain = Terrain.grass;
   Map<String, FieldCreateEnvelope> fields = {};
   List<String> startingFieldIds = [];
 
-  WorldCreateEnvelope();
-
-  factory WorldCreateEnvelope.fromJson(Map<String, dynamic> json) =>
-      _$WorldCreateEnvelopeFromJson(json);
-
-  Map toJson() {
-    return _$WorldCreateEnvelopeToJson(this);
-  }
-}
-
-class World {
-  int width;
-  int height;
-  Terrain baseTerrain = Terrain.grass;
-  Map<String, Field> fields = {};
-  List<String> startingFieldIds = [];
-  covariant Tale clientTaleService;
-
   World();
 
-//  Field operator [](String fieldId) => fields[fieldId];
+  factory World.fromJson(Map<String, dynamic> json) =>
+      _$WorldFromJson(json);
 
-  void fromEnvelope(WorldCreateEnvelope envelope,
-      Field Function(String key, World world) fieldInstanceGenerator) {
-    width = envelope.width;
-    height = envelope.height;
-    fields.clear();
-    for (int x = 0; x < width; x++) {
-      for (int y = 0; y < height; y++) {
+  Map toJson() {
+    return _$WorldToJson(this);
+  }
+
+  static Map<String, Field> createFields(World envelope,
+      Field Function(String key) fieldInstanceGenerator) {
+    Map<String, Field> fields = {};
+    for (int x = 0; x < envelope.width; x++) {
+      for (int y = 0; y < envelope.height; y++) {
         String key = "${x}_$y";
-        Field field = fieldInstanceGenerator(key, this);
+        Field field = fieldInstanceGenerator(key);
         if (envelope.fields.containsKey(key)) {
           field.terrain = envelope.fields[key].terrain;
         } else {
-          field.terrain = baseTerrain;
+          field.terrain = envelope.baseTerrain;
         }
         fields[key] = field;
       }
     }
-    startingFieldIds = envelope.startingFieldIds;
+    return fields;
   }
 
-  Map<String, FieldCreateEnvelope> createFieldsData(
-      WorldCreateEnvelope envelope) {
+  static Map<String, FieldCreateEnvelope> createFieldsData(
+      World envelope) {
     Map<String, FieldCreateEnvelope> fieldsData = envelope.fields;
     Map<String, FieldCreateEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {

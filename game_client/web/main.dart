@@ -1,6 +1,5 @@
 import 'package:angular/angular.dart';
 import 'package:game_client/app_component.template.dart' as ng;
-import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/game_view/world_view_service.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -21,8 +20,6 @@ import 'main.template.dart' as self;
   ClassProvider(CreateGameService),
   ClassProvider(GameService),
   ClassProvider(WorldViewService),
-  ClassProvider(ClientTaleService),
-  ClassProvider(ClientWorldService),
 ])
 final InjectorFactory injector = self.injector$Injector;
 

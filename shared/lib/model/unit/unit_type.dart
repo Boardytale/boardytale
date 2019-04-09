@@ -19,25 +19,6 @@ abstract class UnitTypeCommons {
 
 @Typescript()
 @JsonSerializable()
-class UnitTypeCreateEnvelope extends UnitTypeCommons {
-  AbilitiesEnvelope abilities;
-  String authorEmail;
-  String created;
-  String imageName;
-  String iconName;
-  String bigImageName;
-
-  static UnitTypeCreateEnvelope fromJson(Map data) {
-    return _$UnitTypeCreateEnvelopeFromJson(data);
-  }
-
-  Map<String, dynamic> toJson() {
-    return _$UnitTypeCreateEnvelopeToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
 class UnitTypeCompiled extends UnitTypeCommons {
   AbilitiesEnvelope abilities;
   String authorEmail;
@@ -54,26 +35,59 @@ class UnitTypeCompiled extends UnitTypeCommons {
   }
 }
 
+@Typescript()
+@JsonSerializable()
 class UnitType extends UnitTypeCommons {
-  Image bigImage;
-  Image image;
-  Image icon;
+  String imageName;
+  String iconName;
+  String bigImageName;
   AbilitiesEnvelope abilities;
 
-  void fromCompiledUnitType(UnitTypeCompiled data) {
-    abilities = data.abilities;
-    bigImage = data.bigImage;
-    image = data.image;
-    icon = data.icon;
-    race = data.race;
-    name = data.name;
-    health = data.health;
-    armor = data.armor;
-    speed = data.speed;
-    range = data.range;
-    actions = data.actions;
-    attack = data.attack;
-    cost = data.cost;
+  fromCompiled(UnitTypeCompiled data, Assets assets) {
+      abilities = data.abilities;
+      imageName = data.image.name;
+      bigImageName = data.bigImage?.name;
+      iconName = data.icon?.name;
+      race = data.race;
+      name = data.name;
+      health = data.health;
+      armor = data.armor;
+      speed = data.speed;
+      range = data.range;
+      actions = data.actions;
+      attack = data.attack;
+      cost = data.cost;
+      assets.images[data.image.name] = data.image;
+      if(data.bigImage != null){
+        assets.images[data.bigImage.name] = data.bigImage;
+      }
+      if(data.icon != null){
+        assets.images[data.icon.name] = data.icon;
+      }
+  }
+
+  static UnitType fromJson(Map data) {
+    return _$UnitTypeFromJson(data);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$UnitTypeToJson(this);
+  }
+
+}
+
+@Typescript()
+@JsonSerializable()
+class UnitTypeCreateEnvelope extends UnitType {
+  String authorEmail;
+  String created;
+
+  static UnitTypeCreateEnvelope fromJson(Map data) {
+    return _$UnitTypeCreateEnvelopeFromJson(data);
+  }
+
+  Map<String, dynamic> toJson() {
+    return _$UnitTypeCreateEnvelopeToJson(this);
   }
 }
 

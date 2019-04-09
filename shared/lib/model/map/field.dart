@@ -17,7 +17,6 @@ class FieldCreateEnvelope {
 class Field {
   List<Unit> units = [];
   String id;
-  World world;
   Terrain terrain;
   PublishSubject<Unit> onUnitAdded = PublishSubject<Unit>();
   PublishSubject<Unit> onUnitRemoved = PublishSubject<Unit>();
@@ -32,7 +31,7 @@ class Field {
 
   bool get hasUnit => !units.isEmpty;
 
-  Field(this.id, this.world) {
+  Field(this.id) {
     List<String> xy = id.split("_");
     x = int.parse(xy[0]);
     y = int.parse(xy[1]);

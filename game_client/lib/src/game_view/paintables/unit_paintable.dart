@@ -2,7 +2,6 @@ part of world_view;
 
 class UnitPaintable extends Paintable {
   ClientUnit unit;
-  SettingsService settings;
   static Map<String, stage_lib.BitmapData> unitGlobalCache = {};
   static Map<String, stage_lib.BitmapData> teamGlobalCache = {};
   static Map<String, stage_lib.BitmapData> stepsGlobalCache = {};
@@ -14,16 +13,16 @@ class UnitPaintable extends Paintable {
       src:
       "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAVCAYAAACZm7S3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKGSURBVDhPnZLdS9NhFMd/YhdFQhjlXHPLqZu692nq3hQq0E2F6Coi6EbowiiCsMALC8yguyCqKy8i6E1IerEoayhT0VaZrYv+hILITN3MTU/fc/abOlOQHvhyzrbz+Z7znD1K09FI4eEj8w5LzQBtJK2xYyNFS6w9GsXuGUpkChtal6m+JQmlRLsLQmS03CCz6x45fOPk9I2RrrSL9KYrYqI4A5MqsLQ57L5PtrpBctd/JJPzLlVUP/4/uNz9kAzmq1uDS2y3ATwimycM+JN01Zt7tgaX2XsB9JPdO0xVDTHZjd685s6BlkUVWFLzJGKSdMVnyOS4Q5UHnmJho+QKvCcrxs+6c6D5jxSzgeTNiyKGedOWmhey6crqJ4R/Jxv2hxIqlES+ILkfYpjva619TU7/BExeYoKxVRgLmfKH4quQ5AkRwxVV/Rj1LeAo4huJDEIpRW/q7vMF51VggSQPxhHjVFR2Cfd9hk0PiYHdE8nAKYELdMcv+4KzUuwPJhDnxIDFsKXmFTY9IjC/Mlf9FF5ZJxsMKHpzdwU6LXtVyNv0G3EWcVbgdMeRdNfABzHAdaYBmxQ+RWVdg1zsbZojb+OMGLAYttUNwyAMaAKPJEba4vPQuV7AOQoRKfuMF3aaXQ/GGfY0/oJmRNK5NoyxR9F1Uj7vLTp1HY8nhzmBWRrD6XwY/OAivhd34WIe2eGLpsct7fwC5WWYFZiFcYIwABzDU/wqsMP3TkDk3wAeXFufBbMA97EBi2Gj5SYZyq9NAzyxK18r42aUBbIOtX7O1Rjanxfub1fhWz8BtuVuy8sCWXLWf3ms7XvuHt3JCMMAOxRlxz8ga+Ws/8FgOrsd8MXNQUX5C6rsmLieQIf6AAAAAElFTkSuQmCC");
 
-  UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view, ClientField field, this.settings)
+  UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view, ClientField field)
       : super(view, field, stage) {
     // trigger preload
     UnitPaintable._armorImage;
     leftOffset = 0;
     topOffset = 0;
-    height = world.fieldHeight.toInt();
-    width = world.fieldWidth.toInt();
+    height = gameService.worldParams.fieldHeight.toInt();
+    width = gameService.worldParams.fieldWidth.toInt();
     createBitmap();
-    view.clientWorldService.onResolutionLevelChanged.listen(createBitmap);
+    view.gameService.worldParams.onResolutionLevelChanged.listen(createBitmap);
     unit.onFieldChanged.listen((_) {
       this.field = unit.field;
     });
@@ -31,9 +30,9 @@ class UnitPaintable extends Paintable {
     unit.onStepsChanged.listen(createBitmap);
   }
 
-  ClientWorldService get world => view.clientWorldService;
+  Map<String, shared.Image> get images => view.assets.images;
 
-  int get resolutionLevel => world.resolutionLevel;
+  int get resolutionLevel => gameService.worldParams.resolutionLevel;
 
   // TODO: explain
   double get pixelRatio => [0.5, 1.0, 2.0][resolutionLevel];
@@ -42,7 +41,7 @@ class UnitPaintable extends Paintable {
 
   double get rectWidth => settings.defaultFieldWidth * pixelRatio;
 
-  double get rectHeight => world.defaultFieldHeight * pixelRatio;
+  double get rectHeight => settings.defaultFieldHeight * pixelRatio;
 
   stage_lib.Rectangle get rectangle {
     return stage_lib.Rectangle(0, 0, rectWidth, rectHeight);
@@ -50,14 +49,14 @@ class UnitPaintable extends Paintable {
 
   @override
   Future createBitmapInner() async {
-    int resolutionLevel = view.clientWorldService.resolutionLevel;
+    int resolutionLevel = gameService.worldParams.resolutionLevel;
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
       shared.Image primaryImage = getPrimaryImage();
       data = stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
-      if (primaryImage == unit.type.bigImage) {
+      if (primaryImage == images[unit.type.bigImageName]) {
         imageElement = await getBigImageData();
       } else {
         imageElement = ImageElement(src: primaryImage.data);
@@ -172,7 +171,7 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.BitmapData getLifeBar() {
-    int resolutionLevel = view.clientWorldService.resolutionLevel;
+    int resolutionLevel = gameService.worldParams.resolutionLevel;
     String description = "${unit.type.health}_${unit.actualHealth}_$resolutionLevel";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.type.health < 10) {
@@ -203,7 +202,7 @@ class UnitPaintable extends Paintable {
   Map<String, int> usedStepColors = {"me": 0xFF007088, "team": 0xFF787700, "enemy": 0xFF780000};
 
   stage_lib.BitmapData getStepsBar() {
-    int resolutionLevel = view.clientWorldService.resolutionLevel;
+    int resolutionLevel = gameService.worldParams.resolutionLevel;
     String description = "${unit.speed}_${unit.steps}_${resolutionLevel}";
     double bitSpace = [0.25, 0.5, 1.0][resolutionLevel];
     if (unit.speed < 10) {
@@ -231,7 +230,7 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.Rectangle getLifeBarRect() {
-    double width = view.clientWorldService.fieldWidth / 2;
+    double width = gameService.worldParams.fieldWidth / 2;
     return stage_lib.Rectangle(0, 0, width, lifeBarHeight * pixelRatio);
   }
 
@@ -244,29 +243,29 @@ class UnitPaintable extends Paintable {
   }
 
   shared.Image getPrimaryImage() {
-    int resolutionLevel = view.clientWorldService.resolutionLevel;
+    int resolutionLevel = gameService.worldParams.resolutionLevel;
     if (resolutionLevel == 0) {
-      if (unit.type.icon != null) {
-        return unit.type.icon;
+      if (images.containsKey(unit.type.iconName)) {
+        return images[unit.type.iconName];
       } else {
-        return unit.type.image;
+        return images[unit.type.imageName];
       }
     } else if (resolutionLevel == 1) {
-      return unit.type.image;
-    } else if (unit.type.bigImage != null) {
-      return unit.type.bigImage;
+      return images[unit.type.imageName];
+    } else if (images.containsKey(unit.type.bigImageName)) {
+      return images[unit.type.bigImageName];
     } else {
-      return unit.type.image;
+      return images[unit.type.imageName];
     }
   }
 
   Future<ImageElement> getBigImageData() {
     Completer<ImageElement> completer = Completer<ImageElement>();
     ImageElement imageElement;
-    if (unit.type.bigImage != null) {
-      imageElement = ImageElement(src: "img/big_units/" + unit.type.bigImage.name);
+    if (images.containsKey(unit.type.bigImageName)) {
+      imageElement = ImageElement(src: "img/big_units/" + unit.type.bigImageName);
     } else {
-      imageElement = ImageElement(src: unit.type.image.data);
+      imageElement = ImageElement(src: images[unit.type.imageName].data);
     }
     imageElement.onLoad.listen((_) {
       completer.complete(imageElement);

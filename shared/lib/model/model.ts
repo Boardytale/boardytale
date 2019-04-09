@@ -195,7 +195,10 @@ export interface UnitCreateOrUpdateAction extends Object {
     useAnimationName?: AnimationName;
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
-    newUnitTypeToTale?: UnitTypeCompiled;
+    newUnitTypeToTale?: UnitType;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    newAssetsToTale?: Assets;
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
     newPlayerToTale?: Player;
@@ -231,15 +234,6 @@ export interface UnitTypeCommons extends Object {
     unitTypeVersion: number;
 }
 
-export interface UnitTypeCreateEnvelope extends UnitTypeCommons {
-    abilities: AbilitiesEnvelope;
-    authorEmail: string;
-    created: string;
-    imageName: string;
-    iconName: string;
-    bigImageName: string;
-}
-
 export interface UnitTypeCompiled extends UnitTypeCommons {
     abilities: AbilitiesEnvelope;
     authorEmail: string;
@@ -248,13 +242,25 @@ export interface UnitTypeCompiled extends UnitTypeCommons {
     bigImage: Image;
 }
 
+export interface UnitType extends UnitTypeCommons {
+    imageName: string;
+    iconName: string;
+    bigImageName: string;
+    abilities: AbilitiesEnvelope;
+}
+
+export interface UnitTypeCreateEnvelope extends UnitType {
+    authorEmail: string;
+    created: string;
+}
+
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
 export interface FieldCreateEnvelope extends Object {
     terrain: Terrain;
 }
 
-export interface WorldCreateEnvelope extends Object {
+export interface World extends Object {
     width: number;
     height: number;
     baseTerrain: Terrain;
@@ -288,7 +294,7 @@ export interface TaleInnerEnvelope extends Object {
     langName: { [key in Lang]?: string };
     langs: { [key in Lang]?: { [key: string]: string } };
     taleVersion: number;
-    world: WorldCreateEnvelope;
+    world: World;
     aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };
@@ -303,7 +309,7 @@ export interface TaleInnerCompiled extends Object {
     langs: { [key in Lang]?: { [key: string]: string } };
     langName: { [key in Lang]?: string };
     taleVersion: number;
-    world: WorldCreateEnvelope;
+    world: World;
     aiPlayers: { [key: string]: Player };
     events: { [key: string]: Event };
     dialogs: { [key: string]: Dialog };

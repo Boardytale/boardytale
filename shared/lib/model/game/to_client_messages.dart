@@ -70,17 +70,22 @@ class ToClientMessage {
 
   TaleData get getTaleDataMessage => TaleData.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleData(InitialTaleData data) {
+  factory ToClientMessage.fromTaleData(Tale data, Assets assets, String playerIdOnThisClientMachine) {
     return ToClientMessage()
       ..message = OnClientAction.taleData
-      ..content = json.encode((TaleData()..data = data).toJson());
+      ..content = json.encode((TaleData()
+            ..tale = data
+            ..playerIdOnThisClientMachine = playerIdOnThisClientMachine
+            ..assets = assets)
+          .toJson());
   }
 
   // ---
 
   UnitCreateOrUpdate get getUnitCreateOrUpdate => UnitCreateOrUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitCreateOrUpdate(List<UnitCreateOrUpdateAction> actions, Iterable<String> playerOnMoveIds) {
+  factory ToClientMessage.fromUnitCreateOrUpdate(
+      List<UnitCreateOrUpdateAction> actions, Iterable<String> playerOnMoveIds) {
     return ToClientMessage()
       ..message = OnClientAction.unitCreateOrUpdate
       ..content = json.encode((UnitCreateOrUpdate()
@@ -221,7 +226,9 @@ class OpenedLobbyData extends MessageContent {
 
 @JsonSerializable()
 class TaleData extends MessageContent {
-  InitialTaleData data;
+  Tale tale;
+  Assets assets;
+  String playerIdOnThisClientMachine;
 
   static TaleData fromJson(Map<String, dynamic> json) => _$TaleDataFromJson(json);
 

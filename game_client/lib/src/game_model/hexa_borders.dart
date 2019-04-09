@@ -7,16 +7,16 @@ class HexaBorders {
   FieldPoint left;
   FieldPoint bottomLeft;
   FieldPoint bottomRight;
-  ClientWorldService world;
+  GameService gameService;
 
-  HexaBorders(this.world);
+  HexaBorders(this.gameService);
 
   stageLib.Rectangle<num> get rectangle =>
-      stageLib.Rectangle<num>(0.0, 0.0, world.fieldWidth, world.fieldHeight);
+      stageLib.Rectangle<num>(0.0, 0.0, gameService.worldParams.fieldWidth, gameService.worldParams.fieldHeight);
 
   void recalculate() {
-    double fieldWidth = world.fieldWidth;
-    double fieldHeight = world.fieldHeight;
+    double fieldWidth = gameService.worldParams.fieldWidth;
+    double fieldHeight = gameService.worldParams.fieldHeight;
     double halfHeight = fieldHeight / 2;
     double quarterWidth = fieldWidth / 4;
     double left2 = quarterWidth * 3;

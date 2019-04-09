@@ -9,8 +9,8 @@ class UserIntentionPaintable extends Paintable {
     if(field == null){
       throw "field cannot be null";
     }
-    width = view.clientWorldService.defaultFieldWidth;
-    height = view.clientWorldService.defaultFieldHeight;
+    width = settings.defaultFieldWidth;
+    height = settings.defaultFieldHeight;
     createBitmap();
 //    view.clientWorldService.onResolutionLevelChanged.listen(createBitmap);
   }
@@ -41,10 +41,10 @@ class UserIntentionConnectorPaintable extends UserIntentionPaintable {
   UserIntentionConnectorPaintable(WorldViewService view, ClientField field,
       this.field2, stage_lib.Stage stage, int color)
       : super(view, field, stage, color) {
-    width = view.clientWorldService.defaultFieldWidth * 2;
-    height = view.clientWorldService.defaultFieldHeight * 2;
-    leftOffset = - view.clientWorldService.defaultFieldWidth ~/ 2;
-    topOffset = - view.clientWorldService.defaultFieldHeight ~/ 2;
+    width = settings.defaultFieldWidth * 2;
+    height = settings.defaultFieldHeight * 2;
+    leftOffset = - settings.defaultFieldWidth ~/ 2;
+    topOffset = - settings.defaultFieldHeight ~/ 2;
   }
 
   @override

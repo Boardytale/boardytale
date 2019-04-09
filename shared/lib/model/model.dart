@@ -48,7 +48,7 @@ part 'package:shared/model/tale/tale_create_envelope.dart';
 
 part 'package:shared/model/tale/lobby_tale.dart';
 
-part 'package:shared/model/tale/client_tale_data.dart';
+part 'package:shared/model/tale/tale_action.dart';
 
 part 'package:shared/model/game/state.dart';
 
@@ -90,7 +90,6 @@ part 'package:shared/model/map/track.dart';
 
 part 'model.g.dart';
 
-
-class SimpleLogger{
+class SimpleLogger {
   String log = "";
 }

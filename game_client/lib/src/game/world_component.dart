@@ -41,30 +41,18 @@ class WorldComponent implements OnDestroy {
   int _startOffsetLeft;
   int _lastActionId = 0;
   ClientField _lastActiveField;
-  ClientWorldService _clientWorldService;
   List<shared.Field> trackFields;
-
-  // Helper for async loader of the game. Source of Actions is in gameService.
-  ReplaySubject<List<shared.UnitCreateOrUpdateAction>> _unitCreateOrUpdateAction = ReplaySubject();
   StreamSubscription _destroySubscription;
-  StreamSubscription _unitCreateOrUpdateActionSubscription;
   StreamSubscription _onWorldLoadedSubscription;
 
   String get widthString => "${window.innerWidth}px";
 
   String get heightString => "${window.innerHeight}px";
 
-  WorldComponent(this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view,
-      this._clientWorldService) {
-    print("world component construct");
+  WorldComponent(this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view) {
     _onResizeSubscription = window.onResize.listen(detectChanges);
-    _onWorldLoadedSubscription = gameService.onWorldLoaded.listen(modelLoaded);
+    _onWorldLoadedSubscription = gameService.onTaleLoaded.listen(modelLoaded);
     gatewayService.handlers[shared.OnClientAction.intentionUpdate] = handleIntentionUpdate;
-    gatewayService.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
-      var action = message.getUnitCreateOrUpdate;
-      _unitCreateOrUpdateAction.add(action.actions);
-      gameService.setPlayersOnMoveByIds(action.playerOnMoveIds);
-    };
     _destroySubscription = appService.destroyCurrentTale.listen(clear);
   }
 
@@ -84,7 +72,7 @@ class WorldComponent implements OnDestroy {
     ClientPlayer player = appService.players[playerId];
     int color = player.getStageColor();
     mapObjectsManager.addIntention(
-        activeFieldIds == null ? null : activeFieldIds.map((id) => _clientWorldService.fields[id]).toList(), color);
+        activeFieldIds == null ? null : activeFieldIds.map((id) => gameService.fields[id]).toList(), color);
   }
 
   void detectChanges([dynamic _]) {
@@ -96,12 +84,7 @@ class WorldComponent implements OnDestroy {
     changeDetector.detectChanges();
   }
 
-  void modelLoaded(bool isLoad) {
-    if (!isLoad) {
-      return;
-    }
-    _unitCreateOrUpdateActionSubscription =
-        _unitCreateOrUpdateAction.listen(_clientWorldService.handleUnitCreateOrUpdate);
+  void modelLoaded([_]) {
     if (worldStage == null) {
       worldStage = stage_lib.Stage(worldElement,
           width: window.innerWidth,
@@ -126,9 +109,9 @@ class WorldComponent implements OnDestroy {
       var renderLoop = stage_lib.RenderLoop();
       renderLoop.addStage(unitStage);
     }
-    view.onWorldLoaded(worldStage, unitStage);
+    view.onWorldLoaded(worldStage, unitStage, gameService.assets);
     if (mapObjectsManager == null) {
-      mapObjectsManager = MapObjectsManager(unitStage, view, settings);
+      mapObjectsManager = MapObjectsManager(unitStage, view);
     }
 //    mapObectsManager.addInitialUnits();
     detectChanges();
@@ -137,7 +120,7 @@ class WorldComponent implements OnDestroy {
   void onMouseDown(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+    ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
     if (field != null) {
       ClientUnit unit = field.getFirstPlayableUnitOnField();
       trackFields = [field];
@@ -153,17 +136,17 @@ class WorldComponent implements OnDestroy {
     }
     _moving = true;
     _start = event.page;
-    _startOffsetTop = _clientWorldService.userTopOffset;
-    _startOffsetLeft = _clientWorldService.userLeftOffset;
+    _startOffsetTop = gameService.worldParams.userTopOffset;
+    _startOffsetLeft = gameService.worldParams.userLeftOffset;
   }
 
   void onMouseUp(MouseEvent event) {
     event.preventDefault();
     event.stopPropagation();
-    _clientWorldService.onUnitAssistanceChanged.add(null);
+    gameService.onUnitAssistanceChanged.add(null);
     if (_draggedUnit != null) {
-      ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
-      shared.Track track = shared.Track.clean(trackFields, _clientWorldService.fields);
+      ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
+      shared.Track track = shared.Track.clean(trackFields, gameService.fields);
       shared.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
       if (ability != null) {
         print(ability.name);
@@ -185,20 +168,20 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     if (!_moving) {
-      ClientField field = _clientWorldService.getFieldByMouseOffset(event.page.x, event.page.y);
+      ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
       if (field != _lastActiveField) {
         _lastActiveField = field;
         if (_draggedUnit != null) {
           trackFields.add(field);
-          shared.Track track = shared.Track.clean(trackFields, _clientWorldService.fields);
+          shared.Track track = shared.Track.clean(trackFields, gameService.fields);
           ClientAbility ability =
               _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey) as ClientAbility;
           if (ability != null) {
             print((ability as shared.Ability).name);
             ability.show(_draggedUnit, track);
-            _clientWorldService.onUnitAssistanceChanged.add(ability);
+            gameService.onUnitAssistanceChanged.add(ability);
           } else {
-            _clientWorldService.onUnitAssistanceChanged.add(null);
+            gameService.onUnitAssistanceChanged.add(null);
           }
           gatewayService.sendIntention(track.fields);
         } else {
@@ -211,10 +194,10 @@ class WorldComponent implements OnDestroy {
     if (_draggedUnit == null) {
       int deltaX = (event.page.x - _start.x).toInt();
       int deltaY = (event.page.y - _start.y).toInt();
-      _clientWorldService.userLeftOffset = _startOffsetLeft - deltaX;
-      _clientWorldService.userTopOffset = _startOffsetTop - deltaY;
+      gameService.worldParams.userLeftOffset = _startOffsetLeft - deltaX;
+      gameService.worldParams.userTopOffset = _startOffsetTop - deltaY;
       // TODO: stack on anim frame
-      _clientWorldService.recalculate();
+      gameService.recalculate();
       view.repaint();
     }
   }
@@ -224,17 +207,17 @@ class WorldComponent implements OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
-    _clientWorldService.zoom *= zoomMultiply;
+    gameService.worldParams.zoom *= zoomMultiply;
 
-    if (_clientWorldService.zoom < 0.3) {
-      _clientWorldService.zoom = 0.3;
+    if (gameService.worldParams.zoom < 0.3) {
+      gameService.worldParams.zoom = 0.3;
     } else {
-      int topOfMap = (event.page.y + _clientWorldService.userTopOffset).toInt();
-      int leftOfMap = (event.page.x + _clientWorldService.userLeftOffset).toInt();
-      _clientWorldService.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
-      _clientWorldService.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
+      int topOfMap = (event.page.y + gameService.worldParams.userTopOffset).toInt();
+      int leftOfMap = (event.page.x + gameService.worldParams.userLeftOffset).toInt();
+      gameService.worldParams.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
+      gameService.worldParams.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
     }
-    _clientWorldService.recalculate();
+    gameService.recalculate();
     view.repaint();
   }
 
@@ -268,9 +251,7 @@ class WorldComponent implements OnDestroy {
     mapObjectsManager.clear();
     mapObjectsManager = null;
     _lastActiveField = null;
-    _clientWorldService = null;
     trackFields = null;
-    _unitCreateOrUpdateAction.close();
   }
 
   void clear([_]) {
@@ -280,7 +261,5 @@ class WorldComponent implements OnDestroy {
     mapObjectsManager.clear();
     _lastActiveField = null;
     trackFields = null;
-    _unitCreateOrUpdateActionSubscription.cancel();
-    _unitCreateOrUpdateActionSubscription = null;
   }
 }

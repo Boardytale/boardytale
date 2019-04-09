@@ -3,20 +3,21 @@ part of world_view;
 class MapObjectsManager {
   stage_lib.Stage stage;
   WorldViewService worldViewService;
-  SettingsService settings;
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
   List<UserIntentionPaintable> intentions = [];
   List<Paintable> abilityAssistance = [];
 
-  ClientWorldService get clientWorldService => worldViewService.clientWorldService;
+  SettingsService get settings => worldViewService.settings;
 
-  MapObjectsManager(this.stage, this.worldViewService, this.settings) {
+  GameService get gameService => worldViewService.gameService;
+
+  MapObjectsManager(this.stage, this.worldViewService) {
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
 //    clientWorldService.onUnitAdded.listen((unit) {
 //      addUnit(unit);
 //    });
-    clientWorldService.onUnitAssistanceChanged.listen((ClientAbility ability) {
+    gameService.onUnitAssistanceChanged.listen((ClientAbility ability) {
       abilityAssistance.forEach((p) => p.destroy());
       abilityAssistance.clear();
       if (ability == null) {
@@ -34,23 +35,6 @@ class MapObjectsManager {
       });
     });
   }
-
-//  void addInitialUnits(){
-//    clientWorldService.clientTaleService.units.values.forEach(addUnit);
-//  }
-//
-//  void addUnit(shared.Unit unit) {
-//    paintables.add(UnitPaintable(unit, stage, worldViewService, unit.field, settings));
-//  }
-//
-//  void removeUnit(shared.Unit unit) {
-//    paintables.removeWhere((paintable) {
-//      if (paintable is UnitPaintable) {
-//        return paintable.unit == unit;
-//      }
-//      return false;
-//    });
-//  }
 
   void setActiveField(ClientField field) {
     activeField.field = field;
