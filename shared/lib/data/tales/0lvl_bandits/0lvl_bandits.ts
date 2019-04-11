@@ -63,6 +63,11 @@ export let data: TaleCreateEnvelope = {
                 transferToPlayerId: 'bandits',
             },
             {
+                moveToFieldId: '4_3',
+                changeToTypeName: 'elvenLizard',
+                transferToPlayerId: 'bandits',
+            },
+            {
                 moveToFieldId: '5_5',
                 changeToTypeName: 'banditPikeman',
                 transferToPlayerId: 'bandits',

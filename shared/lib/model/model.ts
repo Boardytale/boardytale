@@ -268,6 +268,10 @@ export interface World extends Object {
     startingFieldIds: Array<string>;
 }
 
+export interface Assets extends Object {
+    images: { [key: string]: Image };
+}
+
 export interface Event extends Object {
     name: string;
     triggers: Array<Trigger>;

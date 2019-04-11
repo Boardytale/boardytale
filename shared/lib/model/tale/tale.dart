@@ -52,6 +52,7 @@ class Tale {
   }
 }
 
+@Typescript()
 @JsonSerializable()
 class Assets {
   Map<String, Image> images = {};
