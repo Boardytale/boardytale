@@ -138,4 +138,8 @@ class UnitWrap implements Serializable {
   APISchemaObject documentSchema(APIDocumentContext context) {
     return null;
   }
+
+  void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
+    readFromMap(object);
+  }
 }

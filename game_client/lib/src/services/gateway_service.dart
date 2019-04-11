@@ -23,7 +23,7 @@ class GatewayService {
     } else {
       newUri = "ws:";
     }
-    newUri += "//" + loc.host;
+    newUri += "//" + loc.hostname;
     _socket = WebSocket(
         '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {

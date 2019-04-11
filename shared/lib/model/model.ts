@@ -28,13 +28,13 @@ export interface Image extends Object {
     tags: Array<ImageTag>;
     origin: string;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     multiply?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     top?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     left?: number;
 }
 
@@ -66,7 +66,7 @@ export interface Triggers extends Object {
 }
 
 export interface Trigger extends Object {
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     // annotation @TypescriptOptional() → TypescriptOptional
     condition?: Condition;
     action: Action;
@@ -80,7 +80,7 @@ export interface UnitTrigger extends Object {
 
 export interface Condition extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     andCondition?: AndCondition;
 }
 
@@ -96,10 +96,10 @@ export interface EqualCondition extends Object {
 
 export interface Action extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     unitAction?: UnitCreateOrUpdateAction;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     victoryCheckAction?: VictoryCheckAction;
 }
 
@@ -164,55 +164,55 @@ export type ActionExplanation = 'unitAttacked' | 'unitGotDamage';
 
 export interface UnitCreateOrUpdateAction extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     unitId?: string;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     actionId?: string;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     far?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     steps?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     health?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     buffs?: Array<Buff>;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     actions?: number;
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     changeToTypeName: string;
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     moveToFieldId: string;
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     transferToPlayerId: string;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     useAnimationName?: AnimationName;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     newUnitTypeToTale?: UnitType;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     newAssetsToTale?: Assets;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     newPlayerToTale?: Player;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     isNewPlayerOnMove?: boolean;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     diceNumbers?: Array<number>;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     explain?: ActionExplanation;
     // annotation @TypescriptOptional() → TypescriptOptional
-    // annotation @JsonKey({String name, bool nullable, bool includeIfNull, bool ignore, Function fromJson, Function toJson, Object defaultValue, bool required, bool disallowNullValue}) → JsonKey
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     explainFirstValue?: string;
 }
 

@@ -82,7 +82,7 @@ export let config: BoardytaleConfiguration = {
         route: '/',
         uris: [
             {
-                port: 80,
+                port: 8083,
                 host: 'localhost',
             }
         ],
