@@ -40,10 +40,10 @@ Map<String, dynamic> getFileMap(Directory dir) {
 }
 
 String dartExecutable =
-    "dart${Platform.operatingSystem == 'linux' ? "" : ".exe"}";
+    "dart${(Platform.operatingSystem == 'linux' || Platform.operatingSystem == 'macos') ? "" : ".exe"}";
 
 String pubExecutable =
-    "pub${Platform.operatingSystem == 'linux' ? "" : ".bat"}";
+    "pub${(Platform.operatingSystem == 'linux' || Platform.operatingSystem == 'macos') ? "" : ".bat"}";
 
 Future<bool> waitForSignal(Process process, String signal,
     {String printPrefix: null}) {
