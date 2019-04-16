@@ -3,7 +3,7 @@ import 'package:angular/src/common/directives.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Component(selector: 'lobbies', directives: [NgFor], template: '''
       <h1>Lobbies</h1>
@@ -29,7 +29,7 @@ class LobbiesComponent {
     lobbyService.lobbies.listen((onData) => changeDetector.markForCheck());
   }
 
-  void enterGame(shared.OpenedLobby lobby) {
-    gateway.sendMessage(shared.ToGameServerMessage.enterLobby(lobby.id));
+  void enterGame(core.OpenedLobby lobby) {
+    gateway.sendMessage(core.ToGameServerMessage.enterLobby(lobby.id));
   }
 }

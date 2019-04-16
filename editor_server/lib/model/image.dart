@@ -1,6 +1,6 @@
 import 'package:editor_server/model/tag.dart';
 import 'package:editor_server/editor_server.dart';
-import 'package:shared/model/model.dart';
+import 'package:core/model/model.dart';
 
 class Image extends ManagedObject<_Image> implements _Image {}
 

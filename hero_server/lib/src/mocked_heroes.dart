@@ -1,7 +1,7 @@
 part of hero_server;
 
-List<shared.GameHeroCreateEnvelope> mockedHeroes = [
-  shared.GameHeroCreateEnvelope.fromJson({
+List<core.GameHeroCreateEnvelope> mockedHeroes = [
+  core.GameHeroCreateEnvelope.fromJson({
     "name": "První",
     "level": 1,
     "type": {
@@ -44,7 +44,7 @@ List<shared.GameHeroCreateEnvelope> mockedHeroes = [
       "unitTypeDataVersion": 0
     }
   }),
-  shared.GameHeroCreateEnvelope.fromJson({
+  core.GameHeroCreateEnvelope.fromJson({
     "name": "Druhý",
     "level": 1,
     "type": {
@@ -87,7 +87,7 @@ List<shared.GameHeroCreateEnvelope> mockedHeroes = [
       "unitTypeDataVersion": 0
     }
   }),
-  shared.GameHeroCreateEnvelope.fromJson({
+  core.GameHeroCreateEnvelope.fromJson({
     "name": "Druhý",
     "level": 1,
     "type": {
@@ -130,7 +130,7 @@ List<shared.GameHeroCreateEnvelope> mockedHeroes = [
       "unitTypeDataVersion": 0
     }
   }),
-  shared.GameHeroCreateEnvelope.fromJson({
+  core.GameHeroCreateEnvelope.fromJson({
     "name": "Druhý",
     "level": 1,
     "type": {

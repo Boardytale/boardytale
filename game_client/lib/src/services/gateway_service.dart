@@ -4,15 +4,15 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 import 'package:game_client/project_settings.dart';
 
 @Injectable()
 class GatewayService {
   WebSocket _socket;
   bool _opened = false;
-  List<shared.ToGameServerMessage> _beforeOpenBuffer = [];
-  Map<shared.OnClientAction, void Function(shared.ToClientMessage message)>
+  List<core.ToGameServerMessage> _beforeOpenBuffer = [];
+  Map<core.OnClientAction, void Function(core.ToClientMessage message)>
       handlers = {};
 
   GatewayService() {
@@ -28,7 +28,7 @@ class GatewayService {
         '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
       Map<String, dynamic> message = json.decode(e.data.toString());
-      handleMessages(shared.ToClientMessage.fromJson(message));
+      handleMessages(core.ToClientMessage.fromJson(message));
     });
     _socket.onOpen.listen((_) {
       _opened = true;
@@ -38,10 +38,10 @@ class GatewayService {
   }
 
   void initMessages(String innerToken) {
-    sendMessage(shared.ToGameServerMessage.init(innerToken));
+    sendMessage(core.ToGameServerMessage.init(innerToken));
   }
 
-  void sendMessage(shared.ToGameServerMessage message) {
+  void sendMessage(core.ToGameServerMessage message) {
     if (!_opened) {
       _beforeOpenBuffer.add(message);
     } else {
@@ -49,7 +49,7 @@ class GatewayService {
     }
   }
 
-  void handleMessages(shared.ToClientMessage message) {
+  void handleMessages(core.ToClientMessage message) {
     if (handlers.containsKey(message.message)) {
       handlers[message.message](message);
     } else {
@@ -57,8 +57,8 @@ class GatewayService {
     }
   }
 
-  void sendIntention(List<shared.Field> fields) {
-    sendMessage(shared.ToGameServerMessage.playerGameIntention(fields?.map((f){
+  void sendIntention(List<core.Field> fields) {
+    sendMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f){
       return f.id;
     })?.toList()));
   }

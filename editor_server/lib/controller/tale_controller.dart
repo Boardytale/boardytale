@@ -3,7 +3,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:editor_server/model/tale.dart';
 import 'package:editor_server/model/unit.dart';
 import 'package:io_utils/aqueduct/wraps.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 class TaleController extends ResourceController {
   TaleController(this.context);
@@ -64,14 +64,14 @@ class TaleController extends ResourceController {
     Tale taleData = (await notCompiledQuery.fetch()).first;
 
     // get images
-    var taleInnerDataEnvelope = shared.TaleInnerEnvelope.fromJson(taleData.taleData.data as Map<String, dynamic>);
+    var taleInnerDataEnvelope = core.TaleInnerEnvelope.fromJson(taleData.taleData.data as Map<String, dynamic>);
 
-    shared.TaleCompiled taleCompiled = shared.TaleCompiled();
+    core.TaleCompiled taleCompiled = core.TaleCompiled();
     taleCompiled.authorEmail = taleData.authorEmail;
-    taleCompiled.tale = shared.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
-    taleCompiled.lobby = shared.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
+    taleCompiled.tale = core.TaleInnerCompiled.fromJson(taleInnerDataEnvelope.toJson());
+    taleCompiled.lobby = core.LobbyTale.fromJson(taleData.lobbyTale.data as Map);
 
-    shared.TaleInnerCompiled innerCompiled = taleCompiled.tale;
+    core.TaleInnerCompiled innerCompiled = taleCompiled.tale;
 
     innerCompiled.images = {};
     innerCompiled.unitTypes = {};
@@ -83,7 +83,7 @@ class TaleController extends ResourceController {
       if (result.isNotEmpty) {
         // compiled unit ready
         innerCompiled.unitTypes[unitName] =
-            shared.UnitTypeCompiled.fromJson(result.first.unitTypeData.data as Map<String, dynamic>);
+            core.UnitTypeCompiled.fromJson(result.first.unitTypeData.data as Map<String, dynamic>);
       } else {
         // check if not compiled ready
         var query = Query<UnitType>(context)..where((u) => u.name).equalTo(unitName);
@@ -116,7 +116,7 @@ class TaleController extends ResourceController {
 }
 
 class TaleWrap implements Serializable {
-  shared.TaleCreateEnvelope content;
+  core.TaleCreateEnvelope content;
 
   @override
   Map<String, dynamic> asMap() {
@@ -125,7 +125,7 @@ class TaleWrap implements Serializable {
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    content = shared.TaleCreateEnvelope.fromJson(requestBody);
+    content = core.TaleCreateEnvelope.fromJson(requestBody);
   }
 
   @override

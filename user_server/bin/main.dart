@@ -1,6 +1,6 @@
 import 'package:user_server/user_server.dart';
 import 'package:io_utils/io_utils.dart';
-import 'package:shared/configuration/configuration.dart';
+import 'package:core/configuration/configuration.dart';
 
 Future main() async {
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();

@@ -4,7 +4,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'create-game',
@@ -19,7 +19,7 @@ class CreateGameComponent {
   String selectedTaleId;
   String roomName = "aa";
 
-  shared.LobbyTale get selectedTale {
+  core.LobbyTale get selectedTale {
     for (var tale in createGameService.talesToCreate.value) {
       if (tale.id == selectedTaleId) {
         return tale;
@@ -43,7 +43,7 @@ class CreateGameComponent {
 
   void createLobby() {
     gateway.sendMessage(
-        shared.ToGameServerMessage.createLobby(selectedTaleId, roomName));
+        core.ToGameServerMessage.createLobby(selectedTaleId, roomName));
   }
 
   void selectLobby(String id) {

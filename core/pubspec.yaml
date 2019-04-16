@@ -1,0 +1,23 @@
+name: core
+description: Multiplayre webgame on hexagonal fields common library
+
+environment:
+  sdk: ">=2.0.0 <3.0.0"
+
+dependencies:
+  typescript_reporter:
+    path: '../libs/typescript_reporter'
+  utils:
+    path: '../libs/utils'
+  json_annotation: any
+  rxdart: ^0.20.0
+  fff: any
+
+dev_dependencies:
+  build_runner: any
+  test: any
+  json_serializable: any
+  typescript_generator:
+    path: ../libs/typescript_generator/
+
+

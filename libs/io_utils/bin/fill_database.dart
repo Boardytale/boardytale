@@ -1,11 +1,11 @@
 import "dart:io";
 import 'dart:math';
 import 'dart:convert';
-import 'package:shared/model/model.dart' as model;
+import 'package:core/model/model.dart' as model;
 import 'package:io_utils/io_utils.dart';
 import 'package:path/path.dart' as path;
 import 'package:http/http.dart' as http;
-import 'package:shared/configuration/configuration.dart';
+import 'package:core/configuration/configuration.dart';
 
 String projectDirectoryPath = getProjectDirectory().path;
 
@@ -17,7 +17,7 @@ main() async {
 
 createUnits() async {
   List<FileSystemEntity> entities =
-      Directory(projectDirectoryPath + "/shared/lib/data/units").listSync(recursive: true);
+      Directory(projectDirectoryPath + "/core/lib/data/units").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
@@ -44,7 +44,7 @@ createUnits() async {
 
 createImages() async {
   List<FileSystemEntity> entities =
-      Directory(projectDirectoryPath + "/shared/lib/data/unit_images").listSync(recursive: true);
+      Directory(projectDirectoryPath + "/core/lib/data/unit_images").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
@@ -64,7 +64,7 @@ createImages() async {
 
 createTale() async {
   List<FileSystemEntity> entities =
-      Directory(projectDirectoryPath + "/shared/lib/data/tales").listSync(recursive: true);
+      Directory(projectDirectoryPath + "/core/lib/data/tales").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {

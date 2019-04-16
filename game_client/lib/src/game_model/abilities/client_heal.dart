@@ -1,12 +1,12 @@
 part of boardytale.client.abilities;
 
-//class HealAbility extends shared.HealAbility implements ClientAbility {
+//class HealAbility extends core.HealAbility implements ClientAbility {
 //  @override
-//  void show(shared.Unit invoker, shared.Track track) {
+//  void show(core.Unit invoker, core.Track track) {
 //    // TODO: implement perform
 //  }
 //
-//  bool validate(shared.Unit invoker, shared.Track track) {
+//  bool validate(core.Unit invoker, core.Track track) {
 //    throw "not implemented";
 //  }
 //}

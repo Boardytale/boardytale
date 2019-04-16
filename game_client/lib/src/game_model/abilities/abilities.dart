@@ -1,6 +1,6 @@
 library boardytale.client.abilities;
 
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 part 'client_ability.dart';
 part 'client_attack.dart';

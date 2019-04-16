@@ -2,7 +2,7 @@ part of game_server;
 
 class NavigationService {
   NavigationService() {
-    gateway.handlers[shared.OnServerAction.goToState] = handle;
+    gateway.handlers[core.OnServerAction.goToState] = handle;
   }
 
   void handle(MessageWithConnection messageWithConnection) async {
@@ -12,26 +12,26 @@ class NavigationService {
   }
 
   void restoreState(ServerPlayer player) {
-    shared.GameNavigationState newState = player.navigationState;
+    core.GameNavigationState newState = player.navigationState;
     gateway.sendMessage(
-        shared.ToClientMessage.fromSetNavigationState(newState), player);
+        core.ToClientMessage.fromSetNavigationState(newState), player);
 
-    if (newState == shared.GameNavigationState.findLobby) {
+    if (newState == core.GameNavigationState.findLobby) {
       player.subscribeToOpenedLobbiesChanges();
     }
 
-    if (newState == shared.GameNavigationState.createGame) {
+    if (newState == core.GameNavigationState.createGame) {
       createGameService.sendGamesToCreate(player);
       player.unsubscribeFromOpenedLobbiesChanges();
     }
 
-    if (newState == shared.GameNavigationState.inLobby) {
+    if (newState == core.GameNavigationState.inLobby) {
       LobbyRoom currentPlayerRoom = lobbyService.getLobbyRoomByPlayer(player);
       currentPlayerRoom.sendUpdateToPlayer(player);
       player.unsubscribeFromOpenedLobbiesChanges();
     }
 
-    if(newState == shared.GameNavigationState.inGame){
+    if(newState == core.GameNavigationState.inGame){
       player.tale.sendTaleDataToPlayer(player);
     }
   }

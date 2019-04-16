@@ -6,7 +6,7 @@ import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/game/world_component.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 part 'arrow_disk.dart';
 
@@ -31,19 +31,19 @@ class LobbyComponent {
   final ChangeDetectorRef changeDetector;
   GatewayService gateway;
 
-  shared.OpenedLobby get lobby => lobbyService.openedLobby.value;
+  core.OpenedLobby get lobby => lobbyService.openedLobby.value;
   LobbyService lobbyService;
 
   LobbyComponent(this.lobbyService, this.changeDetector, this.gateway) {
     lobbyService.openedLobby.listen((onData){
       changeDetector.markForCheck();
 //      if(onData.id != null){
-//        gateway.sendMessage(shared.ToGameServerMessage.enterGame(onData.id));
+//        gateway.sendMessage(core.ToGameServerMessage.enterGame(onData.id));
 //      }
     });
   }
 
   void enterGame() {
-    gateway.sendMessage(shared.ToGameServerMessage.enterGame(lobby.id));
+    gateway.sendMessage(core.ToGameServerMessage.enterGame(lobby.id));
   }
 }

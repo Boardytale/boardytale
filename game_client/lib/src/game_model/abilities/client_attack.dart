@@ -1,8 +1,8 @@
 part of boardytale.client.abilities;
 
-class ClientAttackAbility extends shared.AttackAbility implements ClientAbility {
+class ClientAttackAbility extends core.AttackAbility implements ClientAbility {
   @override
-  void show(shared.Unit unitOnMove, shared.Track track) {
+  void show(core.Unit unitOnMove, core.Track track) {
     highlights = [];
     for (int i = 1; i < track.fields.length - 1; i++) {
       highlights.add(FieldHighlight()

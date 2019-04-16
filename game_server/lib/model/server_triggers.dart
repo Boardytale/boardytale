@@ -1,7 +1,7 @@
 part of game_server;
 
 class ServerTriggers {
-  final shared.Triggers triggers;
+  final core.Triggers triggers;
   final ServerTale tale;
 
   ServerTriggers(this.tale, this.triggers) {
@@ -10,7 +10,7 @@ class ServerTriggers {
         if (trigger.action.victoryCheckAction != null) {
           var victory = trigger.action.victoryCheckAction;
           Set<String> livingTeams = {};
-          tale.units.forEach((key, value){
+          tale.taleState.units.forEach((key, value){
             if(value.isAlive){
               livingTeams.add(value.player.team);
             }
@@ -37,7 +37,7 @@ class ServerTriggers {
           }
           if(victory.unitsEliminatedForLost != null){
             if(victory.unitsEliminatedForLost.any((unitId){
-              var unit = tale.units[unitId];
+              var unit = tale.taleState.units[unitId];
               if(unit == null){
                 return true;
               }

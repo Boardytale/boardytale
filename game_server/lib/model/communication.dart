@@ -1,7 +1,7 @@
 part of game_server;
 
 class MessageWithConnection {
-  shared.ToGameServerMessage message;
+  core.ToGameServerMessage message;
   Connection connection;
   ServerPlayer get player => connection.player;
 }

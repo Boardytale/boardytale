@@ -1,6 +1,6 @@
 part of client_model;
 
-class ClientField extends shared.Field {
+class ClientField extends core.Field {
   FieldPoint offset;
   FieldPoint topLeft;
   FieldPoint topRight;
@@ -39,7 +39,7 @@ class ClientField extends shared.Field {
   }
 
   ClientUnit getFirstPlayableUnitOnField() {
-    return units.firstWhere((shared.Unit unit) => unit.isPlayable,
+    return units.firstWhere((core.Unit unit) => unit.isPlayable,
         orElse: returnNull);
   }
 }

@@ -1,7 +1,7 @@
 part of boardytale.client.abilities;
 
-List<shared.Ability> createClientAbilityList(shared.AbilitiesEnvelope envelope){
-  List<shared.Ability> out = [];
+List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope){
+  List<core.Ability> out = [];
   if(envelope.move != null){
     out.add(ClientMoveAbility()..fromEnvelope(envelope.move));
   }
@@ -13,12 +13,12 @@ List<shared.Ability> createClientAbilityList(shared.AbilitiesEnvelope envelope){
 
 abstract class ClientAbility {
   List<FieldHighlight> highlights = [];
-  void show(shared.Unit unitOnMove, shared.Track track);
+  void show(core.Unit unitOnMove, core.Track track);
 }
 
 class FieldHighlight {
   HighlightName highlightName;
-  shared.Field field;
+  core.Field field;
 }
 
 enum HighlightName{

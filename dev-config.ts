@@ -1,4 +1,4 @@
-import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
+import {BoardytaleConfiguration} from './core/lib/configuration/configuration';
 
 export let config: BoardytaleConfiguration = {
     aiServer: {
@@ -17,7 +17,7 @@ export let config: BoardytaleConfiguration = {
             host: 'localhost',
             port: 9000,
         }],
-        executableType: 'dart',
+        executableType: "dart",
         pathToExecutable: 'editor_server/bin/editor_server_start.dart',
         pathToWorkingDirectory: 'editor_server'
     },

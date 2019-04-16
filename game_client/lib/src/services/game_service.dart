@@ -9,7 +9,7 @@ import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Injectable()
 class GameService {
@@ -17,48 +17,46 @@ class GameService {
   final AppService appService;
   final GatewayService gatewayService;
   BehaviorSubject<bool> showCoordinateLabels = BehaviorSubject<bool>(seedValue: false);
-  Map<String, shared.AiGroup> aiGroups = {};
-  BehaviorSubject<shared.World> onTaleLoaded = BehaviorSubject();
+  Map<String, core.AiGroup> aiGroups = {};
+  BehaviorSubject<core.World> onTaleLoaded = BehaviorSubject();
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
 
   ReplaySubject<EnhancedUnitCreateOrUpdateAction> unitCreateOrUpdateAction = ReplaySubject();
-  BehaviorSubject<shared.Banter> currentBanter = BehaviorSubject();
-  List<shared.Banter> _banterQueue = [];
-  shared.Assets assets;
+  BehaviorSubject<core.Banter> currentBanter = BehaviorSubject();
+  List<core.Banter> _banterQueue = [];
+  core.Assets assets;
   Map<String, ClientField> fields = {};
   BehaviorSubject<Null> onDimensionsChanged = BehaviorSubject();
   BehaviorSubject<ClientAbility> onUnitAssistanceChanged = BehaviorSubject();
 
   List<String> startingFieldIds = [];
   String taleName;
-  Map<shared.Lang, Map<String, String>> langs;
-  Map<shared.Lang, String> langName;
+  Map<core.Lang, Map<String, String>> langs;
+  Map<core.Lang, String> langName;
   Map<String, ClientPlayer> aiPlayers = {};
-  Map<String, shared.Event> events = {};
-  Map<String, shared.Dialog> dialogs = {};
-  Map<String, shared.Unit> units = {};
-  Map<String, shared.UnitType> unitTypes = {};
+  Map<String, core.Event> events = {};
+  Map<String, core.Dialog> dialogs = {};
+  Map<String, core.Unit> units = {};
+  Map<String, core.UnitType> unitTypes = {};
 
   ClientPlayer get currentPlayer => appService.currentPlayer;
 
   ClientWorldParams worldParams = ClientWorldParams();
 
   GameService(this.gatewayService, this.settings, this.appService) {
-    gatewayService.handlers[shared.OnClientAction.taleData] = handleTaleData;
-    gatewayService.handlers[shared.OnClientAction.showBanter] = handleShowBanter;
-    gatewayService.handlers[shared.OnClientAction.unitCreateOrUpdate] = (shared.ToClientMessage message) {
-      var action = message.getUnitCreateOrUpdate;
-      setPlayersOnMoveByIds(action.playerOnMoveIds);
-      unitsCreateOrUpdate(action.actions);
+    gatewayService.handlers[core.OnClientAction.taleData] = handleTaleData;
+    gatewayService.handlers[core.OnClientAction.showBanter] = handleShowBanter;
+    gatewayService.handlers[core.OnClientAction.unitCreateOrUpdate] = (core.ToClientMessage message) {
+      taleUpdate(message.getUnitCreateOrUpdate);
     };
     worldParams.defaultHex = HexaBorders(this);
   }
 
-  void handleShowBanter(shared.ToClientMessage message) {
+  void handleShowBanter(core.ToClientMessage message) {
     addBanter(message.getBanter);
   }
 
-  void addBanter(shared.Banter banter) {
+  void addBanter(core.Banter banter) {
     if (banter == null) {
       if (_banterQueue.isNotEmpty) {
         addBanter(_banterQueue.removeAt(0));
@@ -93,18 +91,18 @@ class GameService {
     onDimensionsChanged.add(null);
   }
 
-  void handleTaleData(shared.ToClientMessage message) {
+  void handleTaleData(core.ToClientMessage message) {
     assets = message.getTaleDataMessage.assets;
-    shared.Tale tale = message.getTaleDataMessage.tale;
+    core.Tale tale = message.getTaleDataMessage.tale;
     taleName = tale.name;
     langName = tale.langName;
     ClientWorldUtils.fromEnvelope(tale.world, this);
     recalculate();
     tale.players.forEach((key, player) {
       if (appService.players.containsKey(player.id)) {
-        appService.players[player.id].fromSharedPlayer(player);
+        appService.players[player.id].fromCorePlayer(player);
       } else {
-        appService.players[player.id] = ClientPlayer()..fromSharedPlayer(player);
+        appService.players[player.id] = ClientPlayer()..fromCorePlayer(player);
       }
       if (player.id == message.getTaleDataMessage.playerIdOnThisClientMachine) {
         appService.currentPlayer = appService.players[player.id];
@@ -116,21 +114,26 @@ class GameService {
     onTaleLoaded.add(tale.world);
   }
 
-  void unitsCreateOrUpdate(List<shared.UnitCreateOrUpdateAction> actions) {
-    actions.forEach((action) {
-      if (action.newPlayerToTale != null && !appService.players.containsKey(action.newPlayerToTale.id)) {
-        ClientPlayer newPlayer = ClientPlayer()..fromSharedPlayer(action.newPlayerToTale);
+  void taleUpdate(core.TaleUpdate update){
+    update.newPlayersToTale.forEach((player){
+      if (!appService.players.containsKey(player.id)) {
+        ClientPlayer newPlayer = ClientPlayer()..fromCorePlayer(player);
         appService.players[newPlayer.id] = newPlayer;
-        if (action.isNewPlayerOnMove) {
-          playersOnMove.add(playersOnMove.value..add(newPlayer));
-        }
       }
-      if (action.newUnitTypeToTale != null) {
-        unitTypes[action.newUnitTypeToTale.name] = action.newUnitTypeToTale;
-        if (action.newAssetsToTale != null) {
-          assets.merge(action.newAssetsToTale);
-        }
-      }
+    });
+
+    update.newUnitTypesToTale.forEach((type){
+      unitTypes[type.name] = type;
+    });
+    if (update.newAssetsToTale != null) {
+      assets.merge(update.newAssetsToTale);
+    }
+    setPlayersOnMoveByIds(update.playerOnMoveIds);
+    unitsCreateOrUpdate(update.actions);
+  }
+
+  void unitsCreateOrUpdate(List<core.UnitCreateOrUpdateAction> actions) {
+    actions.forEach((action) {
       ClientUnit unit;
       if (units.containsKey(action.unitId)) {
         unit = units[action.unitId];
@@ -147,6 +150,6 @@ class GameService {
 }
 
 class EnhancedUnitCreateOrUpdateAction {
-  shared.UnitCreateOrUpdateAction action;
+  core.UnitCreateOrUpdateAction action;
   ClientUnit unit;
 }

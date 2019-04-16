@@ -2,10 +2,10 @@ part of game_server;
 
 class LobbyRoom {
   bool gameRunning = false;
-  shared.TaleCompiled compiledTale;
+  core.TaleCompiled compiledTale;
 
   String get id => openedLobby.id;
-  shared.OpenedLobby openedLobby;
+  core.OpenedLobby openedLobby;
   ServerTale tale;
 
   // by email
@@ -15,7 +15,7 @@ class LobbyRoom {
     //    openedLobby.listen((onData) {
     //      connectedPlayers.forEach((player) {
     //        gateway.sendMessage(
-    //            shared.ToClientMessage.fromOpenedLobby(onData), player);
+    //            core.ToClientMessage.fromOpenedLobby(onData), player);
     //      });
     //    });
   }
@@ -24,7 +24,7 @@ class LobbyRoom {
     if (gameRunning && player.tale != null) {
       return;
     }
-    gateway.sendMessage(shared.ToClientMessage.fromOpenedLobby(openedLobby), player);
+    gateway.sendMessage(core.ToClientMessage.fromOpenedLobby(openedLobby), player);
   }
 
   void sendUpdateToAllPlayers() {
@@ -44,12 +44,12 @@ class LobbyRoom {
 final LobbyList lobbyList = new LobbyList._private();
 
 class LobbyList {
-  BehaviorSubject<List<shared.LobbyTale>> onLobbiesChanged = new BehaviorSubject<List<shared.LobbyTale>>(seedValue: []);
-  List<shared.LobbyTale> lobbies = [];
+  BehaviorSubject<List<core.LobbyTale>> onLobbiesChanged = new BehaviorSubject<List<core.LobbyTale>>(seedValue: []);
+  List<core.LobbyTale> lobbies = [];
 
   LobbyList._private();
 
-  void addLobby(shared.LobbyTale lobby) {
+  void addLobby(core.LobbyTale lobby) {
     lobbies.add(lobby);
     onLobbiesChanged.add(lobbies);
   }

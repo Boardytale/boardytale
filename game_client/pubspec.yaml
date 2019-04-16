@@ -14,8 +14,8 @@ dependencies:
   fff: any
   ng2_g_signin:
     git: https://github.com/Boardytale/ng2_g_signin
-  shared:
-    path: ../shared
+  core:
+    path: ../core
 
 dev_dependencies:
   angular_test: ^2.1.0

@@ -5,7 +5,7 @@ import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'game-controls',
@@ -33,7 +33,7 @@ class GameControlsComponent {
   }
 
   void endTurn(){
-    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.endOfTurn));
+    gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
   }
 
   void switchShowCoordinates(){

@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as proxy from 'http-proxy-middleware';
 import {config} from '../dev-config';
 import {makeAddress} from '../libs/network';
-import {FrontEndDevelopment, ServerConfiguration} from '../shared/lib/configuration/configuration';
+import {FrontEndDevelopment, ServerConfiguration} from '../core/lib/configuration/configuration';
 
 let isMocked = false;
 

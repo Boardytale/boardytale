@@ -8,7 +8,7 @@ import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 import 'package:stagexl/stagexl.dart' as stage_lib;
 import 'package:angular/core.dart';
 
@@ -35,17 +35,17 @@ class WorldViewService {
   stage_lib.Stage unitStage;
   ImageElement grassBackground;
   bool _imageLoaded = false;
-  Map<shared.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
+  Map<core.Terrain, stage_lib.Bitmap> fieldBitmaps = {};
   Map<String, ViewField> fields = {};
-  shared.Assets assets;
+  core.Assets assets;
 
   WorldViewService(this.appService, this.gameService, this.settings) {
-    Map<shared.Terrain, ImageElement> resources = {};
-    Map<shared.Terrain, String> paths = {
-      shared.Terrain.grass: "img/map_tiles/grass.png",
-      shared.Terrain.rock: "img/map_tiles/rock.png",
-      shared.Terrain.water: "img/map_tiles/water.png",
-      shared.Terrain.forest: "img/map_tiles/forest2.png",
+    Map<core.Terrain, ImageElement> resources = {};
+    Map<core.Terrain, String> paths = {
+      core.Terrain.grass: "img/map_tiles/grass.png",
+      core.Terrain.rock: "img/map_tiles/rock.png",
+      core.Terrain.water: "img/map_tiles/water.png",
+      core.Terrain.forest: "img/map_tiles/forest2.png",
     };
     List<Future<Event>> imageLoads = [];
 
@@ -64,7 +64,7 @@ class WorldViewService {
     gameService.showCoordinateLabels.listen(repaint);
   }
 
-  void onWorldLoaded(worldStage, unitStage, shared.Assets assets) {
+  void onWorldLoaded(worldStage, unitStage, core.Assets assets) {
     this.assets = assets;
     this.worldStage = worldStage;
     this.unitStage = unitStage;
@@ -74,7 +74,7 @@ class WorldViewService {
     init();
   }
 
-  void createBitmapsByTerrain(Map<shared.Terrain, ImageElement> resources) {
+  void createBitmapsByTerrain(Map<core.Terrain, ImageElement> resources) {
     HexaBorders defaultHex = gameService.worldParams.defaultHex;
     var path = stage_lib.Shape();
     stage_lib.Graphics graphics = path.graphics;
@@ -89,7 +89,7 @@ class WorldViewService {
       ..closePath()
       ..strokeColor(0xff1E350D, 1.8);
 
-    resources.forEach((shared.Terrain k, ImageElement v) {
+    resources.forEach((core.Terrain k, ImageElement v) {
       v.width = defaultHex.rectangle.width.toInt() + 1;
       v.height = defaultHex.rectangle.height.toInt() + 1;
       stage_lib.BitmapData data = stage_lib.BitmapData.fromImageElement(v);

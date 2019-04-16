@@ -9,8 +9,8 @@ environment:
 dependencies:
   uuid: any
   shelf: any
-  shared:
-    path: ../shared
+  core:
+    path: ../core
   io_utils:
     path: ../libs/io_utils
   rxdart: ^0.20.0

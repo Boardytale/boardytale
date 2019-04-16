@@ -1,13 +1,13 @@
 part of client_model;
 
-class ClientUnit extends shared.Unit {
-  ClientUnit(shared.UnitCreateOrUpdateAction action, Map<String, shared.Field> fields,
-      Map<String, shared.Player> players, Map<String, shared.UnitType> types)
+class ClientUnit extends core.Unit {
+  ClientUnit(core.UnitCreateOrUpdateAction action, Map<String, core.Field> fields,
+      Map<String, core.Player> players, Map<String, core.UnitType> types)
       : super(createClientAbilityList, action, fields, players, types);
 
-  shared.Ability getAbility(shared.Track track, bool shift, bool alt, bool ctrl) {
-    List<shared.Ability> possibles = abilities.toList();
-    possibles..removeWhere((shared.Ability ability){
+  core.Ability getAbility(core.Track track, bool shift, bool alt, bool ctrl) {
+    List<core.Ability> possibles = abilities.toList();
+    possibles..removeWhere((core.Ability ability){
       return !ability.validate(this, track);
     });
 
@@ -32,9 +32,9 @@ class ClientUnit extends shared.Unit {
     return possibles[used];
   }
 
-  List<String> whyNoAbility(shared.Track track) {
+  List<String> whyNoAbility(core.Track track) {
     return abilities
-        .map((shared.Ability ability) => "${ability.name}: ${ability.validate(this, track)}")
+        .map((core.Ability ability) => "${ability.name}: ${ability.validate(this, track)}")
         .toList(growable: false);
   }
 }

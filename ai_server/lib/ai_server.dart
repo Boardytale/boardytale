@@ -2,9 +2,9 @@ library ai_server;
 
 import 'dart:convert';
 import 'dart:io' as io;
-import 'package:shared/configuration/configuration.dart';
-import 'package:shared/model/model.dart' as shared;
-
+import 'package:core/configuration/configuration.dart';
+import 'package:core/model/model.dart' as core;
+import 'package:web_socket_channel/web_socket_channel.dart';
 part 'server_gateway.dart';
 part 'src/ai_tale.dart';
 

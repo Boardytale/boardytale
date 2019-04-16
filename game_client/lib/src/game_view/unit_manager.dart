@@ -42,7 +42,7 @@ class MapObjectsManager {
 
   void repaintActiveField() {}
 
-  UnitPaintable getFirstUnitPaintableOnField(shared.Field field) {
+  UnitPaintable getFirstUnitPaintableOnField(core.Field field) {
     for (Paintable paintable in paintables) {
       if (paintable is! UnitPaintable) continue;
       if (paintable.field != field) continue;

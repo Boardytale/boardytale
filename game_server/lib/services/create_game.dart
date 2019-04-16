@@ -1,18 +1,18 @@
 part of game_server;
 
 class CreateGameService {
-  Future<List<shared.LobbyTale>> getGamesToCreate() async {
+  Future<List<core.LobbyTale>> getGamesToCreate() async {
     String uri =
         makeAddressFromUri(config.editorServer.uris.first) + "inner/lobbyList";
     print(uri);
     http.Response response =
         await http.get(uri, headers: {"Content-Type": "application/json"});
-    List<shared.LobbyTale> lobbies = [];
+    List<core.LobbyTale> lobbies = [];
     if(response.body.isEmpty){
       throw "editor server not responding correctly";
     }
     (jsonDecode(response.body) as List).forEach((lobbyTaleData) {
-      shared.LobbyTale lobbyTale = shared.LobbyTale.fromJson(lobbyTaleData);
+      core.LobbyTale lobbyTale = core.LobbyTale.fromJson(lobbyTaleData);
       lobbies.add(lobbyTale);
     });
     return lobbies;
@@ -20,7 +20,7 @@ class CreateGameService {
 
   void sendGamesToCreate(ServerPlayer player) async {
     gateway.sendMessage(
-        shared.ToClientMessage.fromGamesToCreateMessage(
+        core.ToClientMessage.fromGamesToCreateMessage(
             await createGameService.getGamesToCreate()),
         player);
   }

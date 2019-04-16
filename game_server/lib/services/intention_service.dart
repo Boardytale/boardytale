@@ -2,14 +2,14 @@ part of game_server;
 
 class IntentionService {
   IntentionService() {
-    gateway.handlers[shared.OnServerAction.playerGameIntention] = handle;
+    gateway.handlers[core.OnServerAction.playerGameIntention] = handle;
   }
 
   void handle(MessageWithConnection message) {
-    message.player.tale.humanPlayers.forEach((email, player) {
+    message.player.tale.taleState.humanPlayers.forEach((email, player) {
       if (player != message.player) {
         gateway.sendMessage(
-            shared.ToClientMessage.fromIntentionUpdate(
+            core.ToClientMessage.fromIntentionUpdate(
                 message.player.id, message.message.playerGameIntentionMessage.fieldsId),
             player);
       }

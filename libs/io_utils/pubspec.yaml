@@ -9,8 +9,8 @@ dependencies:
   http: any
   args: any
   aqueduct: ^3.0.0
-  shared:
-    path: '../../shared'
+  core:
+    path: '../../core'
   utils:
     path: '../utils'
   console: any

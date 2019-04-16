@@ -10,7 +10,7 @@ class ClientWorldParams{
   HexaBorders defaultHex;
   int width;
   int height;
-  shared.Terrain baseTerrain = shared.Terrain.grass;
+  core.Terrain baseTerrain = core.Terrain.grass;
   BehaviorSubject<Null> onResolutionLevelChanged = BehaviorSubject();
 
   void recalculate(SettingsService settings) {
@@ -90,7 +90,7 @@ class ClientWorldUtils{
     return gameService.fields["${fx}_$fy"];
   }
 
-  static void fromEnvelope(shared.World envelope,
+  static void fromEnvelope(core.World envelope,
       GameService gameService
       ) {
     gameService.worldParams.width = envelope.width;
@@ -111,17 +111,17 @@ class ClientWorldUtils{
     gameService.startingFieldIds = envelope.startingFieldIds;
   }
 
-  static Map<String, shared.FieldCreateEnvelope> createFieldsData(
-      shared.World envelope) {
-    Map<String, shared.FieldCreateEnvelope> fieldsData = envelope.fields;
-    Map<String, shared.FieldCreateEnvelope> indexedFieldsData = {};
+  static Map<String, core.FieldCreateEnvelope> createFieldsData(
+      core.World envelope) {
+    Map<String, core.FieldCreateEnvelope> fieldsData = envelope.fields;
+    Map<String, core.FieldCreateEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
-      fieldsData.forEach((String k, shared.FieldCreateEnvelope v) {
+      fieldsData.forEach((String k, core.FieldCreateEnvelope v) {
         if (v is int) {
           indexedFieldsData[k] = v;
         }
         if (v is Map<String, dynamic>) {
-          indexedFieldsData[k] = shared.FieldCreateEnvelope()
+          indexedFieldsData[k] = core.FieldCreateEnvelope()
             ..terrain = envelope.baseTerrain;
         }
       });

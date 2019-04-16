@@ -1,5 +1,5 @@
 import 'package:io_utils/io_utils.dart';
-import 'package:shared/configuration/configuration.dart' as shared;
+import 'package:core/configuration/configuration.dart' as core;
 import 'package:user_server/controller/temporary_user_controller.dart';
 import 'package:user_server/controller/user_controller.dart';
 import 'package:user_server/controller/user_inner_authentication.dart';
@@ -11,9 +11,9 @@ class UserServerChannel extends ApplicationChannel {
 
   @override
   Future prepare() async {
-    final shared.BoardytaleConfiguration boardytaleConfiguration =
+    final core.BoardytaleConfiguration boardytaleConfiguration =
         getConfiguration();
-    shared.DatabaseConfiguration database =
+    core.DatabaseConfiguration database =
         boardytaleConfiguration.userDatabase;
     logger.onRecord.listen(
         (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));

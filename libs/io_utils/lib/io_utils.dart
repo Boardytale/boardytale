@@ -7,7 +7,7 @@ import 'package:utils/utils.dart';
 import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
 import 'package:console/console.dart';
-import 'package:shared/configuration/configuration.dart';
+import 'package:core/configuration/configuration.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'get_config.dart';
@@ -286,6 +286,24 @@ String makeAddressFromUri(Uri uri, {bool secured: false}) {
       uri.port.toString() +
       '/';
 }
+
+String harmonizePath() {
+  if (Platform.isWindows) {
+    if (slashesInPath(Directory.current.path).split("/").last == "runner") {
+      return new Directory("../").path;
+    }
+  } else {
+    if (slashesInPath(Directory.current.path).split("/").last == "runner") {
+      return new Directory("../").path;
+    }
+  }
+  return Directory.current.path;
+}
+
+String slashesInPath(String path) {
+  return path.replaceAll('\\', '/');
+}
+
 
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {
 //  arg_lib.ArgParser parser = new arg_lib.ArgParser();

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/model/user.dart';
-import 'package:shared/configuration/configuration.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/configuration/configuration.dart';
+import 'package:core/model/model.dart' as core;
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 
@@ -30,14 +30,14 @@ class UserInnerAuthController extends ResourceController {
 
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     String body = await request.readAsString();
-    shared.ToUserServerMessage message =
-    shared.ToUserServerMessage.fromJson(json.decode(body) as Map<String, dynamic>);
-    if (message.message == shared.OnUserServerAction.getUseresByInnerToken) {
+    core.ToUserServerMessage message =
+    core.ToUserServerMessage.fromJson(json.decode(body) as Map<String, dynamic>);
+    if (message.message == core.OnUserServerAction.getUseresByInnerToken) {
       var query = Query<User>(context)
         ..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
       List<User> users = await query.fetch();
       if (users.isNotEmpty) {
-        message.addUser(shared.User.fromJson(users.first.asMap()));
+        message.addUser(core.User.fromJson(users.first.asMap()));
       }
       return shelf.Response.ok(json.encode(message.toJson()));
     }

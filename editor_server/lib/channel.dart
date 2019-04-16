@@ -4,13 +4,13 @@ import 'package:editor_server/controller/lobby_data_controller.dart';
 import 'package:editor_server/controller/tale_controller.dart';
 import 'package:editor_server/controller/unit_controller.dart';
 import 'package:io_utils/io_utils.dart';
-import 'package:shared/configuration/configuration.dart' as shared;
+import 'package:core/configuration/configuration.dart' as core;
 import 'package:editor_server/editor_server.dart';
 
 import 'editor_server.dart';
 
-shared.BoardytaleConfiguration boardytaleConfiguration;
-shared.DatabaseConfiguration database;
+core.BoardytaleConfiguration boardytaleConfiguration;
+core.DatabaseConfiguration database;
 ManagedDataModel dataModel;
 
 ManagedContext generateContext(){

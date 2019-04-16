@@ -7,7 +7,7 @@ import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'action-feedback',
@@ -45,14 +45,14 @@ class ActionsFeedback {
     }
     ClientUnit unit = cont.unit;
     ActionFeedbackData feedback = ActionFeedbackData();
-    if (action.explain == shared.ActionExplanation.unitAttacked) {
+    if (action.explain == core.ActionExplanation.unitAttacked) {
       feedback
         ..dices = action.diceNumbers
         ..label = "unit ${unit.name} attacking"
         ..color = unit.player.color
       ;
     }
-    if (action.explain == shared.ActionExplanation.unitGotDamage) {
+    if (action.explain == core.ActionExplanation.unitGotDamage) {
       feedback
         ..label = "unit ${unit.name} got damage ${action.explainFirstValue}"
         ..color = unit.player.color

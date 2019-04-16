@@ -8,7 +8,7 @@ import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
-import 'package:shared/model/model.dart';
+import 'package:core/model/model.dart';
 import 'package:angular/core.dart';
 import 'dart:html';
 
@@ -73,7 +73,7 @@ class AppComponent {
       //        lobbyService.lobbies.listen((onData) {
       //          if (onData != null && onData.isNotEmpty) {
       //            gateway.sendMessage(
-      //                shared.ToGameServerMessage.enterLobby(onData.first.id));
+      //                core.ToGameServerMessage.enterLobby(onData.first.id));
       //          }
       //          if (onData.isEmpty) {
       //            appService.goToState(GameNavigationState.createGame);

@@ -1,9 +1,9 @@
 part of game_server;
 
-class ServerPlayer extends shared.Player {
+class ServerPlayer extends core.Player {
   Connection connection;
-  shared.GameNavigationState navigationState;
-  shared.User user;
+  core.GameNavigationState navigationState;
+  core.User user;
   ServerTale tale;
   String color = "#ff0000";
 
@@ -15,7 +15,7 @@ class ServerPlayer extends shared.Player {
 
   void subscribeToOpenedLobbiesChanges() {
     _lobbyRoomsSubscription = lobbyService.openedLobbies.listen((onData) {
-      gateway.sendMessage(shared.ToClientMessage.fromLobbyList(onData), this);
+      gateway.sendMessage(core.ToClientMessage.fromLobbyList(onData), this);
     });
   }
 
@@ -36,27 +36,27 @@ class ServerPlayer extends shared.Player {
 
   void enterGame(ServerTale tale) {
     this.tale = tale;
-    navigationState = shared.GameNavigationState.inGame;
-    gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState), this);
+    navigationState = core.GameNavigationState.inGame;
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(navigationState), this);
   }
 
-  shared.Player createGamePlayer() {
-    shared.Player gamePlayer = shared.Player()
+  core.Player createGamePlayer() {
+    core.Player gamePlayer = core.Player()
         ..color = color
         ..taleId = taleId
         ..team = team
         ..id = id;
     if(isHumanPlayer){
       return gamePlayer
-        ..humanPlayer = (shared.HumanPlayer()..name = user.name);
+        ..humanPlayer = (core.HumanPlayer()..name = user.name);
     }else{
       return gamePlayer
-        ..aiGroup = (shared.AiGroup()..langName = aiGroup.langName);
+        ..aiGroup = (core.AiGroup()..langName = aiGroup.langName);
     }
 
   }
 
-  void fromSharedPlayer(shared.Player input) {
+  void fromCorePlayer(core.Player input) {
     color = input.color;
     id = input.id;
     taleId = input.taleId;
@@ -72,8 +72,8 @@ class ServerPlayer extends shared.Player {
 
   void leaveGame() {
     tale = null;
-    navigationState = shared.GameNavigationState.findLobby;
-    gateway.sendMessage(shared.ToClientMessage.fromSetNavigationState(navigationState, destroyCurrentTale: true), this);
+    navigationState = core.GameNavigationState.findLobby;
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(navigationState, destroyCurrentTale: true), this);
   }
 
   void leaveRoom() {

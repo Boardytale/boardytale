@@ -8,43 +8,35 @@ class HeroesHelper {
     List<Future<ResponseWithPlayer>> responses = [];
     forPlayer.forEach((player) {
       var url = "http://localhost:${config.heroesServer.uris.first.port}/";
-      var message = shared.ToHeroServerMessage.fromPlayerEmail(player.email);
+      var message = core.ToHeroServerMessage.fromPlayerEmail(player.email);
       responses.add(http.post(url, body: json.encode(message.toJson())).asStream().map((convert) {
         return ResponseWithPlayer(convert, player);
       }).first);
     });
     List<ResponseWithPlayer> data = await Future.wait(responses);
-    List<shared.UnitCreateOrUpdateAction> actions = [];
+    List<core.UnitCreateOrUpdateAction> actions = [];
+    List<core.UnitType> types = [];
+    core.Assets assets = core.Assets();
     data.forEach((item) {
-      var hero = shared.ToHeroServerMessage.fromJson(json.decode(item.response.body));
+      var hero = core.ToHeroServerMessage.fromJson(json.decode(item.response.body));
       var heroEnvelope = hero.getHeroesOfPlayerMessage.responseHeroes.first;
       var compiledType = heroEnvelope.type;
       compiledType.name = "hero${_lastHeroId++}";
-      shared.Assets newAssets = shared.Assets();
-      shared.UnitType type = shared.UnitType()..fromCompiled(compiledType, newAssets);
-      tale.assets.merge(newAssets);
-      tale.unitTypes[compiledType.name] = type;
-      tale.taleState.unitTypes[compiledType.name] = type;
+      core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
+      var startingField =
+          tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
 
-      var startingField = tale.fields[tale.startingFieldIds[tale.lastUsedStartingField++]];
-
-      shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction()
+      core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
         ..unitId = "${tale.lastUnitId++}"
         ..moveToFieldId = startingField.id
         ..transferToPlayerId = item.player.id
-        ..changeToTypeName = type.name
-        ..newUnitTypeToTale = type
-        ..newAssetsToTale = newAssets;
-
-      ServerUnit unit = ServerUnit(tale, action, tale.fields, tale.players, tale.unitTypes);
-      tale.units[unit.id] = unit;
-      action.newPlayerToTale = item.player;
-      action.isNewPlayerOnMove = tale.playersOnMoveIds.contains(item.player.id);
+        ..changeToTypeName = type.name;
+      types.add(type);
       actions.add(action);
     });
-    tale.taleState.addTaleAction(shared.TaleAction()..newUnitsToTale = actions);
-    emitToPlayers.forEach((player) {
-      gateway.sendMessage(shared.ToClientMessage.fromUnitCreateOrUpdate(actions, tale.playersOnMoveIds), player);
-    });
+    tale.taleState.addTaleAction(TaleAction()
+      ..unitUpdates = actions
+      ..newUnitTypesToTale = types
+      ..newAssetsToTale = assets);
   }
 }

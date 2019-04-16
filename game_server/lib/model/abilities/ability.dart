@@ -1,5 +1,5 @@
 part of game_server;
 
-abstract class ServerAbility extends shared.Ability {
-  void perform(ServerUnit unit, shared.Track track, shared.UnitTrackAction action, ServerTale tale);
+abstract class ServerAbility extends core.Ability {
+  TaleAction perform(core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection);
 }

@@ -1,10 +1,10 @@
 library hero_server;
 
-import 'package:shared/configuration/configuration.dart';
+import 'package:core/configuration/configuration.dart';
 import 'package:shelf/shelf.dart' as shelf;
 import 'package:shelf/shelf_io.dart' as io;
 import 'dart:async';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 import 'dart:convert';
 
 part "src/mocked_heroes.dart";
@@ -32,10 +32,10 @@ class HeroServer {
 
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     String body = await request.readAsString();
-    shared.ToHeroServerMessage message =
-        shared.ToHeroServerMessage.fromJson(json.decode(body));
-    if (message.message == shared.OnHeroServerAction.getHeroesOfPlayer) {
-//      shared.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
+    core.ToHeroServerMessage message =
+        core.ToHeroServerMessage.fromJson(json.decode(body));
+    if (message.message == core.OnHeroServerAction.getHeroesOfPlayer) {
+//      core.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
       message.addHeroes([mockedHeroes[counter]]);
       counter++;
       if(counter >= mockedHeroes.length){

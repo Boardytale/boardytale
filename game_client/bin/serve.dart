@@ -1,4 +1,4 @@
-import 'package:shared/configuration/configuration.dart';
+import 'package:core/configuration/configuration.dart';
 import 'package:io_utils/io_utils.dart';
 import 'dart:io';
 import 'dart:async';

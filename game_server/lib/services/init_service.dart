@@ -2,7 +2,7 @@ part of game_server;
 
 class InitGameService {
   InitGameService() {
-    gateway.handlers[shared.OnServerAction.init] = handle;
+    gateway.handlers[core.OnServerAction.init] = handle;
   }
 
   void handle(MessageWithConnection messageWithConnection) async {
@@ -12,20 +12,20 @@ class InitGameService {
       player = playerService.playersByInnerToken[innerToken];
       player.setConnection(messageWithConnection.connection);
       navigationService.restoreState(player);
-      gateway.sendMessage(shared.ToClientMessage.fromCurrentUser(player.user), player);
+      gateway.sendMessage(core.ToClientMessage.fromCurrentUser(player.user), player);
     } else {
       var url = "http://localhost:${config.userServer.innerPort}/";
       http.Response response = await http.post(url,
           headers: {"Content-Type": "application/json"},
-          body: jsonEncode(shared.ToUserServerMessage.fromInnerToken(innerToken)));
+          body: jsonEncode(core.ToUserServerMessage.fromInnerToken(innerToken)));
 
-      shared.ToUserServerMessage responseMessage = shared.ToUserServerMessage.fromJson(json.decode(response.body));
+      core.ToUserServerMessage responseMessage = core.ToUserServerMessage.fromJson(json.decode(response.body));
 
-      shared.User user =responseMessage.getUser.user;
+      core.User user =responseMessage.getUser.user;
 
       if (user == null) {
         // user not in database - reset login
-        gateway.sendMessageByConnection(shared.ToClientMessage.fromCurrentUser(null), messageWithConnection.connection);
+        gateway.sendMessageByConnection(core.ToClientMessage.fromCurrentUser(null), messageWithConnection.connection);
         return;
       }
 
@@ -37,12 +37,12 @@ class InitGameService {
       player = ServerPlayer()
         ..id = "${playerService.lastPlayerId++}"
         ..user = user
-        ..humanPlayer = (shared.HumanPlayer()..name = user.name)
-        ..navigationState = shared.GameNavigationState.findLobby;
+        ..humanPlayer = (core.HumanPlayer()..name = user.name)
+        ..navigationState = core.GameNavigationState.findLobby;
 
       playerService.setPlayer(player, messageWithConnection.connection);
 
-      gateway.sendMessage(shared.ToClientMessage.fromCurrentUser(user), player);
+      gateway.sendMessage(core.ToClientMessage.fromCurrentUser(user), player);
 
       navigationService.restoreState(player);
     }

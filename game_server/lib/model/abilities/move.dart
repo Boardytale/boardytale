@@ -1,23 +1,24 @@
 part of game_server;
 
-class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
+class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
   @override
-  void perform(ServerUnit unit, shared.Track track, shared.UnitTrackAction action, ServerTale tale) {
+  TaleAction perform(core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
     bool isValid = super.validate(unit, track);
-
+    List<core.UnitCreateOrUpdateAction> unitActions = [];
+    TaleAction out = TaleAction()..unitUpdates = unitActions;
     if (!isValid) {
-      shared.CancelOnFieldAction cancelOnFieldAction = shared.CancelOnFieldAction();
+      core.CancelOnFieldAction cancelOnFieldAction = core.CancelOnFieldAction();
       cancelOnFieldAction.fieldId = unit.field.id;
-      if (unit.player != null && unit.player.connection != null) {
-        gateway.sendMessage(shared.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unit.player);
+      if (unitOnMoveConnection != null) {
+        gateway.sendMessageByConnection(core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
       } else {
         print("AI move canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI
       }
-      return;
+      return out;
     }
 
-    shared.UnitCreateOrUpdateAction action = shared.UnitCreateOrUpdateAction();
+    core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction();
 
     action
       ..unitId = unit.id
@@ -30,7 +31,7 @@ class ServerMoveAbility extends shared.MoveAbility implements ServerAbility {
       action.actions = 0;
     }
 
-    unit.addUnitUpdateAction(action, track.last);
-    tale.sendNewState(action);
+    unitActions.add(action);
+    return out;
   }
 }

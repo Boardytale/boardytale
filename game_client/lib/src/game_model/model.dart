@@ -1,7 +1,7 @@
 library client_model;
 
 import 'dart:math';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 import 'package:stagexl/stagexl.dart' as stageLib;
 import 'package:utils/utils.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';

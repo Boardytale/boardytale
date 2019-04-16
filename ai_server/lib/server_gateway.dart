@@ -6,17 +6,17 @@ class ServerGateway {
     print(io.Directory.current.path);
   }
 
-  void sendMessage(shared.ToGameServerMessage message, Connection connection) {
+  void sendMessage(core.ToGameServerMessage message, Connection connection) {
     print("ai out: ${message.content}");
-    connection.socket.write(json.encode(message.toJson()));
+    connection.socket.sink.add(json.encode(message.toJson()));
   }
 
   void incomingMessage(MessageWithConnection messageWithConnection) async {
     print("ai in: ${messageWithConnection.message.content}");
-    if(messageWithConnection.message.message == shared.OnAiServerAction.getNextMoveByState){
+    if(messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByState){
       tales[messageWithConnection.connection.id.toString()] = AiTale(messageWithConnection.message.getNextMoveByState, messageWithConnection.connection)..nextMove();
     }
-    if(messageWithConnection.message.message == shared.OnAiServerAction.getNextMoveByUpdate){
+    if(messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByUpdate){
       tales[messageWithConnection.connection.id.toString()]..applyPatch(messageWithConnection.message.getNextMoveByUpdate)..nextMove();
     }
   }
@@ -24,10 +24,10 @@ class ServerGateway {
 
 class Connection {
   int id;
-  io.Socket socket;
+  WebSocketChannel socket;
 }
 
 class MessageWithConnection {
-  shared.ToAiServerMessage message;
+  core.ToAiServerMessage message;
   Connection connection;
 }

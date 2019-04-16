@@ -10,8 +10,8 @@ dependencies:
   aqueduct: ^3.0.0
   uuid: any
   rxdart: ^0.20.0
-  shared:
-    path: ../shared
+  core:
+    path: ../core
   io_utils:
     path: ../libs/io_utils
 

@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import {BoardytaleConfiguration} from './shared/lib/configuration/configuration';
+import {BoardytaleConfiguration} from './core/lib/configuration/configuration';
 
 let configPath = null;
 process.argv.forEach(function (val, index, array) {
@@ -8,7 +8,7 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 import('./' + configPath).then((configFile: { config: BoardytaleConfiguration }) => {
-    fs.writeFileSync('config.json', JSON.stringify(configFile.config));
+    fs.writeFileSync('config.g.json', JSON.stringify(configFile.config));
     const config = configFile.config;
 
     fs.writeFileSync('user_server/database.yaml', `  

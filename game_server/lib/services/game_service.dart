@@ -4,9 +4,9 @@ class GameService {
   Map<String, ServerTale> tales = {};
 
   GameService() {
-    gateway.handlers[shared.OnServerAction.enterGame] = handleEnterGame;
-    gateway.handlers[shared.OnServerAction.unitTrackAction] = handleUnitTrackAction;
-    gateway.handlers[shared.OnServerAction.controlsAction] = handleControlsAction;
+    gateway.handlers[core.OnServerAction.enterGame] = handleEnterGame;
+    gateway.handlers[core.OnServerAction.unitTrackAction] = handleUnitTrackAction;
+    gateway.handlers[core.OnServerAction.controlsAction] = handleControlsAction;
   }
 
   void handleEnterGame(MessageWithConnection message) {
@@ -40,7 +40,7 @@ class GameService {
   }
 
   void handleControlsAction(MessageWithConnection message) {
-    if (message.message.controlsActionMessage.actionName == shared.ControlsActionName.endOfTurn) {
+    if (message.message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
       message.player.tale.endOfTurn(message);
     }
   }

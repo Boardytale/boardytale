@@ -1,20 +1,20 @@
 part of game_server;
 
 class ServerGateway {
-  Map<shared.OnServerAction, void Function(MessageWithConnection message)>
+  Map<core.OnServerAction, void Function(MessageWithConnection message)>
       handlers = {};
 
-  void sendMessage(shared.ToClientMessage message, ServerPlayer player) {
+  void sendMessage(core.ToClientMessage message, ServerPlayer player) {
     player.connection.webSocket.sink.add(json.encode(message.toJson()));
   }
 
-  void sendMessageByConnection(shared.ToClientMessage message, Connection connection) {
+  void sendMessageByConnection(core.ToClientMessage message, Connection connection) {
     connection.webSocket.sink.add(json.encode(message.toJson()));
   }
 
   void incomingMessage(MessageWithConnection messageWithConnection) async {
-    if (messageWithConnection.message.message == shared.OnServerAction.init) {
-      handlers[shared.OnServerAction.init](messageWithConnection);
+    if (messageWithConnection.message.message == core.OnServerAction.init) {
+      handlers[core.OnServerAction.init](messageWithConnection);
       return;
     }
 

@@ -30,7 +30,7 @@ class UnitPaintable extends Paintable {
     unit.onStepsChanged.listen(createBitmap);
   }
 
-  Map<String, shared.Image> get images => view.assets.images;
+  Map<String, core.Image> get images => view.assets.images;
 
   int get resolutionLevel => gameService.worldParams.resolutionLevel;
 
@@ -53,7 +53,7 @@ class UnitPaintable extends Paintable {
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     if (!unitGlobalCache.containsKey(state)) {
-      shared.Image primaryImage = getPrimaryImage();
+      core.Image primaryImage = getPrimaryImage();
       data = stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
       ImageElement imageElement;
       if (primaryImage == images[unit.type.bigImageName]) {
@@ -242,7 +242,7 @@ class UnitPaintable extends Paintable {
         .armor}r${unit.range}${unit.player.id}";
   }
 
-  shared.Image getPrimaryImage() {
+  core.Image getPrimaryImage() {
     int resolutionLevel = gameService.worldParams.resolutionLevel;
     if (resolutionLevel == 0) {
       if (images.containsKey(unit.type.iconName)) {

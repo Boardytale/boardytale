@@ -6,8 +6,8 @@ import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:ng2_g_signin/ng2_g_signin.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared/model/model.dart' as model;
-import 'package:shared/model/model.dart';
+import 'package:core/model/model.dart' as model;
+import 'package:core/model/model.dart';
 
 @Component(
     selector: 'user-bar',

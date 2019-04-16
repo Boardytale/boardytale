@@ -2,20 +2,20 @@ part of ai_server;
 
 class AiTale {
   final Connection connection;
-  shared.GetNextMoveByState initialRequest;
-  shared.Tale initialTaleData;
-  shared.AiEngine engine;
-  Map<String, shared.Player> players = {};
+  core.GetNextMoveByState initialRequest;
+  core.Tale initialTaleData;
+  core.AiEngine engine;
+  Map<String, core.Player> players = {};
 
   // TODO: AI does not need images
-  Map<String, shared.UnitType> unitTypes = {};
-  shared.Player me;
-  Set<shared.Unit> playedUnits = {};
-  covariant Map<String, shared.Player> aiPlayers = {};
-  Map<String, shared.Field> fields;
-  Map<String, shared.Event> events = {};
-  Map<String, shared.Dialog> dialogs = {};
-  Map<String, shared.Unit> units = {};
+  Map<String, core.UnitType> unitTypes = {};
+  core.Player me;
+  Set<core.Unit> playedUnits = {};
+  covariant Map<String, core.Player> aiPlayers = {};
+  Map<String, core.Field> fields;
+  Map<String, core.Event> events = {};
+  Map<String, core.Dialog> dialogs = {};
+  Map<String, core.Unit> units = {};
 
   AiTale(this.initialRequest, this.connection) {
     initialTaleData = initialRequest.requestData;
@@ -24,22 +24,22 @@ class AiTale {
     initialTaleData.players.forEach((key, player) {
       players[player.id] = player;
     });
-    shared.World.createFields(initialTaleData.world, (key) => shared.Field(key));
+    fields = core.World.createFields(initialTaleData.world, (key) => core.Field(key));
     initialTaleData.units.forEach((action) {
-      units[action.unitId] = shared.Unit(createAbilityList, action, fields, players, unitTypes);
+      units[action.unitId] = core.Unit(createAbilityList, action, fields, players, unitTypes);
     });
     me = players[initialRequest.idOfAiPlayerOnMove];
   }
 
   void nextMove() {
-    shared.Unit unitOnMove = getFirstPlayCapableUnitOfMine();
+    core.Unit unitOnMove = getFirstPlayCapableUnitOfMine();
     if (unitOnMove == null) {
       endAiTurn();
       return;
     }
     print("starting next move with unit ${unitOnMove.id}");
-    List<shared.Unit> enemies = [];
-    List<shared.Unit> allies = [];
+    List<core.Unit> enemies = [];
+    List<core.Unit> allies = [];
     units.forEach((key, oneOfUnits) {
       if (oneOfUnits.player.team != unitOnMove.player.team) {
         enemies.add(oneOfUnits);
@@ -56,23 +56,23 @@ class AiTale {
       return;
     }
 
-    shared.SimpleLogger logger = shared.SimpleLogger();
-    shared.Track track =
-        shared.Track(shared.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, fields, unitOnMove.steps, logger: logger));
+    core.SimpleLogger logger = core.SimpleLogger();
+    core.Track track =
+        core.Track(core.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, fields, unitOnMove.steps, logger: logger));
     io.File("lib/log/lastNearestEnemy")..createSync()..writeAsString(logger.log);
     int terrainLength = track.getMoveCostOfFreeWay();
-    shared.UnitTrackAction action = shared.UnitTrackAction()..unitId = unitOnMove.id;
+    core.UnitTrackAction action = core.UnitTrackAction()..unitId = unitOnMove.id;
     if (terrainLength > unitOnMove.steps) {
-      action.abilityName = shared.AbilityName.move;
+      action.abilityName = core.AbilityName.move;
       action.track = track.subTrack(0, track.getEndIndexWithSteps(unitOnMove.steps) + 1).toIds();
     } else {
-      action.abilityName = shared.AbilityName.attack;
+      action.abilityName = core.AbilityName.attack;
       action.track = track.toIds();
     }
-    gateway.sendMessage(shared.ToGameServerMessage.unitTrackAction(action), connection);
+    gateway.sendMessage(core.ToGameServerMessage.unitTrackAction(action), connection);
   }
 
-  shared.Unit getFirstPlayCapableUnitOfMine() {
+  core.Unit getFirstPlayCapableUnitOfMine() {
     var unitList = units.values.toList();
     for (var i = 0; i < unitList.length; i++) {
       var unit = unitList[i];
@@ -87,10 +87,10 @@ class AiTale {
   }
 
   void endAiTurn() {
-    gateway.sendMessage(shared.ToGameServerMessage.controlsAction(shared.ControlsActionName.endOfTurn), connection);
+    gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn), connection);
   }
 
-  void applyPatch(shared.GetNextMoveByUpdate update) {
+  void applyPatch(core.GetNextMoveByUpdate update) {
     update.requestUpdateData.actions.forEach((action) {
       units[action.unitId]
           .addUnitUpdateAction(action, action.moveToFieldId != null ? fields[action.moveToFieldId] : null);
@@ -98,13 +98,13 @@ class AiTale {
   }
 }
 
-List<shared.Ability> createAbilityList(shared.AbilitiesEnvelope envelope) {
-  List<shared.Ability> out = [];
+List<core.Ability> createAbilityList(core.AbilitiesEnvelope envelope) {
+  List<core.Ability> out = [];
   if (envelope.move != null) {
-    out.add(shared.MoveAbility()..fromEnvelope(envelope.move));
+    out.add(core.MoveAbility()..fromEnvelope(envelope.move));
   }
   if (envelope.attack != null) {
-    out.add(shared.AttackAbility()..fromEnvelope(envelope.attack));
+    out.add(core.AttackAbility()..fromEnvelope(envelope.attack));
   }
   return out;
 }

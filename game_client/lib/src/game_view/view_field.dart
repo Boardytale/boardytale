@@ -24,7 +24,7 @@ class ViewField {
         _clearPaintables();
       }
     } else {
-      shared.Unit painted = original.getFirstAliveOnField();
+      core.Unit painted = original.getFirstAliveOnField();
       if (painted == null) {
         painted = original.units.first;
       }
@@ -47,7 +47,7 @@ class ViewField {
     unitPaintables.clear();
   }
 
-  void addUnit(shared.Unit unit) {
+  void addUnit(core.Unit unit) {
     unitPaintables
         .add(UnitPaintable(unit, worldViewService.unitStage, worldViewService, unit.field));
   }

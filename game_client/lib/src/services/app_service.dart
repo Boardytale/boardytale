@@ -9,7 +9,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
-import 'package:shared/model/model.dart' as shared;
+import 'package:core/model/model.dart' as core;
 
 @Injectable()
 class AppService {
@@ -19,34 +19,34 @@ class AppService {
     } else {
       showSignInButton = true;
     }
-    navigationState.add(states[shared.GameNavigationState.loading]);
-    this.gatewayService.handlers[shared.OnClientAction.setNavigationState] = setState;
-    this.gatewayService.handlers[shared.OnClientAction.setCurrentUser] = setUser;
+    navigationState.add(states[core.GameNavigationState.loading]);
+    this.gatewayService.handlers[core.OnClientAction.setNavigationState] = setState;
+    this.gatewayService.handlers[core.OnClientAction.setCurrentUser] = setUser;
   }
 
-  shared.Lang language = shared.Lang.en;
-  BehaviorSubject<shared.User> currentUser = BehaviorSubject<shared.User>(seedValue: null);
+  core.Lang language = core.Lang.en;
+  BehaviorSubject<core.User> currentUser = BehaviorSubject<core.User>(seedValue: null);
   BehaviorSubject<Null> destroyCurrentTale = BehaviorSubject<Null>();
-  Map<shared.GameNavigationState, ClientGameState> states = {
-    shared.GameNavigationState.loading: ClientGameState()
-      ..name = shared.GameNavigationState.loading
+  Map<core.GameNavigationState, ClientGameState> states = {
+    core.GameNavigationState.loading: ClientGameState()
+      ..name = core.GameNavigationState.loading
       ..showCreateGameButton = false,
-    shared.GameNavigationState.createGame: ClientGameState()
-      ..name = shared.GameNavigationState.createGame
+    core.GameNavigationState.createGame: ClientGameState()
+      ..name = core.GameNavigationState.createGame
       ..showCreateGameButton = false,
-    shared.GameNavigationState.findLobby: ClientGameState()
-      ..name = shared.GameNavigationState.findLobby
+    core.GameNavigationState.findLobby: ClientGameState()
+      ..name = core.GameNavigationState.findLobby
       ..showCreateGameButton = true,
-    shared.GameNavigationState.inGame: ClientGameState()
-      ..name = shared.GameNavigationState.inGame
+    core.GameNavigationState.inGame: ClientGameState()
+      ..name = core.GameNavigationState.inGame
       ..showCreateGameButton = false,
-    shared.GameNavigationState.inLobby: ClientGameState()
-      ..name = shared.GameNavigationState.inLobby
+    core.GameNavigationState.inLobby: ClientGameState()
+      ..name = core.GameNavigationState.inLobby
       ..showCreateGameButton = false,
   };
 
   Map<String, ClientPlayer> players = {};
-  Map<String, shared.AiGroup> aiGroups = {};
+  Map<String, core.AiGroup> aiGroups = {};
   ClientPlayer currentPlayer;
   SettingsService settings;
   StreamController<Map> _onAlert = StreamController<Map>();
@@ -62,14 +62,14 @@ class AppService {
   bool showSignInButton = false;
 
 
-  void setState(shared.ToClientMessage message) {
+  void setState(core.ToClientMessage message) {
     navigationState.add(states[message.navigationStateMessage.newState]);
     if (message.navigationStateMessage.destroyCurrentTale) {
       destroyCurrentTale.add(null);
     }
   }
 
-  void setUser(shared.ToClientMessage message) {
+  void setUser(core.ToClientMessage message) {
     currentUser.add(message.getCurrentUser.user);
     if (message.getCurrentUser.user == null) {
       showSignInButton = true;
@@ -88,12 +88,12 @@ class AppService {
     _onAlert.add({"text": text, "type": "note"});
   }
 
-  void goToState(shared.GameNavigationState newState) {
-    gatewayService.sendMessage(shared.ToGameServerMessage.fromGoToState(newState));
+  void goToState(core.GameNavigationState newState) {
+    gatewayService.sendMessage(core.ToGameServerMessage.fromGoToState(newState));
   }
 }
 
 class ClientGameState {
-  shared.GameNavigationState name;
+  core.GameNavigationState name;
   bool showCreateGameButton;
 }
