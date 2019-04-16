@@ -11,21 +11,12 @@ class UserServerChannel extends ApplicationChannel {
 
   @override
   Future prepare() async {
-    final core.BoardytaleConfiguration boardytaleConfiguration =
-        getConfiguration();
-    core.DatabaseConfiguration database =
-        boardytaleConfiguration.userDatabase;
-    logger.onRecord.listen(
-        (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final ManagedDataModel dataModel =
-        ManagedDataModel.fromCurrentMirrorSystem();
-    final PostgreSQLPersistentStore psc =
-        PostgreSQLPersistentStore.fromConnectionInfo(
-            database.username,
-            database.password,
-            database.host,
-            database.port,
-            database.databaseName);
+    final core.BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
+    core.DatabaseConfiguration database = boardytaleConfiguration.userDatabase;
+    logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+    final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
+        database.username, database.password, database.host, database.port, database.databaseName);
 
     context = ManagedContext(dataModel, psc);
 

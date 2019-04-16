@@ -9,8 +9,7 @@ class EnumField {}
 
 class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
   @override
-  FutureOr<String> generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+  FutureOr<String> generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
     if (element is! ClassElement) {
       final name = element.name;
       return '// $name ${element.runtimeType}';
@@ -23,15 +22,12 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         field.metadata.forEach((ElementAnnotation annotation) {
           if (annotation.computeConstantValue() != null) {
             if (annotation.computeConstantValue().type.name == 'JsonValue') {
-              enumValues.add(annotation
-                  .computeConstantValue()
-                  .getField('value')
-                  .toStringValue());
+              enumValues.add(annotation.computeConstantValue().getField('value').toStringValue());
             }
           }
         });
       });
-      if(enumValues.isEmpty){
+      if (enumValues.isEmpty) {
         return "";
       }
       return 'export type ${classElement.name} = ${enumValues.map((value) => "'$value'").join('|')}';
@@ -58,8 +54,7 @@ class TypescriptGenerator extends GeneratorForAnnotation<Typescript> {
         }
       }
       if (field != null) {
-        fields.add(
-            '${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');
+        fields.add('${field.name}${isOptional ? "?" : ""}: ${_resolveType(field.type)};');
       }
     });
 

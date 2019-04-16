@@ -19,7 +19,7 @@ class Player {
 
   get isGameMaster => isHumanPlayer && humanPlayer.isGameMaster;
 
-  String get name => isHumanPlayer?humanPlayer.name: aiGroup.langName.values.first;
+  String get name => isHumanPlayer ? humanPlayer.name : aiGroup.langName.values.first;
 
   static Player fromJson(Map json) {
     return _$PlayerFromJson(json);
@@ -27,7 +27,7 @@ class Player {
 
   int getStageColor() {
     var color = ColorParser(this.color);
-    return 256*256*256*255 + 256*256*color.red + 256*color.green + color.blue;
+    return 256 * 256 * 256 * 255 + 256 * 256 * color.red + 256 * color.green + color.blue;
   }
 
   Map<String, dynamic> toJson() {

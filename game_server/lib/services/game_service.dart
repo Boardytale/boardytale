@@ -13,7 +13,7 @@ class GameService {
     String lobbyId = message.message.enterGameMessage.lobbyId;
     LobbyRoom room = lobbyService.getLobbyRoomById(lobbyId);
 
-    if(room.connectedPlayers.length >= 4){
+    if (room.connectedPlayers.length >= 4) {
       print("too much connected players");
       // TODO: send info to client
       return;

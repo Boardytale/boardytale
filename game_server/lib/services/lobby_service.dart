@@ -2,11 +2,9 @@ part of game_server;
 
 class LobbyService {
   int lobbyId = 0;
-  BehaviorSubject<List<LobbyRoom>> openedLobbyRooms =
-      BehaviorSubject<List<LobbyRoom>>(seedValue: []);
+  BehaviorSubject<List<LobbyRoom>> openedLobbyRooms = BehaviorSubject<List<LobbyRoom>>(seedValue: []);
 
-  BehaviorSubject<List<core.OpenedLobby>> openedLobbies =
-      BehaviorSubject<List<core.OpenedLobby>>(seedValue: []);
+  BehaviorSubject<List<core.OpenedLobby>> openedLobbies = BehaviorSubject<List<core.OpenedLobby>>(seedValue: []);
 
   LobbyService() {
     gateway.handlers[core.OnServerAction.createLobby] = handleLobbyCreation;
@@ -38,8 +36,7 @@ class LobbyService {
     return null;
   }
 
-  Future<LobbyRoom> createLobbyRoom(
-      ServerPlayer player, String taleName, String name) async {
+  Future<LobbyRoom> createLobbyRoom(ServerPlayer player, String taleName, String name) async {
     var lobbyPlayer = player.createGamePlayer();
     lobbyPlayer.humanPlayer.isGameMaster = true;
 
@@ -61,18 +58,16 @@ class LobbyService {
     return room;
   }
 
-  void removeLobbyRoom(LobbyRoom room){
+  void removeLobbyRoom(LobbyRoom room) {
     openedLobbyRooms.value.remove(room);
     openedLobbyRooms.add(openedLobbyRooms.value);
   }
 
   Future<core.TaleCompiled> getTaleByName(String name) async {
-    String uri =
-        makeAddressFromUri(config.editorServer.uris.first) + "inner/taleByName";
+    String uri = makeAddressFromUri(config.editorServer.uris.first) + "inner/taleByName";
     print(jsonEncode(IdWrap.packId(name)));
-    http.Response response = await http.post(uri,
-        headers: {"Content-Type": "application/json"},
-        body: IdWrap.packId(name));
+    http.Response response =
+        await http.post(uri, headers: {"Content-Type": "application/json"}, body: IdWrap.packId(name));
 
     print(response.body);
     return core.TaleCompiled.fromJson(json.decode(response.body));
@@ -80,26 +75,18 @@ class LobbyService {
 
   void handleLobbyCreation(MessageWithConnection messageWithConnection) async {
     gateway.sendMessage(
-        core.ToClientMessage.fromSetNavigationState(
-            core.GameNavigationState.inLobby),
-        messageWithConnection.player);
+        core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), messageWithConnection.player);
 
-    core.CreateLobby message =
-        messageWithConnection.message.createLobbyMessage;
+    core.CreateLobby message = messageWithConnection.message.createLobbyMessage;
 
-    createLobbyRoom(
-        messageWithConnection.player, message.taleName, message.name);
+    createLobbyRoom(messageWithConnection.player, message.taleName, message.name);
 
-    messageWithConnection.player.navigationState =
-        core.GameNavigationState.inLobby;
+    messageWithConnection.player.navigationState = core.GameNavigationState.inLobby;
   }
 
   void handleEnterLobby(MessageWithConnection messageWithConnection) async {
     ServerPlayer player = messageWithConnection.player;
-    gateway.sendMessage(
-        core.ToClientMessage.fromSetNavigationState(
-            core.GameNavigationState.inLobby),
-        player);
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), player);
 
     core.EnterLobby message = messageWithConnection.message.enterLobbyMessage;
 
@@ -107,8 +94,7 @@ class LobbyService {
     var lobbyPlayer = messageWithConnection.player.createGamePlayer();
     room.openedLobby.players.add(lobbyPlayer);
     room.connectedPlayers[player.email] = player;
-    messageWithConnection.player.navigationState =
-        core.GameNavigationState.inLobby;
+    messageWithConnection.player.navigationState = core.GameNavigationState.inLobby;
     room.sendUpdateToAllPlayers();
   }
 }

@@ -8,7 +8,6 @@ class CreateImageService {
   CreateImageService(this._http) {}
 
   void addImage(String image) {
-    this._http.post("/editorApi/images",
-        headers: {"Content-Type": "application/json"}, body: image);
+    this._http.post("/editorApi/images", headers: {"Content-Type": "application/json"}, body: image);
   }
 }

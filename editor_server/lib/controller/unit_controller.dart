@@ -15,9 +15,7 @@ class UnitController extends ResourceController {
     if (name == null) {
       return Response.badRequest(body: "id is not provided");
     }
-    var query = Query<UnitType>(context)
-      ..where((u) => u.name).equalTo(name)
-      ..where((u) => u.compiled).equalTo(true);
+    var query = Query<UnitType>(context)..where((u) => u.name).equalTo(name)..where((u) => u.compiled).equalTo(true);
     List<UnitType> result = await query.fetch();
     return Response.ok(result);
   }
@@ -67,39 +65,31 @@ class UnitController extends ResourceController {
     UnitType unitTypeData = (await notCompiledQuery.fetch()).first;
 
     // get images
-    var unitTypeEnvelope = model.UnitTypeCreateEnvelope.fromJson(
-        unitTypeData.unitTypeData.data as Map);
+    var unitTypeEnvelope = model.UnitTypeCreateEnvelope.fromJson(unitTypeData.unitTypeData.data as Map);
 
     model.Image image;
     model.Image icon;
     model.Image bigImage;
 
-    var query = Query<Image>(context)
-      ..where((u) => u.name).equalTo(unitTypeEnvelope.imageName);
+    var query = Query<Image>(context)..where((u) => u.name).equalTo(unitTypeEnvelope.imageName);
     List<Image> result = await query.fetch();
     if (result.isNotEmpty) {
-      image = model.Image.fromJson(
-          result.first.imageData.data as Map<String, dynamic>);
+      image = model.Image.fromJson(result.first.imageData.data as Map<String, dynamic>);
     }
 
-    query = Query<Image>(context)
-      ..where((u) => u.name).equalTo(unitTypeEnvelope.iconName);
+    query = Query<Image>(context)..where((u) => u.name).equalTo(unitTypeEnvelope.iconName);
     result = await query.fetch();
     if (result.isNotEmpty) {
-      icon = model.Image.fromJson(
-          result.first.imageData.data as Map<String, dynamic>);
+      icon = model.Image.fromJson(result.first.imageData.data as Map<String, dynamic>);
     }
 
-    query = Query<Image>(context)
-      ..where((u) => u.name).equalTo(unitTypeEnvelope.bigImageName);
+    query = Query<Image>(context)..where((u) => u.name).equalTo(unitTypeEnvelope.bigImageName);
     result = await query.fetch();
     if (result.isNotEmpty) {
-      bigImage = model.Image.fromJson(
-          result.first.imageData.data as Map<String, dynamic>);
+      bigImage = model.Image.fromJson(result.first.imageData.data as Map<String, dynamic>);
     }
 
-    model.UnitTypeCompiled unitType =
-        model.UnitTypeCompiled.fromJson(unitTypeData.unitTypeData.data as Map);
+    model.UnitTypeCompiled unitType = model.UnitTypeCompiled.fromJson(unitTypeData.unitTypeData.data as Map);
     unitType
       ..image = image
       ..bigImage = bigImage

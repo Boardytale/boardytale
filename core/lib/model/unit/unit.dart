@@ -73,7 +73,7 @@ class Unit {
     _limitAttributes();
   }
 
-  int resolveIncomingDamage(int damage){
+  int resolveIncomingDamage(int damage) {
     return damage - _armor;
   }
 

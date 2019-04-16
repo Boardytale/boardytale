@@ -10,6 +10,7 @@ List<core.Ability> createServerAbilityList(core.AbilitiesEnvelope envelope) {
   }
   return out;
 }
+
 //
 class ServerUnit {
 //  ServerPlayer player;
@@ -19,7 +20,8 @@ class ServerUnit {
 //      Map<String, core.Player> players, Map<String, core.UnitType> types)
 //      : super(createServerAbilityList, action, fields, players, types);
 //
-  static TaleAction perform(core.AbilityName name, core.Track track, core.UnitTrackAction action, ServerTale tale, core.Unit unit, ServerPlayer player) {
+  static TaleAction perform(core.AbilityName name, core.Track track, core.UnitTrackAction action, ServerTale tale,
+      core.Unit unit, ServerPlayer player) {
     for (int i = 0; i < unit.abilities.length; i++) {
       ServerAbility ability = unit.abilities[i];
       if (ability.name == name) {
@@ -28,6 +30,7 @@ class ServerUnit {
     }
     return null;
   }
+
 //
 //  core.UnitUpdateReport addUnitUpdateAction(core.UnitCreateOrUpdateAction action, core.Field newField) {
 //    core.UnitUpdateReport report = super.addUnitUpdateAction(action, newField);

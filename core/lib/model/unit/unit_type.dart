@@ -44,26 +44,26 @@ class UnitType extends UnitTypeCommons {
   AbilitiesEnvelope abilities;
 
   fromCompiled(UnitTypeCompiled data, Assets assets) {
-      abilities = data.abilities;
-      imageName = data.image.name;
-      bigImageName = data.bigImage?.name;
-      iconName = data.icon?.name;
-      race = data.race;
-      name = data.name;
-      health = data.health;
-      armor = data.armor;
-      speed = data.speed;
-      range = data.range;
-      actions = data.actions;
-      attack = data.attack;
-      cost = data.cost;
-      assets.images[data.image.name] = data.image;
-      if(data.bigImage != null){
-        assets.images[data.bigImage.name] = data.bigImage;
-      }
-      if(data.icon != null){
-        assets.images[data.icon.name] = data.icon;
-      }
+    abilities = data.abilities;
+    imageName = data.image.name;
+    bigImageName = data.bigImage?.name;
+    iconName = data.icon?.name;
+    race = data.race;
+    name = data.name;
+    health = data.health;
+    armor = data.armor;
+    speed = data.speed;
+    range = data.range;
+    actions = data.actions;
+    attack = data.attack;
+    cost = data.cost;
+    assets.images[data.image.name] = data.image;
+    if (data.bigImage != null) {
+      assets.images[data.bigImage.name] = data.bigImage;
+    }
+    if (data.icon != null) {
+      assets.images[data.icon.name] = data.icon;
+    }
   }
 
   static UnitType fromJson(Map data) {
@@ -73,7 +73,6 @@ class UnitType extends UnitTypeCommons {
   Map<String, dynamic> toJson() {
     return _$UnitTypeToJson(this);
   }
-
 }
 
 @Typescript()

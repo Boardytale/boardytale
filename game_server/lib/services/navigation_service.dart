@@ -6,15 +6,13 @@ class NavigationService {
   }
 
   void handle(MessageWithConnection messageWithConnection) async {
-    messageWithConnection.player.navigationState =
-        messageWithConnection.message.goToStateMessage.newState;
+    messageWithConnection.player.navigationState = messageWithConnection.message.goToStateMessage.newState;
     restoreState(messageWithConnection.player);
   }
 
   void restoreState(ServerPlayer player) {
     core.GameNavigationState newState = player.navigationState;
-    gateway.sendMessage(
-        core.ToClientMessage.fromSetNavigationState(newState), player);
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(newState), player);
 
     if (newState == core.GameNavigationState.findLobby) {
       player.subscribeToOpenedLobbiesChanges();
@@ -31,7 +29,7 @@ class NavigationService {
       player.unsubscribeFromOpenedLobbiesChanges();
     }
 
-    if(newState == core.GameNavigationState.inGame){
+    if (newState == core.GameNavigationState.inGame) {
       player.tale.sendTaleDataToPlayer(player);
     }
   }

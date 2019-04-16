@@ -58,4 +58,3 @@ class NameWrap implements Serializable {
     return json.encode((NameWrap()..name = name).asMap());
   }
 }
-

@@ -1,11 +1,11 @@
 part of boardytale.client.abilities;
 
-List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope){
+List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope) {
   List<core.Ability> out = [];
-  if(envelope.move != null){
+  if (envelope.move != null) {
     out.add(ClientMoveAbility()..fromEnvelope(envelope.move));
   }
-  if(envelope.attack != null){
+  if (envelope.attack != null) {
     out.add(ClientAttackAbility()..fromEnvelope(envelope.attack));
   }
   return out;
@@ -21,7 +21,4 @@ class FieldHighlight {
   core.Field field;
 }
 
-enum HighlightName{
-  track,
-  attack
-}
+enum HighlightName { track, attack }

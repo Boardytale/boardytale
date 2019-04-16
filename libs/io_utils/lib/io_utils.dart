@@ -45,8 +45,7 @@ String dartExecutable =
 String pubExecutable =
     "pub${(Platform.operatingSystem == 'linux' || Platform.operatingSystem == 'macos') ? "" : ".bat"}";
 
-Future<bool> waitForSignal(Process process, String signal,
-    {String printPrefix: null}) {
+Future<bool> waitForSignal(Process process, String signal, {String printPrefix: null}) {
   Stream<List<int>> stdout = process.stdout;
   Stream<List<int>> stderr = process.stderr;
   Completer<bool> completer = new Completer<bool>();
@@ -84,14 +83,12 @@ void printFromOutputStreams(Object process, String prefix, String color) {
     if (process.stdout is String) {
       _outToConsole(prefix, process.stdout, colorCode);
     } else {
-      _outToConsole(prefix,
-          new String.fromCharCodes(process.stdout as List<int>), colorCode);
+      _outToConsole(prefix, new String.fromCharCodes(process.stdout as List<int>), colorCode);
     }
     if (process.stderr is String) {
       _errToConsole(prefix, process.stderr, colorCode);
     } else {
-      _errToConsole(prefix,
-          new String.fromCharCodes(process.stderr as List<int>), colorCode);
+      _errToConsole(prefix, new String.fromCharCodes(process.stderr as List<int>), colorCode);
     }
   } else {
     throw new ArgumentError("unknown type - cannot extract stdout and stderr");
@@ -143,8 +140,7 @@ Color _getColor(String string) {
 Directory getProjectDirectory() {
   Directory projectDir = Directory.current;
   int overflowProtection = 0;
-  while (!isFileInFileSystemEntityList(
-      projectDir.listSync(followLinks: false), "projectroot")) {
+  while (!isFileInFileSystemEntityList(projectDir.listSync(followLinks: false), "projectroot")) {
     if (overflowProtection++ > 30) {
       throw new Exception("Cannot found project dir");
     }
@@ -153,8 +149,7 @@ Directory getProjectDirectory() {
   return projectDir;
 }
 
-bool isFileInFileSystemEntityList(
-    List<FileSystemEntity> list, String filename) {
+bool isFileInFileSystemEntityList(List<FileSystemEntity> list, String filename) {
   for (FileSystemEntity f in list) {
     if (path_lib.basename(f.path) == filename) {
       return true;
@@ -168,9 +163,7 @@ Future<bool> terminateMe(int port, [int terminateDelay = 50]) async {
     var socket = await Socket.connect('127.0.0.1', port);
     socket.write('terminate');
     // time to terminate
-    await new Future<dynamic>.delayed(
-            new Duration(milliseconds: terminateDelay))
-        .then((_) {
+    await new Future<dynamic>.delayed(new Duration(milliseconds: terminateDelay)).then((_) {
       socket.close();
     });
     return true;
@@ -190,38 +183,24 @@ Future createTerminator(int port) async {
   });
 }
 
-arg_lib.ArgResults parseArgs(
-    void enhanceParser(arg_lib.ArgParser parser), List<String> args) {
+arg_lib.ArgResults parseArgs(void enhanceParser(arg_lib.ArgParser parser), List<String> args) {
   arg_lib.ArgParser parser = new arg_lib.ArgParser();
   parser.addOption("loglevel",
       abbr: "l",
-      allowed: [
-        "ALL",
-        "FINEST",
-        "FINER",
-        "FINE",
-        "CONFIG",
-        "INFO",
-        "WARNING",
-        "SEVERE",
-        "SHOUT",
-        "OFF"
-      ],
+      allowed: ["ALL", "FINEST", "FINER", "FINE", "CONFIG", "INFO", "WARNING", "SEVERE", "SHOUT", "OFF"],
       defaultsTo: "INFO",
       help: "set logLevel for Logger");
   if (enhanceParser != null) enhanceParser(parser);
   return parser.parse(args);
 }
 
-void recursiveFolderCopySync(String path1, String path2,
-    [List<String> forbiddenFileNames]) {
+void recursiveFolderCopySync(String path1, String path2, [List<String> forbiddenFileNames]) {
   if (forbiddenFileNames == null) {
     forbiddenFileNames = [];
   }
   Directory dir1 = new Directory(path1);
   if (!dir1.existsSync()) {
-    throw new Exception(
-        'Source directory "${dir1.path}" does not exist, nothing to copy');
+    throw new Exception('Source directory "${dir1.path}" does not exist, nothing to copy');
   }
   Directory dir2 = new Directory(path2);
   if (!dir2.existsSync()) {
@@ -244,8 +223,7 @@ void recursiveFolderCopySync(String path1, String path2,
 }
 
 void deleteRecursively(Directory root,
-    {bool deleteFileChecker(String fileName),
-    bool deleteDirectoryChecker(String dirName)}) {
+    {bool deleteFileChecker(String fileName), bool deleteDirectoryChecker(String dirName)}) {
   root.listSync().forEach((FileSystemEntity element) {
     if (element is File) {
       if (deleteFileChecker(path_lib.basename(element.path))) {
@@ -258,8 +236,7 @@ void deleteRecursively(Directory root,
         element.deleteSync(recursive: true);
       } else {
         deleteRecursively(element,
-            deleteFileChecker: deleteFileChecker,
-            deleteDirectoryChecker: deleteDirectoryChecker);
+            deleteFileChecker: deleteFileChecker, deleteDirectoryChecker: deleteDirectoryChecker);
       }
     } else {
       throw new Exception('File is neither File nor Directory. HOW?!');
@@ -269,9 +246,7 @@ void deleteRecursively(Directory root,
 
 String thisPackagePath() {
   Directory directory = Directory.current;
-  while (!directory
-      .listSync()
-      .any((entity) => entity.path.contains("pubspec.yaml"))) {
+  while (!directory.listSync().any((entity) => entity.path.contains("pubspec.yaml"))) {
     directory = directory.parent;
   }
 
@@ -279,12 +254,7 @@ String thisPackagePath() {
 }
 
 String makeAddressFromUri(Uri uri, {bool secured: false}) {
-  return (secured ? 'https' : 'http') +
-      '://' +
-      uri.host +
-      ':' +
-      uri.port.toString() +
-      '/';
+  return (secured ? 'https' : 'http') + '://' + uri.host + ':' + uri.port.toString() + '/';
 }
 
 String harmonizePath() {
@@ -303,7 +273,6 @@ String harmonizePath() {
 String slashesInPath(String path) {
   return path.replaceAll('\\', '/');
 }
-
 
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {
 //  arg_lib.ArgParser parser = new arg_lib.ArgParser();

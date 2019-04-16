@@ -1,6 +1,6 @@
 part of client_model;
 
-class ClientWorldParams{
+class ClientWorldParams {
   int userTopOffset = 0;
   int userLeftOffset = 0;
   double _zoom = 1;
@@ -18,7 +18,6 @@ class ClientWorldParams{
     fieldHeight = fieldWidth * settings.widthHeightRatio;
     defaultHex.recalculate();
   }
-
 
   double get zoom => _zoom;
 
@@ -40,11 +39,9 @@ class ClientWorldParams{
     _resolutionLevel = value;
     onResolutionLevelChanged.add(null);
   }
-
 }
 
-class ClientWorldUtils{
-
+class ClientWorldUtils {
   static ClientField getFieldByMouseOffset(num nx, num ny, GameService gameService) {
     int x = nx.toInt();
     int y = ny.toInt();
@@ -90,9 +87,7 @@ class ClientWorldUtils{
     return gameService.fields["${fx}_$fy"];
   }
 
-  static void fromEnvelope(core.World envelope,
-      GameService gameService
-      ) {
+  static void fromEnvelope(core.World envelope, GameService gameService) {
     gameService.worldParams.width = envelope.width;
     gameService.worldParams.height = envelope.height;
     gameService.fields.clear();
@@ -111,8 +106,7 @@ class ClientWorldUtils{
     gameService.startingFieldIds = envelope.startingFieldIds;
   }
 
-  static Map<String, core.FieldCreateEnvelope> createFieldsData(
-      core.World envelope) {
+  static Map<String, core.FieldCreateEnvelope> createFieldsData(core.World envelope) {
     Map<String, core.FieldCreateEnvelope> fieldsData = envelope.fields;
     Map<String, core.FieldCreateEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
@@ -121,12 +115,10 @@ class ClientWorldUtils{
           indexedFieldsData[k] = v;
         }
         if (v is Map<String, dynamic>) {
-          indexedFieldsData[k] = core.FieldCreateEnvelope()
-            ..terrain = envelope.baseTerrain;
+          indexedFieldsData[k] = core.FieldCreateEnvelope()..terrain = envelope.baseTerrain;
         }
       });
     }
     return fieldsData;
   }
 }
-

@@ -15,13 +15,10 @@ class ImageController extends ResourceController {
     if (_type is core.ImageType) {
       imageType = _type;
     } else {
-      return Response.badRequest(body: {
-        'error':
-            'image type not sent or not supported see ImageType for more details'
-      });
+      return Response.badRequest(
+          body: {'error': 'image type not sent or not supported see ImageType for more details'});
     }
-    var query = Query<Image>(context)
-      ..where((u) => u.imageType).equalTo(imageType);
+    var query = Query<Image>(context)..where((u) => u.imageType).equalTo(imageType);
     List<Image> result = await query.fetch();
     return Response.ok(result);
   }

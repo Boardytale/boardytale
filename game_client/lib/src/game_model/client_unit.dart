@@ -1,15 +1,16 @@
 part of client_model;
 
 class ClientUnit extends core.Unit {
-  ClientUnit(core.UnitCreateOrUpdateAction action, Map<String, core.Field> fields,
-      Map<String, core.Player> players, Map<String, core.UnitType> types)
+  ClientUnit(core.UnitCreateOrUpdateAction action, Map<String, core.Field> fields, Map<String, core.Player> players,
+      Map<String, core.UnitType> types)
       : super(createClientAbilityList, action, fields, players, types);
 
   core.Ability getAbility(core.Track track, bool shift, bool alt, bool ctrl) {
     List<core.Ability> possibles = abilities.toList();
-    possibles..removeWhere((core.Ability ability){
-      return !ability.validate(this, track);
-    });
+    possibles
+      ..removeWhere((core.Ability ability) {
+        return !ability.validate(this, track);
+      });
 
     int used = 0;
     if (possibles.isEmpty) {

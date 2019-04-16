@@ -11,7 +11,7 @@ class UnitPaintable extends Paintable {
   int _armorWidth = 15;
   static ImageElement _armorImage = ImageElement(
       src:
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAVCAYAAACZm7S3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKGSURBVDhPnZLdS9NhFMd/YhdFQhjlXHPLqZu692nq3hQq0E2F6Coi6EbowiiCsMALC8yguyCqKy8i6E1IerEoayhT0VaZrYv+hILITN3MTU/fc/abOlOQHvhyzrbz+Z7znD1K09FI4eEj8w5LzQBtJK2xYyNFS6w9GsXuGUpkChtal6m+JQmlRLsLQmS03CCz6x45fOPk9I2RrrSL9KYrYqI4A5MqsLQ57L5PtrpBctd/JJPzLlVUP/4/uNz9kAzmq1uDS2y3ATwimycM+JN01Zt7tgaX2XsB9JPdO0xVDTHZjd685s6BlkUVWFLzJGKSdMVnyOS4Q5UHnmJho+QKvCcrxs+6c6D5jxSzgeTNiyKGedOWmhey6crqJ4R/Jxv2hxIqlES+ILkfYpjva619TU7/BExeYoKxVRgLmfKH4quQ5AkRwxVV/Rj1LeAo4huJDEIpRW/q7vMF51VggSQPxhHjVFR2Cfd9hk0PiYHdE8nAKYELdMcv+4KzUuwPJhDnxIDFsKXmFTY9IjC/Mlf9FF5ZJxsMKHpzdwU6LXtVyNv0G3EWcVbgdMeRdNfABzHAdaYBmxQ+RWVdg1zsbZojb+OMGLAYttUNwyAMaAKPJEba4vPQuV7AOQoRKfuMF3aaXQ/GGfY0/oJmRNK5NoyxR9F1Uj7vLTp1HY8nhzmBWRrD6XwY/OAivhd34WIe2eGLpsct7fwC5WWYFZiFcYIwABzDU/wqsMP3TkDk3wAeXFufBbMA97EBi2Gj5SYZyq9NAzyxK18r42aUBbIOtX7O1Rjanxfub1fhWz8BtuVuy8sCWXLWf3ms7XvuHt3JCMMAOxRlxz8ga+Ws/8FgOrsd8MXNQUX5C6rsmLieQIf6AAAAAElFTkSuQmCC");
+          "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAVCAYAAACZm7S3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKGSURBVDhPnZLdS9NhFMd/YhdFQhjlXHPLqZu692nq3hQq0E2F6Coi6EbowiiCsMALC8yguyCqKy8i6E1IerEoayhT0VaZrYv+hILITN3MTU/fc/abOlOQHvhyzrbz+Z7znD1K09FI4eEj8w5LzQBtJK2xYyNFS6w9GsXuGUpkChtal6m+JQmlRLsLQmS03CCz6x45fOPk9I2RrrSL9KYrYqI4A5MqsLQ57L5PtrpBctd/JJPzLlVUP/4/uNz9kAzmq1uDS2y3ATwimycM+JN01Zt7tgaX2XsB9JPdO0xVDTHZjd685s6BlkUVWFLzJGKSdMVnyOS4Q5UHnmJho+QKvCcrxs+6c6D5jxSzgeTNiyKGedOWmhey6crqJ4R/Jxv2hxIqlES+ILkfYpjva619TU7/BExeYoKxVRgLmfKH4quQ5AkRwxVV/Rj1LeAo4huJDEIpRW/q7vMF51VggSQPxhHjVFR2Cfd9hk0PiYHdE8nAKYELdMcv+4KzUuwPJhDnxIDFsKXmFTY9IjC/Mlf9FF5ZJxsMKHpzdwU6LXtVyNv0G3EWcVbgdMeRdNfABzHAdaYBmxQ+RWVdg1zsbZojb+OMGLAYttUNwyAMaAKPJEba4vPQuV7AOQoRKfuMF3aaXQ/GGfY0/oJmRNK5NoyxR9F1Uj7vLTp1HY8nhzmBWRrD6XwY/OAivhd34WIe2eGLpsct7fwC5WWYFZiFcYIwABzDU/wqsMP3TkDk3wAeXFufBbMA97EBi2Gj5SYZyq9NAzyxK18r42aUBbIOtX7O1Rjanxfub1fhWz8BtuVuy8sCWXLWf3ms7XvuHt3JCMMAOxRlxz8ga+Ws/8FgOrsd8MXNQUX5C6rsmLieQIf6AAAAAElFTkSuQmCC");
 
   UnitPaintable(this.unit, stage_lib.Stage stage, WorldViewService view, ClientField field)
       : super(view, field, stage) {
@@ -123,7 +123,7 @@ class UnitPaintable extends Paintable {
     // TODO: one bitmap data might be reduced
     stage_lib.BitmapData data = stage_lib.BitmapData(rectWidth / 2, _damageHeight, 0x55FFFFFF);
     var textField =
-    stage_lib.TextField(unit.attack.join(" "), stage_lib.TextFormat('Spicy Rice', 12, stage_lib.Color.Black));
+        stage_lib.TextField(unit.attack.join(" "), stage_lib.TextFormat('Spicy Rice', 12, stage_lib.Color.Black));
     stage_lib.BitmapData labelBitmap = stage_lib.BitmapData(rectWidth / 2, _damageHeight, stage_lib.Color.Transparent);
     labelBitmap.draw(textField);
     data.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, rectWidth / 2, _damageHeight), stage_lib.Point(10, 0));
@@ -186,7 +186,7 @@ class UnitPaintable extends Paintable {
       double bitWidth = (width - (unit.type.health + 1) * bitSpace) / unit.type.health;
       for (int i = 0; i < unit.type.health; i++) {
         stage_lib.Rectangle bitRectangle =
-        stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
+            stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.actualHealth) {
           data.fillRect(bitRectangle, stage_lib.Color.Green);
         } else {
@@ -217,7 +217,7 @@ class UnitPaintable extends Paintable {
       double bitWidth = (width - (unit.speed + 1) * bitSpace) / unit.speed;
       for (int i = 0; i < unit.speed; i++) {
         stage_lib.Rectangle bitRectangle =
-        stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
+            stage_lib.Rectangle(i * bitWidth + (i + 1) * bitSpace, bitSpace, bitWidth, lifeBarHeight - 2 * bitSpace);
         if (i < unit.steps) {
           data.fillRect(bitRectangle, 0xFF00D2FF);
         } else {
@@ -238,8 +238,7 @@ class UnitPaintable extends Paintable {
     if (!unit.isAlive) {
       return "u${unit.type.name}h${unit.actualHealth}";
     }
-    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit
-        .armor}r${unit.range}${unit.player.id}";
+    return "u${unit.type.name}h${unit.actualHealth}mh${unit.type.health}s${unit.steps}ms${unit.speed}a${unit.armor}r${unit.range}${unit.player.id}";
   }
 
   core.Image getPrimaryImage() {

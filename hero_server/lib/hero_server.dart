@@ -17,12 +17,9 @@ class HeroServer {
   }
 
   void run() async {
-    var handler = const shelf.Pipeline()
-        .addMiddleware(shelf.logRequests())
-        .addHandler(_echoRequest);
+    var handler = const shelf.Pipeline().addMiddleware(shelf.logRequests()).addHandler(_echoRequest);
 
-    var server = await io.serve(
-        handler, 'localhost', config.heroesServer.uris.first.port);
+    var server = await io.serve(handler, 'localhost', config.heroesServer.uris.first.port);
 
     // Enable content compression
     server.autoCompress = true;
@@ -32,13 +29,12 @@ class HeroServer {
 
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     String body = await request.readAsString();
-    core.ToHeroServerMessage message =
-        core.ToHeroServerMessage.fromJson(json.decode(body));
+    core.ToHeroServerMessage message = core.ToHeroServerMessage.fromJson(json.decode(body));
     if (message.message == core.OnHeroServerAction.getHeroesOfPlayer) {
 //      core.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
       message.addHeroes([mockedHeroes[counter]]);
       counter++;
-      if(counter >= mockedHeroes.length){
+      if (counter >= mockedHeroes.length) {
         counter = 0;
       }
       return shelf.Response.ok(json.encode(message.toJson()));

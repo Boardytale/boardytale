@@ -24,8 +24,7 @@ class LobbiesComponent {
   final ChangeDetectorRef changeDetector;
   GatewayService gateway;
 
-  LobbiesComponent(this.lobbyService, this.settingsService, this.changeDetector,
-      this.gateway) {
+  LobbiesComponent(this.lobbyService, this.settingsService, this.changeDetector, this.gateway) {
     lobbyService.lobbies.listen((onData) => changeDetector.markForCheck());
   }
 

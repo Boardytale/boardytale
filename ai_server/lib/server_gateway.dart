@@ -2,7 +2,7 @@ part of ai_server;
 
 class ServerGateway {
   Map<String, AiTale> tales = {};
-  ServerGateway(){
+  ServerGateway() {
     print(io.Directory.current.path);
   }
 
@@ -13,11 +13,14 @@ class ServerGateway {
 
   void incomingMessage(MessageWithConnection messageWithConnection) async {
     print("ai in: ${messageWithConnection.message.content}");
-    if(messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByState){
-      tales[messageWithConnection.connection.id.toString()] = AiTale(messageWithConnection.message.getNextMoveByState, messageWithConnection.connection)..nextMove();
+    if (messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByState) {
+      tales[messageWithConnection.connection.id.toString()] =
+          AiTale(messageWithConnection.message.getNextMoveByState, messageWithConnection.connection)..nextMove();
     }
-    if(messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByUpdate){
-      tales[messageWithConnection.connection.id.toString()]..applyPatch(messageWithConnection.message.getNextMoveByUpdate)..nextMove();
+    if (messageWithConnection.message.message == core.OnAiServerAction.getNextMoveByUpdate) {
+      tales[messageWithConnection.connection.id.toString()]
+        ..applyPatch(messageWithConnection.message.getNextMoveByUpdate)
+        ..nextMove();
     }
   }
 }

@@ -11,8 +11,7 @@ class ToGameServerMessage {
     return _$ToGameServerMessageToJson(this);
   }
 
-  static ToGameServerMessage fromJson(Map<String, dynamic> json) =>
-      _$ToGameServerMessageFromJson(json);
+  static ToGameServerMessage fromJson(Map<String, dynamic> json) => _$ToGameServerMessageFromJson(json);
 
   // ---
 
@@ -36,8 +35,7 @@ class ToGameServerMessage {
 
   // ---
 
-  CreateLobby get createLobbyMessage =>
-      CreateLobby.fromJson(json.decode(content));
+  CreateLobby get createLobbyMessage => CreateLobby.fromJson(json.decode(content));
 
   factory ToGameServerMessage.createLobby(String taleName, String roomName) {
     return ToGameServerMessage()
@@ -70,8 +68,7 @@ class ToGameServerMessage {
 
   // ---
 
-  UnitTrackAction get unitTrackActionMessage =>
-      UnitTrackAction.fromJson(json.decode(content));
+  UnitTrackAction get unitTrackActionMessage => UnitTrackAction.fromJson(json.decode(content));
 
   factory ToGameServerMessage.unitTrackAction(UnitTrackAction action) {
     return ToGameServerMessage()
@@ -81,25 +78,21 @@ class ToGameServerMessage {
 
   // ---
 
-  PlayerGameIntention get playerGameIntentionMessage =>
-      PlayerGameIntention.fromJson(json.decode(content));
+  PlayerGameIntention get playerGameIntentionMessage => PlayerGameIntention.fromJson(json.decode(content));
 
   factory ToGameServerMessage.playerGameIntention(List<String> fieldsId) {
     return ToGameServerMessage()
-      ..content =
-          jsonEncode((PlayerGameIntention()..fieldsId = fieldsId).toJson())
+      ..content = jsonEncode((PlayerGameIntention()..fieldsId = fieldsId).toJson())
       ..message = OnServerAction.playerGameIntention;
   }
 
   // ---
 
-  ControlsAction get controlsActionMessage =>
-      ControlsAction.fromJson(json.decode(content));
+  ControlsAction get controlsActionMessage => ControlsAction.fromJson(json.decode(content));
 
   factory ToGameServerMessage.controlsAction(ControlsActionName actionName) {
     return ToGameServerMessage()
-      ..content =
-          jsonEncode((ControlsAction()..actionName = actionName).toJson())
+      ..content = jsonEncode((ControlsAction()..actionName = actionName).toJson())
       ..message = OnServerAction.controlsAction;
   }
 }
@@ -128,8 +121,7 @@ enum OnServerAction {
 class GoToState extends MessageContent {
   GameNavigationState newState;
 
-  static GoToState fromJson(Map<String, dynamic> json) =>
-      _$GoToStateFromJson(json);
+  static GoToState fromJson(Map<String, dynamic> json) => _$GoToStateFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$GoToStateToJson(this);
@@ -140,8 +132,7 @@ class GoToState extends MessageContent {
 class InitMessage extends MessageContent {
   String innerToken;
 
-  static InitMessage fromJson(Map<String, dynamic> json) =>
-      _$InitMessageFromJson(json);
+  static InitMessage fromJson(Map<String, dynamic> json) => _$InitMessageFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$InitMessageToJson(this);
@@ -153,8 +144,7 @@ class CreateLobby extends MessageContent {
   String taleName;
   String name;
 
-  static CreateLobby fromJson(Map<String, dynamic> json) =>
-      _$CreateLobbyFromJson(json);
+  static CreateLobby fromJson(Map<String, dynamic> json) => _$CreateLobbyFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$CreateLobbyToJson(this);
@@ -165,8 +155,7 @@ class CreateLobby extends MessageContent {
 class EnterLobby extends MessageContent {
   String lobbyId;
 
-  static EnterLobby fromJson(Map<String, dynamic> json) =>
-      _$EnterLobbyFromJson(json);
+  static EnterLobby fromJson(Map<String, dynamic> json) => _$EnterLobbyFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$EnterLobbyToJson(this);
@@ -177,8 +166,7 @@ class EnterLobby extends MessageContent {
 class EnterGame extends MessageContent {
   String lobbyId;
 
-  static EnterGame fromJson(Map<String, dynamic> json) =>
-      _$EnterGameFromJson(json);
+  static EnterGame fromJson(Map<String, dynamic> json) => _$EnterGameFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$EnterGameToJson(this);
@@ -194,8 +182,7 @@ class UnitTrackAction extends MessageContent {
   /// playerId_clientManagedActionId - originated by UserManipulateAction
   String actionId;
 
-  static UnitTrackAction fromJson(Map<String, dynamic> json) =>
-      _$UnitTrackActionFromJson(json);
+  static UnitTrackAction fromJson(Map<String, dynamic> json) => _$UnitTrackActionFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$UnitTrackActionToJson(this);
@@ -206,8 +193,7 @@ class UnitTrackAction extends MessageContent {
 class PlayerGameIntention extends MessageContent {
   List<String> fieldsId;
 
-  static PlayerGameIntention fromJson(Map<String, dynamic> json) =>
-      _$PlayerGameIntentionFromJson(json);
+  static PlayerGameIntention fromJson(Map<String, dynamic> json) => _$PlayerGameIntentionFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$PlayerGameIntentionToJson(this);
@@ -218,8 +204,7 @@ class PlayerGameIntention extends MessageContent {
 class ControlsAction extends MessageContent {
   ControlsActionName actionName;
 
-  static ControlsAction fromJson(Map<String, dynamic> json) =>
-      _$ControlsActionFromJson(json);
+  static ControlsAction fromJson(Map<String, dynamic> json) => _$ControlsActionFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$ControlsActionToJson(this);
@@ -228,6 +213,6 @@ class ControlsAction extends MessageContent {
 
 @Typescript()
 enum ControlsActionName {
-@JsonValue('endOfTurn')
-endOfTurn,
+  @JsonValue('endOfTurn')
+  endOfTurn,
 }

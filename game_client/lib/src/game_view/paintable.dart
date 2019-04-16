@@ -24,8 +24,7 @@ abstract class Paintable {
   Paintable(this.view, this._field, this.stage) {
     width = settings.defaultFieldWidth;
     height = settings.defaultFieldHeight;
-    _onDimensionChangedSubscription =
-        view.gameService.onDimensionsChanged.listen(_transformBitmap);
+    _onDimensionChangedSubscription = view.gameService.onDimensionsChanged.listen(_transformBitmap);
   }
 
   stage_lib.Bitmap get bitmap => _bitmap;

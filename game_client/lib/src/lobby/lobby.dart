@@ -10,12 +10,8 @@ import 'package:core/model/model.dart' as core;
 
 part 'arrow_disk.dart';
 
-@Component(selector: 'lobby', directives: [
-  WorldComponent,
-  LobbyPlayersComponent,
-  ArrowDisk,
-  coreDirectives
-], template: '''
+@Component(
+    selector: 'lobby', directives: [WorldComponent, LobbyPlayersComponent, ArrowDisk, coreDirectives], template: '''
       <div 
       *ngIf="lobby != null"
       class="lobby-room"> 
@@ -35,7 +31,7 @@ class LobbyComponent {
   LobbyService lobbyService;
 
   LobbyComponent(this.lobbyService, this.changeDetector, this.gateway) {
-    lobbyService.openedLobby.listen((onData){
+    lobbyService.openedLobby.listen((onData) {
       changeDetector.markForCheck();
 //      if(onData.id != null){
 //        gateway.sendMessage(core.ToGameServerMessage.enterGame(onData.id));

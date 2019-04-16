@@ -42,18 +42,15 @@ class ServerPlayer extends core.Player {
 
   core.Player createGamePlayer() {
     core.Player gamePlayer = core.Player()
-        ..color = color
-        ..taleId = taleId
-        ..team = team
-        ..id = id;
-    if(isHumanPlayer){
-      return gamePlayer
-        ..humanPlayer = (core.HumanPlayer()..name = user.name);
-    }else{
-      return gamePlayer
-        ..aiGroup = (core.AiGroup()..langName = aiGroup.langName);
+      ..color = color
+      ..taleId = taleId
+      ..team = team
+      ..id = id;
+    if (isHumanPlayer) {
+      return gamePlayer..humanPlayer = (core.HumanPlayer()..name = user.name);
+    } else {
+      return gamePlayer..aiGroup = (core.AiGroup()..langName = aiGroup.langName);
     }
-
   }
 
   void fromCorePlayer(core.Player input) {
@@ -63,9 +60,9 @@ class ServerPlayer extends core.Player {
     team = input.team;
     if (input.isAiPlayer) {
       aiGroup = input.aiGroup;
-    } else if(input.isHumanPlayer){
+    } else if (input.isHumanPlayer) {
       humanPlayer = input.humanPlayer;
-    }else{
+    } else {
       throw "player have to be human or ai";
     }
   }

@@ -8,4 +8,3 @@ class TaleAction {
   core.Assets newAssetsToTale;
   List<core.UnitCreateOrUpdateAction> unitUpdates = [];
 }
-

@@ -21,7 +21,7 @@ class LobbyDataController extends ResourceController {
         List<Tale> result = await query.fetch();
         lobbyTales = result.map((tale) => tale.lobbyTale.data).toList();
       } catch (e) {
-        if(catchAttempts++ <3){
+        if (catchAttempts++ < 3) {
           await context.close();
           context = generateContext();
           await process();

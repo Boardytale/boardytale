@@ -12,8 +12,8 @@ main() async {
   BoardytaleConfiguration config;
 
   try {
-    config = BoardytaleConfiguration.fromJson(json.decode(
-        File(projectDirectoryPath + '/config.g.json').readAsStringSync()));
+    config =
+        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/config.g.json').readAsStringSync()));
   } catch (e) {
     if (e is CheckedFromJsonException) {
       print(e.innerError.toString());
@@ -23,8 +23,7 @@ main() async {
 
   print(config.proxyServer.uris.first.port);
 
-  print(
-      "OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
+  print("OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
 
   runServerByServerConfiguration(config.proxyServer);
 
@@ -50,19 +49,15 @@ void runServerByServerConfiguration(ServerConfiguration config) {
     executable = 'ts-node';
   }
 
-  String executableFile =
-      slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
-  String workingDirectory =
-      slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
-  Process.start(executable, [executableFile],
-      workingDirectory: workingDirectory, runInShell: true)
+  String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
+  String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
+  Process.start(executable, [executableFile], workingDirectory: workingDirectory, runInShell: true)
     ..then((Process process) {
-      print(
-          "running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");
+      print("running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");
       printFromOutputStreams(process, config.pathToExecutable, "light_cyan");
     })
-  ..catchError((onError){
-    print(onError);
-  });
+    ..catchError((onError) {
+      print(onError);
+    });
   ;
 }

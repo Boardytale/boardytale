@@ -24,8 +24,7 @@ main() async {
           ..message = core.ToGameServerMessage.fromJson(jsonDecode(data))
           ..connection = connection);
       } catch (e) {
-        webSocket.sink
-            .add("message is not instance of ToGameServerMessage ${data}");
+        webSocket.sink.add("message is not instance of ToGameServerMessage ${data}");
         print(e);
         return;
       }

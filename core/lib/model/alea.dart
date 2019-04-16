@@ -8,10 +8,7 @@ class Alea {
   List<int> nums = [];
 
   Alea(this.attack) {
-    nums = [
-      (random.nextDouble() * 6).floor(),
-      (random.nextDouble() * 6).floor()
-    ];
+    nums = [(random.nextDouble() * 6).floor(), (random.nextDouble() * 6).floor()];
   }
 
   int getDamage() {

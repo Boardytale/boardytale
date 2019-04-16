@@ -99,7 +99,7 @@ class WorldViewService {
   }
 
   void init() {
-    if(!_imageLoaded || worldStage == null){
+    if (!_imageLoaded || worldStage == null) {
       return;
     }
     bool showLabel = gameService.showCoordinateLabels.value;

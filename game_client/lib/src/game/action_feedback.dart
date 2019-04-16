@@ -40,7 +40,7 @@ class ActionsFeedback {
 
   void handleUnitCreateOrUpdate(EnhancedUnitCreateOrUpdateAction cont) {
     var action = cont.action;
-    if (action.explain == null){
+    if (action.explain == null) {
       return;
     }
     ClientUnit unit = cont.unit;
@@ -49,18 +49,16 @@ class ActionsFeedback {
       feedback
         ..dices = action.diceNumbers
         ..label = "unit ${unit.name} attacking"
-        ..color = unit.player.color
-      ;
+        ..color = unit.player.color;
     }
     if (action.explain == core.ActionExplanation.unitGotDamage) {
       feedback
         ..label = "unit ${unit.name} got damage ${action.explainFirstValue}"
-        ..color = unit.player.color
-      ;
+        ..color = unit.player.color;
     }
     displayedActions.add(feedback);
     changeDetector.markForCheck();
-    Future.delayed(Duration(seconds: 3)).then((_){
+    Future.delayed(Duration(seconds: 3)).then((_) {
       displayedActions.remove(feedback);
       changeDetector.markForCheck();
     });

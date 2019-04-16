@@ -8,7 +8,7 @@ class SettingsService {
   int defaultFieldHeight;
   double widthHeightRatio = 1;
 
-  SettingsService(){
+  SettingsService() {
     defaultFieldHeight = (defaultFieldWidth * widthHeightRatio).toInt();
   }
 }

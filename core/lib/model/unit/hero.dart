@@ -7,8 +7,7 @@ class GameHeroCreateEnvelope {
   UnitTypeCompiled type;
   UnitCreateOrUpdateAction unit;
 
-  static GameHeroCreateEnvelope fromJson(Map<String, dynamic> json) =>
-      _$GameHeroCreateEnvelopeFromJson(json);
+  static GameHeroCreateEnvelope fromJson(Map<String, dynamic> json) => _$GameHeroCreateEnvelopeFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$GameHeroCreateEnvelopeToJson(this);

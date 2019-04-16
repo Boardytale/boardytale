@@ -12,8 +12,7 @@ class GatewayService {
   WebSocket _socket;
   bool _opened = false;
   List<core.ToGameServerMessage> _beforeOpenBuffer = [];
-  Map<core.OnClientAction, void Function(core.ToClientMessage message)>
-      handlers = {};
+  Map<core.OnClientAction, void Function(core.ToClientMessage message)> handlers = {};
 
   GatewayService() {
     var loc = window.location;
@@ -24,8 +23,7 @@ class GatewayService {
       newUri = "ws:";
     }
     newUri += "//" + loc.hostname;
-    _socket = WebSocket(
-        '${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
+    _socket = WebSocket('${newUri}:${ProjectSettings.gameApiPort}${ProjectSettings.gameApiRoute}/ws');
     _socket.onMessage.listen((MessageEvent e) {
       Map<String, dynamic> message = json.decode(e.data.toString());
       handleMessages(core.ToClientMessage.fromJson(message));
@@ -58,7 +56,7 @@ class GatewayService {
   }
 
   void sendIntention(List<core.Field> fields) {
-    sendMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f){
+    sendMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f) {
       return f.id;
     })?.toList()));
   }

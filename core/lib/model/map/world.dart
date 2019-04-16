@@ -11,15 +11,13 @@ class World {
 
   World();
 
-  factory World.fromJson(Map<String, dynamic> json) =>
-      _$WorldFromJson(json);
+  factory World.fromJson(Map<String, dynamic> json) => _$WorldFromJson(json);
 
   Map toJson() {
     return _$WorldToJson(this);
   }
 
-  static Map<String, Field> createFields(World envelope,
-      Field Function(String key) fieldInstanceGenerator) {
+  static Map<String, Field> createFields(World envelope, Field Function(String key) fieldInstanceGenerator) {
     Map<String, Field> fields = {};
     for (int x = 0; x < envelope.width; x++) {
       for (int y = 0; y < envelope.height; y++) {
@@ -36,8 +34,7 @@ class World {
     return fields;
   }
 
-  static Map<String, FieldCreateEnvelope> createFieldsData(
-      World envelope) {
+  static Map<String, FieldCreateEnvelope> createFieldsData(World envelope) {
     Map<String, FieldCreateEnvelope> fieldsData = envelope.fields;
     Map<String, FieldCreateEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
@@ -46,8 +43,7 @@ class World {
           indexedFieldsData[k] = v;
         }
         if (v is Map<String, dynamic>) {
-          indexedFieldsData[k] = FieldCreateEnvelope()
-            ..terrain = envelope.baseTerrain;
+          indexedFieldsData[k] = FieldCreateEnvelope()..terrain = envelope.baseTerrain;
         }
       });
     }

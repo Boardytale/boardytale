@@ -14,19 +14,16 @@ class ClientField extends core.Field {
 
   ClientField(String id, this.gameService) : super(id);
 
-  stageLib.Rectangle<num> get rectangle => stageLib.Rectangle<num>(
-      offset.x, offset.y, params.fieldWidth, params.fieldHeight);
+  stageLib.Rectangle<num> get rectangle =>
+      stageLib.Rectangle<num>(offset.x, offset.y, params.fieldWidth, params.fieldHeight);
 
   void recalculate() {
     double fieldWidth = params.fieldWidth;
     double fieldHeight = params.fieldHeight;
     double halfHeight = fieldHeight / 2;
     double quarterWidth = fieldWidth / 4;
-    offset = FieldPoint(
-        x * 3 / 4 * fieldWidth - params.userLeftOffset,
-        y * fieldHeight +
-            (x % 2) * fieldHeight / 2 -
-            params.userTopOffset);
+    offset = FieldPoint(x * 3 / 4 * fieldWidth - params.userLeftOffset,
+        y * fieldHeight + (x % 2) * fieldHeight / 2 - params.userTopOffset);
     double bottom = offset.y + fieldHeight;
     double left1 = offset.x + quarterWidth;
     double left2 = offset.x + quarterWidth * 3;
@@ -39,7 +36,6 @@ class ClientField extends core.Field {
   }
 
   ClientUnit getFirstPlayableUnitOnField() {
-    return units.firstWhere((core.Unit unit) => unit.isPlayable,
-        orElse: returnNull);
+    return units.firstWhere((core.Unit unit) => unit.isPlayable, orElse: returnNull);
   }
 }

@@ -2,7 +2,8 @@ part of game_server;
 
 class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
   @override
-  TaleAction perform(core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
+  TaleAction perform(
+      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
     bool isValid = super.validate(unit, track);
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
@@ -10,7 +11,8 @@ class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
       core.CancelOnFieldAction cancelOnFieldAction = core.CancelOnFieldAction();
       cancelOnFieldAction.fieldId = unit.field.id;
       if (unitOnMoveConnection != null) {
-        gateway.sendMessageByConnection(core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
+        gateway.sendMessageByConnection(
+            core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
       } else {
         print("AI attack canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI
@@ -42,7 +44,7 @@ class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
     unitActions.add(action);
 
     int damage = unit.attack[diceNumbers[0]];
-    if(diceNumbers.length > 1){
+    if (diceNumbers.length > 1) {
       damage += diceNumbers[1] + 1;
     }
 

@@ -61,7 +61,6 @@ class AppService {
   CreateGameService createGameService;
   bool showSignInButton = false;
 
-
   void setState(core.ToClientMessage message) {
     navigationState.add(states[message.navigationStateMessage.newState]);
     if (message.navigationStateMessage.destroyCurrentTale) {

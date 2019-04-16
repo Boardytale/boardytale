@@ -50,7 +50,6 @@ class Assets {
   }
 }
 
-
 @Typescript()
 @JsonSerializable()
 class Event {
@@ -80,4 +79,3 @@ class Dialog {
     return _$DialogToJson(this);
   }
 }
-

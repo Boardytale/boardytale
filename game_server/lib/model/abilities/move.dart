@@ -2,7 +2,8 @@ part of game_server;
 
 class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
   @override
-  TaleAction perform(core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
+  TaleAction perform(
+      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
     bool isValid = super.validate(unit, track);
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
@@ -10,7 +11,8 @@ class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
       core.CancelOnFieldAction cancelOnFieldAction = core.CancelOnFieldAction();
       cancelOnFieldAction.fieldId = unit.field.id;
       if (unitOnMoveConnection != null) {
-        gateway.sendMessageByConnection(core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
+        gateway.sendMessageByConnection(
+            core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
       } else {
         print("AI move canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI

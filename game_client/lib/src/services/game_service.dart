@@ -114,15 +114,15 @@ class GameService {
     onTaleLoaded.add(tale.world);
   }
 
-  void taleUpdate(core.TaleUpdate update){
-    update.newPlayersToTale.forEach((player){
+  void taleUpdate(core.TaleUpdate update) {
+    update.newPlayersToTale.forEach((player) {
       if (!appService.players.containsKey(player.id)) {
         ClientPlayer newPlayer = ClientPlayer()..fromCorePlayer(player);
         appService.players[newPlayer.id] = newPlayer;
       }
     });
 
-    update.newUnitTypesToTale.forEach((type){
+    update.newUnitTypesToTale.forEach((type) {
       unitTypes[type.name] = type;
     });
     if (update.newAssetsToTale != null) {

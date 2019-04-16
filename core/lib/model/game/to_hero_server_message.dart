@@ -11,23 +11,20 @@ class ToHeroServerMessage {
     return _$ToHeroServerMessageToJson(this);
   }
 
-  static ToHeroServerMessage fromJson(Map<String, dynamic> json) =>
-      _$ToHeroServerMessageFromJson(json);
+  static ToHeroServerMessage fromJson(Map<String, dynamic> json) => _$ToHeroServerMessageFromJson(json);
 
   // ---
 
   GetHeroesOfPlayer get getHeroesOfPlayerMessage => GetHeroesOfPlayer.fromJson(json.decode(content));
 
-  void addHeroes(List<GameHeroCreateEnvelope> responseHeroes){
+  void addHeroes(List<GameHeroCreateEnvelope> responseHeroes) {
     content = json.encode(getHeroesOfPlayerMessage..responseHeroes = responseHeroes);
   }
 
   factory ToHeroServerMessage.fromPlayerEmail(String requestPlayerEmail) {
     return ToHeroServerMessage()
       ..message = OnHeroServerAction.getHeroesOfPlayer
-      ..content = json.encode((GetHeroesOfPlayer()
-            ..requestPlayerEmail = requestPlayerEmail)
-          .toJson());
+      ..content = json.encode((GetHeroesOfPlayer()..requestPlayerEmail = requestPlayerEmail).toJson());
   }
 
 // ---
@@ -44,8 +41,7 @@ class GetHeroesOfPlayer extends MessageContent {
   String requestPlayerEmail;
   List<GameHeroCreateEnvelope> responseHeroes;
 
-  static GetHeroesOfPlayer fromJson(Map<String, dynamic> json) =>
-      _$GetHeroesOfPlayerFromJson(json);
+  static GetHeroesOfPlayer fromJson(Map<String, dynamic> json) => _$GetHeroesOfPlayerFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$GetHeroesOfPlayerToJson(this);

@@ -74,8 +74,8 @@ class MapObjectsManager {
 
   void clear() {
     activeField = null;
-    intentions.forEach((paintable)=>paintable.destroy());
-    abilityAssistance.forEach((paintable)=>paintable.destroy());
+    intentions.forEach((paintable) => paintable.destroy());
+    abilityAssistance.forEach((paintable) => paintable.destroy());
     intentions.clear();
     abilityAssistance.clear();
   }

@@ -55,7 +55,7 @@ class ServerTaleState {
     });
     outputTaleUpdate.newUnitTypesToTale = action.newUnitTypesToTale;
 
-    if(action.newAssetsToTale != null){
+    if (action.newAssetsToTale != null) {
       assets.merge(action.newAssetsToTale);
       outputTaleUpdate.newAssetsToTale = action.newAssetsToTale;
     }
@@ -80,8 +80,7 @@ class ServerTaleState {
     });
 
     if (tale.currentAiPlayerSocket != null) {
-      tale.currentAiPlayerSocket
-          .add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
+      tale.currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
     }
   }
 }

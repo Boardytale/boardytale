@@ -37,7 +37,6 @@ class AttackAbility extends Ability {
   @override
   AbilityReach get reach => AbilityReach.hand;
 
-
   /**
    *  use null to use unitOnMove attack
    *  use 6 expressions separated by space
@@ -62,13 +61,13 @@ class AttackAbility extends Ability {
       return false;
     }
 
-    if(unitOnMove.actions == 0){
+    if (unitOnMove.actions == 0) {
       return false;
     }
 
     int currentSteps = _resolveCurrentSteps(unitOnMove, steps);
 
-    if(!track.last.isEnemyOf(unitOnMove.player)){
+    if (!track.last.isEnemyOf(unitOnMove.player)) {
       return false;
     }
 
@@ -87,10 +86,10 @@ class AttackAbility extends Ability {
 //  }
 
   fromEnvelope(AttackAbilityEnvelope envelope) {
-    if(envelope.attack != null) {
+    if (envelope.attack != null) {
       attack = envelope.attack;
     }
-    if(envelope.steps != null){
+    if (envelope.steps != null) {
       steps = envelope.steps;
     }
   }

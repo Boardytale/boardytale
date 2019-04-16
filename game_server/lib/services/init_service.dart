@@ -21,7 +21,7 @@ class InitGameService {
 
       core.ToUserServerMessage responseMessage = core.ToUserServerMessage.fromJson(json.decode(response.body));
 
-      core.User user =responseMessage.getUser.user;
+      core.User user = responseMessage.getUser.user;
 
       if (user == null) {
         // user not in database - reset login

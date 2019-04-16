@@ -54,10 +54,8 @@ class UserBarComponent {
     GoogleUser googleUser = event.googleUser;
     AuthResponse response = googleUser.getAuthResponse();
     http.Response loginResponse = await _http.post("/userApi/login",
-        headers: {"Content-Type": "application/json"},
-        body: json.encode({"id": response.id_token}));
-    User currentUser =
-        model.User.fromGoogleJson(json.decode(loginResponse.body));
+        headers: {"Content-Type": "application/json"}, body: json.encode({"id": response.id_token}));
+    User currentUser = model.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
@@ -66,10 +64,8 @@ class UserBarComponent {
 
   void createTemporaryUser() async {
     http.Response loginResponse = await _http.post("/userApi/createTemporaryUser",
-        headers: {"Content-Type": "application/json"},
-        body: json.encode({"name": "TODO custom temp name"}));
-    User currentUser =
-        model.User.fromGoogleJson(json.decode(loginResponse.body));
+        headers: {"Content-Type": "application/json"}, body: json.encode({"name": "TODO custom temp name"}));
+    User currentUser = model.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);

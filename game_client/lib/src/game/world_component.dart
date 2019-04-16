@@ -49,7 +49,8 @@ class WorldComponent implements OnDestroy {
 
   String get heightString => "${window.innerHeight}px";
 
-  WorldComponent(this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view) {
+  WorldComponent(
+      this.changeDetector, this.settings, this.appService, this.gatewayService, this.gameService, this.view) {
     _onResizeSubscription = window.onResize.listen(detectChanges);
     _onWorldLoadedSubscription = gameService.onTaleLoaded.listen(modelLoaded);
     gatewayService.handlers[core.OnClientAction.intentionUpdate] = handleIntentionUpdate;

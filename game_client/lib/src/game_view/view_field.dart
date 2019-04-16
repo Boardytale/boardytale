@@ -48,8 +48,7 @@ class ViewField {
   }
 
   void addUnit(core.Unit unit) {
-    unitPaintables
-        .add(UnitPaintable(unit, worldViewService.unitStage, worldViewService, unit.field));
+    unitPaintables.add(UnitPaintable(unit, worldViewService.unitStage, worldViewService, unit.field));
   }
 
   void setState(String state) {

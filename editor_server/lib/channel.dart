@@ -13,7 +13,7 @@ core.BoardytaleConfiguration boardytaleConfiguration;
 core.DatabaseConfiguration database;
 ManagedDataModel dataModel;
 
-ManagedContext generateContext(){
+ManagedContext generateContext() {
   final PostgreSQLPersistentStore psc = PostgreSQLPersistentStore.fromConnectionInfo(
       database.username, database.password, database.host, database.port, database.databaseName);
   return ManagedContext(dataModel, psc);

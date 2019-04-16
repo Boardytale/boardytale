@@ -15,8 +15,7 @@ class CompiledTaleController extends ResourceController {
       ..where((tale) => tale.name).equalTo("${idWrap.id}Compiled")
       ..where((tale) => tale.compiled).equalTo(true);
     Tale result = await query.fetchOne();
-    core.TaleCompiled out = core.TaleCompiled.fromJson(
-        result.taleData.data as Map<String, dynamic>);
+    core.TaleCompiled out = core.TaleCompiled.fromJson(result.taleData.data as Map<String, dynamic>);
 
     return Response.ok(out.toJson());
   }

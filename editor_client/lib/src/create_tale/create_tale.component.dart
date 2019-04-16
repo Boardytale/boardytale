@@ -29,7 +29,6 @@ class CreateTaleComponent implements OnInit {
 
   void add() {
     print('click');
-    this._http.post("/editorApi/tales",
-        headers: {"Content-Type": "application/json"}, body: newTale);
+    this._http.post("/editorApi/tales", headers: {"Content-Type": "application/json"}, body: newTale);
   }
 }

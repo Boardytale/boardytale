@@ -14,8 +14,7 @@ class ImagePaintable extends Paintable {
   Future createBitmapInner() async {
     image = ImageElement(src: imagePath);
     await image.onLoad.first;
-    stage_lib.BitmapData data =
-    stage_lib.BitmapData.fromImageElement(image);
+    stage_lib.BitmapData data = stage_lib.BitmapData.fromImageElement(image);
     bitmap = stage_lib.Bitmap(data);
   }
 

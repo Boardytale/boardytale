@@ -3,7 +3,6 @@ part of model;
 @JsonSerializable(nullable: false)
 @Typescript()
 class Triggers {
-
   // Cannot be optional. Null condition is not generated on lists. Probably json_serializable issue.
   // TODO: report issue to https://github.com/dart-lang/json_serializable
   List<Trigger> onInit = [];

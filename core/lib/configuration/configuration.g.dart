@@ -12,11 +12,9 @@ Uri _$UriFromJson(Map<String, dynamic> json) {
     ..port = json['port'] as num;
 }
 
-Map<String, dynamic> _$UriToJson(Uri instance) =>
-    <String, dynamic>{'host': instance.host, 'port': instance.port};
+Map<String, dynamic> _$UriToJson(Uri instance) => <String, dynamic>{'host': instance.host, 'port': instance.port};
 
-DatabaseConfiguration _$DatabaseConfigurationFromJson(
-    Map<String, dynamic> json) {
+DatabaseConfiguration _$DatabaseConfigurationFromJson(Map<String, dynamic> json) {
   return DatabaseConfiguration()
     ..username = json['username'] as String
     ..password = json['password'] as String
@@ -25,9 +23,7 @@ DatabaseConfiguration _$DatabaseConfigurationFromJson(
     ..databaseName = json['databaseName'] as String;
 }
 
-Map<String, dynamic> _$DatabaseConfigurationToJson(
-        DatabaseConfiguration instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$DatabaseConfigurationToJson(DatabaseConfiguration instance) => <String, dynamic>{
       'username': instance.username,
       'password': instance.password,
       'host': instance.host,
@@ -37,20 +33,15 @@ Map<String, dynamic> _$DatabaseConfigurationToJson(
 
 ServerConfiguration _$ServerConfigurationFromJson(Map<String, dynamic> json) {
   return ServerConfiguration()
-    ..uris = (json['uris'] as List)
-        ?.map((e) => e == null ? null : Uri.fromJson(e as Map<String, dynamic>))
-        ?.toList()
+    ..uris = (json['uris'] as List)?.map((e) => e == null ? null : Uri.fromJson(e as Map<String, dynamic>))?.toList()
     ..innerPort = json['innerPort'] as int
     ..route = json['route'] as String
     ..pathToExecutable = json['pathToExecutable'] as String
     ..pathToWorkingDirectory = json['pathToWorkingDirectory'] as String
-    ..executableType =
-        _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType']);
+    ..executableType = _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType']);
 }
 
-Map<String, dynamic> _$ServerConfigurationToJson(
-        ServerConfiguration instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ServerConfigurationToJson(ServerConfiguration instance) => <String, dynamic>{
       'uris': instance.uris?.map((e) => e?.toJson())?.toList(),
       'innerPort': instance.innerPort,
       'route': instance.route,
@@ -66,8 +57,7 @@ T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
   }
   return enumValues.entries
       .singleWhere((e) => e.value == source,
-          orElse: () => throw ArgumentError(
-              '`$source` is not one of the supported values: '
+          orElse: () => throw ArgumentError('`$source` is not one of the supported values: '
               '${enumValues.values.join(', ')}'))
       .key;
 }
@@ -92,61 +82,38 @@ FrontEndDevelopment _$FrontEndDevelopmentFromJson(Map<String, dynamic> json) {
     ..route = json['route'] as String;
 }
 
-Map<String, dynamic> _$FrontEndDevelopmentToJson(
-        FrontEndDevelopment instance) =>
-    <String, dynamic>{
-      'active': instance.active,
-      'port': instance.port,
-      'route': instance.route
-    };
+Map<String, dynamic> _$FrontEndDevelopmentToJson(FrontEndDevelopment instance) =>
+    <String, dynamic>{'active': instance.active, 'port': instance.port, 'route': instance.route};
 
-BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
-    Map<String, dynamic> json) {
+BoardytaleConfiguration _$BoardytaleConfigurationFromJson(Map<String, dynamic> json) {
   return BoardytaleConfiguration()
-    ..gameServer = json['gameServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['gameServer'] as Map<String, dynamic>)
-    ..editorServer = json['editorServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['editorServer'] as Map<String, dynamic>)
+    ..gameServer =
+        json['gameServer'] == null ? null : ServerConfiguration.fromJson(json['gameServer'] as Map<String, dynamic>)
+    ..editorServer =
+        json['editorServer'] == null ? null : ServerConfiguration.fromJson(json['editorServer'] as Map<String, dynamic>)
     ..userDatabase = json['userDatabase'] == null
         ? null
-        : DatabaseConfiguration.fromJson(
-            json['userDatabase'] as Map<String, dynamic>)
+        : DatabaseConfiguration.fromJson(json['userDatabase'] as Map<String, dynamic>)
     ..editorDatabase = json['editorDatabase'] == null
         ? null
-        : DatabaseConfiguration.fromJson(
-            json['editorDatabase'] as Map<String, dynamic>)
-    ..userServer = json['userServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['userServer'] as Map<String, dynamic>)
-    ..heroesServer = json['heroesServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['heroesServer'] as Map<String, dynamic>)
-    ..aiServer = json['aiServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(json['aiServer'] as Map<String, dynamic>)
-    ..proxyServer = json['proxyServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['proxyServer'] as Map<String, dynamic>)
+        : DatabaseConfiguration.fromJson(json['editorDatabase'] as Map<String, dynamic>)
+    ..userServer =
+        json['userServer'] == null ? null : ServerConfiguration.fromJson(json['userServer'] as Map<String, dynamic>)
+    ..heroesServer =
+        json['heroesServer'] == null ? null : ServerConfiguration.fromJson(json['heroesServer'] as Map<String, dynamic>)
+    ..aiServer =
+        json['aiServer'] == null ? null : ServerConfiguration.fromJson(json['aiServer'] as Map<String, dynamic>)
+    ..proxyServer =
+        json['proxyServer'] == null ? null : ServerConfiguration.fromJson(json['proxyServer'] as Map<String, dynamic>)
     ..gameStaticDev = json['gameStaticDev'] == null
         ? null
-        : FrontEndDevelopment.fromJson(
-            json['gameStaticDev'] as Map<String, dynamic>)
+        : FrontEndDevelopment.fromJson(json['gameStaticDev'] as Map<String, dynamic>)
     ..editorStaticDev = json['editorStaticDev'] == null
         ? null
-        : FrontEndDevelopment.fromJson(
-            json['editorStaticDev'] as Map<String, dynamic>);
+        : FrontEndDevelopment.fromJson(json['editorStaticDev'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$BoardytaleConfigurationToJson(
-        BoardytaleConfiguration instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BoardytaleConfigurationToJson(BoardytaleConfiguration instance) => <String, dynamic>{
       'gameServer': instance.gameServer?.toJson(),
       'editorServer': instance.editorServer?.toJson(),
       'userDatabase': instance.userDatabase?.toJson(),

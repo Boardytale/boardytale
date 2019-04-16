@@ -13,6 +13,7 @@ class Image {
   int dataModelVersion = 0;
   DateTime created;
   List<ImageTag> tags;
+
   /// The place where the image comes from. Expected is URL or just "direct"
   String origin;
   @TypescriptOptional()

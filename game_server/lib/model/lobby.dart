@@ -32,7 +32,7 @@ class LobbyRoom {
   }
 
   void destroy() {
-    connectedPlayers.forEach((key, player){
+    connectedPlayers.forEach((key, player) {
       player.leaveRoom();
     });
     connectedPlayers = null;

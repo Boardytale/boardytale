@@ -27,23 +27,23 @@ class GameControlsComponent {
   AppService appService;
   GatewayService gateway;
   final ChangeDetectorRef changeDetector;
-  GameControlsComponent(this.gameService, this.gateway, this.changeDetector, this.appService){
-    this.gameService.showCoordinateLabels.listen((_)=>changeDetector.markForCheck());
-    this.gameService.playersOnMove.listen((_)=>changeDetector.markForCheck());
+  GameControlsComponent(this.gameService, this.gateway, this.changeDetector, this.appService) {
+    this.gameService.showCoordinateLabels.listen((_) => changeDetector.markForCheck());
+    this.gameService.playersOnMove.listen((_) => changeDetector.markForCheck());
   }
 
-  void endTurn(){
+  void endTurn() {
     gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
   }
 
-  void switchShowCoordinates(){
+  void switchShowCoordinates() {
     gameService.showCoordinateLabels.add(!gameService.showCoordinateLabels.value);
   }
 
-  String getPlayersOnMoveLabel(){
-    if(gameService.playersOnMove.value != null){
-      return gameService.playersOnMove.value.map((ClientPlayer player){
-        return player.humanPlayer != null? player.humanPlayer.name : player.aiGroup.langName[appService.language];
+  String getPlayersOnMoveLabel() {
+    if (gameService.playersOnMove.value != null) {
+      return gameService.playersOnMove.value.map((ClientPlayer player) {
+        return player.humanPlayer != null ? player.humanPlayer.name : player.aiGroup.langName[appService.language];
       }).join(", ");
     }
     return "";

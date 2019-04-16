@@ -115,7 +115,7 @@ class Field {
   bool isEnemyOf(Player player) {
     if (units.isEmpty) return false;
     Unit firstAlive = getFirstAliveOnField();
-    if(firstAlive == null){
+    if (firstAlive == null) {
       return false;
     }
     return firstAlive.player.team != player.team;
@@ -307,21 +307,35 @@ class Field {
     return result;
   }
 
-  static List<List<int>> evenCircle1 = [[0,-1],[1,-1],[1,0],[0,1],[-1,0],[-1,-1],];
-  static List<List<int>> oddCircle1 = [[0,-1],[1,0],[1,1],[0,1],[-1,1],[-1,0],];
+  static List<List<int>> evenCircle1 = [
+    [0, -1],
+    [1, -1],
+    [1, 0],
+    [0, 1],
+    [-1, 0],
+    [-1, -1],
+  ];
+  static List<List<int>> oddCircle1 = [
+    [0, -1],
+    [1, 0],
+    [1, 1],
+    [0, 1],
+    [-1, 1],
+    [-1, 0],
+  ];
 
-  static bool fieldsAreNextEachOther(Field f1, Field f2){
+  static bool fieldsAreNextEachOther(Field f1, Field f2) {
     return f1.getCircle1Ids().contains(f2.id);
   }
 
-  List<String> getCircle1Ids(){
-    if(x.isEven){
-      return Field.evenCircle1.map((circleItem){
-        return "${x + circleItem[0]}_${y+circleItem[1]}";
+  List<String> getCircle1Ids() {
+    if (x.isEven) {
+      return Field.evenCircle1.map((circleItem) {
+        return "${x + circleItem[0]}_${y + circleItem[1]}";
       }).toList();
-    }else{
-      return Field.oddCircle1.map((circleItem){
-        return "${x + circleItem[0]}_${y+circleItem[1]}";
+    } else {
+      return Field.oddCircle1.map((circleItem) {
+        return "${x + circleItem[0]}_${y + circleItem[1]}";
       }).toList();
     }
   }
