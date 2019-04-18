@@ -10,7 +10,7 @@ class AiTale {
   // TODO: AI does not need images
   Map<String, core.UnitType> unitTypes = {};
   core.Player me;
-  Set<core.Unit> playedUnits = {};
+  Set<core.Unit> playedUnits = Set<core.Unit>();
   covariant Map<String, core.Player> aiPlayers = {};
   Map<String, core.Field> fields;
   Map<String, core.Event> events = {};

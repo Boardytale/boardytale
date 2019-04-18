@@ -16,29 +16,26 @@ check path variable if dart, pub, npm executables are available for command line
 
 open IDE, set dart executables
 
-run `pub get` in ./libs/io_utils
+run `npm run pub-get-all` to get dart dependencies for all packages, wait until finished
 
+run debug no all packages you are going to develop - suggesting to run debug game_server
+ - right click on `game_server/bin/game_servers_start.dart` and click on debug icon
  
+run `npm run start-dev` to run all microservices
 
-# change common class
-run `npm run generate-core`
+run `npm run game-client` - not in start dev, because its start takes a long time so restart of start dev would be too slow
+ 
+game is running on port set in dev-config.ts proxy server - probably 8083
 
-# run game
+# important notes
 
-
-run
-dart runner/pub_get_all.dart
-
-wait until finished
-
-run 
-dart runner/run.dart
+after change of core class run `npm run generate-core`
 
 between `generate core` and `initial-data-to-database` editor server must be restarted! (using old version of fromJson and toJson)
 
+game is runnning on port set in 
 
-
-GLOBAL TODOs:
+# GLOBAL TODOs:
  - Write test on serialization and deserialization all tales
  - Take care of images, delete race specific backgrounds
  - Add author name to and image origin to every used image

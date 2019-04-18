@@ -74,6 +74,7 @@ class ImageWrap implements Serializable {
     return null;
   }
 
+  @override
   void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
     readFromMap(object);
   }

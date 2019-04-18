@@ -1,6 +1,6 @@
-import { WorldCreateEnvelope } from '../../../model/model';
+import { World } from '../../../model/model';
 
-export let world: WorldCreateEnvelope = {
+export let world: World = {
     baseTerrain: 'grass',
     fields: {
         '3_3': {
