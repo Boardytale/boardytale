@@ -2,6 +2,7 @@ part of game_server;
 
 class ServerTaleState {
   final ServerTale tale;
+  String taleId;
   core.TaleInnerCompiled compiled;
   core.Assets assets = core.Assets();
   Map<String, core.Unit> units = {};
@@ -16,6 +17,7 @@ class ServerTaleState {
   List<TaleAction> actionLog = [];
 
   ServerTaleState(this.compiled, this.tale) {
+    taleId = DateTime.now().toIso8601String().replaceAll(":", "-");
     compiled.unitTypes.forEach((String name, core.UnitTypeCompiled unitType) {
       unitTypes[name] = core.UnitType()..fromCompiled(unitType, assets);
     });
@@ -66,6 +68,7 @@ class ServerTaleState {
           core.Unit unit = units[action.unitId];
           unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
         } else {
+          print(action.changeToTypeName);
           core.Unit unit = core.Unit(createServerAbilityList, action, fields, players, unitTypes);
           units[unit.id] = unit;
         }
@@ -75,12 +78,14 @@ class ServerTaleState {
 
     outputTaleUpdate.playerOnMoveIds = playerOnMoveIds;
 
-    humanPlayers.forEach((key, player) {
-      gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);
-    });
+    if(gameStared){
+      humanPlayers.forEach((key, player) {
+        gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);
+      });
 
-    if (tale.currentAiPlayerSocket != null) {
-      tale.currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
+      if (tale.currentAiPlayerSocket != null) {
+        tale.currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
+      }
     }
   }
 }

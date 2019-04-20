@@ -37,6 +37,7 @@ class ServerTale {
     taleState.addTaleAction(TaleAction()..unitUpdates = actions);
 
     taleState.humanPlayers.values.forEach(sendTaleDataToPlayer);
+    Logger.log(taleState.taleId, core.LoggerMessage.fromTaleData(taleState.createTaleForPlayer(null)));
     taleState.gameStared = true;
     HeroesHelper.getHeroes(taleState.humanPlayers.values, taleState.humanPlayers.values, this);
     triggers = ServerTriggers(this, room.compiledTale.tale.triggers);

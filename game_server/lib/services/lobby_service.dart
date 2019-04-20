@@ -37,6 +37,10 @@ class LobbyService {
   }
 
   Future<LobbyRoom> createLobbyRoom(ServerPlayer player, String taleName, String name) async {
+    if (taleName == null) {
+      return null;
+    }
+
     var lobbyPlayer = player.createGamePlayer();
     lobbyPlayer.humanPlayer.isGameMaster = true;
 

@@ -1,5 +1,5 @@
-name: game_server
-description: Server side for Boardytale game
+name: logger_server
+description: Logging service for Boardytale game
 version: 0.0.1
 author: Zdeněk Mlčoch <mlcoch.zdenek@gmail.com>
 
@@ -9,13 +9,8 @@ environment:
 dependencies:
   uuid: any
   shelf: any
-  http: any
-  shelf_web_socket: any
   core:
     path: ../core
   io_utils:
     path: ../libs/io_utils
   rxdart: ^0.20.0
-  stagexl: ^1.4.0+2
-  logger_server:
-    path: ../logger_server

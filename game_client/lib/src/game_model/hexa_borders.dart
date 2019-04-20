@@ -9,7 +9,9 @@ class HexaBorders {
   FieldPoint bottomRight;
   GameService gameService;
 
-  HexaBorders(this.gameService);
+  HexaBorders(this.gameService){
+    recalculate();
+  }
 
   stageLib.Rectangle<num> get rectangle =>
       stageLib.Rectangle<num>(0.0, 0.0, gameService.worldParams.fieldWidth, gameService.worldParams.fieldHeight);

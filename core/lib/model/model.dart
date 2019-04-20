@@ -60,6 +60,10 @@ part 'package:core/model/game/to_ai_server_message.dart';
 
 part 'package:core/model/game/to_user_server_message.dart';
 
+part 'package:core/model/logger/logger_message.dart';
+
+part 'package:core/model/logger/logger_tale.dart';
+
 part "package:core/model/abilities/ability.dart";
 
 part "package:core/model/abilities/move.dart";

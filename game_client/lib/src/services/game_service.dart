@@ -44,12 +44,12 @@ class GameService {
   ClientWorldParams worldParams = ClientWorldParams();
 
   GameService(this.gatewayService, this.settings, this.appService) {
+    worldParams.defaultHex = HexaBorders(this);
     gatewayService.handlers[core.OnClientAction.taleData] = handleTaleData;
     gatewayService.handlers[core.OnClientAction.showBanter] = handleShowBanter;
     gatewayService.handlers[core.OnClientAction.unitCreateOrUpdate] = (core.ToClientMessage message) {
       taleUpdate(message.getUnitCreateOrUpdate);
     };
-    worldParams.defaultHex = HexaBorders(this);
   }
 
   void handleShowBanter(core.ToClientMessage message) {
@@ -115,21 +115,26 @@ class GameService {
   }
 
   void taleUpdate(core.TaleUpdate update) {
-    update.newPlayersToTale.forEach((player) {
-      if (!appService.players.containsKey(player.id)) {
-        ClientPlayer newPlayer = ClientPlayer()..fromCorePlayer(player);
-        appService.players[newPlayer.id] = newPlayer;
-      }
-    });
-
-    update.newUnitTypesToTale.forEach((type) {
-      unitTypes[type.name] = type;
-    });
+    if (update.newPlayersToTale != null) {
+      update.newPlayersToTale.forEach((player) {
+        if (!appService.players.containsKey(player.id)) {
+          ClientPlayer newPlayer = ClientPlayer()..fromCorePlayer(player);
+          appService.players[newPlayer.id] = newPlayer;
+        }
+      });
+    }
+    if (update.newUnitTypesToTale != null) {
+      update.newUnitTypesToTale.forEach((type) {
+        unitTypes[type.name] = type;
+      });
+    }
     if (update.newAssetsToTale != null) {
       assets.merge(update.newAssetsToTale);
     }
     setPlayersOnMoveByIds(update.playerOnMoveIds);
-    unitsCreateOrUpdate(update.actions);
+    if (update.actions != null) {
+      unitsCreateOrUpdate(update.actions);
+    }
   }
 
   void unitsCreateOrUpdate(List<core.UnitCreateOrUpdateAction> actions) {

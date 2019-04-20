@@ -11,6 +11,7 @@ import 'package:core/model/model.dart' as core;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:core/configuration/configuration.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:logger_server/logger.dart';
 
 part 'server_gateway.dart';
 
