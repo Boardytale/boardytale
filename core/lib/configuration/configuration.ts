@@ -44,6 +44,7 @@ export interface BoardytaleConfiguration extends Object {
     heroesServer: ServerConfiguration;
     aiServer: ServerConfiguration;
     proxyServer: ServerConfiguration;
+    loggerServer: ServerConfiguration;
     gameStaticDev: FrontEndDevelopment;
     editorStaticDev: FrontEndDevelopment;
 }

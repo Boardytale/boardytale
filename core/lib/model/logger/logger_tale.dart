@@ -3,6 +3,7 @@ part of model;
 @JsonSerializable()
 class LoggerTale{
   Tale initial;
+  List<TaleUpdate> updates = [];
 
   Map<String, dynamic> toJson() {
     return _$LoggerTaleToJson(this);

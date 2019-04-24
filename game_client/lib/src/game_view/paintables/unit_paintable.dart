@@ -19,8 +19,8 @@ class UnitPaintable extends Paintable {
     UnitPaintable._armorImage;
     leftOffset = 0;
     topOffset = 0;
-    height = gameService.worldParams.fieldHeight.toInt();
-    width = gameService.worldParams.fieldWidth.toInt();
+    width = settings.defaultFieldWidth;
+    height = settings.defaultFieldHeight;
     createBitmap();
     view.gameService.worldParams.onResolutionLevelChanged.listen(createBitmap);
     unit.onFieldChanged.listen((_) {
@@ -98,7 +98,7 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.Rectangle getOverlayRect() {
-    return stage_lib.Rectangle(0, 0, rectWidth, rectHeight);
+    return stage_lib.Rectangle(0, 0, width, height);
   }
 
   stage_lib.Rectangle getArmorCont() {

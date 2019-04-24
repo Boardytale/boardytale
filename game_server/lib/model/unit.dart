@@ -60,12 +60,12 @@ class ServerUnit {
 //  //    return addUnitUpdateAction(action, track.last);
 //  //  }
 //
-  static bool newTurn(core.Unit unit) {
+  static core.UnitCreateOrUpdateAction newTurn(core.Unit unit) {
     core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
       ..unitId = unit.id
       ..steps = unit.type.speed
       ..actions = unit.type.actions
       ..far = 0;
-    return unit.addUnitUpdateAction(action, null) != null;
+    return action;
   }
 }

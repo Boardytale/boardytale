@@ -11,6 +11,16 @@ export let config: BoardytaleConfiguration = {
         pathToExecutable: 'ai_server/bin/ai_server_start.dart',
         pathToWorkingDirectory: 'ai_server'
     },
+    loggerServer: {
+        uris: [{
+            host: 'localhost',
+            port: 3333,
+        }],
+        route: null,
+        executableType: "dart",
+        pathToExecutable: 'logger_server/bin/logger_server_start.dart',
+        pathToWorkingDirectory: 'logger_server'
+    },
     editorServer: {
         route: '/editorApi',
         uris: [{

@@ -1491,18 +1491,26 @@ Map<String, dynamic> _$LoggerMessageToJson(LoggerMessage instance) =>
     };
 
 const _$LoggerMessageTypeEnumMap = <LoggerMessageType, dynamic>{
-  LoggerMessageType.initial: 'initial'
+  LoggerMessageType.initial: 'initial',
+  LoggerMessageType.taleUpdate: 'taleUpdate'
 };
 
 LoggerTale _$LoggerTaleFromJson(Map<String, dynamic> json) {
   return LoggerTale()
     ..initial = json['initial'] == null
         ? null
-        : Tale.fromJson(json['initial'] as Map<String, dynamic>);
+        : Tale.fromJson(json['initial'] as Map<String, dynamic>)
+    ..updates = (json['updates'] as List)
+        ?.map((e) =>
+            e == null ? null : TaleUpdate.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$LoggerTaleToJson(LoggerTale instance) =>
-    <String, dynamic>{'initial': instance.initial?.toJson()};
+    <String, dynamic>{
+      'initial': instance.initial?.toJson(),
+      'updates': instance.updates?.map((e) => e?.toJson())?.toList()
+    };
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
   return AbilitiesEnvelope()

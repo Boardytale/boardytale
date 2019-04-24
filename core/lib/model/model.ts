@@ -364,7 +364,7 @@ export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
 
 export type OnUserServerAction = 'getUseresByInnerToken';
 
-export type LoggerMessageType = 'initial';
+export type LoggerMessageType = 'initial' | 'taleUpdate';
 
 export type Targets = 'me' | 'own' | 'ally' | 'enemy' | 'corpse' | 'empty';
 

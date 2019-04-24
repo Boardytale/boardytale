@@ -36,4 +36,12 @@ class ProjectSettings {
 }  
     `);
 
+    fs.writeFileSync('logger_server/lib/project_settings.dart', `
+library project_settings;
+
+class ProjectSettings {
+  static String loggerServerPort = "${config.loggerServer.uris[0].port}";
+}  
+    `);
+
 });

@@ -6,6 +6,8 @@ import 'package:shelf/shelf_io.dart' as io;
 import 'dart:async';
 import 'package:core/model/model.dart' as core;
 import 'dart:convert';
+import 'package:core/configuration/configuration.dart';
+import 'package:io_utils/io_utils.dart';
 
 Map<String, core.LoggerTale> loggedTales = {};
 Set<String> changedTales = Set();
@@ -28,9 +30,11 @@ class Logger {
   }
 
   void run() async {
+    final BoardytaleConfiguration config = getConfiguration();
+    final port = config.loggerServer.uris.first.port.toInt();
     var handler = const shelf.Pipeline().addMiddleware(shelf.logRequests()).addHandler(_echoRequest);
 
-    var server = await io.serve(handler, 'localhost', 3333);
+    var server = await io.serve(handler, 'localhost', port);
 
     // Enable content compression
     server.autoCompress = true;
@@ -53,6 +57,9 @@ class Logger {
     }
     if(message.message == core.LoggerMessageType.initial){
       tale.initial = message.getTaleDataMessage;
+    }
+    if(message.message == core.LoggerMessageType.taleUpdate){
+      tale.updates.add(message.getTaleUpdateMessage);
     }
     return shelf.Response.ok("");
   }

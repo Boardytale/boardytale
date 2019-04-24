@@ -23,10 +23,21 @@ class LoggerMessage {
       ..message = LoggerMessageType.initial
       ..content = json.encode(data.toJson());
   }
+
+
+  TaleUpdate get getTaleUpdateMessage => TaleUpdate.fromJson(json.decode(content));
+
+  factory LoggerMessage.fromTaleUpdate(TaleUpdate data) {
+    return LoggerMessage()
+      ..message = LoggerMessageType.taleUpdate
+      ..content = json.encode(data.toJson());
+  }
 }
 
 @Typescript()
 enum LoggerMessageType {
 @JsonValue('initial')
 initial,
+@JsonValue('taleUpdate')
+taleUpdate,
 }

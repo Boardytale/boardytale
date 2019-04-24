@@ -63,17 +63,22 @@ class ServerTaleState {
     }
 
     if (action.unitUpdates != null) {
+      List<core.UnitCreateOrUpdateAction> actionsWithEffect = [];
       action.unitUpdates.forEach((core.UnitCreateOrUpdateAction action) {
         if (units.containsKey(action.unitId)) {
           core.Unit unit = units[action.unitId];
-          unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
+          var report = unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
+          if(report != null){
+            actionsWithEffect.add(action);
+            tale.events.setUnitReport(report);
+          }
         } else {
-          print(action.changeToTypeName);
           core.Unit unit = core.Unit(createServerAbilityList, action, fields, players, unitTypes);
           units[unit.id] = unit;
+          actionsWithEffect.add(action);
         }
       });
-      outputTaleUpdate.actions = action.unitUpdates;
+      outputTaleUpdate.actions = actionsWithEffect;
     }
 
     outputTaleUpdate.playerOnMoveIds = playerOnMoveIds;
@@ -87,5 +92,6 @@ class ServerTaleState {
         tale.currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
       }
     }
+    Logger.log(taleId, core.LoggerMessage.fromTaleUpdate(outputTaleUpdate));
   }
 }

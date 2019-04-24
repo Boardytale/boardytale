@@ -80,6 +80,7 @@ class BoardytaleConfiguration {
   ServerConfiguration heroesServer;
   ServerConfiguration aiServer;
   ServerConfiguration proxyServer;
+  ServerConfiguration loggerServer;
   FrontEndDevelopment gameStaticDev;
   FrontEndDevelopment editorStaticDev;
 

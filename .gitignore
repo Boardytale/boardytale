@@ -44,6 +44,7 @@ user_server/.dart_tool/pub/bin/aqueduct/
 user_server/.dart_tool/pub/bin/test/
 user_server/database.yaml
 user_server/migrations/
+logger_server/out/
 
 # Mac OS
 .DS_Store

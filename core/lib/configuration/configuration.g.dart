@@ -134,6 +134,10 @@ BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
         ? null
         : ServerConfiguration.fromJson(
             json['proxyServer'] as Map<String, dynamic>)
+    ..loggerServer = json['loggerServer'] == null
+        ? null
+        : ServerConfiguration.fromJson(
+            json['loggerServer'] as Map<String, dynamic>)
     ..gameStaticDev = json['gameStaticDev'] == null
         ? null
         : FrontEndDevelopment.fromJson(
@@ -155,6 +159,7 @@ Map<String, dynamic> _$BoardytaleConfigurationToJson(
       'heroesServer': instance.heroesServer?.toJson(),
       'aiServer': instance.aiServer?.toJson(),
       'proxyServer': instance.proxyServer?.toJson(),
+      'loggerServer': instance.loggerServer?.toJson(),
       'gameStaticDev': instance.gameStaticDev?.toJson(),
       'editorStaticDev': instance.editorStaticDev?.toJson()
     };

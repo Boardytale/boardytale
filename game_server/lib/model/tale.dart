@@ -55,26 +55,12 @@ class ServerTale {
     taleState.addTaleAction(ServerUnit.perform(name, track, action, this, unit, unit.player as ServerPlayer));
   }
 
-  //  void sendNewState(core.UnitCreateOrUpdateAction action) {
-  //    taleState.humanPlayers.values.forEach((player) {
-  //      gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate([action], taleState.playerOnMoveIds), player);
-  //    });
-  //    if (currentAiPlayerSocket != null) {
-  //      currentAiPlayerSocket
-  //          .write(json.encode(core.ToAiServerMessage.fromUpdate(core.TaleUpdate()..actions = [action]).toJson()));
-  //    }
-  //  }
-
   void endOfTurn(MessageWithConnection message) {
     _humansOnMove = false;
-    List<core.UnitCreateOrUpdateAction> actions = [];
-    taleState.units.forEach((key, unit) {
-      if (ServerUnit.newTurn(unit)) {
-        actions.add(core.UnitCreateOrUpdateAction()
-          ..fromUnit(unit)
-          ..unitId = unit.id);
-      }
-    });
+    List<core.UnitCreateOrUpdateAction> actions = taleState.units.values.map((unit) {
+      return ServerUnit.newTurn(unit);
+    }).toList();
+    taleState.addTaleAction(TaleAction()..unitUpdates = actions);
     aiPlay();
     sendPlayersOnMove();
   }

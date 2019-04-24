@@ -36,6 +36,8 @@ main() async {
   runServerByServerConfiguration(config.aiServer);
 
   runServerByServerConfiguration(config.gameServer);
+
+  runServerByServerConfiguration(config.loggerServer);
 }
 
 void runServerByServerConfiguration(ServerConfiguration config) {
