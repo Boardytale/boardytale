@@ -81,6 +81,9 @@ class MockedEditor {
           try {
             print("success ${entity.path}");
             core.TaleCompiled tale = core.TaleCompiled.fromJson(json.decode(outString) as Map<String, dynamic>);
+            File imageFile = File("${projectDirectoryPath}/core/lib/data/image_sources/${tale.lobby.image.data}");
+            List<int> imageBytes = imageFile.readAsBytesSync();
+            tale.lobby.image.data = "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
             out.add(tale.lobby.toJson());
           } catch (e) {
             print("fail ${entity.path}");
@@ -158,7 +161,7 @@ class MockedEditor {
 
   Future<Map<String, core.Image>> getImagesByNames(Set<String> names) async {
     List<FileSystemEntity> entities =
-        Directory("${projectDirectoryPath}/core/lib/data/unit_images").listSync(recursive: true);
+        Directory("${projectDirectoryPath}/core/lib/data/images").listSync(recursive: true);
     Stopwatch stopwatch = Stopwatch()..start();
     Map<String, core.Image> images = {};
 
@@ -203,6 +206,9 @@ class MockedEditor {
             core.TaleCreateEnvelope tale =
                 core.TaleCreateEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
             if (tale.tale.name == name) {
+              File imageFile = File("${projectDirectoryPath}/core/lib/data/image_sources/${tale.lobby.image.data}");
+              List<int> imageBytes = imageFile.readAsBytesSync();
+              tale.lobby.image.data = "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
               return tale;
             }
           } catch (e) {

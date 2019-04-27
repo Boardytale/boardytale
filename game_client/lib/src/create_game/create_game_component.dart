@@ -37,7 +37,7 @@ class CreateGameComponent {
     createGameService.talesToCreate.listen((data) {
       selectedTaleId = data.first.id;
       changeDetector.markForCheck();
-      createLobby();
+//      createLobby();
     });
   }
 

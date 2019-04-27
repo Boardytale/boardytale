@@ -43,7 +43,7 @@ createUnits() async {
 
 createImages() async {
   List<FileSystemEntity> entities =
-      Directory(projectDirectoryPath + "/core/lib/data/unit_images").listSync(recursive: true);
+      Directory(projectDirectoryPath + "/core/lib/data/images").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {

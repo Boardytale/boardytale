@@ -79,9 +79,13 @@ class GameService {
     if (ids == null) {
       playersOnMove.add(null);
     } else {
-      playersOnMove.add(ids.map((String playerId) {
-        return appService.players[playerId];
-      }).toList());
+      List<ClientPlayer> playersOnMoveOut = [];
+      ids.forEach((id){
+        if(appService.players.containsKey(id)){
+          playersOnMoveOut.add(appService.players[id]);
+        }
+      });
+      playersOnMove.add(playersOnMoveOut);
     }
   }
 

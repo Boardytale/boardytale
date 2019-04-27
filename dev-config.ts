@@ -28,7 +28,7 @@ export let config: BoardytaleConfiguration = {
             port: 9000,
         }],
         executableType: "dart",
-        pathToExecutable: 'editor_server/bin/editor_server_start.dart',
+        pathToExecutable: 'editor_server/mocked/run_mocked_editor.dart',
         pathToWorkingDirectory: 'editor_server'
     },
     editorDatabase: {

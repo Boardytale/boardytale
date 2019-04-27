@@ -29,6 +29,8 @@ game is running on port set in dev-config.ts proxy server - probably 8083
 
 # important notes
 
+when you are using `initial-data-to-database` full (not mocked) version of editor should run
+
 after change of core class run `npm run generate-core`
 
 between `generate core` and `initial-data-to-database` editor server must be restarted! (using old version of fromJson and toJson)
@@ -44,3 +46,8 @@ game is runnning on port set in
     - unitTypeName
     - unit name
  - image refactoring [https://docs.google.com/document/d/1Yks_w_cAMHexz8LEXJwvHqBRz1V8LmxCjYM9jqr5zZA/edit]
+
+# create editor server database
+ - activate aqueduct [https://aqueduct.io]
+ - `cd editor_server && aqueduct db generate`
+ - `aqueduct db upgrade`

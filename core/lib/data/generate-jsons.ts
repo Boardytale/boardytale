@@ -18,7 +18,7 @@ const walkSync = dir => {
                         if (!imageFile.data) {
                             return;
                         }
-                        if (dir.search('unit_images') != -1) {
+                        if (dir.search('images') != -1) {
                             let imgPath: string = imageFile.data.data;
 
                             ['png', 'jpg', 'jpeg'].forEach(imageExt => {

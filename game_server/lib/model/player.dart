@@ -68,6 +68,7 @@ class ServerPlayer extends core.Player {
   }
 
   void leaveGame() {
+    tale.room.ejectPlayer(this);
     tale = null;
     navigationState = core.GameNavigationState.findLobby;
     gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(navigationState, destroyCurrentTale: true), this);

@@ -14,6 +14,7 @@ import 'package:core/model/model.dart' as core;
       <div class='game-controls-cont'>
         <button (click)='endTurn()'>End turn</button>
         <button (click)='switchShowCoordinates()'>{{gameService.showCoordinateLabels.value?"Hide coordinate labels": "Show coordinate labels"}}</button>
+        <button (click)='leaveGame()'>Leave game</button>
         <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
           <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player?.color}">
             {{player?.name}}({{player?.id}})
@@ -34,6 +35,10 @@ class GameControlsComponent {
 
   void endTurn() {
     gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
+  }
+
+  void leaveGame() {
+    gateway.sendMessage(core.ToGameServerMessage.leaveGameAction());
   }
 
   void switchShowCoordinates() {

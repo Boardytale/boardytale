@@ -352,6 +352,7 @@ export type OnServerAction =
     | 'createLobby'
     | 'enterLobby'
     | 'enterGame'
+    | 'leaveGame'
     | 'unitTrackAction'
     | 'playerGameIntention'
     | 'controlsAction';

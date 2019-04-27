@@ -95,6 +95,13 @@ class ToGameServerMessage {
       ..content = jsonEncode((ControlsAction()..actionName = actionName).toJson())
       ..message = OnServerAction.controlsAction;
   }
+  // ---
+
+  factory ToGameServerMessage.leaveGameAction() {
+    return ToGameServerMessage()
+      ..content = ""
+      ..message = OnServerAction.leaveGame;
+  }
 }
 
 @Typescript()
@@ -109,6 +116,8 @@ enum OnServerAction {
   enterLobby,
   @JsonValue('enterGame')
   enterGame,
+  @JsonValue('leaveGame')
+  leaveGame,
   @JsonValue('unitTrackAction')
   unitTrackAction,
   @JsonValue('playerGameIntention')

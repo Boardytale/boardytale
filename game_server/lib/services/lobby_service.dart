@@ -2,6 +2,7 @@ part of game_server;
 
 class LobbyService {
   int lobbyId = 0;
+  static int maximumPlayersInLobby = 4;
   BehaviorSubject<List<LobbyRoom>> openedLobbyRooms = BehaviorSubject<List<LobbyRoom>>(seedValue: []);
 
   BehaviorSubject<List<core.OpenedLobby>> openedLobbies = BehaviorSubject<List<core.OpenedLobby>>(seedValue: []);
@@ -90,15 +91,21 @@ class LobbyService {
 
   void handleEnterLobby(MessageWithConnection messageWithConnection) async {
     ServerPlayer player = messageWithConnection.player;
-    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), player);
 
     core.EnterLobby message = messageWithConnection.message.enterLobbyMessage;
 
     LobbyRoom room = getLobbyRoomById(message.lobbyId);
+    if(room.connectedPlayers.length >= LobbyService.maximumPlayersInLobby){
+      throw "Player entering to full room";
+    }
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), player);
     var lobbyPlayer = messageWithConnection.player.createGamePlayer();
     room.openedLobby.players.add(lobbyPlayer);
     room.connectedPlayers[player.email] = player;
     messageWithConnection.player.navigationState = core.GameNavigationState.inLobby;
+    if(room.connectedPlayers.length == LobbyService.maximumPlayersInLobby){
+      openedLobbyRooms.add(openedLobbyRooms.value..remove(room));
+    }
     room.sendUpdateToAllPlayers();
   }
 }

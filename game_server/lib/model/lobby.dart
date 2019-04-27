@@ -39,6 +39,14 @@ class LobbyRoom {
     lobbyService.removeLobbyRoom(this);
     print("destroyed lobby room ${id}");
   }
+
+  void ejectPlayer(ServerPlayer player) {
+    connectedPlayers.remove(player);
+    if(connectedPlayers.isEmpty){
+      tale.destroy();
+      destroy();
+    }
+  }
 }
 
 final LobbyList lobbyList = new LobbyList._private();

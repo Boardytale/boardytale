@@ -1243,6 +1243,7 @@ const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
   OnServerAction.createLobby: 'createLobby',
   OnServerAction.enterLobby: 'enterLobby',
   OnServerAction.enterGame: 'enterGame',
+  OnServerAction.leaveGame: 'leaveGame',
   OnServerAction.unitTrackAction: 'unitTrackAction',
   OnServerAction.playerGameIntention: 'playerGameIntention',
   OnServerAction.controlsAction: 'controlsAction'
