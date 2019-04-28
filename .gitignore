@@ -42,9 +42,13 @@ editor_server/node_modules/
 game_client/.dart_tool/
 user_server/.dart_tool/pub/bin/aqueduct/
 user_server/.dart_tool/pub/bin/test/
-user_server/database.yaml
-user_server/migrations/
 logger_server/out/
 
 # Mac OS
 .DS_Store
+
+# security issue - do not push generated config - can be production
+config.g.json
+editor_server/database.yaml
+user_server/database.yaml
+
