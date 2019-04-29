@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:game_server/game_server.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:core/configuration/configuration.dart';
@@ -31,7 +32,7 @@ main() async {
     });
   });
 
-  shelf_io.serve(handler, 'localhost', port).then((server) {
+  shelf_io.serve(handler, InternetAddress.anyIPv4, port).then((server) {
     print('Serving game server at ws://${server.address.host}:${server.port}');
   });
 }

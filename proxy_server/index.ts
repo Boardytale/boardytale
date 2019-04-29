@@ -1,9 +1,13 @@
 import * as express from 'express';
 import * as path from 'path';
 import * as proxy from 'http-proxy-middleware';
-import {config} from '../dev-config';
+import * as fs from 'fs';
 import {makeAddress} from '../libs/network';
-import {FrontEndDevelopment, ServerConfiguration} from '../core/lib/configuration/configuration';
+import {
+    BoardytaleConfiguration,
+    FrontEndDevelopment,
+    ServerConfiguration
+} from '../core/lib/configuration/configuration';
 
 let isMocked = false;
 
@@ -12,6 +16,8 @@ process.argv.forEach((val) => {
         isMocked = true;
     }
 });
+
+let config: BoardytaleConfiguration = JSON.parse(fs.readFileSync('../config.g.json').toString());
 
 const app = express();
 app.use((req, res, next) => {
@@ -38,8 +44,7 @@ app.use(express.static(path.resolve(__dirname, '../www'), {
     index: path.resolve(__dirname, '../www/index.html')
 }));
 
-
-var server = app.listen(config.proxyServer.uris[0].port, () => {
+app.listen(config.proxyServer.uris[0].port, () => {
     console.log('Proxy server is listening to http://localhost:' + config.proxyServer.uris[0].port);
 });
 
@@ -70,23 +75,4 @@ function runProxy(server: ServerConfiguration) {
         app.use(server.route, apiProxy);
         console.log(`running proxy from ${server.route} to ${makeAddress(server.uris[0])}`);
     }
-}
-
-function proxyWebsocket(server: ServerConfiguration) {
-    var apiProxy;
-    if (server.route) {
-        // let apiProxy = proxy('ws://' + server.uris[0].host + ':' + server.uris[0].port + '/');
-        let pathRewrite = {};
-        pathRewrite[`^${server.route}`] = '/';
-        apiProxy = proxy({
-            target: makeAddress(server.uris[0]),
-            pathRewrite,
-            changeOrigin: true,
-            ws: true, // enable websocket proxy
-            logLevel: 'debug'
-        });
-        app.use(server.route, apiProxy);
-        console.log(`running proxy from ${server.route} to ${makeAddress(server.uris[0])}`);
-    }
-    return apiProxy;
 }

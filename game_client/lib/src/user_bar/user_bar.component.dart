@@ -53,6 +53,9 @@ class UserBarComponent {
   void onGoogleSigninSuccess(GoogleSignInSuccess event) async {
     GoogleUser googleUser = event.googleUser;
     AuthResponse response = googleUser.getAuthResponse();
+    if(response.id_token ==  null){
+      print("missing id_token in google auth");
+    }
     http.Response loginResponse = await _http.post("/userApi/login",
         headers: {"Content-Type": "application/json"}, body: json.encode({"id": response.id_token}));
     User currentUser = model.User.fromGoogleJson(json.decode(loginResponse.body));
