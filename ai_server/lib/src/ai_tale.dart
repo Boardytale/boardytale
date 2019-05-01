@@ -59,9 +59,16 @@ class AiTale {
     core.SimpleLogger logger = core.SimpleLogger();
     core.Track track =
         core.Track(core.MapUtils.getNearestEnemyByTerrain(units, unitOnMove, fields, unitOnMove.steps, logger: logger));
-    io.File("lib/log/lastNearestEnemy")
-      ..createSync()
-      ..writeAsString(logger.log);
+    try{
+      io.Directory("lib/log/")
+          .createSync(recursive: true);
+      io.File("lib/log/lastNearestEnemy")
+        ..createSync()
+        ..writeAsString(logger.log);
+    }catch(e){
+      print("cannot create log file for ai server");
+    }
+
     int terrainLength = track.getMoveCostOfFreeWay();
     core.UnitTrackAction action = core.UnitTrackAction()..unitId = unitOnMove.id;
     if (terrainLength > unitOnMove.steps) {

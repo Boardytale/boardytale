@@ -18,7 +18,8 @@
     "hero-server": "dart hero_server/bin/hero_server_start.dart",
     "game-client": "cd game_client && dart bin/serve.dart",
     "generate-data-jsons": "cd core/lib/data && ts-node generate-jsons.ts",
-    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart"
+    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart",
+    "build-game-clien": "cd game_client && webdev build"
   },
   "private": true,
   "devDependencies": {
