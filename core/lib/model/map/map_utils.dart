@@ -1,7 +1,8 @@
 part of model;
 
 class MapUtils {
-  static List<Field> getShortestPathWithTerrain(Field fromField, Field toField, Map<String, Field> fields) {
+  static List<Field> getShortestPathWithTerrain(
+      Field fromField, Field toField, Map<String, Field> fields, int maxPathLength) {
     if (fromField == toField) {
       return [fromField];
     }
@@ -12,7 +13,7 @@ class MapUtils {
     int generation = 0;
     Map<int, List<List<Field>>> waitingPaths = {};
 
-    while (++generation < 10000) {
+    while (++generation < maxPathLength) {
       List<List<Field>> nextGenPaths = [];
       for (int i = 0; i < paths.length; i++) {
         List<Field> currentGenPath = paths[i];
@@ -55,9 +56,28 @@ class MapUtils {
 
   static List<Field> getNearestEnemyByTerrain(
       Map<String, Unit> units, Unit unitOnMove, Map<String, Field> fields, int steps,
-      {bool Function(Field field, Player unitOnMovePlayer) canGoHere = MapUtils.standardCanGo,
+      {int sight = 7, bool Function(Field field, Player unitOnMovePlayer) canGoHere = MapUtils.standardCanGo,
       bool Function(Field field, Player unitOnMovePlayer) canEndHere = MapUtils.standardCanEnd,
       SimpleLogger logger}) {
+
+//    List<Field> fieldsInSight = [];
+    List<String> fieldsInSightIds = MapCircles.getCircleAround(sight, field: unitOnMove.field);
+
+    bool foundEnemy = false;
+    for(String fieldId in fieldsInSightIds){
+      Field field = fields[fieldId];
+      if(field != null){
+//        fieldsInSight.add(field);
+        if (field.units.isNotEmpty && field.isEnemyOf(unitOnMove.player)){
+          foundEnemy = true;
+          break;
+        }
+      }
+    }
+    if(!foundEnemy){
+      return null;
+    }
+
     Set<Field> reachedFields = Set();
     List<List<Field>> paths = [
       [unitOnMove.field]
@@ -67,7 +87,7 @@ class MapUtils {
     if (logger != null) {
       logger.log += "\n getNearestEnemyByTerrain for unit ${unitOnMove.id} \n";
     }
-    while (++generation < 20) {
+    while (++generation < sight) {
       if (logger != null) {
         logger.log += "\n generation ${generation} \n";
       }

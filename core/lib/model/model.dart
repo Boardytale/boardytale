@@ -42,6 +42,8 @@ part 'package:core/model/map/stage_geometry.dart';
 
 part 'package:core/model/map/map_utils.dart';
 
+part 'package:core/model/map/map_circle_ids.dart';
+
 part 'package:core/model/tale/tale.dart';
 
 part 'package:core/model/tale/tale_create_envelope.dart';

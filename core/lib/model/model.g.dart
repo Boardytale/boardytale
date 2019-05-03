@@ -1347,7 +1347,8 @@ Map<String, dynamic> _$ControlsActionToJson(ControlsAction instance) =>
     };
 
 const _$ControlsActionNameEnumMap = <ControlsActionName, dynamic>{
-  ControlsActionName.endOfTurn: 'endOfTurn'
+  ControlsActionName.endOfTurn: 'endOfTurn',
+  ControlsActionName.unitWillNotPlay: 'unitWillNotPlay'
 };
 
 ToHeroServerMessage _$ToHeroServerMessageFromJson(Map<String, dynamic> json) {

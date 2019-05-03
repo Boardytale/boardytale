@@ -357,7 +357,7 @@ export type OnServerAction =
     | 'playerGameIntention'
     | 'controlsAction';
 
-export type ControlsActionName = 'endOfTurn';
+export type ControlsActionName = 'endOfTurn' | 'unitWillNotPlay';
 
 export type OnHeroServerAction = 'getHeroesOfPlayer';
 

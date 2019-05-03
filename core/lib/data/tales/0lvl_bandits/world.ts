@@ -284,5 +284,5 @@ export let world: World = {
         '29_29': { terrain: 'forest' },
     },
     height: 18,
-    width: 23,
+    width: 40,
 };

@@ -224,4 +224,6 @@ class ControlsAction extends MessageContent {
 enum ControlsActionName {
   @JsonValue('endOfTurn')
   endOfTurn,
+  @JsonValue('unitWillNotPlay')
+  unitWillNotPlay,
 }
