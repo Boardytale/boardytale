@@ -32,6 +32,14 @@ class LoggerMessage {
       ..message = LoggerMessageType.taleUpdate
       ..content = json.encode(data.toJson());
   }
+
+  TaleUpdate get trace => TaleUpdate.fromJson(json.decode(content));
+
+  factory LoggerMessage.fromTrace(String data) {
+    return LoggerMessage()
+      ..message = LoggerMessageType.taleUpdate
+      ..content = data;
+  }
 }
 
 @Typescript()

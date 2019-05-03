@@ -56,6 +56,7 @@ export let world: World = {
         '4_17': { terrain: 'forest' },
         '4_19': { terrain: 'forest' },
         '4_24': { terrain: 'forest' },
+        '5_3': { terrain: 'forest' },
         '5_5': { terrain: 'forest' },
         '5_8': { terrain: 'forest' },
         '5_13': { terrain: 'forest' },
@@ -282,6 +283,6 @@ export let world: World = {
         '29_28': { terrain: 'forest' },
         '29_29': { terrain: 'forest' },
     },
-    height: 30,
-    width: 30,
+    height: 18,
+    width: 23,
 };

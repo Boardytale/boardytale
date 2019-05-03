@@ -41,10 +41,9 @@ class LobbyRoom {
   }
 
   void ejectPlayer(ServerPlayer player) {
-    connectedPlayers.remove(player);
+    connectedPlayers.remove(player.email);
     if(connectedPlayers.isEmpty){
       tale.destroy();
-      destroy();
     }
   }
 }

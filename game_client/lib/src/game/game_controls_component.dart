@@ -17,7 +17,7 @@ import 'package:core/model/model.dart' as core;
         <button (click)='leaveGame()'>Leave game</button>
         <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
           <span *ngFor='let player of gameService.playersOnMove.value' [ngStyle]="{'color': player?.color}">
-            {{player?.name}}({{player?.id}})
+            {{stripName(player?.name)}}({{player?.id}})
           </span>
         </span>
       </div>
@@ -28,6 +28,7 @@ class GameControlsComponent {
   AppService appService;
   GatewayService gateway;
   final ChangeDetectorRef changeDetector;
+
   GameControlsComponent(this.gameService, this.gateway, this.changeDetector, this.appService) {
     this.gameService.showCoordinateLabels.listen((_) => changeDetector.markForCheck());
     this.gameService.playersOnMove.listen((_) => changeDetector.markForCheck());
@@ -52,5 +53,15 @@ class GameControlsComponent {
       }).join(", ");
     }
     return "";
+  }
+
+  String stripName(String name) {
+    if(name == null){
+      return "";
+    }
+    if (name.length > 19) {
+      return name.substring(0, 18);
+    }
+    return name;
   }
 }

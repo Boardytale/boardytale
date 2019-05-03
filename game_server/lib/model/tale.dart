@@ -85,30 +85,31 @@ class ServerTale {
     });
   }
 
-  void aiPlay() {
+  void aiPlay() async {
     //TODO: more ai players
-    io.WebSocket.connect("ws://localhost:${config.aiServer.uris.first.port}/").then((io.WebSocket socket) {
-      currentAiPlayerSocket = socket;
-      ServerPlayer player = taleState.aiPlayers.values.first;
-      socket.add(json.encode(
-          core.ToAiServerMessage.fromState(taleState.createTaleForPlayer(player), core.AiEngine.standard, player.id)
-              .toJson()));
-      socket.listen((dynamic aiServerData) {
-        String messageString = aiServerData.toString();
-        print(messageString);
-        core.ToGameServerMessage message = core.ToGameServerMessage.fromJson(json.decode(messageString));
-        if (message.message == core.OnServerAction.controlsAction) {
-          if (message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
-            socket.close();
-            currentAiPlayerSocket = null;
-            _humansOnMove = true;
-            // TODO: refresh only units currently beginning their move
-            sendPlayersOnMove();
-          }
-        } else if (message.message == core.OnServerAction.unitTrackAction) {
-          handleUnitTrackAction(message.unitTrackActionMessage);
+    String uri = "ws://localhost:${config.aiServer.uris.first.port}/";
+    Logger.log(taleState.taleId, core.LoggerMessage.fromTrace("opening connection to ai server $uri"));
+    currentAiPlayerSocket = await io.WebSocket.connect(uri);
+    Logger.log(taleState.taleId, core.LoggerMessage.fromTrace("opened connection to ai server $uri"));
+    ServerPlayer player = taleState.aiPlayers.values.first;
+    currentAiPlayerSocket.add(json.encode(
+        core.ToAiServerMessage.fromState(taleState.createTaleForPlayer(player), core.AiEngine.standard, player.id)
+            .toJson()));
+    currentAiPlayerSocket.listen((dynamic aiServerData) {
+      String messageString = aiServerData.toString();
+      print(messageString);
+      core.ToGameServerMessage message = core.ToGameServerMessage.fromJson(json.decode(messageString));
+      if (message.message == core.OnServerAction.controlsAction) {
+        if (message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
+          currentAiPlayerSocket.close();
+          currentAiPlayerSocket = null;
+          _humansOnMove = true;
+          // TODO: refresh only units currently beginning their move
+          sendPlayersOnMove();
         }
-      });
+      } else if (message.message == core.OnServerAction.unitTrackAction) {
+        handleUnitTrackAction(message.unitTrackActionMessage);
+      }
     });
   }
 

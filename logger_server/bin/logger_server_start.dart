@@ -32,7 +32,7 @@ class Logger {
   void run() async {
     final BoardytaleConfiguration config = getConfiguration();
     final port = config.loggerServer.uris.first.port.toInt();
-    var handler = const shelf.Pipeline().addMiddleware(shelf.logRequests()).addHandler(_echoRequest);
+    var handler = const shelf.Pipeline().addHandler(_echoRequest);
 
     var server = await io.serve(handler, 'localhost', port);
 

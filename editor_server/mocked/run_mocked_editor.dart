@@ -58,14 +58,31 @@ class MockedEditor {
     return response.body;
   }
 
+  void restartTypescriptServer() async{
+    int nextPort = 15000 + math.Random().nextInt(10000);
+    while(nextPort == tsPort){
+      nextPort = 15000 + math.Random().nextInt(10000);
+    }
+    tsPort = nextPort;
+    if(tsProcess != null){
+      tsProcess.kill(ProcessSignal.sigquit);
+    }
+    tsProcess = await Process.start("npm", ["run", "ts-node", "libs/generate-data-json-service.ts", "$tsPort"],
+        workingDirectory: projectDirectoryPath, runInShell: true);
+    // TODO: detach output streams
+    printFromOutputStreams(tsProcess, "ts:", "blue");
+  }
+
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     if (request.url.path == "inner/lobbyList") {
       String out = json.encode(await getLobbies());
+      restartTypescriptServer();
       return shelf.Response.ok(out);
     } else {
       String body = await request.readAsString();
       String id = (IdWrap()..readFromMap(json.decode(body) as Map<String, dynamic>)).id;
       String out = json.encode(await getCompiledTale(id));
+      restartTypescriptServer();
       return shelf.Response.ok(out);
     }
   }

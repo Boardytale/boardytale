@@ -5,18 +5,17 @@ class LobbyService {
   static int maximumPlayersInLobby = 4;
   BehaviorSubject<List<LobbyRoom>> openedLobbyRooms = BehaviorSubject<List<LobbyRoom>>(seedValue: []);
 
-  BehaviorSubject<List<core.OpenedLobby>> openedLobbies = BehaviorSubject<List<core.OpenedLobby>>(seedValue: []);
 
   LobbyService() {
     gateway.handlers[core.OnServerAction.createLobby] = handleLobbyCreation;
     gateway.handlers[core.OnServerAction.enterLobby] = handleEnterLobby;
     openedLobbyRooms.listen((List<LobbyRoom> data) {
-      List<core.OpenedLobby> out = [];
-      data.forEach((room) {
-        out.add(room.openedLobby);
-      });
-      openedLobbies.add(out);
+      print("opened lobby rooms changed ${openedLobbyRooms.value.map((v)=>v.openedLobby.lobbyName).join(" ")}");
     });
+  }
+
+  List<core.OpenedLobby> getOpenedRoomsClientData(){
+    return openedLobbyRooms.value.map((room)=>room.openedLobby).toList();
   }
 
   LobbyRoom getLobbyRoomByPlayer(ServerPlayer player) {

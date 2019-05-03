@@ -14,8 +14,8 @@ class ServerPlayer extends core.Player {
   StreamSubscription _lobbyRoomsSubscription;
 
   void subscribeToOpenedLobbiesChanges() {
-    _lobbyRoomsSubscription = lobbyService.openedLobbies.listen((onData) {
-      gateway.sendMessage(core.ToClientMessage.fromLobbyList(onData), this);
+    _lobbyRoomsSubscription = lobbyService.openedLobbyRooms.listen((onData) {
+      gateway.sendMessage(core.ToClientMessage.fromLobbyList(lobbyService.getOpenedRoomsClientData()), this);
     });
   }
 

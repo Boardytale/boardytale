@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 var bodyParser = require('body-parser');
 // NEVER let this service be running on production server due to security - possibly executes untrusted code.
 
@@ -6,7 +6,7 @@ const app = express();
 let port = parseInt(process.argv[2]);
 
 app.use(bodyParser.text()); // for parsing application/json
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Typescript service listening on port ${port}!`))
 
 app.post('/', (req, res) => {
     var input = req.body;
