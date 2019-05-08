@@ -20,7 +20,8 @@
     "game-client": "cd game_client && dart bin/serve.dart",
     "game-client-build": "cd game_client && webdev build",
     "generate-data-jsons": "cd core/lib/data && ts-node generate-jsons.ts",
-    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart"
+    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart",
+    "initial-data-to-production-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database_production.dart"
   },
   "private": true,
   "devDependencies": {
