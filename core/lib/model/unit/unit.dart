@@ -92,7 +92,9 @@ class Unit {
 
   Field get field => _field;
 
-  void destroy() {}
+  void destroy() {
+    field.removeUnit(this);
+  }
 
   int get actualHealth => _health;
 

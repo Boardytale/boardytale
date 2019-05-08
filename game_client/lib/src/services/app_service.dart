@@ -53,6 +53,7 @@ class AppService {
 
   Stream<Map> get onAlert => _onAlert.stream;
   BehaviorSubject<ClientGameState> navigationState = BehaviorSubject<ClientGameState>();
+  BehaviorSubject<ClientPlayer> playerRemoved = BehaviorSubject<ClientPlayer>();
 
   final GatewayService gatewayService;
 
@@ -89,6 +90,10 @@ class AppService {
 
   void goToState(core.GameNavigationState newState) {
     gatewayService.sendMessage(core.ToGameServerMessage.fromGoToState(newState));
+  }
+
+  void removePlayerById(String id){
+    playerRemoved.add(players.remove(id));
   }
 }
 

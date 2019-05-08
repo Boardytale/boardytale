@@ -1139,13 +1139,16 @@ TaleUpdate _$TaleUpdateFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : UnitType.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..unitToRemoveIds =
+        (json['unitToRemoveIds'] as List)?.map((e) => e as String)?.toList()
     ..newAssetsToTale = json['newAssetsToTale'] == null
         ? null
         : Assets.fromJson(json['newAssetsToTale'] as Map<String, dynamic>)
     ..newPlayersToTale = (json['newPlayersToTale'] as List)
         ?.map((e) =>
             e == null ? null : Player.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..removePlayerId = json['removePlayerId'] as String;
 }
 
 Map<String, dynamic> _$TaleUpdateToJson(TaleUpdate instance) {
@@ -1162,9 +1165,11 @@ Map<String, dynamic> _$TaleUpdateToJson(TaleUpdate instance) {
 
   writeNotNull('newUnitTypesToTale',
       instance.newUnitTypesToTale?.map((e) => e?.toJson())?.toList());
+  writeNotNull('unitToRemoveIds', instance.unitToRemoveIds);
   writeNotNull('newAssetsToTale', instance.newAssetsToTale?.toJson());
   writeNotNull('newPlayersToTale',
       instance.newPlayersToTale?.map((e) => e?.toJson())?.toList());
+  writeNotNull('removePlayerId', instance.removePlayerId);
   return val;
 }
 

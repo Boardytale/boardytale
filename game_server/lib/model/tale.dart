@@ -136,19 +136,25 @@ class ServerTale {
   }
 
   void endGame([_]) {
-    taleState.humanPlayers.values.forEach((player) {
+    taleState.humanPlayers.values.toList().forEach((player) {
       player.leaveGame();
     });
     destroy();
   }
 
   void destroy() {
-    taleState.units = null;
-    taleState.unitTypes = null;
-    taleState = null;
+    if(taleState != null){
+      taleState.units = null;
+      taleState.unitTypes = null;
+      taleState = null;
+    }
     triggers = null;
     room.destroy();
     room = null;
+  }
+
+  void ejectPlayer(ServerPlayer player) {
+    taleState.addTaleAction(TaleAction()..removePlayerId = player.id);
   }
 }
 

@@ -80,8 +80,8 @@ class GameService {
       playersOnMove.add(null);
     } else {
       List<ClientPlayer> playersOnMoveOut = [];
-      ids.forEach((id){
-        if(appService.players.containsKey(id)){
+      ids.forEach((id) {
+        if (appService.players.containsKey(id)) {
           playersOnMoveOut.add(appService.players[id]);
         }
       });
@@ -138,6 +138,18 @@ class GameService {
     setPlayersOnMoveByIds(update.playerOnMoveIds);
     if (update.actions != null) {
       unitsCreateOrUpdate(update.actions);
+    }
+    if (update.unitToRemoveIds != null) {
+      update.unitToRemoveIds.forEach((toRemoveId){
+        if(units.containsKey(toRemoveId)){
+          units[toRemoveId].destroy();
+          units.remove(toRemoveId);
+        }
+      });
+    }
+
+    if (update.removePlayerId != null) {
+      appService.removePlayerById(update.removePlayerId);
     }
   }
 

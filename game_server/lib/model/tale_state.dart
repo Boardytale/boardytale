@@ -83,6 +83,20 @@ class ServerTaleState {
 
     outputTaleUpdate.playerOnMoveIds = playerOnMoveIds;
 
+    if(action.removePlayerId != null){
+      outputTaleUpdate.removePlayerId = action.removePlayerId;
+      humanPlayers.remove(action.removePlayerId);
+      outputTaleUpdate.unitToRemoveIds = [];
+      units.forEach((id, unit){
+        if(unit.player.id == action.removePlayerId){
+          outputTaleUpdate.unitToRemoveIds.add(id);
+        }
+      });
+      outputTaleUpdate.unitToRemoveIds.forEach((idToRemove){
+        units.remove(idToRemove);
+      });
+    }
+
     if(gameStared){
       humanPlayers.forEach((key, player) {
         gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);

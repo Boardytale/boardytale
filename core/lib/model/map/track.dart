@@ -31,6 +31,10 @@ class Track {
     }
     // fill missing
     List<Field> out = [fields.first];
+    if(fields.length < 2){
+      this.fields = out;
+      return;
+    }
     for (var i = 0; i < fields.length - 1; i++) {
       Field f1 = fields[i];
       Field f2 = fields[i + 1];

@@ -13,7 +13,6 @@ import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:stagexl/stagexl.dart' as stage_lib;
-import 'package:rxdart/rxdart.dart';
 
 @Component(
     selector: 'world',
@@ -55,6 +54,9 @@ class WorldComponent implements OnDestroy {
     _onWorldLoadedSubscription = gameService.onTaleLoaded.listen(modelLoaded);
     gatewayService.handlers[core.OnClientAction.intentionUpdate] = handleIntentionUpdate;
     _destroySubscription = appService.destroyCurrentTale.listen(clear);
+    appService.playerRemoved.listen((ClientPlayer player){
+      mapObjectsManager.addIntention(null, player.getStageColor());
+    });
   }
 
   @ViewChild("world")

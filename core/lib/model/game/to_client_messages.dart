@@ -243,11 +243,19 @@ class TaleUpdate extends MessageContent {
 
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
+  List<String> unitToRemoveIds;
+
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
   Assets newAssetsToTale;
 
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
   List<Player> newPlayersToTale;
+
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String removePlayerId;
 
   static TaleUpdate fromJson(Map<String, dynamic> json) => _$TaleUpdateFromJson(json);
 

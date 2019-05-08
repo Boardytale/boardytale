@@ -22,7 +22,7 @@ class Logger {
     Timer.periodic(Duration(seconds: 15), (_) {
       changedTales.forEach((taleId) {
         File("out/$taleId")
-          ..createSync()
+          ..createSync(recursive: true)
           ..writeAsString(json.encode(loggedTales[taleId].toJson()));
       });
       changedTales.clear();
