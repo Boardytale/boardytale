@@ -13,7 +13,7 @@ main() async {
 
   try {
     config =
-        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/config.g.json').readAsStringSync()));
+        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '../boardytale_production_config/config.g.json').readAsStringSync()));
   } catch (e) {
     if (e is CheckedFromJsonException) {
       print(e.innerError.toString());

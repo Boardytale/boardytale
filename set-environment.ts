@@ -2,13 +2,17 @@ import * as fs from 'fs';
 import {BoardytaleConfiguration} from './core/lib/configuration/configuration';
 
 let configPath = null;
+let targetPath = 'config.g.json';
 process.argv.forEach(function (val, index, array) {
     if (val.indexOf('--config=') === 0) {
         configPath = val.replace('--config=', '');
     }
+    if (val.indexOf('--target=') === 0) {
+        targetPath = val.replace('--target=', '');
+    }
 });
 import('./' + configPath).then((configFile: { config: BoardytaleConfiguration }) => {
-    fs.writeFileSync('config.g.json', JSON.stringify(configFile.config));
+    fs.writeFileSync(targetPath, JSON.stringify(configFile.config));
     const config = configFile.config;
 
     fs.writeFileSync('user_server/database.yaml', `  
