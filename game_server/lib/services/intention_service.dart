@@ -6,13 +6,15 @@ class IntentionService {
   }
 
   void handle(MessageWithConnection message) {
-    message.player.tale.taleState.humanPlayers.forEach((email, player) {
-      if (player != message.player) {
-        gateway.sendMessage(
-            core.ToClientMessage.fromIntentionUpdate(
-                message.player.id, message.message.playerGameIntentionMessage.fieldsId),
-            player);
-      }
-    });
+    if(message.player.tale != null){
+      message.player.tale.taleState.humanPlayers.forEach((email, player) {
+        if (player != message.player) {
+          gateway.sendMessage(
+              core.ToClientMessage.fromIntentionUpdate(
+                  message.player.id, message.message.playerGameIntentionMessage.fieldsId),
+              player);
+        }
+      });
+    }
   }
 }
