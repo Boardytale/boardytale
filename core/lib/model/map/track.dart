@@ -84,7 +84,7 @@ class Track {
   bool get isConnected {
     Field previous;
     for (Field field in fields) {
-      if (previous != null && field.distance(previous) != 1) return false;
+      if (previous != null && MapUtils.distance(field, previous) != 1) return false;
       previous = field;
     }
     return true;

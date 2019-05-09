@@ -135,15 +135,6 @@ class Field {
     return !units.isEmpty;
   }
 
-  int distance(Field field) {
-    int dx = (x - field.x);
-    int dy = (yt - field.yt);
-    if (dx * dy < 0) {
-      return Math.max(dx.abs(), dy.abs());
-    }
-    return dy.abs() + dx.abs();
-  }
-
   String stepToDirection(int direction) {
     if (x.isEven) {
       switch (direction) {

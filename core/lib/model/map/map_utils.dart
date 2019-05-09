@@ -175,4 +175,13 @@ class MapUtils {
   static bool standardCanEnd(Field field, Player unitOnMovePlayer) {
     return field.terrain != Terrain.rock && field.terrain != Terrain.water && !field.anyAliveOnField();
   }
+
+  static int distance(Field f1, Field f2) {
+    int dx = (f2.x - f1.x);
+    int dy = (f2.yt - f1.yt);
+    if (dx * dy < 0) {
+      return Math.max(dx.abs(), dy.abs());
+    }
+    return dy.abs() + dx.abs();
+  }
 }

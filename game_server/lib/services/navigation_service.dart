@@ -12,11 +12,6 @@ class NavigationService {
 
   void restoreState(ServerPlayer player) {
     core.GameNavigationState newState = player.navigationState;
-    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(newState), player);
-
-    if (newState == core.GameNavigationState.findLobby) {
-      player.subscribeToOpenedLobbiesChanges();
-    }
 
     if (newState == core.GameNavigationState.createGame) {
       createGameService.sendGamesToCreate(player);
@@ -25,12 +20,23 @@ class NavigationService {
 
     if (newState == core.GameNavigationState.inLobby) {
       LobbyRoom currentPlayerRoom = lobbyService.getLobbyRoomByPlayer(player);
-      currentPlayerRoom.sendUpdateToPlayer(player);
-      player.unsubscribeFromOpenedLobbiesChanges();
+      if (currentPlayerRoom == null) {
+        print("bad state player is in lobby, but no room found");
+        newState = core.GameNavigationState.findLobby;
+        player.navigationState = newState;
+      } else {
+        currentPlayerRoom.sendUpdateToPlayer(player);
+        player.unsubscribeFromOpenedLobbiesChanges();
+      }
+    }
+
+    if (newState == core.GameNavigationState.findLobby) {
+      player.subscribeToOpenedLobbiesChanges();
     }
 
     if (newState == core.GameNavigationState.inGame) {
       player.tale.sendTaleDataToPlayer(player);
     }
+    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(newState), player);
   }
 }

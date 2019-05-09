@@ -12,7 +12,7 @@ class DistanceTest {
   }
   String get name => "${_origin.id} => ${_target.id} == $_distance";
   void test() {
-    expect(_origin.distance(_target), _distance);
+    expect(MapUtils.distance(_origin, _target), _distance);
   }
 }
 

@@ -45,7 +45,7 @@ class ActionsFeedback {
     }
     ClientUnit unit = cont.unit;
     ActionFeedbackData feedback = ActionFeedbackData();
-    if (action.explain == core.ActionExplanation.unitAttacked) {
+    if (action.explain == core.ActionExplanation.unitAttacking) {
       feedback
         ..dices = action.diceNumbers
         ..label = "unit ${unit.name} attacking"

@@ -9,6 +9,9 @@ class AbilitiesEnvelope {
   @TypescriptOptional()
   AttackAbilityEnvelope attack;
 
+  @TypescriptOptional()
+  ShootAbilityEnvelope shoot;
+
   static AbilitiesEnvelope fromJson(Map json) {
     return _$AbilitiesEnvelopeFromJson(json);
   }

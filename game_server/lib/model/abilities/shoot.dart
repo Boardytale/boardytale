@@ -1,6 +1,6 @@
 part of game_server;
 
-class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
+class ServerShootAbility extends core.ShootAbility implements ServerAbility {
   @override
   TaleAction perform(
       core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
@@ -31,7 +31,6 @@ class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
       ..steps = 0
       ..far = unit.far + track.fields.length - 2
       ..actions = unit.actions - 1
-      ..moveToFieldId = track.fields[track.fields.length - 2].id
       ..unitId = unit.id
       ..actionId = action.actionId
       ..diceNumbers = diceNumbers

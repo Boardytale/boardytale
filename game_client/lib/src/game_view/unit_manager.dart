@@ -31,6 +31,9 @@ class MapObjectsManager {
           case HighlightName.attack:
             abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/attack.png"));
             break;
+          case HighlightName.shoot:
+            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/shoot.png"));
+            break;
         }
       });
     });

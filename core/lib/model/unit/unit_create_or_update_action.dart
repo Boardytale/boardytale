@@ -127,8 +127,8 @@ enum AnimationName {
 
 @Typescript()
 enum ActionExplanation {
-  @JsonValue('unitAttacked')
-  unitAttacked,
+  @JsonValue('unitAttacking')
+  unitAttacking,
   @JsonValue('unitGotDamage')
   unitGotDamage,
 }

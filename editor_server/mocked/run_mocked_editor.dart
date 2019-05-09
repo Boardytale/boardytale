@@ -43,13 +43,12 @@ class MockedEditor {
     tsProcess = await Process.start("npm", ["run", "ts-node", "libs/generate-data-json-service.ts", "$tsPort"],
         workingDirectory: projectDirectoryPath, runInShell: true);
     printFromOutputStreams(tsProcess, "ts:", "blue");
-//    await Future.delayed(Duration(seconds: 1));
-//    List lobbies = await getLobbies();
-//    print("got lobbies ${lobbies}");
-
+    //    await Future.delayed(Duration(seconds: 1));
+    //    List lobbies = await getLobbies();
+    //    print("got lobbies ${lobbies}");
   }
 
-  Future<String> getFileByPath(String path) async{
+  Future<String> getFileByPath(String path) async {
     String harmonizedPath = path.replaceAll("\\", "/");
     var url = "http://localhost:${tsPort}/";
     print("sent?  ${harmonizedPath}");
@@ -58,13 +57,13 @@ class MockedEditor {
     return response.body;
   }
 
-  void restartTypescriptServer() async{
+  void restartTypescriptServer() async {
     int nextPort = 15000 + math.Random().nextInt(10000);
-    while(nextPort == tsPort){
+    while (nextPort == tsPort) {
       nextPort = 15000 + math.Random().nextInt(10000);
     }
     tsPort = nextPort;
-    if(tsProcess != null){
+    if (tsProcess != null) {
       tsProcess.kill(ProcessSignal.sigquit);
     }
     tsProcess = await Process.start("npm", ["run", "ts-node", "libs/generate-data-json-service.ts", "$tsPort"],
@@ -100,7 +99,8 @@ class MockedEditor {
             core.TaleCompiled tale = core.TaleCompiled.fromJson(json.decode(outString) as Map<String, dynamic>);
             File imageFile = File("${projectDirectoryPath}/core/lib/data/image_sources/${tale.lobby.image.data}");
             List<int> imageBytes = imageFile.readAsBytesSync();
-            tale.lobby.image.data = "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
+            tale.lobby.image.data =
+                "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
             out.add(tale.lobby.toJson());
           } catch (e) {
             print("fail ${entity.path}");
@@ -225,7 +225,8 @@ class MockedEditor {
             if (tale.tale.name == name) {
               File imageFile = File("${projectDirectoryPath}/core/lib/data/image_sources/${tale.lobby.image.data}");
               List<int> imageBytes = imageFile.readAsBytesSync();
-              tale.lobby.image.data = "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
+              tale.lobby.image.data =
+                  "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
               return tale;
             }
           } catch (e) {

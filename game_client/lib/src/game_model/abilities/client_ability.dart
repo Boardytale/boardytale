@@ -21,4 +21,4 @@ class FieldHighlight {
   core.Field field;
 }
 
-enum HighlightName { track, attack }
+enum HighlightName { track, attack, shoot }

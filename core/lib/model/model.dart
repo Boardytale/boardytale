@@ -71,6 +71,7 @@ part "package:core/model/abilities/ability.dart";
 part "package:core/model/abilities/move.dart";
 
 part "package:core/model/abilities/attack.dart";
+part "package:core/model/abilities/shoot.dart";
 
 part 'package:core/model/abilities/targets.dart';
 

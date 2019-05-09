@@ -8,6 +8,9 @@ List<core.Ability> createServerAbilityList(core.AbilitiesEnvelope envelope) {
   if (envelope.attack != null) {
     out.add(ServerAttackAbility()..fromEnvelope(envelope.attack));
   }
+  if (envelope.shoot != null) {
+    out.add(ServerShootAbility()..fromEnvelope(envelope.shoot));
+  }
   return out;
 }
 

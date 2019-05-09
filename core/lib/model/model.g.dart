@@ -455,7 +455,7 @@ const _$AnimationNameEnumMap = <AnimationName, dynamic>{
 };
 
 const _$ActionExplanationEnumMap = <ActionExplanation, dynamic>{
-  ActionExplanation.unitAttacked: 'unitAttacked',
+  ActionExplanation.unitAttacking: 'unitAttacking',
   ActionExplanation.unitGotDamage: 'unitGotDamage'
 };
 
@@ -1526,14 +1526,17 @@ AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
         : MoveAbilityEnvelope.fromJson(json['move'] as Map<String, dynamic>)
     ..attack = json['attack'] == null
         ? null
-        : AttackAbilityEnvelope.fromJson(
-            json['attack'] as Map<String, dynamic>);
+        : AttackAbilityEnvelope.fromJson(json['attack'] as Map<String, dynamic>)
+    ..shoot = json['shoot'] == null
+        ? null
+        : ShootAbilityEnvelope.fromJson(json['shoot'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$AbilitiesEnvelopeToJson(AbilitiesEnvelope instance) =>
     <String, dynamic>{
       'move': instance.move?.toJson(),
-      'attack': instance.attack?.toJson()
+      'attack': instance.attack?.toJson(),
+      'shoot': instance.shoot?.toJson()
     };
 
 MoveAbilityEnvelope _$MoveAbilityEnvelopeFromJson(Map<String, dynamic> json) {
@@ -1553,4 +1556,14 @@ AttackAbilityEnvelope _$AttackAbilityEnvelopeFromJson(
 
 Map<String, dynamic> _$AttackAbilityEnvelopeToJson(
         AttackAbilityEnvelope instance) =>
+    <String, dynamic>{'steps': instance.steps, 'attack': instance.attack};
+
+ShootAbilityEnvelope _$ShootAbilityEnvelopeFromJson(Map<String, dynamic> json) {
+  return ShootAbilityEnvelope()
+    ..steps = json['steps'] as int
+    ..attack = json['attack'] as String;
+}
+
+Map<String, dynamic> _$ShootAbilityEnvelopeToJson(
+        ShootAbilityEnvelope instance) =>
     <String, dynamic>{'steps': instance.steps, 'attack': instance.attack};
