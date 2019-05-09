@@ -44,6 +44,7 @@ class Logger {
 
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     String body = await request.readAsString();
+//    print("logger got \"${body}\"");
     List loggerWrap = json.decode(body);
     String taleId = loggerWrap.first;
     core.LoggerMessage message = core.LoggerMessage.fromJson(loggerWrap.last);
@@ -60,6 +61,9 @@ class Logger {
     }
     if(message.message == core.LoggerMessageType.taleUpdate){
       tale.updates.add(message.getTaleUpdateMessage);
+    }
+    if(message.message == core.LoggerMessageType.trace){
+      tale.trace.add(message.content);
     }
     return shelf.Response.ok("");
   }

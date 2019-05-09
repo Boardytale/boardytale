@@ -89,7 +89,7 @@ class UnitController extends ResourceController {
       bigImage = model.Image.fromJson(result.first.imageData.data as Map<String, dynamic>);
     }
 
-    model.UnitTypeCompiled unitType = model.UnitTypeCompiled.fromJson(unitTypeData.unitTypeData.data as Map);
+    model.UnitTypeCompiled unitType = model.UnitTypeCompiled.fromJson(unitTypeData.unitTypeData.data as Map<String, dynamic>);
     unitType
       ..image = image
       ..bigImage = bigImage

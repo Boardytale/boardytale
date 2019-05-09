@@ -8,6 +8,9 @@ List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope) {
   if (envelope.attack != null) {
     out.add(ClientAttackAbility()..fromEnvelope(envelope.attack));
   }
+  if (envelope.shoot != null) {
+    out.add(ClientShootAbility()..fromEnvelope(envelope.shoot));
+  }
   return out;
 }
 

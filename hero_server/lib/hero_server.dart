@@ -8,6 +8,7 @@ import 'package:core/model/model.dart' as core;
 import 'dart:convert';
 
 part "src/mocked_heroes.dart";
+part "src/mocked_units.dart";
 
 class HeroServer {
   final BoardytaleConfiguration config;
@@ -32,7 +33,7 @@ class HeroServer {
     core.ToHeroServerMessage message = core.ToHeroServerMessage.fromJson(json.decode(body));
     if (message.message == core.OnHeroServerAction.getHeroesOfPlayer) {
 //      core.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
-      message.addHeroes([mockedHeroes[2]]);
+      message.addHeroesAndUnits([mockedHeroes[counter]], [pikeman]);
       counter++;
       if (counter >= mockedHeroes.length) {
         counter = 0;

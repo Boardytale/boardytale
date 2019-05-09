@@ -1,6 +1,6 @@
 part of boardytale.client.abilities;
 
-class ShootAbility extends core.ShootAbility implements ClientAbility {
+class ClientShootAbility extends core.ShootAbility implements ClientAbility {
   @override
   void show(core.Unit unitOnMove, core.Track track) {
     highlights = [];

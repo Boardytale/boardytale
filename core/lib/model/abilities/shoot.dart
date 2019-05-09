@@ -67,7 +67,7 @@ class ShootAbility extends Ability {
       return false;
     }
 
-    if (MapUtils.distance(track.fields.first, track.fields.last) - 1 > unitOnMove.range) {
+    if (MapUtils.distance(track.fields.first, track.fields.last) > unitOnMove.range) {
       return false;
     }
 

@@ -52,47 +52,47 @@ class UnitPaintable extends Paintable {
     int resolutionLevel = gameService.worldParams.resolutionLevel;
     String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
-    if (!unitGlobalCache.containsKey(state)) {
-      core.Image primaryImage = getPrimaryImage();
-      data = stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
-      ImageElement imageElement;
-      if (primaryImage == images[unit.type.bigImageName]) {
-        imageElement = await getBigImageData();
-      } else {
-        imageElement = ImageElement(src: primaryImage.data);
-        await Future.delayed(Duration.zero);
-      }
-      data.drawPixels(
-          stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
-          stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
-              primaryImage.height * pixelRatio / primaryImage.multiply),
-          stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
-      if (!unit.isAlive) {
-        data.applyFilter(stage_lib.ColorMatrixFilter.grayscale());
-        data.applyFilter(stage_lib.ColorMatrixFilter.adjust(brightness: 0.15));
-        ImageElement deathImage = ImageElement(src: "img/death.png");
-        await deathImage.onLoad.first;
-        data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
-      }
-      unitGlobalCache[state] = data;
-      if (unit.isAlive) {
-        data.drawPixels(getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
-        data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
-      }
-      data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
-      if (resolutionLevel == 2 && unit.isAlive) {
-        data.drawPixels(getDamage(unit), getDamageCont(),
-            stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - _damageHeight));
-        if (unit.armor > 0) {
-          data.drawPixels(getArmor(unit), getArmorCont(), stage_lib.Point(rectWidth / 4, lifeBarHeight));
-        }
-      }
-      if (resolutionLevel == 2) {
-        data.drawPixels(getUnitId(unit), getUnitIdCont(), stage_lib.Point(10, (rectHeight ~/ 2) - 8));
-      }
+    //    if (!unitGlobalCache.containsKey(state)) {
+    core.Image primaryImage = getPrimaryImage();
+    data = stage_lib.BitmapData(rectWidth, rectHeight, stage_lib.Color.Transparent);
+    ImageElement imageElement;
+    if (primaryImage == images[unit.type.bigImageName]) {
+      imageElement = await getBigImageData();
     } else {
-      data = unitGlobalCache[state];
+      imageElement = ImageElement(src: primaryImage.data);
+      await Future.delayed(Duration.zero);
     }
+    data.drawPixels(
+        stage_lib.BitmapData.fromImageElement(imageElement, 1 / pixelRatio * primaryImage.multiply),
+        stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
+            primaryImage.height * pixelRatio / primaryImage.multiply),
+        stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
+    if (!unit.isAlive) {
+      data.applyFilter(stage_lib.ColorMatrixFilter.grayscale());
+      data.applyFilter(stage_lib.ColorMatrixFilter.adjust(brightness: 0.15));
+      ImageElement deathImage = ImageElement(src: "img/death.png");
+      await deathImage.onLoad.first;
+      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
+    }
+    unitGlobalCache[state] = data;
+    if (unit.isAlive) {
+      data.drawPixels(getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
+      data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
+    }
+    data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
+    if (resolutionLevel == 2 && unit.isAlive) {
+      data.drawPixels(
+          getDamage(unit), getDamageCont(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - _damageHeight));
+      if (unit.armor > 0) {
+        data.drawPixels(getArmor(unit), getArmorCont(), stage_lib.Point(rectWidth / 4, lifeBarHeight));
+      }
+    }
+    if (resolutionLevel == 2) {
+      data.drawPixels(getUnitId(unit), getUnitIdCont(), stage_lib.Point(10, (rectHeight ~/ 2) - 8));
+    }
+    //    } else {
+    //      data = unitGlobalCache[state];
+    //    }
     bitmap = stage_lib.Bitmap(data);
     return;
   }
@@ -131,16 +131,16 @@ class UnitPaintable extends Paintable {
   }
 
   stage_lib.Rectangle getUnitIdCont() {
-    return stage_lib.Rectangle(0, 0, 16, 16);
+    return stage_lib.Rectangle(0, 0, 24, 16);
   }
 
   stage_lib.BitmapData getUnitId(ClientUnit unit) {
     // TODO: one bitmap data might be reduced
-    stage_lib.BitmapData data = stage_lib.BitmapData(16, 16, 0x55FFFFFF);
+    stage_lib.BitmapData data = stage_lib.BitmapData(24, 16, 0x55FFFFFF);
     var textField = stage_lib.TextField(unit.id, stage_lib.TextFormat('Spicy Rice', 12, stage_lib.Color.Black));
-    stage_lib.BitmapData labelBitmap = stage_lib.BitmapData(16, 16, stage_lib.Color.Transparent);
+    stage_lib.BitmapData labelBitmap = stage_lib.BitmapData(24, 16, stage_lib.Color.Transparent);
     labelBitmap.draw(textField);
-    data.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, 16, 16), stage_lib.Point(10, 0));
+    data.drawPixels(labelBitmap, stage_lib.Rectangle(0, 0, 24, 16), stage_lib.Point(0, 0));
     return data;
   }
 

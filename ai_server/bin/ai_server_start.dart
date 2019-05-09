@@ -32,6 +32,6 @@ main() async {
   });
 
   shelf_io.serve(handler, 'localhost', port).then((server) {
-    print('Serving game server at ws://${server.address.host}:${server.port}');
+    print('Serving ai server at ws://${server.address.host}:${server.port}');
   });
 }

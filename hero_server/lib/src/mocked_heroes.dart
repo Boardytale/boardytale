@@ -123,7 +123,7 @@ List<core.GameHeroCreateEnvelope> mockedHeroes = [
       "langName": {"cz": "Lukostřelkyně", "en": "Archeress"},
       "abilities": {
         "move": {"steps": null},
-        "attack": {"steps": null, "attack": null}
+        "shoot": {"steps": null, "attack": null}
       },
       "authorEmail": "mlcoch.zdenek@gmail.com",
       "unitTypeVersion": 0,
@@ -166,7 +166,7 @@ List<core.GameHeroCreateEnvelope> mockedHeroes = [
       "langName": {"cz": "Bílý mág", "en": "White mage"},
       "abilities": {
         "move": {"steps": null},
-        "attack": {"steps": null, "attack": null}
+        "shoot": {"steps": null, "attack": null}
       },
       "authorEmail": "mlcoch.zdenek@gmail.com",
       "unitTypeVersion": 0,

@@ -26,7 +26,7 @@ class UnitTypeCompiled extends UnitTypeCommons {
   Image icon;
   Image bigImage;
 
-  static UnitTypeCompiled fromJson(Map data) {
+  static UnitTypeCompiled fromJson(Map<String, dynamic> data) {
     utils.retypeMapInJsonToStringDynamic(data, ["langName"]);
     return _$UnitTypeCompiledFromJson(data);
   }

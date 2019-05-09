@@ -4,6 +4,7 @@ part of model;
 class LoggerTale{
   Tale initial;
   List<TaleUpdate> updates = [];
+  List<String> trace = [];
 
   Map<String, dynamic> toJson() {
     return _$LoggerTaleToJson(this);

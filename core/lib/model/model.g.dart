@@ -1381,6 +1381,11 @@ GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
         ?.map((e) => e == null
             ? null
             : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..responseUnits = (json['responseUnits'] as List)
+        ?.map((e) => e == null
+            ? null
+            : UnitTypeCompiled.fromJson(e as Map<String, dynamic>))
         ?.toList();
 }
 
@@ -1388,7 +1393,8 @@ Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
     <String, dynamic>{
       'requestPlayerEmail': instance.requestPlayerEmail,
       'responseHeroes':
-          instance.responseHeroes?.map((e) => e?.toJson())?.toList()
+          instance.responseHeroes?.map((e) => e?.toJson())?.toList(),
+      'responseUnits': instance.responseUnits?.map((e) => e?.toJson())?.toList()
     };
 
 ToAiServerMessage _$ToAiServerMessageFromJson(Map<String, dynamic> json) {
@@ -1499,7 +1505,8 @@ Map<String, dynamic> _$LoggerMessageToJson(LoggerMessage instance) =>
 
 const _$LoggerMessageTypeEnumMap = <LoggerMessageType, dynamic>{
   LoggerMessageType.initial: 'initial',
-  LoggerMessageType.taleUpdate: 'taleUpdate'
+  LoggerMessageType.taleUpdate: 'taleUpdate',
+  LoggerMessageType.trace: 'trace'
 };
 
 LoggerTale _$LoggerTaleFromJson(Map<String, dynamic> json) {
@@ -1510,13 +1517,15 @@ LoggerTale _$LoggerTaleFromJson(Map<String, dynamic> json) {
     ..updates = (json['updates'] as List)
         ?.map((e) =>
             e == null ? null : TaleUpdate.fromJson(e as Map<String, dynamic>))
-        ?.toList();
+        ?.toList()
+    ..trace = (json['trace'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$LoggerTaleToJson(LoggerTale instance) =>
     <String, dynamic>{
       'initial': instance.initial?.toJson(),
-      'updates': instance.updates?.map((e) => e?.toJson())?.toList()
+      'updates': instance.updates?.map((e) => e?.toJson())?.toList(),
+      'trace': instance.trace
     };
 
 AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {

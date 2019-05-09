@@ -25,7 +25,13 @@ class LoggerMessage {
   }
 
 
-  TaleUpdate get getTaleUpdateMessage => TaleUpdate.fromJson(json.decode(content));
+  TaleUpdate get getTaleUpdateMessage{
+    try{
+      return TaleUpdate.fromJson(json.decode(content));
+    }catch(e){
+      throw "cannot decode \"${content} $e\"";
+    }
+  }
 
   factory LoggerMessage.fromTaleUpdate(TaleUpdate data) {
     return LoggerMessage()
@@ -37,7 +43,7 @@ class LoggerMessage {
 
   factory LoggerMessage.fromTrace(String data) {
     return LoggerMessage()
-      ..message = LoggerMessageType.taleUpdate
+      ..message = LoggerMessageType.trace
       ..content = data;
   }
 }
@@ -48,4 +54,6 @@ enum LoggerMessageType {
 initial,
 @JsonValue('taleUpdate')
 taleUpdate,
+@JsonValue('trace')
+trace,
 }

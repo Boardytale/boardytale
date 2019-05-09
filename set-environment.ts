@@ -13,6 +13,9 @@ process.argv.forEach(function (val, index, array) {
 });
 import('./' + configPath).then((configFile: { config: BoardytaleConfiguration }) => {
     fs.writeFileSync(targetPath, JSON.stringify(configFile.config));
+    if(targetPath !==  'config.g.json'){
+        fs.writeFileSync(targetPath, JSON.stringify(configFile.config));
+    }
     const config = configFile.config;
 
     fs.writeFileSync('user_server/database.yaml', `  

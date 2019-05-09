@@ -149,8 +149,10 @@ class ServerTale {
       taleState = null;
     }
     triggers = null;
-    room.destroy();
-    room = null;
+    if(room != null) {
+      room.destroy();
+      room = null;
+    }
   }
 
   void ejectPlayer(ServerPlayer player) {

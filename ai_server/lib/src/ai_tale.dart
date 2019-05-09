@@ -69,6 +69,7 @@ class AiTale {
     }
     if (track == null || track.fields == null || track.fields.isEmpty) {
       playedUnits.add(unitOnMove);
+      nextMove();
       return;
     }
     int terrainLength = track.getMoveCostOfFreeWay();

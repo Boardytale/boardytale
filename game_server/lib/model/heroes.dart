@@ -17,22 +17,37 @@ class HeroesHelper {
     List<core.UnitCreateOrUpdateAction> actions = [];
     List<core.UnitType> types = [];
     core.Assets assets = core.Assets();
-    data.forEach((item) {
-      var hero = core.ToHeroServerMessage.fromJson(json.decode(item.response.body));
-      var heroEnvelope = hero.getHeroesOfPlayerMessage.responseHeroes.first;
-      var compiledType = heroEnvelope.type;
-      compiledType.name = "hero${_lastHeroId++}";
-      core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
-      var startingField =
-          tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+    data.forEach((ResponseWithPlayer item) {
+      var heroesAndUnits = core.ToHeroServerMessage.fromJson(json.decode(item.response.body));
+      heroesAndUnits.getHeroesOfPlayerMessage.responseHeroes.forEach((heroEnvelope){
+        var compiledType = heroEnvelope.type;
+        compiledType.name = "hero${_lastHeroId++}";
+        core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
+        var startingField =
+            tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
 
-      core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
-        ..unitId = "${tale.lastUnitId++}"
-        ..moveToFieldId = startingField.id
-        ..transferToPlayerId = item.player.id
-        ..changeToTypeName = type.name;
-      types.add(type);
-      actions.add(action);
+        core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
+          ..unitId = "${tale.lastUnitId++}"
+          ..moveToFieldId = startingField.id
+          ..transferToPlayerId = item.player.id
+          ..changeToTypeName = type.name;
+        types.add(type);
+        actions.add(action);
+      });
+
+      heroesAndUnits.getHeroesOfPlayerMessage.responseUnits.forEach((core.UnitTypeCompiled compiledType){
+        core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
+        var startingField =
+        tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+
+        core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
+          ..unitId = "${tale.lastUnitId++}"
+          ..moveToFieldId = startingField.id
+          ..transferToPlayerId = item.player.id
+          ..changeToTypeName = type.name;
+        types.add(type);
+        actions.add(action);
+      });
     });
     tale.taleState.addTaleAction(TaleAction()
       ..unitUpdates = actions

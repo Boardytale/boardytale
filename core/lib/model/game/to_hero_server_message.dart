@@ -17,8 +17,8 @@ class ToHeroServerMessage {
 
   GetHeroesOfPlayer get getHeroesOfPlayerMessage => GetHeroesOfPlayer.fromJson(json.decode(content));
 
-  void addHeroes(List<GameHeroCreateEnvelope> responseHeroes) {
-    content = json.encode(getHeroesOfPlayerMessage..responseHeroes = responseHeroes);
+  void addHeroesAndUnits(List<GameHeroCreateEnvelope> responseHeroes, List<UnitTypeCompiled> responseUnits) {
+    content = json.encode(getHeroesOfPlayerMessage..responseHeroes = responseHeroes..responseUnits = responseUnits);
   }
 
   factory ToHeroServerMessage.fromPlayerEmail(String requestPlayerEmail) {
@@ -40,6 +40,7 @@ enum OnHeroServerAction {
 class GetHeroesOfPlayer extends MessageContent {
   String requestPlayerEmail;
   List<GameHeroCreateEnvelope> responseHeroes;
+  List<UnitTypeCompiled> responseUnits;
 
   static GetHeroesOfPlayer fromJson(Map<String, dynamic> json) => _$GetHeroesOfPlayerFromJson(json);
 
