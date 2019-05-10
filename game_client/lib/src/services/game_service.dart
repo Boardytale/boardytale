@@ -3,6 +3,7 @@ library tale_service;
 import 'dart:async';
 
 import 'package:angular/core.dart';
+import 'package:angular_components/utils/angular/scroll_host/interface.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/app_service.dart';
@@ -22,8 +23,8 @@ class GameService {
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
 
   ReplaySubject<EnhancedUnitCreateOrUpdateAction> unitCreateOrUpdateAction = ReplaySubject();
-  BehaviorSubject<core.Banter> currentBanter = BehaviorSubject();
-  List<core.Banter> _banterQueue = [];
+  BehaviorSubject<core.ShowBanterAction> currentBanter = BehaviorSubject();
+  List<core.ShowBanterAction> _banterQueue = [];
   core.Assets assets;
   Map<String, ClientField> fields = {};
   BehaviorSubject<Null> onDimensionsChanged = BehaviorSubject();
@@ -46,17 +47,12 @@ class GameService {
   GameService(this.gatewayService, this.settings, this.appService) {
     worldParams.defaultHex = HexaBorders(this);
     gatewayService.handlers[core.OnClientAction.taleData] = handleTaleData;
-    gatewayService.handlers[core.OnClientAction.showBanter] = handleShowBanter;
     gatewayService.handlers[core.OnClientAction.unitCreateOrUpdate] = (core.ToClientMessage message) {
       taleUpdate(message.getUnitCreateOrUpdate);
     };
   }
 
-  void handleShowBanter(core.ToClientMessage message) {
-    addBanter(message.getBanter);
-  }
-
-  void addBanter(core.Banter banter) {
+  void addBanter(core.ShowBanterAction banter) {
     if (banter == null) {
       if (_banterQueue.isNotEmpty) {
         addBanter(_banterQueue.removeAt(0));
@@ -65,7 +61,7 @@ class GameService {
     }
     if (currentBanter.value == null) {
       currentBanter.add(banter);
-      Future.delayed(Duration(milliseconds: banter.milliseconds)).then((_) {
+      Future.delayed(Duration(milliseconds: banter.showTimeInMilliseconds)).then((_) {
         currentBanter.add(null);
         addBanter(null);
       });
@@ -150,6 +146,10 @@ class GameService {
 
     if (update.removePlayerId != null) {
       appService.removePlayerById(update.removePlayerId);
+    }
+
+    if(update.banterAction != null){
+      addBanter(update.banterAction);
     }
   }
 

@@ -1,6 +1,5 @@
 library hero_server;
 
-import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:core/model/model.dart' as core;

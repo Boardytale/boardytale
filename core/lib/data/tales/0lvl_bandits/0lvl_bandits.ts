@@ -58,9 +58,45 @@ export let data: TaleCreateEnvelope = {
         taleVersion: 0,
         units: [
             {
-                moveToFieldId: '4_5',
+                moveToFieldId: '5_0',
                 changeToTypeName: 'pikeman',
-                transferToPlayerId: 'bandits',
+                transferToPlayerId: 'players',
+                unitId: 'headPikeman',
+            },
+            {
+                moveToFieldId: '6_0',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '7_0',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '8_0',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '5_1',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '6_1',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '7_1',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
+            },
+            {
+                moveToFieldId: '8_1',
+                changeToTypeName: 'pikeman',
+                transferToPlayerId: 'players',
             },
             {
                 moveToFieldId: '4_4',
@@ -126,6 +162,17 @@ export let data: TaleCreateEnvelope = {
         world: world,
         triggers: {
             onInit: [],
+            onAfterGameStarted: [
+                {
+                    action: {
+                        showBanterAction: {
+                            title: {
+                                en: 'Initial tale banter',
+                            },
+                        },
+                    },
+                },
+            ],
             onUnitDies: [
                 {
                     action: {

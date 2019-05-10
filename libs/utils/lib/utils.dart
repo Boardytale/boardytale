@@ -25,7 +25,7 @@ void retypeMapInJsonToStringDynamic(Map originalJson, List<String> keys) {
       });
       originalJson[mainKey] = output;
     } else {
-      throw "Not Map under given key ${mainKey}";
+      print("Not Map under given key ${mainKey}");
     }
   });
 }

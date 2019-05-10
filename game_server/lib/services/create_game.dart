@@ -3,7 +3,6 @@ part of game_server;
 class CreateGameService {
   Future<List<core.LobbyTale>> getGamesToCreate() async {
     String uri = makeAddressFromUri(config.editorServer.uris.first) + "inner/lobbyList";
-    print(uri);
     http.Response response = await http.get(uri, headers: {"Content-Type": "application/json"});
     List<core.LobbyTale> lobbies = [];
     if (response.body.isEmpty) {
@@ -13,6 +12,9 @@ class CreateGameService {
       core.LobbyTale lobbyTale = core.LobbyTale.fromJson(lobbyTaleData);
       lobbies.add(lobbyTale);
     });
+    if(lobbies.isEmpty){
+      throw "no lobby to send ${response.body}";
+    }
     return lobbies;
   }
 

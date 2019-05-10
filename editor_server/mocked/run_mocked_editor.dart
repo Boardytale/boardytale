@@ -43,17 +43,19 @@ class MockedEditor {
     tsProcess = await Process.start("npm", ["run", "ts-node", "libs/generate-data-json-service.ts", "$tsPort"],
         workingDirectory: projectDirectoryPath, runInShell: true);
     printFromOutputStreams(tsProcess, "ts:", "blue");
-    //    await Future.delayed(Duration(seconds: 1));
-    //    List lobbies = await getLobbies();
-    //    print("got lobbies ${lobbies}");
+
+
+    await Future.delayed(Duration(seconds: 1));
+    List lobbies = await getLobbies();
+    print("got lobbies ${lobbies}");
   }
 
   Future<String> getFileByPath(String path) async {
     String harmonizedPath = path.replaceAll("\\", "/");
     var url = "http://localhost:${tsPort}/";
-    print("sent?  ${harmonizedPath}");
+    print("sent to ts  ${harmonizedPath}");
     http.Response response = await http.post(url, body: harmonizedPath);
-    print("got?  ${response.body}");
+    print("got from ts  ${response.body}");
     return response.body;
   }
 
@@ -103,7 +105,7 @@ class MockedEditor {
                 "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
             out.add(tale.lobby.toJson());
           } catch (e) {
-            print("fail ${entity.path}");
+            print("fail ${entity.path} $e");
           }
         }
       }

@@ -50,7 +50,7 @@ class UnitPaintable extends Paintable {
   @override
   Future createBitmapInner() async {
     int resolutionLevel = gameService.worldParams.resolutionLevel;
-    String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
+//    String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     //    if (!unitGlobalCache.containsKey(state)) {
     core.Image primaryImage = getPrimaryImage();
@@ -70,16 +70,22 @@ class UnitPaintable extends Paintable {
     if (!unit.isAlive) {
       data.applyFilter(stage_lib.ColorMatrixFilter.grayscale());
       data.applyFilter(stage_lib.ColorMatrixFilter.adjust(brightness: 0.15));
+
       ImageElement deathImage = ImageElement(src: "img/death.png");
       await deathImage.onLoad.first;
-      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
+//      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
+      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage),  stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
+          primaryImage.height * pixelRatio / primaryImage.multiply),
+          stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
     }
-    unitGlobalCache[state] = data;
+//    unitGlobalCache[state] = data;
     if (unit.isAlive) {
       data.drawPixels(getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
       data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
     }
-    data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
+    if (resolutionLevel == 2 || unit.isAlive) {
+      data.drawPixels(getPlayerColor(unit), getPlayerColorRect(), stage_lib.Point(rectWidth * 3 / 4 - 10, 7));
+    }
     if (resolutionLevel == 2 && unit.isAlive) {
       data.drawPixels(
           getDamage(unit), getDamageCont(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight - _damageHeight));

@@ -8,8 +8,8 @@ class ServerTale {
   int lastUnitId = 0;
   ServerTaleState taleState;
   core.AiGroup aiGroupOnMove = null;
-  bool _humansOnMove = true;
   int _lastAddedHumanPlayerIndex = 0;
+  int _lastIndexOfPlayerGotPlayersUnit = 0;
   ServerTriggers triggers;
   ServerTaleEvents events;
   io.WebSocket currentAiPlayerSocket;
@@ -28,19 +28,27 @@ class ServerTale {
     taleState.addTaleAction(TaleAction()..playersOnMove = room.compiledTale.tale.humanPlayerIds);
 
     List<core.UnitCreateOrUpdateAction> actions = [];
+    List<ServerPlayer> humanPlayers = taleState.humanPlayers.values.toList();
     room.compiledTale.tale.units.forEach((core.UnitCreateOrUpdateAction action) {
       if (action.unitId == null) {
         action.unitId = "${lastUnitId++}";
+      }
+      if(action.transferToPlayerId == "players"){
+        action.transferToPlayerId = humanPlayers[_lastIndexOfPlayerGotPlayersUnit].id;
+        _lastIndexOfPlayerGotPlayersUnit++;
+        if(_lastIndexOfPlayerGotPlayersUnit > humanPlayers.length - 1){
+          _lastIndexOfPlayerGotPlayersUnit = 0;
+        }
       }
       actions.add(action);
     });
     taleState.addTaleAction(TaleAction()..unitUpdates = actions);
 
+    triggers = ServerTriggers(this, room.compiledTale.tale.triggers);
     taleState.humanPlayers.values.forEach(sendTaleDataToPlayer);
     Logger.log(taleState.taleId, core.LoggerMessage.fromTaleData(taleState.createTaleForPlayer(null)));
     taleState.gameStared = true;
     HeroesHelper.getHeroes(taleState.humanPlayers.values, taleState.humanPlayers.values, this);
-    triggers = ServerTriggers(this, room.compiledTale.tale.triggers);
   }
 
   void sendTaleDataToPlayer(ServerPlayer player) {
@@ -56,7 +64,6 @@ class ServerTale {
   }
 
   void endOfTurn(MessageWithConnection message) {
-    _humansOnMove = false;
     List<core.UnitCreateOrUpdateAction> actions = taleState.units.values.map((unit) {
       return ServerUnit.newTurn(unit);
     }).toList();
@@ -103,7 +110,6 @@ class ServerTale {
         if (message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
           currentAiPlayerSocket.close();
           currentAiPlayerSocket = null;
-          _humansOnMove = true;
           // TODO: refresh only units currently beginning their move
           sendPlayersOnMove();
         }
@@ -114,24 +120,26 @@ class ServerTale {
   }
 
   void victory() {
-    core.Banter banter = core.Banter()
+    core.ShowBanterAction banter = core.ShowBanterAction()
       ..image = null
-      ..milliseconds = 10000
-      ..text = "Victory";
-    taleState.humanPlayers.values.forEach((player) {
-      gateway.sendMessage(core.ToClientMessage.fromBanter(banter), player);
-    });
+      ..showTimeInMilliseconds = 10000
+      ..title = {
+        core.Lang.en: "Victory",
+        core.Lang.cz: "Vítězství"
+      };
+    taleState.addTaleAction(TaleAction()..banterAction = banter);
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }
 
   void lost() {
-    core.Banter banter = core.Banter()
+    core.ShowBanterAction banter = core.ShowBanterAction()
       ..image = null
-      ..milliseconds = 10000
-      ..text = "Lost";
-    taleState.humanPlayers.values.forEach((player) {
-      gateway.sendMessage(core.ToClientMessage.fromBanter(banter), player);
-    });
+      ..showTimeInMilliseconds = 10000
+      ..title = {
+        core.Lang.en: "Lost",
+        core.Lang.cz: "Prohra"
+      };
+    taleState.addTaleAction(TaleAction()..banterAction = banter);
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }
 

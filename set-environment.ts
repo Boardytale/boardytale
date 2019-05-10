@@ -14,7 +14,7 @@ process.argv.forEach(function (val, index, array) {
 import('./' + configPath).then((configFile: { config: BoardytaleConfiguration }) => {
     fs.writeFileSync(targetPath, JSON.stringify(configFile.config));
     if(targetPath !==  'config.g.json'){
-        fs.writeFileSync(targetPath, JSON.stringify(configFile.config));
+        fs.writeFileSync('config.g.json', JSON.stringify(configFile.config));
     }
     const config = configFile.config;
 

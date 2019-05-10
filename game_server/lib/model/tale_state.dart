@@ -97,6 +97,10 @@ class ServerTaleState {
       });
     }
 
+    if(action.banterAction != null){
+      outputTaleUpdate.banterAction = action.banterAction;
+    }
+
     if(gameStared){
       humanPlayers.forEach((key, player) {
         gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);

@@ -123,6 +123,9 @@ Triggers _$TriggersFromJson(Map<String, dynamic> json) {
     ..onInit = (json['onInit'] as List)
         .map((e) => Trigger.fromJson(e as Map<String, dynamic>))
         .toList()
+    ..onAfterGameStarted = (json['onAfterGameStarted'] as List)
+        .map((e) => Trigger.fromJson(e as Map<String, dynamic>))
+        .toList()
     ..onUnitDies = (json['onUnitDies'] as List)
         .map((e) => UnitTrigger.fromJson(e as Map<String, dynamic>))
         .toList();
@@ -130,6 +133,8 @@ Triggers _$TriggersFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TriggersToJson(Triggers instance) => <String, dynamic>{
       'onInit': instance.onInit.map((e) => e.toJson()).toList(),
+      'onAfterGameStarted':
+          instance.onAfterGameStarted.map((e) => e.toJson()).toList(),
       'onUnitDies': instance.onUnitDies.map((e) => e.toJson()).toList()
     };
 
@@ -227,7 +232,11 @@ Action _$ActionFromJson(Map<String, dynamic> json) {
     ..victoryCheckAction = json['victoryCheckAction'] == null
         ? null
         : VictoryCheckAction.fromJson(
-            json['victoryCheckAction'] as Map<String, dynamic>);
+            json['victoryCheckAction'] as Map<String, dynamic>)
+    ..showBanterAction = json['showBanterAction'] == null
+        ? null
+        : ShowBanterAction.fromJson(
+            json['showBanterAction'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$ActionToJson(Action instance) {
@@ -241,6 +250,7 @@ Map<String, dynamic> _$ActionToJson(Action instance) {
 
   writeNotNull('unitAction', instance.unitAction?.toJson());
   writeNotNull('victoryCheckAction', instance.victoryCheckAction?.toJson());
+  writeNotNull('showBanterAction', instance.showBanterAction?.toJson());
   return val;
 }
 
@@ -274,6 +284,47 @@ Map<String, dynamic> _$VictoryCheckActionToJson(VictoryCheckAction instance) =>
       'unitsEliminatedForLost': instance.unitsEliminatedForLost
     };
 
+ShowBanterAction _$ShowBanterActionFromJson(Map<String, dynamic> json) {
+  return ShowBanterAction()
+    ..title = (json['title'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String),
+    )
+    ..text = (json['text'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String),
+    )
+    ..image = json['image'] == null
+        ? null
+        : Image.fromJson(json['image'] as Map<String, dynamic>)
+    ..showTimeInMilliseconds = json['showTimeInMilliseconds'] as int;
+}
+
+Map<String, dynamic> _$ShowBanterActionToJson(ShowBanterAction instance) {
+  final val = <String, dynamic>{
+    'title': instance.title?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull(
+      'text', instance.text?.map((k, e) => MapEntry(_$LangEnumMap[k], e)));
+  writeNotNull('image', instance.image?.toJson());
+  writeNotNull('showTimeInMilliseconds', instance.showTimeInMilliseconds);
+  return val;
+}
+
+T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source);
+}
+
+const _$LangEnumMap = <Lang, dynamic>{Lang.en: 'en', Lang.cz: 'cz'};
+
 AiInstruction _$AiInstructionFromJson(Map<String, dynamic> json) {
   return AiInstruction()
     ..unitAction = json['unitAction'] == null
@@ -299,13 +350,6 @@ Map<String, dynamic> _$AiInstructionSetUnitTargetToJson(
       'unitTaleId': instance.unitTaleId,
       'actionOnTarget': _$AiActionEnumMap[instance.actionOnTarget]
     };
-
-T _$enumDecodeNullable<T>(Map<T, dynamic> enumValues, dynamic source) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source);
-}
 
 const _$AiActionEnumMap = <AiAction, dynamic>{
   AiAction.attackAllOnRoad: 'attackAllOnRoad',
@@ -335,8 +379,6 @@ const _$RacesEnumMap = <Races, dynamic>{
   Races.animal: 'animal',
   Races.dragon: 'dragon'
 };
-
-const _$LangEnumMap = <Lang, dynamic>{Lang.en: 'en', Lang.cz: 'cz'};
 
 Player _$PlayerFromJson(Map<String, dynamic> json) {
   return Player()
@@ -1037,8 +1079,7 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.cancelOnField: 'cancelOnField',
   OnClientAction.intentionUpdate: 'intentionUpdate',
   OnClientAction.playersOnMove: 'playersOnMove',
-  OnClientAction.addUnitType: 'addUnitType',
-  OnClientAction.showBanter: 'showBanter'
+  OnClientAction.addUnitType: 'addUnitType'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -1148,7 +1189,11 @@ TaleUpdate _$TaleUpdateFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Player.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..removePlayerId = json['removePlayerId'] as String;
+    ..removePlayerId = json['removePlayerId'] as String
+    ..banterAction = json['banterAction'] == null
+        ? null
+        : ShowBanterAction.fromJson(
+            json['banterAction'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$TaleUpdateToJson(TaleUpdate instance) {
@@ -1170,6 +1215,7 @@ Map<String, dynamic> _$TaleUpdateToJson(TaleUpdate instance) {
   writeNotNull('newPlayersToTale',
       instance.newPlayersToTale?.map((e) => e?.toJson())?.toList());
   writeNotNull('removePlayerId', instance.removePlayerId);
+  writeNotNull('banterAction', instance.banterAction?.toJson());
   return val;
 }
 
@@ -1212,21 +1258,6 @@ Map<String, dynamic> _$IntentionUpdateToJson(IntentionUpdate instance) =>
     <String, dynamic>{
       'playerId': instance.playerId,
       'trackFieldsId': instance.trackFieldsId
-    };
-
-Banter _$BanterFromJson(Map<String, dynamic> json) {
-  return Banter()
-    ..milliseconds = json['milliseconds'] as int
-    ..image = json['image'] == null
-        ? null
-        : Image.fromJson(json['image'] as Map<String, dynamic>)
-    ..text = json['text'] as String;
-}
-
-Map<String, dynamic> _$BanterToJson(Banter instance) => <String, dynamic>{
-      'milliseconds': instance.milliseconds,
-      'image': instance.image?.toJson(),
-      'text': instance.text
     };
 
 ToGameServerMessage _$ToGameServerMessageFromJson(Map<String, dynamic> json) {

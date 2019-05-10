@@ -62,6 +62,7 @@ export interface Buff extends Object {
 
 export interface Triggers extends Object {
     onInit: Array<Trigger>;
+    onAfterGameStarted: Array<Trigger>;
     onUnitDies: Array<UnitTrigger>;
 }
 
@@ -101,6 +102,9 @@ export interface Action extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     victoryCheckAction?: VictoryCheckAction;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    showBanterAction?: ShowBanterAction;
 }
 
 export interface VictoryCheckAction extends Object {
@@ -109,6 +113,19 @@ export interface VictoryCheckAction extends Object {
     anyOfTeamsEliminatedForLost: Array<string>;
     allOfTeamsEliminatedForLost: Array<string>;
     unitsEliminatedForLost: Array<string>;
+}
+
+export interface ShowBanterAction extends Object {
+    title: { [key in Lang]?: string };
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    text?: { [key in Lang]?: string };
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    image?: Image;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    showTimeInMilliseconds?: number;
 }
 
 export type AiAction =
@@ -343,8 +360,7 @@ export type OnClientAction =
     | 'cancelOnField'
     | 'intentionUpdate'
     | 'playersOnMove'
-    | 'addUnitType'
-    | 'showBanter';
+    | 'addUnitType';
 
 export type OnServerAction =
     | 'goToState'

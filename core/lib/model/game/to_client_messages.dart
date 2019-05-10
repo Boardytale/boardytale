@@ -122,14 +122,6 @@ class ToClientMessage {
             ..trackFieldsId = trackFieldsId)
           .toJson());
   }
-
-  Banter get getBanter => Banter.fromJson(json.decode(content));
-
-  factory ToClientMessage.fromBanter(Banter banter) {
-    return ToClientMessage()
-      ..message = OnClientAction.showBanter
-      ..content = json.encode(banter.toJson());
-  }
 }
 
 @Typescript()
@@ -157,9 +149,7 @@ enum OnClientAction {
   @JsonValue('playersOnMove')
   playersOnMove,
   @JsonValue('addUnitType')
-  addUnitType,
-  @JsonValue('showBanter')
-  showBanter
+  addUnitType
 }
 
 abstract class MessageContent {}
@@ -257,6 +247,10 @@ class TaleUpdate extends MessageContent {
   @JsonKey(includeIfNull: false)
   String removePlayerId;
 
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  ShowBanterAction banterAction;
+
   static TaleUpdate fromJson(Map<String, dynamic> json) => _$TaleUpdateFromJson(json);
 
   Map<String, dynamic> toJson() {
@@ -298,37 +292,3 @@ class IntentionUpdate extends MessageContent {
   }
 }
 
-//@JsonSerializable()
-//class PlayersOnMove extends MessageContent {
-//  Iterable<String> playerOnMoveIds;
-//
-//  static PlayersOnMove fromJson(Map<String, dynamic> json) => _$PlayersOnMoveFromJson(json);
-//
-//  Map<String, dynamic> toJson() {
-//    return _$PlayersOnMoveToJson(this);
-//  }
-//}
-//
-//@JsonSerializable()
-//class AddUnitType extends MessageContent {
-//  UnitTypeCompiled type;
-//
-//  static AddUnitType fromJson(Map<String, dynamic> json) => _$AddUnitTypeFromJson(json);
-//
-//  Map<String, dynamic> toJson() {
-//    return _$AddUnitTypeToJson(this);
-//  }
-//}
-
-@JsonSerializable()
-class Banter extends MessageContent {
-  int milliseconds;
-  Image image;
-  String text;
-
-  static Banter fromJson(Map<String, dynamic> json) => _$BanterFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$BanterToJson(this);
-  }
-}

@@ -6,6 +6,7 @@ class Triggers {
   // Cannot be optional. Null condition is not generated on lists. Probably json_serializable issue.
   // TODO: report issue to https://github.com/dart-lang/json_serializable
   List<Trigger> onInit = [];
+  List<Trigger> onAfterGameStarted = [];
   List<UnitTrigger> onUnitDies = [];
 
   static Triggers fromJson(Map data) {
@@ -107,6 +108,10 @@ class Action {
   @JsonKey(includeIfNull: false)
   VictoryCheckAction victoryCheckAction;
 
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  ShowBanterAction showBanterAction;
+
   static Action fromJson(Map<String, dynamic> json) {
     return _$ActionFromJson(json);
   }
@@ -130,5 +135,29 @@ class VictoryCheckAction {
 
   Map toJson() {
     return _$VictoryCheckActionToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class ShowBanterAction {
+  Map<Lang, String> title;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  Map<Lang, String> text;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  Image image;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  int showTimeInMilliseconds = 5000;
+
+  static ShowBanterAction fromJson(Map<String, dynamic> json) {
+    utils.retypeMapInJsonToStringDynamic(json, ["title", "text"]);
+    return _$ShowBanterActionFromJson(json);
+  }
+
+  Map toJson() {
+    return _$ShowBanterActionToJson(this);
   }
 }

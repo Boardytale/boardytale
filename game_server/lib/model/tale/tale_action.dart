@@ -8,4 +8,5 @@ class TaleAction {
   List<core.UnitType> newUnitTypesToTale = [];
   core.Assets newAssetsToTale;
   List<core.UnitCreateOrUpdateAction> unitUpdates = [];
+  core.ShowBanterAction banterAction;
 }
