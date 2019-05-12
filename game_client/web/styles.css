@@ -9630,6 +9630,18 @@ action-feedback .col {
   position: fixed;
   bottom: 0;
   left: 0;
-  background-color: rgba(255, 255, 255, 0.23);
+  background-color: rgba(255, 255, 255, 0.35);
+  width: 100%;
+  font-size: 2em;
+}
+.banter h1 {
   font-size: 3em;
+}
+.banter .banterCol {
+  float: left;
+  position: relative;
+}
+.banter img {
+  position: absolute;
+  bottom: 0;
 }

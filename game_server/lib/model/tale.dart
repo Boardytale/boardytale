@@ -48,6 +48,7 @@ class ServerTale {
     taleState.humanPlayers.values.forEach(sendTaleDataToPlayer);
     Logger.log(taleState.taleId, core.LoggerMessage.fromTaleData(taleState.createTaleForPlayer(null)));
     taleState.gameStared = true;
+    triggers.onAfterInit();
     HeroesHelper.getHeroes(taleState.humanPlayers.values, taleState.humanPlayers.values, this);
   }
 

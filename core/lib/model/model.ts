@@ -126,6 +126,9 @@ export interface ShowBanterAction extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     showTimeInMilliseconds?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    speakingUnitId?: string;
 }
 
 export type AiAction =

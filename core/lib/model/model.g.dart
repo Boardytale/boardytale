@@ -295,7 +295,8 @@ ShowBanterAction _$ShowBanterActionFromJson(Map<String, dynamic> json) {
     ..image = json['image'] == null
         ? null
         : Image.fromJson(json['image'] as Map<String, dynamic>)
-    ..showTimeInMilliseconds = json['showTimeInMilliseconds'] as int;
+    ..showTimeInMilliseconds = json['showTimeInMilliseconds'] as int
+    ..speakingUnitId = json['speakingUnitId'] as String;
 }
 
 Map<String, dynamic> _$ShowBanterActionToJson(ShowBanterAction instance) {
@@ -313,6 +314,7 @@ Map<String, dynamic> _$ShowBanterActionToJson(ShowBanterAction instance) {
       'text', instance.text?.map((k, e) => MapEntry(_$LangEnumMap[k], e)));
   writeNotNull('image', instance.image?.toJson());
   writeNotNull('showTimeInMilliseconds', instance.showTimeInMilliseconds);
+  writeNotNull('speakingUnitId', instance.speakingUnitId);
   return val;
 }
 

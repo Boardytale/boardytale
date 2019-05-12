@@ -5,18 +5,22 @@ class ServerTriggers {
   final ServerTale tale;
 
   ServerTriggers(this.tale, this.triggers) {
-    triggers.onInit.forEach(onInit);
+    triggers.onInit.forEach(perform);
     tale.events.onUnitDies.listen((report) {
       triggers.onUnitDies.forEach(onUnitDies);
     });
   }
 
-  void onInit(core.Trigger trigger){
+  void perform(core.Trigger trigger){
     if(trigger.condition == null){
       if(trigger.action.showBanterAction != null){
         showBanterAction(trigger.action.showBanterAction);
       }
     }
+  }
+
+  void onAfterInit(){
+    triggers.onAfterGameStarted.forEach(perform);
   }
 
   void showBanterAction(core.ShowBanterAction action){

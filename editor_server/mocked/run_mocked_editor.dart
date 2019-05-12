@@ -45,9 +45,9 @@ class MockedEditor {
     printFromOutputStreams(tsProcess, "ts:", "blue");
 
 
-    await Future.delayed(Duration(seconds: 1));
-    List lobbies = await getLobbies();
-    print("got lobbies ${lobbies}");
+//    await Future.delayed(Duration(seconds: 1));
+//    List lobbies = await getLobbies();
+//    print("got lobbies ${lobbies}");
   }
 
   Future<String> getFileByPath(String path) async {

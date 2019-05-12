@@ -9,13 +9,4 @@
       (mouseout)="onMouseOut($event)"
       (mousewheel)="onMouseWheel($event)"
 ></div>
-<div
-    style="z-index: 26"
-    *ngIf="gameService.currentBanter.value != null"
-    class="banter">
-  <img
-    *ngIf="gameService.currentBanter.value.image != null"
-    [src]="gameService.currentBanter.value.image.data">
-  <h1>{{gameService.currentBanter.value.title}}</h1>
-  <span>{{gameService.currentBanter.value?.text}}</span>
-</div>
+<banter></banter>

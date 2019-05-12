@@ -95,6 +95,17 @@ class AppService {
   void removePlayerById(String id){
     playerRemoved.add(players.remove(id));
   }
+
+  String translate(Map<core.Lang, String> input){
+    if(input == null){
+      return "";
+    }
+    if(input.containsKey(language)){
+      return input[language];
+    }else{
+      return input[core.Lang.en];
+    }
+  }
 }
 
 class ClientGameState {

@@ -3,6 +3,7 @@ import 'dart:html';
 
 import 'package:angular/angular.dart';
 import 'package:game_client/src/game/action_feedback.dart';
+import 'package:game_client/src/game/banter/banter.dart';
 import 'package:game_client/src/game/game_controls_component.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:game_client/src/game_model/model.dart';
@@ -17,7 +18,7 @@ import 'package:stagexl/stagexl.dart' as stage_lib;
 @Component(
     selector: 'world',
     templateUrl: 'world_component.html',
-    directives: [coreDirectives, GameControlsComponent, ActionsFeedback],
+    directives: [coreDirectives, GameControlsComponent, ActionsFeedback, BanterComponent],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class WorldComponent implements OnDestroy {
   final SettingsService settings;

@@ -152,9 +152,17 @@ class ShowBanterAction {
   @JsonKey(includeIfNull: false)
   int showTimeInMilliseconds = 5000;
 
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String speakingUnitId;
+
   static ShowBanterAction fromJson(Map<String, dynamic> json) {
     utils.retypeMapInJsonToStringDynamic(json, ["title", "text"]);
-    return _$ShowBanterActionFromJson(json);
+    var out = _$ShowBanterActionFromJson(json);
+    if(out.showTimeInMilliseconds == null){
+      out.showTimeInMilliseconds = 5000;
+    }
+    return out;
   }
 
   Map toJson() {
