@@ -3,8 +3,9 @@ part of world_view;
 class ImagePaintable extends Paintable {
   ImageElement image;
   final String imagePath;
+  HighlightName highlightName;
 
-  ImagePaintable(WorldViewService view, ClientField field, stage_lib.Stage stage, this.imagePath)
+  ImagePaintable(WorldViewService view, ClientField field, stage_lib.Stage stage, this.imagePath, this.highlightName)
       : super(view, field, stage) {
     createBitmap();
     _transformBitmap();

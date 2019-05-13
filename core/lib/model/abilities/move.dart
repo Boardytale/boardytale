@@ -37,12 +37,11 @@ class MoveAbility extends Ability {
     if (track.fields.length == 1) {
       return false;
     }
-    int currentSteps = _resolveCurrentSteps(unitOnMove, steps);
+    int currentSteps = resolveCurrentSteps(unitOnMove, steps);
 
     if (!track.isFreeWay(unitOnMove.player)) {
       return false;
     }
-
     if (currentSteps < track.getMoveCostOfFreeWay()) {
       return false;
     }

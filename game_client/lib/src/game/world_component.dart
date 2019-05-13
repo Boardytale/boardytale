@@ -158,7 +158,7 @@ class WorldComponent implements OnDestroy {
           ..abilityName = ability.name
           ..unitId = _draggedUnit.id
           ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
-          ..track = track.toIds()));
+          ..track = ability.modifyTrack(_draggedUnit, track).toIds()));
         gatewayService.sendIntention(field == null ? null : [field]);
       } else {
         appService.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");

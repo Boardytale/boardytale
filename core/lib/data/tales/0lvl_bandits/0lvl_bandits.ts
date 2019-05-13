@@ -176,7 +176,7 @@ export let data: TaleCreateEnvelope = {
                                 cz:
                                     'Poslední bandité se skrývají zde v tomto lese.',
                             },
-                            showTimeInMilliseconds: 1000000,
+                            showTimeInMilliseconds: 5000,
                             speakingUnitId: 'headPikeman',
                             image: {
                                 authorEmail: 'wassago@seznam.cz',

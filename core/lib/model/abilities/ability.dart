@@ -81,7 +81,7 @@ abstract class Ability {
    *  use "5" to set specific value
    *  every value about 7 is cut
    */
-  int _resolveCurrentSteps(Unit unitOnMove, String steps) {
+  int resolveCurrentSteps(Unit unitOnMove, String steps) {
     int currentSteps = unitOnMove.steps;
     if (steps != null) {
       if (steps.contains("+")) {
@@ -99,6 +99,10 @@ abstract class Ability {
       currentSteps = 0;
     }
     return currentSteps;
+  }
+
+  Track modifyTrack(Unit unitOnMove, Track track){
+    return track;
   }
 }
 

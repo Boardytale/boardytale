@@ -65,7 +65,7 @@ class AttackAbility extends Ability {
       return false;
     }
 
-    int currentSteps = _resolveCurrentSteps(unitOnMove, steps);
+    int currentSteps = resolveCurrentSteps(unitOnMove, steps);
 
     if (!track.last.isEnemyOf(unitOnMove.player)) {
       return false;

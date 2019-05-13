@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:core/model/model.dart' as core;
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -16,6 +17,11 @@ class BanterComponent {
   GatewayService gateway;
   final ChangeDetectorRef changeDetector;
 
+  core.ShowBanterAction getBanter() {
+    CurrentBanter current = gameService.currentBanter.value;
+    return current != null ? current.banter : null;
+  }
+
   BanterComponent(this.gameService, this.gateway, this.changeDetector, this.appService) {
     gameService.currentBanter.listen((_) {
       changeDetector.markForCheck();
@@ -23,14 +29,14 @@ class BanterComponent {
   }
 
   bool showImage() {
-    return gameService.currentBanter.value.image != null;
+    return getBanter().image != null;
   }
 
   String getImageWidth() {
-    return "${(gameService.currentBanter.value.image.width * gameService.currentBanter.value.image.multiply).toInt()}px";
+    return "${(getBanter().image.width * getBanter().image.multiply).toInt()}px";
   }
 
   String getImageHeight() {
-    return "${(gameService.currentBanter.value.image.height * gameService.currentBanter.value.image.multiply).toInt()}px";
+    return "${(getBanter().image.height * getBanter().image.multiply).toInt()}px";
   }
 }

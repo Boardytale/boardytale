@@ -1,16 +1,16 @@
 <div
     style="z-index: 26"
-    *ngIf="gameService.currentBanter.value != null"
+    *ngIf="getBanter() != null"
     class="banter row">
   <div *ngIf="showImage()"
        class="banterCol"
        [ngStyle]="{'width': getImageWidth()}">
     <img
         [ngStyle]="{'width': getImageWidth(), 'height': getImageHeight()}"
-        [src]="gameService.currentBanter.value.image.data">
+        [src]="getBanter().image.data">
   </div>
   <div class="banterCol">
-    <h1>{{appService.translate(gameService.currentBanter.value.title)}}</h1>
-    <span>{{appService.translate(gameService.currentBanter.value.text)}}</span>
+    <h1>{{appService.translate(getBanter().title)}}</h1>
+    <span>{{appService.translate(getBanter().text)}}</span>
   </div>
 </div>

@@ -23,7 +23,8 @@ class GameService {
   BehaviorSubject<List<ClientPlayer>> playersOnMove = BehaviorSubject(seedValue: null);
 
   ReplaySubject<EnhancedUnitCreateOrUpdateAction> unitCreateOrUpdateAction = ReplaySubject();
-  BehaviorSubject<core.ShowBanterAction> currentBanter = BehaviorSubject();
+  BehaviorSubject<core.CancelOnField> cancelOnField = BehaviorSubject();
+  BehaviorSubject<CurrentBanter> currentBanter = BehaviorSubject();
   List<core.ShowBanterAction> _banterQueue = [];
   core.Assets assets;
   Map<String, ClientField> fields = {};
@@ -47,6 +48,7 @@ class GameService {
   GameService(this.gatewayService, this.settings, this.appService) {
     worldParams.defaultHex = HexaBorders(this);
     gatewayService.handlers[core.OnClientAction.taleData] = handleTaleData;
+    gatewayService.handlers[core.OnClientAction.cancelOnField] = handleCancelOnField;
     gatewayService.handlers[core.OnClientAction.unitCreateOrUpdate] = (core.ToClientMessage message) {
       taleUpdate(message.getUnitCreateOrUpdate);
     };
@@ -60,7 +62,11 @@ class GameService {
       return;
     }
     if (currentBanter.value == null) {
-      currentBanter.add(banter);
+      CurrentBanter current = CurrentBanter()..banter=banter;
+      if(banter.speakingUnitId != null && units.containsKey(banter.speakingUnitId)){
+        current.unit = units[banter.speakingUnitId];
+      }
+      currentBanter.add(current);
       Future.delayed(Duration(milliseconds: banter.showTimeInMilliseconds)).then((_) {
         currentBanter.add(null);
         addBanter(null);
@@ -168,9 +174,18 @@ class GameService {
         ..action = action);
     });
   }
+
+  void handleCancelOnField(core.ToClientMessage message) {
+    cancelOnField.add(message.getCancelOnField);
+  }
 }
 
 class EnhancedUnitCreateOrUpdateAction {
   core.UnitCreateOrUpdateAction action;
+  ClientUnit unit;
+}
+
+class CurrentBanter{
+  core.ShowBanterAction banter;
   ClientUnit unit;
 }

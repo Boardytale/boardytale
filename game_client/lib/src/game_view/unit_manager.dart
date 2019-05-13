@@ -6,7 +6,7 @@ class MapObjectsManager {
   List<Paintable> paintables = [];
   ActiveFieldPaintable activeField;
   List<UserIntentionPaintable> intentions = [];
-  List<Paintable> abilityAssistance = [];
+  List<ImagePaintable> abilityAssistances = [];
 
   SettingsService get settings => worldViewService.settings;
 
@@ -14,29 +14,75 @@ class MapObjectsManager {
 
   MapObjectsManager(this.stage, this.worldViewService) {
     activeField = ActiveFieldPaintable(worldViewService, null, stage);
-//    clientWorldService.onUnitAdded.listen((unit) {
-//      addUnit(unit);
-//    });
     gameService.onUnitAssistanceChanged.listen((ClientAbility ability) {
-      abilityAssistance.forEach((p) => p.destroy());
-      abilityAssistance.clear();
       if (ability == null) {
+        abilityAssistances.forEach((a) => a.destroy());
+        abilityAssistances.clear();
         return;
       }
-      ability.highlights.forEach((highlight) {
-        switch (highlight.highlightName) {
-          case HighlightName.track:
-            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/track.png"));
-            break;
-          case HighlightName.attack:
-            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/attack.png"));
-            break;
-          case HighlightName.shoot:
-            abilityAssistance.add(ImagePaintable(worldViewService, highlight.field, stage, "img/shoot.png"));
-            break;
+      List<ImagePaintable> removed = [];
+      List<FieldHighlight> added = [];
+
+      Map<HighlightName, String> paths = {
+        HighlightName.track: "img/track.png",
+        HighlightName.attack: "img/attack.png",
+        HighlightName.shoot: "img/shoot.png",
+        HighlightName.noGo: "img/nogo.png",
+      };
+
+      abilityAssistances.forEach((ImagePaintable assistance) {
+        if (!ability.highlights.any((highlight) {
+          bool sameField = highlight.field == assistance.field;
+          bool sameHighlight = highlight.highlightName == assistance.highlightName;
+          return sameField && sameHighlight;
+        })) {
+          removed.add(assistance);
         }
       });
+
+      ability.highlights.forEach((FieldHighlight highlight) {
+        if (!abilityAssistances.any((assistance) {
+          bool sameField = highlight.field == assistance.field;
+          bool sameHighlight = highlight.highlightName == assistance.highlightName;
+          return sameField && sameHighlight;
+        })) {
+          added.add(highlight);
+        }
+      });
+      removed.forEach((assistance) {
+        assistance.destroy();
+        abilityAssistances.remove(assistance);
+      });
+      added.forEach((highlight) {
+        abilityAssistances
+            .add(ImagePaintable(worldViewService, highlight.field, stage, paths[highlight.highlightName], highlight.highlightName));
+      });
     });
+
+    gameService.currentBanter.listen((banter) async {
+      if (banter.unit == null) {
+        return;
+      }
+      addBlinkingPaintable(banter.unit.field, "img/banter_higlight.png");
+    });
+
+    gameService.cancelOnField.listen((cancelOnFieldAction) {
+      cancelOnFieldAction.actions.forEach((action) {
+        addBlinkingPaintable(gameService.fields[action.fieldId], "img/cancel_on_field.png", 3);
+      });
+    });
+  }
+
+  void addBlinkingPaintable(ClientField field, String imagePath, [int blinks = 5]) async {
+    ImagePaintable blinkingPaintable;
+    for (var i = 0; i < blinks; i++) {
+      blinkingPaintable = ImagePaintable(worldViewService, field, stage, imagePath, null);
+      await Future.delayed(Duration(milliseconds: 300));
+      if (blinkingPaintable != null) {
+        blinkingPaintable.destroy();
+      }
+      await Future.delayed(Duration(milliseconds: 300));
+    }
   }
 
   void setActiveField(ClientField field) {
@@ -78,8 +124,8 @@ class MapObjectsManager {
   void clear() {
     activeField = null;
     intentions.forEach((paintable) => paintable.destroy());
-    abilityAssistance.forEach((paintable) => paintable.destroy());
+    abilityAssistances.forEach((paintable) => paintable.destroy());
     intentions.clear();
-    abilityAssistance.clear();
+    abilityAssistances.clear();
   }
 }
