@@ -59,7 +59,7 @@ export let data: TaleCreateEnvelope = {
         units: [
             {
                 moveToFieldId: '5_0',
-                changeToTypeName: 'pikeman',
+                changeToTypeName: 'pikemanCaptain',
                 transferToPlayerId: 'players',
                 unitId: 'headPikeman',
             },

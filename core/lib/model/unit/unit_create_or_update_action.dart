@@ -131,4 +131,8 @@ enum ActionExplanation {
   unitAttacking,
   @JsonValue('unitGotDamage')
   unitGotDamage,
+  @JsonValue('unitHealing')
+  unitHealing,
+  @JsonValue('unitHealed')
+  unitHealed,
 }

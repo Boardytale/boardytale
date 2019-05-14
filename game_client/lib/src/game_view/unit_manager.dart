@@ -28,6 +28,7 @@ class MapObjectsManager {
         HighlightName.attack: "img/attack.png",
         HighlightName.shoot: "img/shoot.png",
         HighlightName.noGo: "img/nogo.png",
+        HighlightName.heal: "img/heal.png",
       };
 
       abilityAssistances.forEach((ImagePaintable assistance) {
@@ -60,7 +61,7 @@ class MapObjectsManager {
     });
 
     gameService.currentBanter.listen((banter) async {
-      if (banter.unit == null) {
+      if (banter == null || banter.unit == null) {
         return;
       }
       addBlinkingPaintable(banter.unit.field, "img/banter_higlight.png");

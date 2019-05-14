@@ -500,7 +500,9 @@ const _$AnimationNameEnumMap = <AnimationName, dynamic>{
 
 const _$ActionExplanationEnumMap = <ActionExplanation, dynamic>{
   ActionExplanation.unitAttacking: 'unitAttacking',
-  ActionExplanation.unitGotDamage: 'unitGotDamage'
+  ActionExplanation.unitGotDamage: 'unitGotDamage',
+  ActionExplanation.unitHealing: 'unitHealing',
+  ActionExplanation.unitHealed: 'unitHealed'
 };
 
 UnitDeleteAction _$UnitDeleteActionFromJson(Map<String, dynamic> json) {
@@ -1571,14 +1573,18 @@ AbilitiesEnvelope _$AbilitiesEnvelopeFromJson(Map<String, dynamic> json) {
         : AttackAbilityEnvelope.fromJson(json['attack'] as Map<String, dynamic>)
     ..shoot = json['shoot'] == null
         ? null
-        : ShootAbilityEnvelope.fromJson(json['shoot'] as Map<String, dynamic>);
+        : ShootAbilityEnvelope.fromJson(json['shoot'] as Map<String, dynamic>)
+    ..heal = json['heal'] == null
+        ? null
+        : HealAbilityEnvelope.fromJson(json['heal'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$AbilitiesEnvelopeToJson(AbilitiesEnvelope instance) =>
     <String, dynamic>{
       'move': instance.move?.toJson(),
       'attack': instance.attack?.toJson(),
-      'shoot': instance.shoot?.toJson()
+      'shoot': instance.shoot?.toJson(),
+      'heal': instance.heal?.toJson()
     };
 
 MoveAbilityEnvelope _$MoveAbilityEnvelopeFromJson(Map<String, dynamic> json) {
@@ -1609,3 +1615,18 @@ ShootAbilityEnvelope _$ShootAbilityEnvelopeFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ShootAbilityEnvelopeToJson(
         ShootAbilityEnvelope instance) =>
     <String, dynamic>{'steps': instance.steps, 'attack': instance.attack};
+
+HealAbilityEnvelope _$HealAbilityEnvelopeFromJson(Map<String, dynamic> json) {
+  return HealAbilityEnvelope()
+    ..steps = json['steps'] as int
+    ..effect = json['effect'] as String
+    ..range = json['range'] as String;
+}
+
+Map<String, dynamic> _$HealAbilityEnvelopeToJson(
+        HealAbilityEnvelope instance) =>
+    <String, dynamic>{
+      'steps': instance.steps,
+      'effect': instance.effect,
+      'range': instance.range
+    };

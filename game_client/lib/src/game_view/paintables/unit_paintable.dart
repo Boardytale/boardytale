@@ -9,6 +9,7 @@ class UnitPaintable extends Paintable {
   int _damageHeight = 14;
   int _armorHeight = 21;
   int _armorWidth = 15;
+  List<StreamSubscription> subscriptions = [];
   static ImageElement _armorImage = ImageElement(
       src:
           "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAVCAYAAACZm7S3AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAYdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjEuNWRHWFIAAAKGSURBVDhPnZLdS9NhFMd/YhdFQhjlXHPLqZu692nq3hQq0E2F6Coi6EbowiiCsMALC8yguyCqKy8i6E1IerEoayhT0VaZrYv+hILITN3MTU/fc/abOlOQHvhyzrbz+Z7znD1K09FI4eEj8w5LzQBtJK2xYyNFS6w9GsXuGUpkChtal6m+JQmlRLsLQmS03CCz6x45fOPk9I2RrrSL9KYrYqI4A5MqsLQ57L5PtrpBctd/JJPzLlVUP/4/uNz9kAzmq1uDS2y3ATwimycM+JN01Zt7tgaX2XsB9JPdO0xVDTHZjd685s6BlkUVWFLzJGKSdMVnyOS4Q5UHnmJho+QKvCcrxs+6c6D5jxSzgeTNiyKGedOWmhey6crqJ4R/Jxv2hxIqlES+ILkfYpjva619TU7/BExeYoKxVRgLmfKH4quQ5AkRwxVV/Rj1LeAo4huJDEIpRW/q7vMF51VggSQPxhHjVFR2Cfd9hk0PiYHdE8nAKYELdMcv+4KzUuwPJhDnxIDFsKXmFTY9IjC/Mlf9FF5ZJxsMKHpzdwU6LXtVyNv0G3EWcVbgdMeRdNfABzHAdaYBmxQ+RWVdg1zsbZojb+OMGLAYttUNwyAMaAKPJEba4vPQuV7AOQoRKfuMF3aaXQ/GGfY0/oJmRNK5NoyxR9F1Uj7vLTp1HY8nhzmBWRrD6XwY/OAivhd34WIe2eGLpsct7fwC5WWYFZiFcYIwABzDU/wqsMP3TkDk3wAeXFufBbMA97EBi2Gj5SYZyq9NAzyxK18r42aUBbIOtX7O1Rjanxfub1fhWz8BtuVuy8sCWXLWf3ms7XvuHt3JCMMAOxRlxz8ga+Ws/8FgOrsd8MXNQUX5C6rsmLieQIf6AAAAAElFTkSuQmCC");
@@ -22,12 +23,12 @@ class UnitPaintable extends Paintable {
     width = settings.defaultFieldWidth;
     height = settings.defaultFieldHeight;
     createBitmap();
-    view.gameService.worldParams.onResolutionLevelChanged.listen(createBitmap);
-    unit.onFieldChanged.listen((_) {
+    subscriptions.add(view.gameService.worldParams.onResolutionLevelChanged.listen(createBitmap));
+    subscriptions.add(unit.onFieldChanged.listen((_) {
       this.field = unit.field;
-    });
-    unit.onHealthChanged.listen(createBitmap);
-    unit.onStepsChanged.listen(createBitmap);
+    }));
+    subscriptions.add(unit.onHealthChanged.listen(createBitmap));
+    subscriptions.add(unit.onStepsChanged.listen(createBitmap));
   }
 
   Map<String, core.Image> get images => view.assets.images;
@@ -50,7 +51,7 @@ class UnitPaintable extends Paintable {
   @override
   Future createBitmapInner() async {
     int resolutionLevel = gameService.worldParams.resolutionLevel;
-//    String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
+    //    String state = getUnitPaintedState(unit) + "_${resolutionLevel}";
     stage_lib.BitmapData data;
     //    if (!unitGlobalCache.containsKey(state)) {
     core.Image primaryImage = getPrimaryImage();
@@ -73,12 +74,14 @@ class UnitPaintable extends Paintable {
 
       ImageElement deathImage = ImageElement(src: "img/death.png");
       await deathImage.onLoad.first;
-//      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
-      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage),  stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
-          primaryImage.height * pixelRatio / primaryImage.multiply),
+      //      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
+      data.drawPixels(
+          stage_lib.BitmapData.fromImageElement(deathImage),
+          stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
+              primaryImage.height * pixelRatio / primaryImage.multiply),
           stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
     }
-//    unitGlobalCache[state] = data;
+    //    unitGlobalCache[state] = data;
     if (unit.isAlive) {
       data.drawPixels(getLifeBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, 0));
       data.drawPixels(getStepsBar(), getLifeBarRect(), stage_lib.Point(rectWidth / 4, rectHeight - lifeBarHeight));
@@ -272,13 +275,15 @@ class UnitPaintable extends Paintable {
     } else {
       imageElement = ImageElement(src: images[unit.type.imageName].data);
     }
-    imageElement.onLoad.listen((_) {
+    imageElement.onLoad.first.then((_) {
       completer.complete(imageElement);
     });
     return completer.future;
   }
 
   void destroy() {
+    subscriptions.forEach((subscription)=>subscription.cancel());
+    subscriptions.clear();
     super.destroy();
   }
 }

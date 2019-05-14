@@ -11,6 +11,9 @@ List<core.Ability> createServerAbilityList(core.AbilitiesEnvelope envelope) {
   if (envelope.shoot != null) {
     out.add(ServerShootAbility()..fromEnvelope(envelope.shoot));
   }
+  if (envelope.heal != null) {
+    out.add(ServerHealAbility()..fromEnvelope(envelope.heal));
+  }
   return out;
 }
 

@@ -1,8 +1,8 @@
-import { UnitTypeCreateEnvelope } from '../../model/model';
+import { UnitTypeCreateEnvelope } from '../../../model/model';
 
 export let data: UnitTypeCreateEnvelope = {
     authorEmail: 'mlcoch.zdenek@gmail.com',
-    name: 'pikeman',
+    name: 'pikemanCaptain',
     created: '2011-10-05T14:48:00.000Z',
     abilities: {
         attack: {},
@@ -10,17 +10,17 @@ export let data: UnitTypeCreateEnvelope = {
     },
     actions: 1,
     armor: 0,
-    attack: '0 0 0 1 2 2',
-    cost: 100,
-    health: 1,
-    imageName: 'pikeman',
+    attack: '0 0 1 2 3 2',
+    cost: 800,
+    health: 15,
+    imageName: 'pikemanCaptain',
     race: 'human',
     range: 0,
     speed: 4,
     tags: [],
     langName: {
-        en: 'pikeman',
-        cz: 'kopiník',
+        en: 'pikeman captain',
+        cz: 'kapitán kopiníků',
     },
     bigImageName: null,
     iconName: 'pikemanIcon',

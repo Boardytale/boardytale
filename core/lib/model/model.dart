@@ -77,11 +77,11 @@ part 'package:core/model/abilities/targets.dart';
 
 part 'package:core/model/map/track.dart';
 
+part "abilities/heal.dart";
 //part "abilities/raise.dart";
 //part "abilities/teleport.dart";
 //part "abilities/shoot.dart";
 //part "abilities/change_type.dart";
-//part "abilities/heal.dart";
 //part "abilities/revive.dart";
 //part "abilities/regeneration.dart";
 //part "abilities/boost.dart";

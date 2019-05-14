@@ -1,4 +1,4 @@
-import { Image } from '../../model/model';
+import { Image } from '../../../model/model';
 
 export let data: Image = {
     authorEmail: 'wassago@seznam.cz',

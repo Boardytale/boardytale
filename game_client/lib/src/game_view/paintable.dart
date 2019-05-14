@@ -83,7 +83,7 @@ abstract class Paintable {
 
   Future createBitmapInner();
 
-// scale bitmap according to map
+  // scale bitmap according to map
   void _transformBitmap([_]) {
     if (bitmap == null || field == null) return;
     double zoom = view.gameService.worldParams.zoom;
@@ -98,6 +98,8 @@ abstract class Paintable {
     _onDimensionChangedSubscription.cancel();
     if (stage.contains(bitmap)) {
       stage.removeChild(bitmap);
+    } else {
+      print("bitmap on field ${field.id} is not in stage");
     }
     _destroyed = true;
     field = null;

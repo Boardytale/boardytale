@@ -180,7 +180,11 @@ export interface AiGroup extends Object {
 
 export type AnimationName = 'move';
 
-export type ActionExplanation = 'unitAttacking' | 'unitGotDamage';
+export type ActionExplanation =
+    | 'unitAttacking'
+    | 'unitGotDamage'
+    | 'unitHealing'
+    | 'unitHealed';
 
 export interface UnitCreateOrUpdateAction extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
@@ -423,6 +427,8 @@ export interface AbilitiesEnvelope extends Object {
     attack?: AttackAbilityEnvelope;
     // annotation @TypescriptOptional() → TypescriptOptional
     shoot?: ShootAbilityEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    heal?: HealAbilityEnvelope;
 }
 
 export interface MoveAbilityEnvelope extends Object {
@@ -442,4 +448,12 @@ export interface ShootAbilityEnvelope extends Object {
     steps?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
     attack?: string;
+}
+
+export interface HealAbilityEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    steps?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    effect?: string;
+    range: string;
 }

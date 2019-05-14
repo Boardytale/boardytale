@@ -33,7 +33,8 @@ class HeroServer {
     core.ToHeroServerMessage message = core.ToHeroServerMessage.fromJson(json.decode(body));
     if (message.message == core.OnHeroServerAction.getHeroesOfPlayer) {
 //      core.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
-      message.addHeroesAndUnits([mockedHeroes[counter]], [pikeman]);
+      message.addHeroesAndUnits([mockedHeroes[3]], [pikeman]);
+//      message.addHeroesAndUnits([mockedHeroes[counter]], [pikeman]);
       counter++;
       if (counter >= mockedHeroes.length) {
         counter = 0;

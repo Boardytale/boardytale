@@ -88,7 +88,7 @@ List<core.GameHeroCreateEnvelope> mockedHeroes = [
     }
   }),
   core.GameHeroCreateEnvelope.fromJson({
-    "name": "Druhý",
+    "name": "Třetí",
     "level": 1,
     "type": {
       "cost": 500,
@@ -131,7 +131,7 @@ List<core.GameHeroCreateEnvelope> mockedHeroes = [
     }
   }),
   core.GameHeroCreateEnvelope.fromJson({
-    "name": "Druhý",
+    "name": "Čtvrtý",
     "level": 1,
     "type": {
       "cost": 600,
@@ -166,7 +166,8 @@ List<core.GameHeroCreateEnvelope> mockedHeroes = [
       "langName": {"cz": "Bílý mág", "en": "White mage"},
       "abilities": {
         "move": {"steps": null},
-        "shoot": {"steps": null, "attack": null}
+        "shoot": {"steps": null, "attack": null},
+        "heal": {"steps": null, "effect": "1 2 2 3 3 3"}
       },
       "authorEmail": "mlcoch.zdenek@gmail.com",
       "unitTypeVersion": 0,

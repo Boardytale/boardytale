@@ -45,6 +45,7 @@ class ActionsFeedback {
     }
     ClientUnit unit = cont.unit;
     ActionFeedbackData feedback = ActionFeedbackData();
+    // TODO: translations
     if (action.explain == core.ActionExplanation.unitAttacking) {
       feedback
         ..dices = action.diceNumbers
@@ -54,6 +55,17 @@ class ActionsFeedback {
     if (action.explain == core.ActionExplanation.unitGotDamage) {
       feedback
         ..label = "unit ${unit.name} got damage ${action.explainFirstValue}"
+        ..color = unit.player.color;
+    }
+    if (action.explain == core.ActionExplanation.unitHealing) {
+      feedback
+        ..dices = action.diceNumbers
+        ..label = "unit ${unit.name} healing unit"
+        ..color = unit.player.color;
+    }
+    if (action.explain == core.ActionExplanation.unitHealed) {
+      feedback
+        ..label = "unit ${unit.name} has healed with power ${action.explainFirstValue}"
         ..color = unit.player.color;
     }
     displayedActions.add(feedback);

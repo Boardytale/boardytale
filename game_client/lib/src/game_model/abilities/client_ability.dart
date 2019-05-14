@@ -11,6 +11,9 @@ List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope) {
   if (envelope.shoot != null) {
     out.add(ClientShootAbility()..fromEnvelope(envelope.shoot));
   }
+  if (envelope.heal != null) {
+    out.add(ClientHealAbility()..fromEnvelope(envelope.heal));
+  }
   return out;
 }
 
@@ -24,4 +27,4 @@ class FieldHighlight {
   core.Field field;
 }
 
-enum HighlightName { track, attack, shoot, noGo }
+enum HighlightName { track, attack, shoot, noGo, heal }

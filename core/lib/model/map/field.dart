@@ -79,6 +79,15 @@ class Field {
     return null;
   }
 
+  Unit getFirstHarmedAliveAllyOnTheField(Player player) {
+    for (Unit unit in units) {
+      if (unit.isAlive && unit.player.team == player.team && unit.isHarmed) {
+        return unit;
+      }
+    }
+    return null;
+  }
+
   Field getFieldWithUnitNear() {
     if (hasUnit) return this;
 //    var fields = World.instance.getFieldsRound(this);

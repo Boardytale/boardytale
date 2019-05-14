@@ -45,6 +45,8 @@ class Unit {
 
   List<Ability> Function(AbilitiesEnvelope envelope) _createClientAbilityList;
 
+  bool get isHarmed => _health < type.health;
+
   static List<int> _parseAttack(String input) {
     return input.split(" ").map((segment) => int.parse(segment)).toList(growable: false);
   }
