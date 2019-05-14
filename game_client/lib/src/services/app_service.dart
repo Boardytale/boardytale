@@ -33,16 +33,23 @@ class AppService {
       ..showCreateGameButton = false,
     core.GameNavigationState.createGame: ClientGameState()
       ..name = core.GameNavigationState.createGame
-      ..showCreateGameButton = false,
+      ..showCreateGameButton = false
+      ..showUserPanelButton = true,
     core.GameNavigationState.findLobby: ClientGameState()
       ..name = core.GameNavigationState.findLobby
-      ..showCreateGameButton = true,
+      ..showCreateGameButton = true
+      ..showUserPanelButton = true,
     core.GameNavigationState.inGame: ClientGameState()
       ..name = core.GameNavigationState.inGame
       ..showCreateGameButton = false,
     core.GameNavigationState.inLobby: ClientGameState()
       ..name = core.GameNavigationState.inLobby
-      ..showCreateGameButton = false,
+      ..showCreateGameButton = false
+      ..showUserPanelButton = true,
+    core.GameNavigationState.userPanel: ClientGameState()
+      ..name = core.GameNavigationState.userPanel
+      ..showCreateGameButton = false
+      ..allowedNoServer = true,
   };
 
   Map<String, ClientPlayer> players = {};
@@ -92,17 +99,26 @@ class AppService {
     gatewayService.sendMessage(core.ToGameServerMessage.fromGoToState(newState));
   }
 
-  void removePlayerById(String id){
+  void noServerGoToState(core.GameNavigationState newState) {
+    ClientGameState state = states[newState];
+    if (state.allowedNoServer) {
+      navigationState.add(state);
+    } else {
+      throw "This state has to be sent to server";
+    }
+  }
+
+  void removePlayerById(String id) {
     playerRemoved.add(players.remove(id));
   }
 
-  String translate(Map<core.Lang, String> input){
-    if(input == null){
+  String translate(Map<core.Lang, String> input) {
+    if (input == null) {
       return "";
     }
-    if(input.containsKey(language)){
+    if (input.containsKey(language)) {
       return input[language];
-    }else{
+    } else {
       return input[core.Lang.en];
     }
   }
@@ -111,4 +127,6 @@ class AppService {
 class ClientGameState {
   core.GameNavigationState name;
   bool showCreateGameButton;
+  bool allowedNoServer = false;
+  bool showUserPanelButton = false;
 }

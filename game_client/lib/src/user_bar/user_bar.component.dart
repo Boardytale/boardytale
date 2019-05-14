@@ -6,8 +6,7 @@ import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:ng2_g_signin/ng2_g_signin.dart';
 import 'package:http/http.dart' as http;
-import 'package:core/model/model.dart' as model;
-import 'package:core/model/model.dart';
+import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'user-bar',
@@ -20,7 +19,7 @@ import 'package:core/model/model.dart';
        <span
        *ngIf="appService.currentUser.value != null"
        >
-       Logged user: {{appService.currentUser.value?.email}}
+       Logged user: {{getUserLabel()}}
        </span>
        <button
        *ngIf="appService.showSignInButton"
@@ -34,6 +33,12 @@ import 'package:core/model/model.dart';
        (click)="goToCreate()"
        >
          Create game
+       </button>
+        <button
+       *ngIf="appService.currentUser.value != null && appService.navigationState.value.showUserPanelButton"
+       (click)="goToUserPanel()"
+       >
+      User panel
        </button>
        
       ''',
@@ -59,7 +64,7 @@ class UserBarComponent {
     }
     http.Response loginResponse = await _http.post("/userApi/login",
         headers: {"Content-Type": "application/json"}, body: json.encode({"id": response.id_token}));
-    User currentUser = model.User.fromGoogleJson(json.decode(loginResponse.body));
+    core.User currentUser = core.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
@@ -69,7 +74,7 @@ class UserBarComponent {
   void createTemporaryUser() async {
     http.Response loginResponse = await _http.post("/userApi/createTemporaryUser",
         headers: {"Content-Type": "application/json"}, body: json.encode({"name": "TODO custom temp name"}));
-    User currentUser = model.User.fromGoogleJson(json.decode(loginResponse.body));
+    core.User currentUser = core.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);
     html.window.localStorage["innerToken"] = currentUser.innerToken;
     gatewayService.initMessages(currentUser.innerToken);
@@ -82,6 +87,22 @@ class UserBarComponent {
   }
 
   void goToCreate() {
-    appService.goToState(GameNavigationState.createGame);
+    appService.goToState(core.GameNavigationState.createGame);
+  }
+
+  void goToUserPanel() {
+    appService.noServerGoToState(core.GameNavigationState.userPanel);
+  }
+
+  String getUserLabel(){
+    core.User user = appService.currentUser.value;
+    if(user == null){
+      return "";
+    }
+    if(user.name != null){
+      return user.name;
+    }else{
+      return user.email;
+    }
   }
 }

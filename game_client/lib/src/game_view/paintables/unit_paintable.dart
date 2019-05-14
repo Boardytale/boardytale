@@ -74,12 +74,11 @@ class UnitPaintable extends Paintable {
 
       ImageElement deathImage = ImageElement(src: "img/death.png");
       await deathImage.onLoad.first;
-      //      data.drawPixels(stage_lib.BitmapData.fromImageElement(deathImage), getOverlayRect(), stage_lib.Point(0, 0));
       data.drawPixels(
-          stage_lib.BitmapData.fromImageElement(deathImage),
-          stage_lib.Rectangle(0, 0, primaryImage.width * pixelRatio / primaryImage.multiply,
-              primaryImage.height * pixelRatio / primaryImage.multiply),
-          stage_lib.Point(primaryImage.left * pixelRatio, primaryImage.top * pixelRatio));
+          stage_lib.BitmapData.fromImageElement(deathImage, 1 / pixelRatio),
+          stage_lib.Rectangle(0, 0, rectWidth ,
+              rectHeight ),
+          stage_lib.Point(0, 0));
     }
     //    unitGlobalCache[state] = data;
     if (unit.isAlive) {

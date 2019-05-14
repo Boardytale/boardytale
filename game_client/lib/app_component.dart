@@ -1,4 +1,7 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:core/model/model.dart';
+import 'package:angular/core.dart';
 import 'package:game_client/src/create_game/create_game_component.dart';
 import 'package:game_client/src/game/game.dart';
 import 'package:game_client/src/lobby/lobbies.dart';
@@ -8,9 +11,7 @@ import 'package:game_client/src/services/game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
-import 'package:core/model/model.dart';
-import 'package:angular/core.dart';
-import 'dart:html';
+import 'package:game_client/src/user_panel/user_panel_component.dart';
 
 @Component(
     selector: 'my-app',
@@ -36,6 +37,10 @@ import 'dart:html';
     *ngIf="showGame"
     >
     </game>
+    <user-panel
+    *ngIf="showUserPanel"
+    >
+    </user-panel>
   </div>
   
   ''',
@@ -46,6 +51,7 @@ import 'dart:html';
       LobbyComponent,
       LobbiesComponent,
       GameComponent,
+      UserPanelComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent {
@@ -62,6 +68,8 @@ class AppComponent {
   bool get showGame => appService.navigationState.value.name == GameNavigationState.inGame;
 
   bool get showLoading => appService.navigationState.value.name == GameNavigationState.loading;
+
+  bool get showUserPanel => appService.navigationState.value.name == GameNavigationState.userPanel;
 
   LobbyService lobbyService;
   GatewayService gateway;

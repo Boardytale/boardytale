@@ -133,12 +133,40 @@ action-feedback {
   h1 {
     font-size: 3em;
   }
-  .banterCol{
+
+  .banterCol {
     float: left;
-    position:relative;
+    position: relative;
   }
+
   img {
     position: absolute;
     bottom: 0;
+  }
+}
+
+.gameTile {
+  border: 2px solid #117a8b;
+  box-sizing: border-box;
+  &.selected {
+    border: 3px solid greenyellow;
+  }
+}
+
+.lobbyTile{
+  border: 2px solid #117a8b;
+  box-sizing: border-box;
+  height: 90px;
+  img{
+    margin: 2px;
+    height: 86px;
+  }
+  h2{
+    font-size: 30px;
+  }
+  button{
+    width: 90%;
+    height: 90%;
+    margin: auto;
   }
 }

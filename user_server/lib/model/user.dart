@@ -11,4 +11,7 @@ class _User {
 
   @Column(unique: true)
   String innerToken;
+
+  @Column(unique: false, defaultValue: null, nullable: true)
+  String name;
 }

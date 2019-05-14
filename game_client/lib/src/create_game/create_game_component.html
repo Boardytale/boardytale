@@ -1,8 +1,11 @@
 <h1>Create game</h1>
-<div *ngFor="let tale of createGameService.talesToCreate.value">
-    {{tale.name[settingsService.language]}}
+<div
+    [ngClass]="{'selected': tale.id == selectedTaleId }"
+    *ngFor="let tale of createGameService.talesToCreate.value"
+    class="gameTile"
+>
     <img [src]="tale.image.data">
-    <p *ngIf="tale.id == selectedTaleId">selected</p>
+    {{tale.name[settingsService.language]}}
     <button
             *ngIf="tale.id != selectedTaleId"
             (click)="selectLobby(tale.id)">

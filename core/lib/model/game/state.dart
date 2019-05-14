@@ -12,4 +12,6 @@ enum GameNavigationState {
   loading,
   @JsonValue('inLobby')
   inLobby,
+  @JsonValue('userPanel')
+  userPanel,
 }

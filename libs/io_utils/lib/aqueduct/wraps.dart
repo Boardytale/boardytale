@@ -58,3 +58,37 @@ class NameWrap implements Serializable {
     return json.encode((NameWrap()..name = name).asMap());
   }
 }
+
+class RenameWrap implements Serializable {
+  String name;
+  String innerToken;
+
+  @override
+  Map<String, dynamic> asMap() {
+    return {"name": name, "innerToken": innerToken};
+    // TODO: implement asMap
+  }
+
+  @override
+  void readFromMap(Map<String, dynamic> requestBody) {
+    name = requestBody["name"] as String;
+    innerToken = requestBody["innerToken"] as String;
+  }
+
+  void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
+    readFromMap(object);
+  }
+
+  @override
+  APISchemaObject documentSchema(APIDocumentContext context) {
+    // TODO: implement documentSchema
+    return null;
+  }
+
+  static String packRename(String name, String innerToken) {
+    return json.encode((RenameWrap()
+          ..name = name
+          ..innerToken = innerToken)
+        .asMap());
+  }
+}

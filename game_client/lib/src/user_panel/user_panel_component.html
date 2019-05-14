@@ -1,0 +1,11 @@
+<h1>User panel</h1>
+
+<label>Name:<input [(ngModel)]="name"/></label><br>
+<span *ngIf="saved">User name saved successfully</span>
+
+<button
+(click)="save()"
+>Save changes</button>
+<button
+(click)="returnToAppState()"
+>Return to application</button>

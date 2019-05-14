@@ -42,8 +42,9 @@ class InitGameService {
       if (response.body.isEmpty) {
         // TODO: handle failed login
       }
-      // TODO: manage username
-      user.name = user.email;
+      if(user.name == null){
+        user.name = user.email;
+      }
       player = ServerPlayer()
         ..id = "${playerService.lastPlayerId++}"
         ..user = user
