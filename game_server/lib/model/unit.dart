@@ -71,7 +71,7 @@ class ServerUnit {
       ..unitId = unit.id
       ..steps = unit.type.speed
       ..actions = unit.type.actions
-      ..far = 0;
+      ..stepsSpent = 0;
     return action;
   }
 }

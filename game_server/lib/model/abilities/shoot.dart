@@ -29,7 +29,7 @@ class ServerShootAbility extends core.ShootAbility implements ServerAbility {
     core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction();
     action
       ..steps = 0
-      ..far = unit.far + track.fields.length - 2
+      ..stepsSpent = unit.far + track.fields.length - 2
       ..actions = unit.actions - 1
       ..unitId = unit.id
       ..actionId = action.actionId

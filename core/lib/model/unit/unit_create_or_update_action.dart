@@ -13,7 +13,7 @@ class UnitCreateOrUpdateAction {
 
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
-  int far;
+  int stepsSpent;
 
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
@@ -66,7 +66,7 @@ class UnitCreateOrUpdateAction {
 
   void fromUnit(Unit unit) {
     // action not triggered directly by user action
-    far = unit.far;
+    stepsSpent = unit.far;
     health = unit.actualHealth;
     actions = unit.actions;
     buffs = unit._buffs;

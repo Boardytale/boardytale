@@ -26,7 +26,7 @@ class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
       ..unitId = unit.id
       ..actionId = action.actionId
       ..steps = unit.steps - track.getMoveCostOfFreeWay()
-      ..far = unit.far + track.fields.length - 1
+      ..stepsSpent = unit.far + track.fields.length - 1
       ..moveToFieldId = track.last.id;
 
     if (steps == 0) {

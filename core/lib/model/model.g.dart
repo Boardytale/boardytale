@@ -446,7 +446,7 @@ UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
   return UnitCreateOrUpdateAction()
     ..unitId = json['unitId'] as String
     ..actionId = json['actionId'] as String
-    ..far = json['far'] as int
+    ..stepsSpent = json['far'] as int
     ..steps = json['steps'] as int
     ..health = json['health'] as int
     ..buffs = (json['buffs'] as List)
@@ -478,7 +478,7 @@ Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
 
   writeNotNull('unitId', instance.unitId);
   writeNotNull('actionId', instance.actionId);
-  writeNotNull('far', instance.far);
+  writeNotNull('far', instance.stepsSpent);
   writeNotNull('steps', instance.steps);
   writeNotNull('health', instance.health);
   writeNotNull('buffs', instance.buffs?.map((e) => e?.toJson())?.toList());

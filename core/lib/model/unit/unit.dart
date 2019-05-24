@@ -165,9 +165,9 @@ class Unit {
     bool healthChanged = false;
     bool fieldChanged = false;
 
-    if (action.far != null && _far != action.far) {
-      report.deltaFar = _far - action.far;
-      _far = action.far;
+    if (action.stepsSpent != null && _far != action.stepsSpent) {
+      report.deltaFar = _far - action.stepsSpent;
+      _far = action.stepsSpent;
       changed = true;
     }
 
