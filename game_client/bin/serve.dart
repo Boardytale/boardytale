@@ -9,7 +9,7 @@ Future main() async {
 
   print("running on ${boardytaleConfiguration.gameStaticDev.port}");
 
-  Process.start("webdev", ["serve", "web:${boardytaleConfiguration.gameStaticDev.port}"],
+  Process.start("webdev", ["serve", "--hostname","127.0.0.1", "web:${boardytaleConfiguration.gameStaticDev.port}"],
           runInShell: true, workingDirectory: "${projectDirectoryPath}/game_client")
       .then((Process process) {
     printFromOutputStreams(process, "game client serve", "light_cyan");

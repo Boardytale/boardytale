@@ -18,6 +18,7 @@ dependencies:
   typescript_reporter:
     path: '../typescript_reporter'
   json_annotation: any
+  shelf_proxy: any
 
 
 dev_dependencies:

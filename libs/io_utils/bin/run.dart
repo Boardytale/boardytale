@@ -25,19 +25,21 @@ main() async {
 
   print("OPEN BROWSER ON http://localhost:${config.proxyServer.uris.first.port}");
 
-  runServerByServerConfiguration(config.proxyServer);
+  List<ServerConfiguration> configs = [
+    config.proxyServer,
+    config.userServer,
+    config.editorServer,
+    config.heroesServer,
+    config.aiServer,
+    config.gameServer,
+    config.loggerServer,
+  ];
 
-  runServerByServerConfiguration(config.userServer);
-
-  runServerByServerConfiguration(config.editorServer);
-
-  runServerByServerConfiguration(config.heroesServer);
-
-  runServerByServerConfiguration(config.aiServer);
-
-  runServerByServerConfiguration(config.gameServer);
-
-  runServerByServerConfiguration(config.loggerServer);
+  configs.forEach((conf){
+    if(conf.disabledForRunner == null || !conf.disabledForRunner){
+      runServerByServerConfiguration(conf);
+    }
+  });
 }
 
 void runServerByServerConfiguration(ServerConfiguration config) {

@@ -29,7 +29,8 @@ export let config: BoardytaleConfiguration = {
         }],
         executableType: "dart",
         pathToExecutable: 'editor_server/mocked/run_mocked_editor.dart',
-        pathToWorkingDirectory: 'editor_server'
+        pathToWorkingDirectory: 'editor_server',
+        disabledForRunner: true
     },
     editorDatabase: {
         host: 'boardytale.vserver.cz',
@@ -39,6 +40,7 @@ export let config: BoardytaleConfiguration = {
         databaseName: 'boardytale',
     },
     gameServer: {
+        runMockedEditor: true,
         route: '/gameApi',
         uris: [{
             host: 'localhost',
@@ -46,7 +48,9 @@ export let config: BoardytaleConfiguration = {
         }],
         executableType: 'dart',
         pathToExecutable: 'game_server/bin/game_server_start.dart',
-        pathToWorkingDirectory: 'game_server'
+        pathToWorkingDirectory: 'game_server',
+        // frequently run in debug mode, so disable to not wait for false loads
+        disabledForRunner: true
     },
     userDatabase: {
         host: 'boardytale.vserver.cz',

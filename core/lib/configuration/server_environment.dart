@@ -43,6 +43,8 @@ class ServerConfiguration {
   String pathToExecutable;
   String pathToWorkingDirectory;
   ExecutableType executableType;
+  @TypescriptOptional()
+  bool disabledForRunner = false;
 
   Map toJson() {
     return _$ServerConfigurationToJson(this);
@@ -50,6 +52,20 @@ class ServerConfiguration {
 
   static ServerConfiguration fromJson(Map<String, dynamic> json) {
     return _$ServerConfigurationFromJson(json);
+  }
+}
+
+@JsonSerializable()
+@Typescript()
+class GameServerConfiguration extends ServerConfiguration {
+  bool runMockedEditor;
+
+  Map toJson() {
+    return _$GameServerConfigurationToJson(this);
+  }
+
+  static GameServerConfiguration fromJson(Map<String, dynamic> json) {
+    return _$GameServerConfigurationFromJson(json);
   }
 }
 
@@ -72,7 +88,8 @@ class FrontEndDevelopment {
 @JsonSerializable()
 @Typescript()
 class BoardytaleConfiguration {
-  ServerConfiguration gameServer;
+  GameServerConfiguration gameServer;
+  @TypescriptOptional()
   ServerConfiguration editorServer;
   DatabaseConfiguration userDatabase;
   DatabaseConfiguration editorDatabase;

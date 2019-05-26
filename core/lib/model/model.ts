@@ -195,7 +195,7 @@ export interface UnitCreateOrUpdateAction extends Object {
     actionId?: string;
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
-    far?: number;
+    stepsSpent?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     steps?: number;
@@ -353,7 +353,8 @@ export type GameNavigationState =
     | 'createGame'
     | 'inGame'
     | 'loading'
-    | 'inLobby';
+    | 'inLobby'
+    | 'userPanel';
 
 export type OnClientAction =
     | 'setNavigationState'

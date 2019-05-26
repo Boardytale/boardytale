@@ -1,6 +1,9 @@
 part of game_server;
 
 class GameService {
+  static const int secondsToEnterRunningGame = 90;
+  static const int minutesToEndGame = 120;
+
   Map<String, ServerTale> tales = {};
 
   GameService() {
@@ -37,6 +40,15 @@ class GameService {
       room.tale = tale;
       room.connectedPlayers.values.forEach((player) {
         player.enterGame(tale);
+      });
+      Future.delayed(Duration(seconds: GameService.secondsToEnterRunningGame)).then((_){
+        room.closedForNewPlayers = true;
+        lobbyService.removeLobbyRoom(room);
+      });
+      Future.delayed(Duration(minutes: GameService.minutesToEndGame)).then((_){
+        room.connectedPlayers.values.toList().forEach((player){
+          player.leaveGame();
+        });
       });
     }
   }

@@ -10,7 +10,7 @@ install dart, add to path
 
 install nodejs, add to path
 
-install webdev [https://pub.dartlang.org/packages/webdev]
+install webdev on version 1.0.1 `pub global activate webdev 1.0.1` [https://pub.dartlang.org/packages/webdev]
 
 check path variable if dart, pub, npm executables are available for command line commands
 

@@ -446,7 +446,7 @@ UnitCreateOrUpdateAction _$UnitCreateOrUpdateActionFromJson(
   return UnitCreateOrUpdateAction()
     ..unitId = json['unitId'] as String
     ..actionId = json['actionId'] as String
-    ..stepsSpent = json['far'] as int
+    ..stepsSpent = json['stepsSpent'] as int
     ..steps = json['steps'] as int
     ..health = json['health'] as int
     ..buffs = (json['buffs'] as List)
@@ -478,7 +478,7 @@ Map<String, dynamic> _$UnitCreateOrUpdateActionToJson(
 
   writeNotNull('unitId', instance.unitId);
   writeNotNull('actionId', instance.actionId);
-  writeNotNull('far', instance.stepsSpent);
+  writeNotNull('stepsSpent', instance.stepsSpent);
   writeNotNull('steps', instance.steps);
   writeNotNull('health', instance.health);
   writeNotNull('buffs', instance.buffs?.map((e) => e?.toJson())?.toList());
@@ -1104,7 +1104,8 @@ const _$GameNavigationStateEnumMap = <GameNavigationState, dynamic>{
   GameNavigationState.createGame: 'createGame',
   GameNavigationState.inGame: 'inGame',
   GameNavigationState.loading: 'loading',
-  GameNavigationState.inLobby: 'inLobby'
+  GameNavigationState.inLobby: 'inLobby',
+  GameNavigationState.userPanel: 'userPanel'
 };
 
 RefreshLobbyList _$RefreshLobbyListFromJson(Map<String, dynamic> json) {

@@ -2,6 +2,7 @@ part of game_server;
 
 class LobbyRoom {
   bool gameRunning = false;
+  bool closedForNewPlayers = false;
   core.TaleCompiled compiledTale;
 
   String get id => openedLobby.id;

@@ -27,6 +27,12 @@ export interface ServerConfiguration extends Object {
     pathToExecutable: string;
     pathToWorkingDirectory: string;
     executableType: ExecutableType;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    disabledForRunner?: boolean;
+}
+
+export interface GameServerConfiguration extends ServerConfiguration {
+    runMockedEditor: boolean;
 }
 
 export interface FrontEndDevelopment extends Object {
@@ -36,8 +42,9 @@ export interface FrontEndDevelopment extends Object {
 }
 
 export interface BoardytaleConfiguration extends Object {
-    gameServer: ServerConfiguration;
-    editorServer: ServerConfiguration;
+    gameServer: GameServerConfiguration;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    editorServer?: ServerConfiguration;
     userDatabase: DatabaseConfiguration;
     editorDatabase: DatabaseConfiguration;
     userServer: ServerConfiguration;

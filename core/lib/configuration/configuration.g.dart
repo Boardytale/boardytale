@@ -45,7 +45,8 @@ ServerConfiguration _$ServerConfigurationFromJson(Map<String, dynamic> json) {
     ..pathToExecutable = json['pathToExecutable'] as String
     ..pathToWorkingDirectory = json['pathToWorkingDirectory'] as String
     ..executableType =
-        _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType']);
+        _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType'])
+    ..disabledForRunner = json['disabledForRunner'] as bool;
 }
 
 Map<String, dynamic> _$ServerConfigurationToJson(
@@ -56,7 +57,8 @@ Map<String, dynamic> _$ServerConfigurationToJson(
       'route': instance.route,
       'pathToExecutable': instance.pathToExecutable,
       'pathToWorkingDirectory': instance.pathToWorkingDirectory,
-      'executableType': _$ExecutableTypeEnumMap[instance.executableType]
+      'executableType': _$ExecutableTypeEnumMap[instance.executableType],
+      'disabledForRunner': instance.disabledForRunner
     };
 
 T _$enumDecode<T>(Map<T, dynamic> enumValues, dynamic source) {
@@ -85,6 +87,35 @@ const _$ExecutableTypeEnumMap = <ExecutableType, dynamic>{
   ExecutableType.dart: 'dart'
 };
 
+GameServerConfiguration _$GameServerConfigurationFromJson(
+    Map<String, dynamic> json) {
+  return GameServerConfiguration()
+    ..uris = (json['uris'] as List)
+        ?.map((e) => e == null ? null : Uri.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..innerPort = json['innerPort'] as int
+    ..route = json['route'] as String
+    ..pathToExecutable = json['pathToExecutable'] as String
+    ..pathToWorkingDirectory = json['pathToWorkingDirectory'] as String
+    ..executableType =
+        _$enumDecodeNullable(_$ExecutableTypeEnumMap, json['executableType'])
+    ..disabledForRunner = json['disabledForRunner'] as bool
+    ..runMockedEditor = json['runMockedEditor'] as bool;
+}
+
+Map<String, dynamic> _$GameServerConfigurationToJson(
+        GameServerConfiguration instance) =>
+    <String, dynamic>{
+      'uris': instance.uris?.map((e) => e?.toJson())?.toList(),
+      'innerPort': instance.innerPort,
+      'route': instance.route,
+      'pathToExecutable': instance.pathToExecutable,
+      'pathToWorkingDirectory': instance.pathToWorkingDirectory,
+      'executableType': _$ExecutableTypeEnumMap[instance.executableType],
+      'disabledForRunner': instance.disabledForRunner,
+      'runMockedEditor': instance.runMockedEditor
+    };
+
 FrontEndDevelopment _$FrontEndDevelopmentFromJson(Map<String, dynamic> json) {
   return FrontEndDevelopment()
     ..active = json['active'] as bool
@@ -105,7 +136,7 @@ BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
   return BoardytaleConfiguration()
     ..gameServer = json['gameServer'] == null
         ? null
-        : ServerConfiguration.fromJson(
+        : GameServerConfiguration.fromJson(
             json['gameServer'] as Map<String, dynamic>)
     ..editorServer = json['editorServer'] == null
         ? null

@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as path from 'path';
 import * as proxy from 'http-proxy-middleware';
 import * as fs from 'fs';
+import * as http from "http";
 import {makeAddress} from '../libs/network';
 import {
     BoardytaleConfiguration,

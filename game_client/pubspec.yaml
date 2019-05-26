@@ -1,5 +1,5 @@
 name: game_client
-description: Tour of Heroes
+description: Game client for Boardytale project
 version: 0.0.1
 
 environment:

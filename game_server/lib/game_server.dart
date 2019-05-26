@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:io' as io;
+import 'package:game_server/mocked_editor/run_mocked_editor.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:io_utils/aqueduct/wraps.dart';
 import 'package:http/http.dart' as http;
@@ -59,9 +60,14 @@ final InitGameService initService = InitGameService();
 final NavigationService navigationService = NavigationService();
 final GameService gameService = GameService();
 final IntentionService intentionService = IntentionService();
+MockedEditor mockedEditor;
+
 
 ServerGateway initServer(BoardytaleConfiguration configInput) {
   config = configInput;
+  if(config.gameServer.runMockedEditor){
+    mockedEditor = MockedEditor(config);
+  }
   // trigger constructors
   playerService;
   lobbyService;
