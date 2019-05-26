@@ -16,7 +16,7 @@ main() async {
 }
 
 createUnits() async {
-  List<FileSystemEntity> entities = Directory(projectDirectoryPath + "/core/lib/data/units").listSync(recursive: true);
+  List<FileSystemEntity> entities = Directory(projectDirectoryPath + "/data/units").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
@@ -43,7 +43,7 @@ createUnits() async {
 
 createImages() async {
   List<FileSystemEntity> entities =
-      Directory(projectDirectoryPath + "/core/lib/data/images").listSync(recursive: true);
+      Directory(projectDirectoryPath + "/data/images").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {
@@ -62,7 +62,7 @@ createImages() async {
 }
 
 createTale() async {
-  List<FileSystemEntity> entities = Directory(projectDirectoryPath + "/core/lib/data/tales").listSync(recursive: true);
+  List<FileSystemEntity> entities = Directory(projectDirectoryPath + "/data/tales").listSync(recursive: true);
   final BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
 
   for (FileSystemEntity entity in entities) {

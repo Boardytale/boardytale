@@ -32,7 +32,6 @@ main() async {
     config.heroesServer,
     config.aiServer,
     config.gameServer,
-    config.loggerServer,
   ];
 
   configs.forEach((conf){
@@ -57,6 +56,7 @@ void runServerByServerConfiguration(ServerConfiguration config) {
 
   String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
   String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
+
   Process.start(executable, [executableFile], workingDirectory: workingDirectory, runInShell: true)
     ..then((Process process) {
       print("running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");

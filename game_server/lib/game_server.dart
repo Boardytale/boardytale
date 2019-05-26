@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:math' as math;
 import 'dart:io' as io;
+import 'package:game_server/logger_server/logger_server.dart';
 import 'package:game_server/mocked_editor/run_mocked_editor.dart';
 import 'package:io_utils/io_utils.dart';
 import 'package:io_utils/aqueduct/wraps.dart';
@@ -12,7 +13,7 @@ import 'package:core/model/model.dart' as core;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:core/configuration/configuration.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:logger_server/logger.dart';
+import 'package:io_utils/logger.dart';
 
 part 'server_gateway.dart';
 
@@ -68,6 +69,7 @@ ServerGateway initServer(BoardytaleConfiguration configInput) {
   if(config.gameServer.runMockedEditor){
     mockedEditor = MockedEditor(config);
   }
+  LoggerServer();
   // trigger constructors
   playerService;
   lobbyService;

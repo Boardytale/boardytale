@@ -17,5 +17,3 @@ dependencies:
     path: ../libs/io_utils
   rxdart: ^0.20.0
   stagexl: ^1.4.0+2
-  logger_server:
-    path: ../logger_server

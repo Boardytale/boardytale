@@ -19,7 +19,8 @@
     "game-client": "cd game_client && dart bin/serve.dart",
     "game-client-build": "cd game_client && webdev build",
     "generate-data-jsons": "cd data && ts-node ../libs/generate-jsons.ts",
-    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart"
+    "initial-data-to-database": "npm run generate-data-jsons && dart libs/io_utils/bin/fill_database.dart",
+    "build-snapshots": "dart --snapshot=libs/snapshots/ai.dart.snapshot ai_server/bin/ai_server_start.dart && dart --snapshot=libs/snapshots/editor.dart.snapshot editor_server/bin/editor_server_start.dart && dart --snapshot=libs/snapshots/game.dart.snapshot game_server/bin/game_server_start.dart && dart --snapshot=libs/snapshots/hero.dart.snapshot hero_server/bin/hero_server_start.dart && dart --snapshot=libs/snapshots/user.dart.snapshot user_server/bin/main.dart && dart --snapshot=libs/snapshots/runner.dart.snapshot libs/io_utils/bin/run_production.dart"
   },
   "private": true,
   "devDependencies": {

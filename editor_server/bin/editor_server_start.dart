@@ -7,5 +7,6 @@ Future main() async {
   final app = Application<EditorServerChannel>()
     ..options.port = boardytaleConfiguration.editorServer.uris.first.port.toInt();
   await app.start(numberOfInstances: 1);
-  print("Editor server started on port: ${app.options.port}.");
+  print(
+      "Editor server started on port: ${app.options.port} with database ${boardytaleConfiguration.editorDatabase.databaseName}");
 }

@@ -13,7 +13,7 @@ main() async {
 
   try {
     config =
-        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/../boardytale_production_config/config.g.json').readAsStringSync()));
+        BoardytaleConfiguration.fromJson(json.decode(File(projectDirectoryPath + '/config.g.json').readAsStringSync()));
   } catch (e) {
     if (e is CheckedFromJsonException) {
       print(e.innerError.toString());
@@ -32,8 +32,6 @@ main() async {
   runServerByServerConfiguration(config.aiServer);
 
   runServerByServerConfiguration(config.gameServer);
-
-  runServerByServerConfiguration(config.loggerServer);
 }
 
 void runServerByServerConfiguration(ServerConfiguration config) {
@@ -51,6 +49,13 @@ void runServerByServerConfiguration(ServerConfiguration config) {
 
   String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
   String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
+
+  print("Executable file: ${executableFile} ${File(executableFile).existsSync()}, wd: ${workingDirectory} ${Directory(workingDirectory).existsSync()}");
+
+  if(!Directory(workingDirectory).existsSync()){
+    Directory(workingDirectory).createSync(recursive: true);
+  }
+
   Process.start(executable, [executableFile], workingDirectory: workingDirectory, runInShell: true)
     ..then((Process process) {
       print("running ${config.pathToExecutable} on port ${config.uris.first.port} pid: ${process.pid}");

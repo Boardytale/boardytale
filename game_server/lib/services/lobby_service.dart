@@ -68,11 +68,8 @@ class LobbyService {
 
   Future<core.TaleCompiled> getTaleByName(String name) async {
     String uri = makeAddressFromUri(config.editorServer.uris.first) + "inner/taleByName";
-    print(jsonEncode(IdWrap.packId(name)));
     http.Response response =
         await http.post(uri, headers: {"Content-Type": "application/json"}, body: IdWrap.packId(name));
-
-    print(response.body);
     return core.TaleCompiled.fromJson(json.decode(response.body));
   }
 

@@ -54,9 +54,7 @@ class MockedEditor {
   Future<String> getFileByPath(String path) async {
     String harmonizedPath = path.replaceAll("\\", "/");
     var url = "http://localhost:${tsPort}/";
-    print("sent to ts  ${harmonizedPath}");
     http.Response response = await http.post(url, body: harmonizedPath);
-    print("got from ts  ${response.body}");
     return response.body;
   }
 
