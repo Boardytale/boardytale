@@ -3,7 +3,7 @@ part of game_server;
 class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
   @override
   TaleAction perform(
-      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
+      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection, {io.WebSocket aiPlayerSocket}) {
     bool isValid = super.validate(unit, track);
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
@@ -51,7 +51,7 @@ class ServerAttackAbility extends core.AttackAbility implements ServerAbility {
     // target actions
     // TODO: rethink enhance incoming damage by buff from zero damage
     if (damage > 0) {
-      track.fields.last.units.forEach((core.Unit targetUnit) {
+      track.fields.last.getAliveUnitsOnField().forEach((core.Unit targetUnit) {
         int damageForTargetUnit = targetUnit.resolveIncomingDamage(damage);
         core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction();
         action

@@ -81,6 +81,7 @@ class AiTale {
       action.abilityName = core.AbilityName.attack;
       action.track = track.toIds();
     }
+    playedUnits.add(unitOnMove);
     gateway.sendMessage(core.ToGameServerMessage.unitTrackAction(action), connection);
   }
 

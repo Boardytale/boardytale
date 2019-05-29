@@ -1,16 +1,20 @@
 library boardytale.client.gateway;
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:html';
 
 import 'package:angular/di.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:game_client/project_settings.dart';
+import 'package:rxdart/rxdart.dart';
 
 @Injectable()
 class GatewayService {
   WebSocket _socket;
   bool _opened = false;
+  bool reconnecting = false;
+  BehaviorSubject<int> reconnectingTime = BehaviorSubject(seedValue: 0);
   List<core.ToGameServerMessage> _beforeOpenBuffer = [];
   Map<core.OnClientAction, void Function(core.ToClientMessage message)> handlers = {};
 
@@ -33,6 +37,35 @@ class GatewayService {
       _beforeOpenBuffer.forEach((message) => sendMessage(message));
       _beforeOpenBuffer.clear();
     });
+    _socket.onClose.listen(reconnect);
+    _socket.onError.listen(reconnect);
+  }
+
+  void reconnect([_]) async {
+    var reloads = 0;
+    var key = "reloads";
+    var lastKey = "lastReloadsWrite";
+    if (window.localStorage.containsKey(key)) {
+      reloads = int.tryParse(window.localStorage[key]) ?? 5;
+      if (window.localStorage.containsKey(lastKey)) {
+        try {
+          if (DateTime.now().millisecondsSinceEpoch -
+                  DateTime.parse(window.localStorage[lastKey]).millisecondsSinceEpoch >
+              500000) {
+            reloads = 0;
+          }
+        } catch (e) {
+          reloads = 5;
+        }
+      }
+    }
+    reconnecting = true;
+    reconnectingTime.add(reloads * reloads);
+    await Future.delayed(Duration(seconds: (reloads * reloads)));
+    window.localStorage[key] = "${++reloads}";
+    window.localStorage[lastKey] = "${DateTime.now().toUtc()}";
+    // if frequency is lower then once per 100 games, full reload is sufficient solution
+    window.location.reload();
   }
 
   void initMessages(String innerToken) {

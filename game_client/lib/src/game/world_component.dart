@@ -185,7 +185,9 @@ class WorldComponent implements OnDestroy {
             ability.show(_draggedUnit, track);
             gameService.onUnitAssistanceChanged.add(ability);
           } else {
-            gameService.onUnitAssistanceChanged.add(null);
+            ability = NoActionPossible();
+            ability.show(_draggedUnit, track);
+            gameService.onUnitAssistanceChanged.add(ability);
           }
           gatewayService.sendIntention(track.fields);
         } else {

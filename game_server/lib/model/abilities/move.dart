@@ -3,7 +3,7 @@ part of game_server;
 class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
   @override
   TaleAction perform(
-      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
+      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection, {io.WebSocket aiPlayerSocket}) {
     bool isValid = super.validate(unit, track);
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
@@ -14,6 +14,9 @@ class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
         gateway.sendMessageByConnection(
             core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
       } else {
+//        aiPlayerSocket.add(json.encode(
+//            core.ToAiServerMessage.fromState(tale.taleState.createTaleForPlayer(player), core.AiEngine.standard, player.id)
+//                .toJson()));
         print("AI move canceled ${json.encode(track.toIds())}");
         // TODO: handle reporting errors to AI
       }

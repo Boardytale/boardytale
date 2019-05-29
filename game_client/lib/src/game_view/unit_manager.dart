@@ -29,6 +29,7 @@ class MapObjectsManager {
         HighlightName.shoot: "img/shoot.png",
         HighlightName.noGo: "img/nogo.png",
         HighlightName.heal: "img/heal.png",
+        HighlightName.noAction: "img/no_action.png",
       };
 
       abilityAssistances.forEach((ImagePaintable assistance) {
@@ -55,6 +56,7 @@ class MapObjectsManager {
         abilityAssistances.remove(assistance);
       });
       added.forEach((highlight) {
+        print("highlight ${highlight.highlightName}");
         abilityAssistances
             .add(ImagePaintable(worldViewService, highlight.field, stage, paths[highlight.highlightName], highlight.highlightName));
       });

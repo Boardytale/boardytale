@@ -27,11 +27,11 @@ class ServerUnit {
 //      : super(createServerAbilityList, action, fields, players, types);
 //
   static TaleAction perform(core.AbilityName name, core.Track track, core.UnitTrackAction action, ServerTale tale,
-      core.Unit unit, ServerPlayer player) {
+      core.Unit unit, ServerPlayer player, {io.WebSocket aiPlayerSocket}) {
     for (int i = 0; i < unit.abilities.length; i++) {
       ServerAbility ability = unit.abilities[i];
       if (ability.name == name) {
-        return ability.perform(unit, track, action, tale, player.connection);
+        return ability.perform(unit, track, action, tale, player.connection, aiPlayerSocket: aiPlayerSocket);
       }
     }
     return null;

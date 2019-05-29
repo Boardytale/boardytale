@@ -2,7 +2,7 @@ name: core
 description: Multiplayre webgame on hexagonal fields common library
 
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   typescript_reporter:

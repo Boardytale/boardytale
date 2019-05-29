@@ -1,6 +1,6 @@
 name: typescript_reporter
 environment:
-  sdk: ">=2.0.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
 

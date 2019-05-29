@@ -19,7 +19,23 @@ List<core.Ability> createClientAbilityList(core.AbilitiesEnvelope envelope) {
 
 abstract class ClientAbility {
   List<FieldHighlight> highlights = [];
+
   void show(core.Unit unitOnMove, core.Track track);
+}
+
+class NoActionPossible extends ClientAbility {
+  @override
+  List<FieldHighlight> highlights = [];
+
+  @override
+  void show(core.Unit unitOnMove, core.Track track) {
+    highlights = [];
+    for (int i = 1; i < track.fields.length; i++) {
+      highlights.add(FieldHighlight()
+        ..field = track.fields[i]
+        ..highlightName = HighlightName.noAction);
+    }
+  }
 }
 
 class FieldHighlight {
@@ -27,4 +43,4 @@ class FieldHighlight {
   core.Field field;
 }
 
-enum HighlightName { track, attack, shoot, noGo, heal }
+enum HighlightName { track, attack, shoot, noGo, heal, noAction }

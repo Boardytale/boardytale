@@ -85,14 +85,14 @@ abstract class Ability {
    *  every value about 7 is cut
    */
   int resolveCurrentSteps(Unit unitOnMove, String steps) {
-    return this.resolveStandardModificator(unitOnMove.steps, steps) - unitOnMove.far;
+    return this.resolveStandardModificator(unitOnMove.steps, steps);
   }
 
-  Track modifyTrack(Unit unitOnMove, Track track){
+  Track modifyTrack(Unit unitOnMove, Track track) {
     return track;
   }
 
-  int resolveStandardModificator(int value, String modificator, {min: 0, max: 7}){
+  int resolveStandardModificator(int value, String modificator, {min: 0, max: 7}) {
     if (modificator != null) {
       if (modificator.contains("+")) {
         value += int.parse(modificator.replaceAll("+", ""));
@@ -101,6 +101,8 @@ abstract class Ability {
       } else {
         value = int.parse(modificator);
       }
+    } else {
+      return value;
     }
     if (value > max) {
       value = max;
@@ -111,13 +113,13 @@ abstract class Ability {
     return value;
   }
 
-  List<int> resolveSixNumberEffect(List<int> originalItems, String modificator, {min: 0, max: 9}){
-    if(modificator == null){
+  List<int> resolveSixNumberEffect(List<int> originalItems, String modificator, {min: 0, max: 9}) {
+    if (modificator == null) {
       return originalItems;
     }
     List<String> modificatorItems = modificator.split(" ");
     List<int> out = [];
-    for(int i = 0;i<6;i++){
+    for (int i = 0; i < 6; i++) {
       out.add(resolveStandardModificator(originalItems[i], modificatorItems[i], min: min, max: max));
     }
     return out;

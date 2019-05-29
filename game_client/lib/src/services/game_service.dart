@@ -3,7 +3,6 @@ library tale_service;
 import 'dart:async';
 
 import 'package:angular/core.dart';
-import 'package:angular_components/utils/angular/scroll_host/interface.dart';
 import 'package:game_client/src/game_model/abilities/abilities.dart';
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/app_service.dart';

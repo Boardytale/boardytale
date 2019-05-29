@@ -21,7 +21,15 @@ import 'package:game_client/src/user_panel/user_panel_component.dart';
     <div
      *ngIf="showLoading"
     >
+    <span *ngIf="gateway.reconnecting">
+      RECONNECTING....
+      <span *ngIf="gateway.reconnectingTime.value > 3">
+      with delay: {{gateway.reconnectingTime.value}}s
+      </span>
+    </span>
+    <span *ngIf="!gateway.reconnecting">
       LOADING....
+    </span>
     </div>
     <create-game
       *ngIf="showCreateGame"
@@ -90,6 +98,7 @@ class AppComponent {
       //      }
       changeDetector.markForCheck();
     });
+    gateway.reconnectingTime.listen((onData) => changeDetector.markForCheck());
     window.onResize.listen(resizeBody);
   }
 

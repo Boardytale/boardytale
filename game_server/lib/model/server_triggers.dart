@@ -5,7 +5,6 @@ class ServerTriggers {
   final ServerTale tale;
 
   ServerTriggers(this.tale, this.triggers) {
-    triggers.onInit.forEach(perform);
     tale.events.onUnitDies.listen((report) {
       triggers.onUnitDies.forEach(onUnitDies);
     });
@@ -17,6 +16,10 @@ class ServerTriggers {
         showBanterAction(trigger.action.showBanterAction);
       }
     }
+  }
+
+  void onInit(){
+    triggers.onInit.forEach(perform);
   }
 
   void onAfterInit(){

@@ -101,10 +101,7 @@ class LobbyService {
       removeLobbyRoom(room);
     }
     if (room.gameRunning) {
-      player.enterGame(room.tale);
-      room.tale.addHumanPlayer(player);
-      room.tale.sendTaleDataToPlayer(player);
-      HeroesHelper.getHeroes([player], room.connectedPlayers.values, room.tale);
+      room.tale.newPlayerEntersTale(player);
       messageWithConnection.player.navigationState = core.GameNavigationState.inGame;
     } else {
       messageWithConnection.player.navigationState = core.GameNavigationState.inLobby;

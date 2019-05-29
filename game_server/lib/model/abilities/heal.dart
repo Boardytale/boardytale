@@ -3,7 +3,7 @@ part of game_server;
 class ServerHealAbility extends core.HealAbility implements ServerAbility {
   @override
   TaleAction perform(
-      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection) {
+      core.Unit unit, core.Track track, core.UnitTrackAction action, ServerTale tale, Connection unitOnMoveConnection, {io.WebSocket aiPlayerSocket}) {
     bool isValid = super.validate(unit, track);
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;

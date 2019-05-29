@@ -17,7 +17,7 @@ class GameService {
     String lobbyId = message.message.enterGameMessage.lobbyId;
     LobbyRoom room = lobbyService.getLobbyRoomById(lobbyId);
 
-    if(room == null){
+    if (room == null) {
       print("entering game on null room for player ${message.player.email}  lobbyId: ${lobbyId}");
       return;
     }
@@ -29,10 +29,7 @@ class GameService {
     }
 
     if (room.gameRunning) {
-      message.player.enterGame(room.tale);
-      room.tale.addHumanPlayer(message.player);
-      room.tale.sendTaleDataToPlayer(message.player);
-      HeroesHelper.getHeroes([message.player], room.connectedPlayers.values, room.tale);
+      room.tale.newPlayerEntersTale(message.player);
     } else {
       room.gameRunning = true;
       ServerTale tale = ServerTale(room);
@@ -41,13 +38,15 @@ class GameService {
       room.connectedPlayers.values.forEach((player) {
         player.enterGame(tale);
       });
-      Future.delayed(Duration(seconds: GameService.secondsToEnterRunningGame)).then((_){
+      Future.delayed(Duration(seconds: GameService.secondsToEnterRunningGame)).then((_) {
         room.closedForNewPlayers = true;
         lobbyService.removeLobbyRoom(room);
       });
-      Future.delayed(Duration(minutes: GameService.minutesToEndGame)).then((_){
-        room.connectedPlayers.values.toList().forEach((player){
-          player.leaveGame();
+      Future.delayed(Duration(minutes: GameService.minutesToEndGame)).then((_) {
+        room.connectedPlayers.values.toList().forEach((player) {
+          if (player.tale.room == room) {
+            player.leaveGame();
+          }
         });
       });
     }

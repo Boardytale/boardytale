@@ -8,7 +8,6 @@ import 'dart:async';
 import 'package:args/args.dart' as arg_lib;
 import 'package:console/console.dart';
 import 'package:core/configuration/configuration.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'get_config.dart';
 
