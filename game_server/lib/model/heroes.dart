@@ -19,12 +19,18 @@ class HeroesHelper {
     core.Assets assets = core.Assets();
     data.forEach((ResponseWithPlayer item) {
       var heroesAndUnits = core.ToHeroServerMessage.fromJson(json.decode(item.response.body));
-      heroesAndUnits.getHeroesOfPlayerMessage.responseHeroes.forEach((heroEnvelope){
+      heroesAndUnits.getHeroesOfPlayerMessage.responseHeroes.forEach((heroEnvelope) {
         var compiledType = heroEnvelope.type;
         compiledType.name = "hero${_lastHeroId++}";
         core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
-        var startingField =
-            tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+        var startingField;
+        try {
+          // TODO: rethink handle not available space
+          startingField =
+              tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+        } catch (e) {
+          return;
+        }
 
         core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
           ..unitId = "${tale.lastUnitId++}"
@@ -35,10 +41,10 @@ class HeroesHelper {
         actions.add(action);
       });
 
-      heroesAndUnits.getHeroesOfPlayerMessage.responseUnits.forEach((core.UnitTypeCompiled compiledType){
+      heroesAndUnits.getHeroesOfPlayerMessage.responseUnits.forEach((core.UnitTypeCompiled compiledType) {
         core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
         var startingField =
-        tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
+            tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
 
         core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
           ..unitId = "${tale.lastUnitId++}"
