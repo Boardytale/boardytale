@@ -14,6 +14,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:core/configuration/configuration.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:io_utils/logger.dart';
+import 'package:uuid/uuid.dart';
 
 part 'server_gateway.dart';
 

@@ -8,19 +8,7 @@ class ServerMoveAbility extends core.MoveAbility implements ServerAbility {
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
     if (!isValid) {
-      core.CancelOnFieldAction cancelOnFieldAction = core.CancelOnFieldAction();
-      cancelOnFieldAction.fieldId = unit.field.id;
-      if (unitOnMoveConnection != null) {
-        gateway.sendMessageByConnection(
-            core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
-      } else {
-//        aiPlayerSocket.add(json.encode(
-//            core.ToAiServerMessage.fromState(tale.taleState.createTaleForPlayer(player), core.AiEngine.standard, player.id)
-//                .toJson()));
-        print("AI move canceled ${json.encode(track.toIds())}");
-        // TODO: handle reporting errors to AI
-      }
-      return out;
+      return ServerAbility.cancelOnField(unit, unitOnMoveConnection, track);
     }
 
     core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction();

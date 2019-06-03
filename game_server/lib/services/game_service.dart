@@ -62,7 +62,7 @@ class GameService {
 
   void handleControlsAction(MessageWithConnection message) {
     if (message.message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
-      message.player.tale.endOfTurn(message);
+      message.player.tale.endOfTurn();
     }
   }
 }

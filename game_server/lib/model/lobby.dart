@@ -42,11 +42,15 @@ class LobbyRoom {
   }
 
   void ejectPlayer(ServerPlayer player) {
+    if(openedLobby != null){
+      openedLobby.players.removeWhere((p)=>p.id==player.id);
+    }
     connectedPlayers.remove(player.email);
     tale.ejectPlayer(player);
     if(connectedPlayers.isEmpty){
       tale.destroy();
     }
+    print("player ejected ${player.email}");
   }
 }
 

@@ -11,9 +11,9 @@ abstract class ServerAbility extends core.Ability {
       gateway.sendMessageByConnection(
           core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
     } else {
-      print("AI attack canceled ${json.encode(track.toIds())}");
+      print("AI action canceled ${json.encode(track.toIds())}");
       // TODO: handle reporting errors to AI
     }
-    return TaleAction()..unitUpdates = [];
+    return null;
   }
 }

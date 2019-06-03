@@ -110,6 +110,7 @@ class AppService {
 
   void removePlayerById(String id) {
     playerRemoved.add(players.remove(id));
+    players.remove(id);
   }
 
   String translate(Map<core.Lang, String> input) {

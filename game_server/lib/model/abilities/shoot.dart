@@ -8,16 +8,7 @@ class ServerShootAbility extends core.ShootAbility implements ServerAbility {
     List<core.UnitCreateOrUpdateAction> unitActions = [];
     TaleAction out = TaleAction()..unitUpdates = unitActions;
     if (!isValid) {
-      core.CancelOnFieldAction cancelOnFieldAction = core.CancelOnFieldAction();
-      cancelOnFieldAction.fieldId = unit.field.id;
-      if (unitOnMoveConnection != null) {
-        gateway.sendMessageByConnection(
-            core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
-      } else {
-        print("AI attack canceled ${json.encode(track.toIds())}");
-        // TODO: handle reporting errors to AI
-      }
-      return out;
+      return ServerAbility.cancelOnField(unit, unitOnMoveConnection, track);
     }
 
     List<int> diceNumbers = [math.Random.secure().nextInt(6)];

@@ -95,6 +95,7 @@ class LobbyService {
     }
 
     var lobbyPlayer = messageWithConnection.player.createGamePlayer();
+
     room.openedLobby.players.add(lobbyPlayer);
     room.connectedPlayers[player.email] = player;
     if (room.connectedPlayers.length == LobbyService.maximumPlayersInLobby) {

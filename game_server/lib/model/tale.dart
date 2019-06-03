@@ -13,6 +13,7 @@ class ServerTale {
   ServerTriggers triggers;
   ServerTaleEvents events;
   io.WebSocket currentAiPlayerSocket;
+  int _messagesOverflowProtection = 0;
 
   ServerTale(this.room) {
     events = ServerTaleEvents(this);
@@ -49,10 +50,11 @@ class ServerTale {
     core.Unit unit = taleState.units[action.unitId];
     core.Track track = core.Track(action.track.map((f) => taleState.fields[f]).toList());
     core.AbilityName name = action.abilityName;
-    taleState.addTaleAction(ServerUnit.perform(name, track, action, this, unit, unit.player as ServerPlayer, aiPlayerSocket: aiPlayerSocket));
+    taleState.addTaleAction(ServerUnit.perform(name, track, action, this, unit, unit.player as ServerPlayer,
+        aiPlayerSocket: aiPlayerSocket));
   }
 
-  void endOfTurn(MessageWithConnection message) {
+  void endOfTurn() {
     List<core.UnitCreateOrUpdateAction> actions = taleState.units.values.map((unit) {
       return ServerUnit.newTurn(unit);
     }).toList();
@@ -68,7 +70,7 @@ class ServerTale {
     if (action.transferToPlayerId == "players") {
       action.transferToPlayerId = humanPlayers[_lastIndexOfPlayerGotPlayersUnit].id;
       _lastIndexOfPlayerGotPlayersUnit++;
-      if(_lastIndexOfPlayerGotPlayersUnit > humanPlayers.length - 1){
+      if (_lastIndexOfPlayerGotPlayersUnit > humanPlayers.length - 1) {
         _lastIndexOfPlayerGotPlayersUnit = 0;
       }
     }
@@ -87,12 +89,26 @@ class ServerTale {
     return player;
   }
 
-  void newPlayerEntersTale(ServerPlayer player){
+  void newPlayerEntersTale(ServerPlayer player) {
     player.enterGame(room.tale);
-    room.tale.taleState.addTaleAction(
-        TaleAction()..newPlayersToTale = [room.tale.upgradeConnectedHumanPlayerToTalePlayer(player)]);
+    room.tale.taleState
+        .addTaleAction(TaleAction()..newPlayersToTale = [room.tale.upgradeConnectedHumanPlayerToTalePlayer(player)]);
     room.tale.sendTaleDataToPlayer(player);
     HeroesHelper.getHeroes([player], room.connectedPlayers.values, room.tale);
+  }
+
+  void sendMessages(core.TaleUpdate outputTaleUpdate) {
+    if (_messagesOverflowProtection++ > taleState.units.length * 3) {
+      Logger.log(taleState.taleId, core.LoggerMessage.fromTrace("message overflow"));
+      endOfTurn();
+    }
+    taleState.humanPlayers.forEach((key, player) {
+      gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);
+    });
+
+    if (currentAiPlayerSocket != null) {
+      currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
+    }
   }
 
   void aiPlay() async {
@@ -113,6 +129,7 @@ class ServerTale {
         if (message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
           currentAiPlayerSocket.close();
           currentAiPlayerSocket = null;
+          _messagesOverflowProtection = 0;
 
           // TODO: refresh only units currently beginning their move
           taleState.addTaleAction(TaleAction()..playersOnMove = taleState.humanPlayers.keys.toList());

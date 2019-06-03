@@ -61,8 +61,8 @@ class GameService {
       return;
     }
     if (currentBanter.value == null) {
-      CurrentBanter current = CurrentBanter()..banter=banter;
-      if(banter.speakingUnitId != null && units.containsKey(banter.speakingUnitId)){
+      CurrentBanter current = CurrentBanter()..banter = banter;
+      if (banter.speakingUnitId != null && units.containsKey(banter.speakingUnitId)) {
         current.unit = units[banter.speakingUnitId];
       }
       currentBanter.add(current);
@@ -136,24 +136,24 @@ class GameService {
     if (update.newAssetsToTale != null) {
       assets.merge(update.newAssetsToTale);
     }
-    setPlayersOnMoveByIds(update.playerOnMoveIds);
+
     if (update.actions != null) {
       unitsCreateOrUpdate(update.actions);
     }
     if (update.unitToRemoveIds != null) {
-      update.unitToRemoveIds.forEach((toRemoveId){
-        if(units.containsKey(toRemoveId)){
+      update.unitToRemoveIds.forEach((toRemoveId) {
+        if (units.containsKey(toRemoveId)) {
           units[toRemoveId].destroy();
           units.remove(toRemoveId);
         }
       });
     }
-
     if (update.removePlayerId != null) {
       appService.removePlayerById(update.removePlayerId);
     }
+    setPlayersOnMoveByIds(update.playerOnMoveIds);
 
-    if(update.banterAction != null){
+    if (update.banterAction != null) {
       addBanter(update.banterAction);
     }
   }
@@ -184,7 +184,7 @@ class EnhancedUnitCreateOrUpdateAction {
   ClientUnit unit;
 }
 
-class CurrentBanter{
+class CurrentBanter {
   core.ShowBanterAction banter;
   ClientUnit unit;
 }

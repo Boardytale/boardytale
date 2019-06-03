@@ -35,8 +35,9 @@ class ServerTaleState {
   void addTaleAction(TaleAction action) {
     if (action == null) {
       // invalid unit track actions handled another way
-      return;
+      return null;
     }
+    // TODO: detect something is changed, don't send messages otherwise. See core.Unit
     actionLog.add(action);
     core.TaleUpdate outputTaleUpdate = core.TaleUpdate();
     action.newPlayersToTale.forEach((player) {
@@ -68,7 +69,7 @@ class ServerTaleState {
         if (units.containsKey(action.unitId)) {
           core.Unit unit = units[action.unitId];
           var report = unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
-          if(report != null){
+          if (report != null) {
             actionsWithEffect.add(action);
             tale.events.setUnitReport(report);
           }
@@ -83,33 +84,28 @@ class ServerTaleState {
 
     outputTaleUpdate.playerOnMoveIds = playerOnMoveIds;
 
-    if(action.removePlayerId != null){
+    if (action.removePlayerId != null) {
       outputTaleUpdate.removePlayerId = action.removePlayerId;
       humanPlayers.remove(action.removePlayerId);
       outputTaleUpdate.unitToRemoveIds = [];
-      units.forEach((id, unit){
-        if(unit.player.id == action.removePlayerId){
+      units.forEach((id, unit) {
+        if (unit.player.id == action.removePlayerId) {
           outputTaleUpdate.unitToRemoveIds.add(id);
         }
       });
-      outputTaleUpdate.unitToRemoveIds.forEach((idToRemove){
+      outputTaleUpdate.unitToRemoveIds.forEach((idToRemove) {
         units.remove(idToRemove);
       });
+      players.remove(action.removePlayerId);
     }
 
-    if(action.banterAction != null){
+    if (action.banterAction != null) {
       outputTaleUpdate.banterAction = action.banterAction;
     }
 
-    if(gameStared){
-      humanPlayers.forEach((key, player) {
-        gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);
-      });
-
-      if (tale.currentAiPlayerSocket != null) {
-        tale.currentAiPlayerSocket.add(json.encode(core.ToAiServerMessage.fromUpdate(outputTaleUpdate).toJson()));
-      }
-    }
     Logger.log(taleId, core.LoggerMessage.fromTaleUpdate(outputTaleUpdate));
+    if (gameStared) {
+      tale.sendMessages(outputTaleUpdate);
+    }
   }
 }
