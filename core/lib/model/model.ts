@@ -354,7 +354,8 @@ export type GameNavigationState =
     | 'inGame'
     | 'loading'
     | 'inLobby'
-    | 'userPanel';
+    | 'userPanel'
+    | 'login';
 
 export type OnClientAction =
     | 'setNavigationState'

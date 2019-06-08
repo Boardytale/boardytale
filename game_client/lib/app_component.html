@@ -1,0 +1,20 @@
+<div class="main-wrapper">
+  <user-bar></user-bar>
+  <user-login *ngIf="showLogin"></user-login>
+  <div *ngIf="showLoading">
+    <span *ngIf="gateway.reconnecting">
+      RECONNECTING....
+      <span *ngIf="gateway.reconnectingTime.value > 3">
+      with delay: {{gateway.reconnectingTime.value}}s
+      </span>
+    </span>
+    <span *ngIf="!gateway.reconnecting">
+      LOADING....
+    </span>
+  </div>
+  <create-game *ngIf="showCreateGame"></create-game>
+  <lobby *ngIf="showLobby"></lobby>
+  <lobbies *ngIf="showLobbies"></lobbies>
+  <game *ngIf="showGame"></game>
+  <user-panel *ngIf="showUserPanel"></user-panel>
+</div>

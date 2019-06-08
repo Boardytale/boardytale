@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <h1>Log in</h1>
+  </div>
+  <div class="row justify-content-center">
+    <div class="container login-card d-flex flex-wrap justify-content-center">
+      <div class="row mt-2">
+        <google-signin
+            *ngIf="appService.showSignInButton"
+            clientId="499749973436-s5enn1mvt99c8vbjdlcm390l3a5ugna0.apps.googleusercontent.com"
+            width="240"
+            theme="dark" longTitle="true" fetchBasicProfile="true"
+            (googleSigninSuccess)="onGoogleSigninSuccess"></google-signin>
+      </div>
+      <div class="row mt-2">
+        <button
+            type="button"
+            class="btn btn-primary"
+            *ngIf="appService.showSignInButton"
+            (click)="createTemporaryUser()"
+        >
+          Login as a temporary user
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
