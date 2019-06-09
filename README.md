@@ -16,6 +16,8 @@ check path variable if dart, pub, npm executables are available for command line
 
 open IDE, set dart executables
 
+run `npm install` restart of your console/IDE might be needed after this step.
+
 run `npm run pub-get-all` to get dart dependencies for all packages, wait until finished
 
 run `npm run set-config-dev` to create a config file

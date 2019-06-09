@@ -2,8 +2,8 @@
   "name": "boardytale_proxy_server",
   "version": "0.0.2",
   "scripts": {
-    "pub-get-all": "cd libs/utils && pub get && cd ../typescript_reporter && cd ../../core && pub get && cd ../libs/typescript_generator && pub get && cd ../io_utils && pub get && cd ../../ai_server && pub get && cd ../editor_client && pub get && cd ../editor_server && pub get && cd ../game_client && pub get && cd ../game_server && pub get && cd ../hero_server && pub get && cd ../user_server && pub get",
-    "pub-upgrade-all": "cd libs/utils && pub upgrade && cd ../typescript_reporter && cd ../../core && pub upgrade && cd ../libs/typescript_generator && pub upgrade && cd ../io_utils && pub upgrade && cd ../../ai_server && pub upgrade && cd ../editor_client && pub upgrade && cd ../editor_server && pub upgrade && cd ../game_client && pub upgrade && cd ../game_server && pub upgrade && cd ../hero_server && pub upgrade && cd ../user_server && pub upgrade && cd ../logger_server && pub upgrade",
+    "pub-get-all": "cd libs/utils && pub get && cd ../typescript_reporter && cd ../../core && pub get && cd ../libs/typescript_generator && pub get && cd ../io_utils && pub get && cd ../../ai_server && pub get && cd ../editor_client && pub get && cd ../editor_server && pub get && cd ../game_client && pub get && cd ../game_server && pub get && cd ../user_server && pub get",
+    "pub-upgrade-all": "cd libs/utils && pub upgrade && cd ../typescript_reporter && cd ../../core && pub upgrade && cd ../libs/typescript_generator && pub upgrade && cd ../io_utils && pub upgrade && cd ../../ai_server && pub upgrade && cd ../editor_client && pub upgrade && cd ../editor_server && pub upgrade && cd ../game_client && pub upgrade && cd ../game_server && pub upgrade && cd ../user_server && pub upgrade && cd ../logger_server && pub upgrade",
     "start-dev": "npm run set-config-dev && dart libs/io_utils/bin/run.dart",
     "start-production": "dart libs/io_utils/bin/run_production.dart",
     "set-config-dev": "ts-node set-environment.ts --config=dev-config.ts",
@@ -35,7 +35,7 @@
     "gzipper": "^1.5.1",
     "nodemon": "^1.19.0",
     "prettier": "^1.17.1",
-    "ts-node": "~5.0.1",
+    "ts-node": "^5.0.1",
     "tslint": "^5.16.0",
     "typescript": "~2.7.2"
   },
