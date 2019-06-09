@@ -77,13 +77,15 @@ User _$UserFromJson(Map<String, dynamic> json) {
   return User()
     ..name = json['name'] as String
     ..email = json['email'] as String
-    ..innerToken = json['innerToken'] as String;
+    ..innerToken = json['innerToken'] as String
+    ..hasHero = json['hasHero'] as bool;
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'name': instance.name,
       'email': instance.email,
-      'innerToken': instance.innerToken
+      'innerToken': instance.innerToken,
+      'hasHero': instance.hasHero
     };
 
 Buff _$BuffFromJson(Map<String, dynamic> json) {
@@ -705,6 +707,7 @@ Map<String, dynamic> _$UnitTypeCreateEnvelopeToJson(
 GameHeroCreateEnvelope _$GameHeroCreateEnvelopeFromJson(
     Map<String, dynamic> json) {
   return GameHeroCreateEnvelope()
+    ..id = json['id'] as String
     ..level = json['level'] as int
     ..name = json['name'] as String
     ..type = json['type'] == null
@@ -719,6 +722,7 @@ GameHeroCreateEnvelope _$GameHeroCreateEnvelopeFromJson(
 Map<String, dynamic> _$GameHeroCreateEnvelopeToJson(
         GameHeroCreateEnvelope instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'level': instance.level,
       'name': instance.name,
       'type': instance.type?.toJson(),
@@ -1288,7 +1292,8 @@ const _$OnServerActionEnumMap = <OnServerAction, dynamic>{
   OnServerAction.leaveGame: 'leaveGame',
   OnServerAction.unitTrackAction: 'unitTrackAction',
   OnServerAction.playerGameIntention: 'playerGameIntention',
-  OnServerAction.controlsAction: 'controlsAction'
+  OnServerAction.controlsAction: 'controlsAction',
+  OnServerAction.setHeroForNextGame: 'setHeroForNextGame'
 };
 
 GoToState _$GoToStateFromJson(Map<String, dynamic> json) {
@@ -1301,13 +1306,6 @@ Map<String, dynamic> _$GoToStateToJson(GoToState instance) => <String, dynamic>{
       'newState': _$GameNavigationStateEnumMap[instance.newState]
     };
 
-InitMessage _$InitMessageFromJson(Map<String, dynamic> json) {
-  return InitMessage()..innerToken = json['innerToken'] as String;
-}
-
-Map<String, dynamic> _$InitMessageToJson(InitMessage instance) =>
-    <String, dynamic>{'innerToken': instance.innerToken};
-
 CreateLobby _$CreateLobbyFromJson(Map<String, dynamic> json) {
   return CreateLobby()
     ..taleName = json['taleName'] as String
@@ -1316,20 +1314,6 @@ CreateLobby _$CreateLobbyFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CreateLobbyToJson(CreateLobby instance) =>
     <String, dynamic>{'taleName': instance.taleName, 'name': instance.name};
-
-EnterLobby _$EnterLobbyFromJson(Map<String, dynamic> json) {
-  return EnterLobby()..lobbyId = json['lobbyId'] as String;
-}
-
-Map<String, dynamic> _$EnterLobbyToJson(EnterLobby instance) =>
-    <String, dynamic>{'lobbyId': instance.lobbyId};
-
-EnterGame _$EnterGameFromJson(Map<String, dynamic> json) {
-  return EnterGame()..lobbyId = json['lobbyId'] as String;
-}
-
-Map<String, dynamic> _$EnterGameToJson(EnterGame instance) =>
-    <String, dynamic>{'lobbyId': instance.lobbyId};
 
 UnitTrackAction _$UnitTrackActionFromJson(Map<String, dynamic> json) {
   return UnitTrackAction()
@@ -1455,19 +1439,21 @@ ToUserServerMessage _$ToUserServerMessageFromJson(Map<String, dynamic> json) {
   return ToUserServerMessage()
     ..message =
         _$enumDecodeNullable(_$OnUserServerActionEnumMap, json['message'])
-    ..content = json['content'] as String;
+    ..content = json['content'] as String
+    ..error = json['error'] as String;
 }
 
 Map<String, dynamic> _$ToUserServerMessageToJson(
         ToUserServerMessage instance) =>
     <String, dynamic>{
       'message': _$OnUserServerActionEnumMap[instance.message],
-      'content': instance.content
+      'content': instance.content,
+      'error': instance.error
     };
 
 const _$OnUserServerActionEnumMap = <OnUserServerAction, dynamic>{
-  OnUserServerAction.getUseresByInnerToken: 'getUseresByInnerToken',
-  OnUserServerAction.getHeroesOfPlayer: 'getHeroesOfPlayer',
+  OnUserServerAction.getUserByInnerToken: 'getUserByInnerToken',
+  OnUserServerAction.getStartingUnits: 'getStartingUnits',
   OnUserServerAction.getHeroesToCreate: 'getHeroesToCreate',
   OnUserServerAction.createHero: 'createHero',
   OnUserServerAction.getMyHeroes: 'getMyHeroes'
@@ -1488,9 +1474,11 @@ Map<String, dynamic> _$GetUserByInnerTokenToJson(
       'innerToken': instance.innerToken
     };
 
-GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
-  return GetHeroesOfPlayer()
-    ..requestPlayerEmail = json['requestPlayerEmail'] as String
+HeroesAndUnitsOfPlayer _$HeroesAndUnitsOfPlayerFromJson(
+    Map<String, dynamic> json) {
+  return HeroesAndUnitsOfPlayer()
+    ..requestedPlayerEmail = json['requestPlayerEmail'] as String
+    ..requestedHeroId = json['requestedHeroId'] as String
     ..responseHeroes = (json['responseHeroes'] as List)
         ?.map((e) => e == null
             ? null
@@ -1503,9 +1491,11 @@ GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
         ?.toList();
 }
 
-Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
+Map<String, dynamic> _$HeroesAndUnitsOfPlayerToJson(
+        HeroesAndUnitsOfPlayer instance) =>
     <String, dynamic>{
-      'requestPlayerEmail': instance.requestPlayerEmail,
+      'requestPlayerEmail': instance.requestedPlayerEmail,
+      'requestedHeroId': instance.requestedHeroId,
       'responseHeroes':
           instance.responseHeroes?.map((e) => e?.toJson())?.toList(),
       'responseUnits': instance.responseUnits?.map((e) => e?.toJson())?.toList()

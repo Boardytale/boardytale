@@ -5,6 +5,11 @@
       class="row">
     <div class="col" style="color: red; font-size: 18pt;">{{message}}</div>
   </div>
+  <div
+      *ngIf="showSelectHeroMessage"
+      class="row">
+    <div class="col" style="color: green; font-size: 25pt;">Create at least one hero!</div>
+  </div>
 
   <div class="row">
     <div class="col">

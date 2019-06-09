@@ -42,6 +42,7 @@ export interface User extends Object {
     name: string;
     email: string;
     innerToken: string;
+    hasHero: boolean;
 }
 
 export type Lang = 'en' | 'cz';
@@ -380,15 +381,16 @@ export type OnServerAction =
     | 'leaveGame'
     | 'unitTrackAction'
     | 'playerGameIntention'
-    | 'controlsAction';
+    | 'controlsAction'
+    | 'setHeroForNextGame';
 
 export type ControlsActionName = 'endOfTurn' | 'unitWillNotPlay';
 
 export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
 
 export type OnUserServerAction =
-    | 'getUseresByInnerToken'
-    | 'getHeroesOfPlayer'
+    | 'getUserByInnerToken'
+    | 'getStartingUnits'
     | 'getHeroesToCreate'
     | 'createHero'
     | 'getMyHeroes';

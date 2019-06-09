@@ -1,0 +1,807 @@
+project directory path /home/boardytale/game/boardytale
+OPEN BROWSER ON http://localhost:8083
+Executable file: /home/boardytale/game/boardytale/libs/snapshots/user.dart.snapshot true, wd: /home/boardytale/game/boardytale/user_server true
+Executable file: /home/boardytale/game/boardytale/libs/snapshots/editor.dart.snapshot true, wd: /home/boardytale/game/boardytale/editor_server true
+Executable file: /home/boardytale/game/boardytale/libs/snapshots/hero.dart.snapshot true, wd: /home/boardytale/game/boardytale/hero_server true
+Executable file: /home/boardytale/game/boardytale/libs/snapshots/ai.dart.snapshot true, wd: /home/boardytale/game/boardytale/ai_server true
+Executable file: /home/boardytale/game/boardytale/libs/snapshots/game.dart.snapshot true, wd: /home/boardytale/game/boardytale/game_server true
+running libs/snapshots/user.dart.snapshot on port 4400 pid: 13445
+running libs/snapshots/editor.dart.snapshot on port 9000 pid: 13449
+running libs/snapshots/hero.dart.snapshot on port 10000 pid: 13452
+running libs/snapshots/ai.dart.snapshot on port 5000 pid: 13454
+running libs/snapshots/game.dart.snapshot on port 7000 pid: 13457
+[1m[36m
+libs/snapshots/user.dart.snapshot: [22mcurrent directory /home/boardytale/game/boardytale/user_server
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22m/home/boardytale/game/boardytale/ai_server
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22mServing at http://localhost:10000
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mServing ai server at ws://localhost:5000
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mServing game server at ws://0.0.0.0:7000
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mLogger running at http://localhost:3333
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: Server aqueduct/1 started.  
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22mApplication started on port: 4400.
+Use Ctrl-C (SIGINT) to stop running the application.
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: Server aqueduct/1 started.  
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22mEditor server started on port: 9000 with database editorproduction
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22mServing user server inner at http://localhost:4500
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 10ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: PostgreSQL connecting, productionuserdb@boardytale.vserver.cz:5432/productionusers.  
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m2019-06-04T04:22:32.659810  0:00:00.208611 POST    [200] /
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: PostgreSQL connecting, production@boardytale.vserver.cz:5432/editorproduction.  
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 193ms 200   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 218ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 0
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-04T04:34:26.444766  0:00:00.133201 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero0, moveToFieldId: 0_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 0
+player ejected 2aefe5ff-e743-4629-b613-f9b1db4be356@temp.com
+opened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 2ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /vtigercrm/vtigerservice.php 1ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: GET /vtigercrm/vtigerservice.php 25ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 0ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: GET / 4ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /a2billing/customer/templates/default/footer.tpl 0ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: GET /a2billing/customer/templates/default/footer.tpl 1ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /recordings/ 0ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: GET /recordings/ 0ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 1ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 0ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 0ms 404   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET / 0ms 404   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m2019-06-07T16:40:42.844079  0:00:00.047533 POST    [200] /
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m[INFO] aqueduct: POST /login 275ms 200   
+[39m[1m[36m
+libs/snapshots/user.dart.snapshot: [22m2019-06-07T16:40:43.885862  0:00:00.022210 POST    [200] /
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 19ms 200   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 48ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 1
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+unit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+unit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+unit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+unit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+unit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T16:41:36.967045  0:00:00.045040 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero1, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 1
+player ejected mlcoch.zdenek@gmail.com
+opened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 11ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 2
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 42ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+unit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+unit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+unit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+unit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+unit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+unit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+unit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+unit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+unit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+unit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+unit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+unit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+unit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+unit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+unit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+unit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+unit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+unit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+unit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+unit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+unit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+unit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+unit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+unit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:02:52.739606  0:00:00.027102 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero2, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 2
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mplayer ejected mlcoch.zdenek@gmail.com
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 3ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 3
+opened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 22ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+unit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+unit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+unit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+unit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+unit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+unit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+unit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+unit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+unit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+unit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+unit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+unit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+unit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+unit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+unit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+unit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+unit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+unit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+unit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+unit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+unit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+unit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+unit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+unit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:03:53.416572  0:00:00.015713 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero3, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 0 {unitId: 0, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 1 {unitId: 1, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 2 {unitId: 2, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 3 {unitId: 3, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 4 {unitId: 4, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 5 {unitId: 5, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 6 {unitId: 6, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 7 {unitId: 7, stepsSpent: 0, steps: 5, buffs: [], actions: 1}
+unit action 8 {unitId: 8, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 9 {unitId: 9, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 10 {unitId: 10, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 11 {unitId: 11, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 12 {unitId: 12, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 13 {unitId: 13, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 14 {unitId: 14, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 15 {unitId: 15, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 16 {unitId: 16, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 17 {unitId: 17, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 18 {unitId: 18, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 19 {unitId: 19, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 20 {unitId: 20, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 21 {unitId: 21, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 22 {unitId: 22, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 23 {unitId: 23, stepsSpent: 0, steps: 3, buffs: [], actions: 1}
+unit action 24 {unitId: 24, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+unit action 25 {unitId: 25, stepsSpent: 0, steps: 4, buffs: [], actions: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai in: {"responseAction":null,"requestData":{"name":"0lvl_bandits","langs":{"en":{}},"langName":{"cz":"Tábor banditů","en":"Bandits camp"},"world":{"width":30,"height":18,"baseTerrain":"grass","fields":{"1_7":{"terrain":"forest"},"1_8":{"terrain":"water"},"1_9":{"terrain":"rock"},"2_7":{"terrain":"rock"},"2_8":{"terrain":"water"},"2_9":{"terrain":"water"},"3_5":{"terrain":"forest"},"5_3":{"terrain":"forest"},"5_5":{"terrain":"forest"},"5_8":{"terrain":"forest"},"6_7":{"terrain":"forest"},"9_1":{"terrain":"forest"},"9_2":{"terrain":"forest"},"9_3":{"terrain":"forest"},"9_4":{"terrain":"forest"},"9_6":{"terrain":"forest"},"9_7":{"terrain":"rock"},"0_21":{"terrain":"forest"},"0_24":{"terrain":"forest"},"0_26":{"terrain":"forest"},"10_6":{"terrain":"forest"},"11_3":{"terrain":"forest"},"11_5":{"terrain":"forest"},"11_6":{"terrain":"forest"},"11_7":{"terrain":"forest"},"12_5":{"terrain":"forest"},"12_6":{"terrain":"forest"},"12_8":{"terrain":"forest"},"13_4":{"terrain":"forest"},"13_7":{"terrain":"forest"},"13_9":{"terrain":"forest"},"14_2":{"terrain":"rock"},"14_5":{"terrain":"forest"},"15_2":{"terrain":"forest"},"15_3":{"terrain":"forest"},"15_4":{"terrain":"forest"},"16_0":{"terrain":"forest"},"16_3":{"terrain":"forest"},"16_4":{"terrain":"forest"},"17_1":{"terrain":"forest"},"17_2":{"terrain":"forest"},"17_4":{"terrain":"forest"},"17_5":{"terrain":"forest"},"17_8":{"terrain":"forest"},"18_2":{"terrain":"rock"},"18_4":{"terrain":"forest"},"18_6":{"terrain":"rock"},"18_7":{"terrain":"forest"},"18_8":{"terrain":"forest"},"19_2":{"terrain":"forest"},"19_3":{"terrain":"forest"},"19_5":{"terrain":"forest"},"19_6":{"terrain":"forest"},"19_7":{"terrain":"forest"},"19_8":{"terrain":"rock"},"1_13":{"terrain":"rock"},"1_16":{"terrain":"forest"},"1_19":{"terrain":"forest"},"1_20":{"terrain":"forest"},"1_27":{"terrain":"forest"},"20_3":{"terrain":"forest"},"20_4":{"terrain":"forest"},"20_7":{"terrain":"forest"},"20_9":{"terrain":"forest"},"21_0":{"terrain":"forest"},"21_3":{"terrain":"forest"},"21_4":{"terrain":"forest"},"21_6":{"terrain":"forest"},"21_8":{"terrain":"forest"},"22_0":{"terrain":"forest"},"22_4":{"terrain":"forest"},"22_9":{"terrain":"forest"},"23_1":{"terrain":"forest"},"23_5":{"terrain":"forest"},"23_6":{"terrain":"forest"},"23_8":{"terrain":"forest"},"24_2":{"terrain":"forest"},"24_5":{"terrain":"forest"},"24_8":{"terrain":"forest"},"25_1":{"terrain":"rock"},"25_2":{"terrain":"forest"},"25_5":{"terrain":"forest"},"25_9":{"terrain":"forest"},"26_6":{"terrain":"forest"},"26_9":{"terrain":"forest"},"27_1":{"terrain":"forest"},"27_7":{"terrain":"forest"},"27_8":{"terrain":"forest"},"28_1":{"terrain":"forest"},"28_3":{"terrain":"forest"},"28_4":{"terrain":"forest"},"28_6":{"terrain":"forest"},"28_9":{"terrain":"rock"},"2_10":{"terrain":"water"},"2_15":{"terrain":"forest"},"2_17":{"terrain":"forest"},"2_28":{"terrain":"forest"},"3_14":{"terrain":"forest"},"3_15":{"terrain":"forest"},"3_16":{"terrain":"forest"},"3_17":{"terrain":"rock"},"3_18":{"terrain":"forest"},"3_19":{"terrain":"forest"},"3_25":{"terrain":"forest"},"4_13":{"terrain":"forest"},"4_16":{"terrain":"rock"},"4_17":{"terrain":"forest"},"4_19":{"terrain":"forest"},"4_24":{"terrain":"forest"},"5_13":{"terrain":"forest"},"5_14":{"terrain":"forest"},"5_19":{"terrain":"forest"},"5_28":{"terrain":"forest"},"5_29":{"terrain":"rock"},"6_12":{"terrain":"forest"},"6_18":{"terrain":"forest"},"6_20":{"terrain":"forest"},"6_21":{"terrain":"forest"},"6_22":{"terrain":"forest"},"6_27":{"terrain":"forest"},"7_11":{"terrain":"forest"},"7_12":{"terrain":"forest"},"7_15":{"terrain":"forest"},"7_17":{"terrain":"forest"},"7_18":{"terrain":"forest"},"7_24":{"terrain":"forest"},"7_29":{"terrain":"forest"},"8_19":{"terrain":"forest"},"8_20":{"terrain":"forest"},"8_21":{"terrain":"forest"},"8_27":{"terrain":"forest"},"9_13":{"terrain":"forest"},"9_14":{"terrain":"forest"},"9_19":{"terrain":"forest"},"9_25":{"terrain":"forest"},"9_27":{"terrain":"rock"},"10_11":{"terrain":"forest"},"10_12":{"terrain":"forest"},"11_11":{"terrain":"forest"},"11_12":{"terrain":"forest"},"11_14":{"terrai[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mn":"forest"},"11_17":{"terrain":"forest"},"11_18":{"terrain":"forest"},"11_22":{"terrain":"forest"},"11_23":{"terrain":"forest"},"11_26":{"terrain":"rock"},"12_10":{"terrain":"forest"},"12_11":{"terrain":"forest"},"12_14":{"terrain":"forest"},"12_17":{"terrain":"forest"},"12_18":{"terrain":"forest"},"12_19":{"terrain":"forest"},"13_12":{"terrain":"forest"},"13_14":{"terrain":"forest"},"13_15":{"terrain":"forest"},"13_16":{"terrain":"forest"},"13_18":{"terrain":"forest"},"13_19":{"terrain":"forest"},"13_23":{"terrain":"forest"},"14_12":{"terrain":"forest"},"14_16":{"terrain":"forest"},"14_18":{"terrain":"forest"},"14_20":{"terrain":"forest"},"14_26":{"terrain":"rock"},"14_27":{"terrain":"rock"},"15_10":{"terrain":"forest"},"15_14":{"terrain":"forest"},"15_16":{"terrain":"forest"},"15_17":{"terrain":"forest"},"15_18":{"terrain":"forest"},"15_21":{"terrain":"forest"},"15_22":{"terrain":"forest"},"15_24":{"terrain":"forest"},"15_26":{"terrain":"forest"},"15_29":{"terrain":"forest"},"16_10":{"terrain":"forest"},"16_11":{"terrain":"forest"},"16_12":{"terrain":"forest"},"16_13":{"terrain":"forest"},"16_16":{"terrain":"forest"},"16_17":{"terrain":"forest"},"16_20":{"terrain":"forest"},"16_21":{"terrain":"forest"},"16_23":{"terrain":"forest"},"17_10":{"terrain":"forest"},"17_17":{"terrain":"rock"},"17_24":{"terrain":"forest"},"17_25":{"terrain":"forest"},"18_10":{"terrain":"forest"},"18_11":{"terrain":"forest"},"18_13":{"terrain":"forest"},"18_19":{"terrain":"forest"},"18_26":{"terrain":"forest"},"18_28":{"terrain":"forest"},"19_10":{"terrain":"forest"},"19_16":{"terrain":"forest"},"19_17":{"terrain":"rock"},"19_19":{"terrain":"forest"},"19_20":{"terrain":"forest"},"19_21":{"terrain":"forest"},"20_10":{"terrain":"forest"},"20_11":{"terrain":"forest"},"20_12":{"terrain":"forest"},"20_13":{"terrain":"forest"},"20_14":{"terrain":"rock"},"20_15":{"terrain":"forest"},"20_16":{"terrain":"rock"},"20_19":{"terrain":"forest"},"20_23":{"terrain":"forest"},"20_24":{"terrain":"rock"},"21_16":{"terrain":"forest"},"21_19":{"terrain":"forest"},"21_24":{"terrain":"forest"},"21_25":{"terrain":"forest"},"21_28":{"terrain":"forest"},"22_10":{"terrain":"forest"},"22_11":{"terrain":"forest"},"22_12":{"terrain":"forest"},"22_13":{"terrain":"forest"},"22_16":{"terrain":"forest"},"22_19":{"terrain":"forest"},"22_20":{"terrain":"forest"},"22_23":{"terrain":"rock"},"22_29":{"terrain":"forest"},"23_16":{"terrain":"forest"},"23_22":{"terrain":"forest"},"23_23":{"terrain":"forest"},"24_13":{"terrain":"rock"},"24_14":{"terrain":"forest"},"24_20":{"terrain":"forest"},"24_22":{"terrain":"forest"},"24_25":{"terrain":"forest"},"24_27":{"terrain":"forest"},"25_18":{"terrain":"forest"},"25_20":{"terrain":"forest"},"25_28":{"terrain":"forest"},"26_10":{"terrain":"forest"},"26_14":{"terrain":"forest"},"26_15":{"terrain":"forest"},"26_17":{"terrain":"forest"},"26_24":{"terrain":"forest"},"26_26":{"terrain":"forest"},"27_13":{"terrain":"forest"},"27_18":{"terrain":"forest"},"27_19":{"terrain":"forest"},"27_20":{"terrain":"forest"},"27_29":{"terrain":"forest"},"28_15":{"terrain":"forest"},"28_20":{"terrain":"forest"},"28_27":{"terrain":"forest"},"28_28":{"terrain":"forest"},"29_13":{"terrain":"forest"},"29_15":{"terrain":"forest"},"29_16":{"terrain":"forest"},"29_23":{"terrain":"forest"},"29_28":{"terrain":"forest"},"29_29":{"terrain":"forest"}},"startingFieldIds":["0_1","0_2","0_3","0_4","1_0","1_1","1_2","1_3","2_1","2_2","2_3","2_4","3_1","3_2","3_3","3_4","4_1","4_2","4_3","4_4"]},"unitTypes":{"pikeman":{"name":"pikeman","race":"human","tags":null,"health":1,"armor":0,"speed":4,"range":0,"actions":1,"attack":"0 0 0 1 2 2","cost":100,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"pikeman","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":{"steps":null,"attack":null},"shoot":null,"heal":null}},"elvenLizard":{"name":"elvenLizard","race":"elf","tags":null,"health":2,"armor":0,"speed":5,"range":0,"actions":1,"attack":"0 0 0 1 2 2","cost":50,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"lizard","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":{"steps":null,"attack":null},"shoot":null,"heal":null}},"banditMaceman":{"name":"banditMaceman","race":"human","tags":null,"health":8,"armor":1,"speed":4,"range":0,"actions":1,"attack":"0 0 0 3 4 3","cost":600,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"banditMaceman","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":{"steps":null,"attack":null},"shoot":null,"heal":null}},"banditPikeman":{"name":"banditPikeman","race":"human","tags":null,"health":1,"armor":0,"speed":3,"range":0,"actions":1,"attack":"0 0 0 1 2 0","cost":80,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"banditPikeman","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":{"steps":null,"attack":null},"shoot":null,"heal":null}},"pikemanCaptain":{"name":"pikemanCaptain","race":"human","tags":null,"health":15,"armor":0,"speed":4,"range":0,"actions":1,"attack":"0 0 1 2 3 2","cost":800,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"pikemanCaptain","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":{"steps":null,"attack":null},"shoot":null,"heal":null}},"hero3":{"name":"hero3","race":"human","tags":null,"health":10,"armor":0,"speed":4,"range":5,"actions":1,"attack":"0 0 1 2 2 2","cost":600,"langName":null,"unitTypeDataVersion":0,"unitTypeVersion":0,"imageName":"whiteMage","iconName":null,"bigImageName":null,"abilities":{"move":{"steps":null},"attack":null,"shoot":{"steps":null,"attack":null},"heal":{"steps":null,"effect":"1 2 2 3 3 3","range":null}}}},"players":{"1":{"id":"1","taleId":"0","team":"players","color":"#ff0000","humanPlayer":{"name":"mlcoch.zdenek@gmail.com","isGameMaster":false,"portrait":null},"aiGroup":null},"bandits":{"id":"bandits","taleId":"bandits","team":"bandits","color":"#555555","humanPlayer":null,"aiGroup":{"langName":{"en":"Bandits"},"aiEngine":null}}},"playerOnMoveIds":["bandits"],"units":[{"unitId":"headPikeman","steps":4,"health":15,"buffs":[],"actions":1,"changeToTypeName":"pikemanCaptain","moveToFieldId":"5_0","transferToPlayerId":"1"},{"unitId":"0","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"6_0","transferToPlayerId":"1"},{"unitId":"1","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"7_0","transferToPlayerId":"1"},{"unitId":"2","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"8_0","transferToPlayerId":"1"},{"unitId":"3","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"5_1","transferToPlayerId":"1"},{"unitId":"4","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"6_1","transferToPlayerId":"1"},{"unitId":"5","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"7_1","transferToPlayerId":"1"},{"unitId":"6","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"8_1","transferToPlayerId":"1"},{"unitId":"7","steps":5,"health":2,"buffs":[],"actions":1,"changeToTypeName":"elvenLizard","moveToFieldId":"4_4","transferToPlayerId":"bandits"},{"unitId":"8","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"5_5","transferToPlayerId":"bandits"},{"unitId":"9","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"5_4","transferToPlayerId":"bandits"},{"unitId":"10","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"14_7","transferToPlayerId":"bandits"},{"unitId":"11","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"14_6","transferToPlayerId":"bandits"},{"unitId":"12","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"14_8","transferToPlayerId":"bandits"},{"unitId":"13","steps":3,"health":1,"buffs":[],"actions":[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22m1,"changeToTypeName":"banditPikeman","moveToFieldId":"15_7","transferToPlayerId":"bandits"},{"unitId":"14","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"15_6","transferToPlayerId":"bandits"},{"unitId":"15","steps":4,"health":8,"buffs":[],"actions":1,"changeToTypeName":"banditMaceman","moveToFieldId":"18_15","transferToPlayerId":"bandits"},{"unitId":"16","steps":4,"health":8,"buffs":[],"actions":1,"changeToTypeName":"banditMaceman","moveToFieldId":"19_14","transferToPlayerId":"bandits"},{"unitId":"17","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"17_15","transferToPlayerId":"bandits"},{"unitId":"18","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"2_13","transferToPlayerId":"bandits"},{"unitId":"19","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"3_13","transferToPlayerId":"bandits"},{"unitId":"20","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"2_14","transferToPlayerId":"bandits"},{"unitId":"21","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"20_1","transferToPlayerId":"bandits"},{"unitId":"22","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"20_2","transferToPlayerId":"bandits"},{"unitId":"23","steps":3,"health":1,"buffs":[],"actions":1,"changeToTypeName":"banditPikeman","moveToFieldId":"21_1","transferToPlayerId":"bandits"},{"unitId":"24","steps":4,"health":10,"buffs":[],"actions":1,"changeToTypeName":"hero3","moveToFieldId":"0_1","transferToPlayerId":"1"},{"unitId":"25","steps":4,"health":1,"buffs":[],"actions":1,"changeToTypeName":"pikeman","moveToFieldId":"0_2","transferToPlayerId":"1"}]},"requestEngine":"standard","idOfAiPlayerOnMove":"bandits"}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, steps: 4, health: 15, buffs: [], actions: 1, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 0 {unitId: 0, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 1 {unitId: 1, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 2 {unitId: 2, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 3 {unitId: 3, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 4 {unitId: 4, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 5 {unitId: 5, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 6 {unitId: 6, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 7 {unitId: 7, steps: 5, health: 2, buffs: [], actions: 1, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 8 {unitId: 8, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 9 {unitId: 9, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 10 {unitId: 10, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 11 {unitId: 11, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 12 {unitId: 12, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 13 {unitId: 13, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 14 {unitId: 14, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 15 {unitId: 15, steps: 4, health: 8, buffs: [], actions: 1, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 16 {unitId: 16, steps: 4, health: 8, buffs: [], actions: 1, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 17 {unitId: 17, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 18 {unitId: 18, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 19 {unitId: 19, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 20 {unitId: 20, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 21 {unitId: 21, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 22 {unitId: 22, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 23 {unitId: 23, steps: 3, health: 1, buffs: [], actions: 1, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 24 {unitId: 24, steps: 4, health: 10, buffs: [], actions: 1, changeToTypeName: hero3, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 25 {unitId: 25, steps: 4, health: 1, buffs: [], actions: 1, changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 7
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai out: {"abilityName":"attack","unitId":"7","track":["4_4","4_3","4_2","5_1"],"actionId":null}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22m{"message":"unitTrackAction","content":"{\"abilityName\":\"attack\",\"unitId\":\"7\",\"track\":[\"4_4\",\"4_3\",\"4_2\",\"5_1\"],\"actionId\":null}"}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, stepsSpent: 2, steps: 0, buffs: [], actions: 0, moveToFieldId: 4_2, diceNumbers: [0], explain: unitAttacking}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:7 deltaHealth:null delta steps: 5
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai in: {"responseAction":null,"requestUpdateData":{"actions":[{"unitId":"7","stepsSpent":2,"steps":0,"buffs":[],"actions":0,"moveToFieldId":"4_2","diceNumbers":[0],"explain":"unitAttacking"}],"playerOnMoveIds":["bandits"],"newUnitTypesToTale":[],"newPlayersToTale":[]}}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 7 {unitId: 7, stepsSpent: 2, steps: 0, buffs: [], actions: 0, moveToFieldId: 4_2, diceNumbers: [0], explain: unitAttacking}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 8
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai out: {"abilityName":"move","unitId":"8","track":["5_5","5_4","6_4","6_3"],"actionId":null}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22m{"message":"unitTrackAction","content":"{\"abilityName\":\"move\",\"unitId\":\"8\",\"track\":[\"5_5\",\"5_4\",\"6_4\",\"6_3\"],\"actionId\":null}"}
+unit action 8 {unitId: 8, stepsSpent: 3, steps: 0, buffs: [], moveToFieldId: 6_3}
+report unit:8 deltaHealth:null delta steps: 3
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai in: {"responseAction":null,"requestUpdateData":{"actions":[{"unitId":"8","stepsSpent":3,"steps":0,"buffs":[],"moveToFieldId":"6_3"}],"playerOnMoveIds":["bandits"],"newUnitTypesToTale":[],"newPlayersToTale":[]}}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 8 {unitId: 8, stepsSpent: 3, steps: 0, buffs: [], moveToFieldId: 6_3}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 9
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai out: {"abilityName":"move","unitId":"9","track":["5_4","6_4","6_3","6_2"],"actionId":null}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22m{"message":"unitTrackAction","content":"{\"abilityName\":\"move\",\"unitId\":\"9\",\"track\":[\"5_4\",\"6_4\",\"6_3\",\"6_2\"],\"actionId\":null}"}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, stepsSpent: 3, steps: 0, buffs: [], moveToFieldId: 6_2}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:9 deltaHealth:null delta steps: 3
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai in: {"responseAction":null,"requestUpdateData":{"actions":[{"unitId":"9","stepsSpent":3,"steps":0,"buffs":[],"moveToFieldId":"6_2"}],"playerOnMoveIds":["bandits"],"newUnitTypesToTale":[],"newPlayersToTale":[]}}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22munit action 9 {unitId: 9, stepsSpent: 3, steps: 0, buffs: [], moveToFieldId: 6_2}
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 10
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 11
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 12
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 13
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 14
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 15
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 16
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 17
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 18
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 19
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 20
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 21
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 22
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mstarting next move with unit 23
+[39m[1m[36m
+libs/snapshots/ai.dart.snapshot: [22mai out: {"actionName":"endOfTurn"}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22m{"message":"controlsAction","content":"{\"actionName\":\"endOfTurn\"}"}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, stepsSpent: 3, steps: 0, buffs: [], actions: 0, diceNumbers: [1], explain: unitAttacking}
+report unit:24 deltaHealth:null delta steps: 4
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, stepsSpent: 3, steps: 0, buffs: [], actions: 0, moveToFieldId: 3_1, diceNumbers: [5, 3], explain: unitAttacking}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:25 deltaHealth:null delta steps: 4
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, health: -4, buffs: [], diceNumbers: [5, 3], explain: unitGotDamage, explainFirstValue: 6}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:7 deltaHealth:-6 delta steps: null
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 3
+player ejected mlcoch.zdenek@gmail.com
+opened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 3ms 200   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 21ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 4
+opened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:26:25.361769  0:00:00.022414 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero4, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 4
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mplayer ejected mlcoch.zdenek@gmail.com
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 18ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 5
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 19ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:26:31.178280  0:00:00.004149 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero5, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 5
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mplayer ejected mlcoch.zdenek@gmail.com
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 3ms 200   
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 20ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 6
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:26:35.566602  0:00:00.004506 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero6, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, stepsSpent: 4, steps: 0, buffs: [], actions: 0, diceNumbers: [5, 2], explain: unitAttacking}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:24 deltaHealth:null delta steps: 5
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 7 {unitId: 7, health: -3, buffs: [], diceNumbers: [5, 2], explain: unitGotDamage, explainFirstValue: 5}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:7 deltaHealth:-5 delta steps: null
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mdestroyed lobby room 6
+player ejected mlcoch.zdenek@gmail.com
+opened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 3ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 7
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 19ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+unit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 0}
+unit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+unit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 0}
+unit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+unit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 0}
+unit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+unit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 0}
+unit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+unit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+unit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+unit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+unit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+unit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+unit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+unit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+unit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+unit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+unit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+unit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+unit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+unit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+unit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+unit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+unit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:38:02.000487  0:00:00.021520 POST    [200] /
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:38:02.036974  0:00:00.003168 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero7, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 26 {unitId: 26, buffs: [], changeToTypeName: hero8, moveToFieldId: 0_3, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 27 {unitId: 27, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_4, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, stepsSpent: 1, steps: 3, buffs: [], moveToFieldId: 1_1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mreport unit:24 deltaHealth:null delta steps: 1
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mplayer ejected 2aefe5ff-e743-4629-b613-f9b1db4be356@temp.com
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:38:35.219162  0:00:00.004654 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 28 {unitId: 28, buffs: [], changeToTypeName: hero9, moveToFieldId: 1_0, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 29 {unitId: 29, buffs: [], changeToTypeName: pikeman, moveToFieldId: 1_1, transferToPlayerId: 0}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mplayer ejected mlcoch.zdenek@gmail.com
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: GET /inner/lobbyList 13ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mcreating lobby room 8
+opened lobby rooms changed aa
+[39m[1m[36m
+libs/snapshots/editor.dart.snapshot: [22m[INFO] aqueduct: POST /inner/taleByName 18ms 200   
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action headPikeman {unitId: headPikeman, changeToTypeName: pikemanCaptain, moveToFieldId: 5_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 0 {unitId: 0, changeToTypeName: pikeman, moveToFieldId: 6_0, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 1 {unitId: 1, changeToTypeName: pikeman, moveToFieldId: 7_0, transferToPlayerId: 1}
+unit action 2 {unitId: 2, changeToTypeName: pikeman, moveToFieldId: 8_0, transferToPlayerId: 1}
+unit action 3 {unitId: 3, changeToTypeName: pikeman, moveToFieldId: 5_1, transferToPlayerId: 1}
+unit action 4 {unitId: 4, changeToTypeName: pikeman, moveToFieldId: 6_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 5 {unitId: 5, changeToTypeName: pikeman, moveToFieldId: 7_1, transferToPlayerId: 1}
+unit action 6 {unitId: 6, changeToTypeName: pikeman, moveToFieldId: 8_1, transferToPlayerId: 1}
+unit action 7 {unitId: 7, changeToTypeName: elvenLizard, moveToFieldId: 4_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 8 {unitId: 8, changeToTypeName: banditPikeman, moveToFieldId: 5_5, transferToPlayerId: bandits}
+unit action 9 {unitId: 9, changeToTypeName: banditPikeman, moveToFieldId: 5_4, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 10 {unitId: 10, changeToTypeName: banditPikeman, moveToFieldId: 14_7, transferToPlayerId: bandits}
+unit action 11 {unitId: 11, changeToTypeName: banditPikeman, moveToFieldId: 14_6, transferToPlayerId: bandits}
+unit action 12 {unitId: 12, changeToTypeName: banditPikeman, moveToFieldId: 14_8, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 13 {unitId: 13, changeToTypeName: banditPikeman, moveToFieldId: 15_7, transferToPlayerId: bandits}
+unit action 14 {unitId: 14, changeToTypeName: banditPikeman, moveToFieldId: 15_6, transferToPlayerId: bandits}
+unit action 15 {unitId: 15, changeToTypeName: banditMaceman, moveToFieldId: 18_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 16 {unitId: 16, changeToTypeName: banditMaceman, moveToFieldId: 19_14, transferToPlayerId: bandits}
+unit action 17 {unitId: 17, changeToTypeName: banditPikeman, moveToFieldId: 17_15, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 18 {unitId: 18, changeToTypeName: banditPikeman, moveToFieldId: 2_13, transferToPlayerId: bandits}
+unit action 19 {unitId: 19, changeToTypeName: banditPikeman, moveToFieldId: 3_13, transferToPlayerId: bandits}
+unit action 20 {unitId: 20, changeToTypeName: banditPikeman, moveToFieldId: 2_14, transferToPlayerId: bandits}
+unit action 21 {unitId: 21, changeToTypeName: banditPikeman, moveToFieldId: 20_1, transferToPlayerId: bandits}
+unit action 22 {unitId: 22, changeToTypeName: banditPikeman, moveToFieldId: 20_2, transferToPlayerId: bandits}
+unit action 23 {unitId: 23, changeToTypeName: banditPikeman, moveToFieldId: 21_1, transferToPlayerId: bandits}
+[39m[1m[36m
+libs/snapshots/hero.dart.snapshot: [22m2019-06-07T17:52:51.291303  0:00:00.003299 POST    [200] /
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 24 {unitId: 24, buffs: [], changeToTypeName: hero10, moveToFieldId: 0_1, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22munit action 25 {unitId: 25, buffs: [], changeToTypeName: pikeman, moveToFieldId: 0_2, transferToPlayerId: 1}
+[39m[1m[36m
+libs/snapshots/game.dart.snapshot: [22mopened lobby rooms changed 
+[39m

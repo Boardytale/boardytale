@@ -6,6 +6,9 @@ class ServerPlayer extends core.Player {
   core.User user;
   ServerTale tale;
   String color = "#ff0000";
+  LobbyRoom room;
+
+  String nextGameHeroId;
 
   String get email => user.email;
 

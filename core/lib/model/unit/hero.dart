@@ -2,6 +2,7 @@ part of model;
 
 @JsonSerializable()
 class GameHeroCreateEnvelope {
+  String id;
   int level;
   String name;
   UnitTypeCompiled type;

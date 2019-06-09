@@ -25,6 +25,7 @@ class UserPanelComponent {
   List<core.GameHeroCreateEnvelope> myHeroes;
   List<core.GameHeroCreateEnvelope> heroesToCreate;
   String message = null;
+  bool showSelectHeroMessage = false;
 
   UserPanelComponent(
     this.appService,
@@ -44,6 +45,7 @@ class UserPanelComponent {
   }
 
   void refreshMyHeroes() async {
+    await appService.currentUser.first;
     http.Response response = await _http.post("/userApi/toUserMessage",
         headers: {"Content-Type": "application/json"},
         body: json.encode(core.ToUserServerMessage.requestMyHeroes(appService.currentUser.value.innerToken)));
@@ -51,6 +53,12 @@ class UserPanelComponent {
     if (response.statusCode == 200) {
       core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
       myHeroes = message.getListOfHeroesOfPlayer.responseHeroes;
+      if (myHeroes.isNotEmpty) {
+        appService.currentUser.add(appService.currentUser.value..hasHero = true);
+        showSelectHeroMessage = false;
+      }else{
+        showSelectHeroMessage = true;
+      }
     } else {
       message = responseBody["message"];
     }
@@ -81,19 +89,18 @@ class UserPanelComponent {
   }
 
   void deleteHero(core.GameHeroCreateEnvelope envelope) async {
-
-//    http.Response response = await _http.post("/userApi/toUserMessage",
-//        headers: {"Content-Type": "application/json"},
-//        body: json.encode(core.ToUserServerMessage.createHero(createMessage)));
-//    Map<String, dynamic> responseBody = json.decode(response.body);
-//    if (response.statusCode == 200) {
-//      core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
-//      core.CreateHero createdHero = message.getCreateHeroMessage;
-//      print(createdHero.name);
-//    } else {
-//      message = responseBody["message"];
-//      changeDetector.markForCheck();
-//    }
+    //    http.Response response = await _http.post("/userApi/toUserMessage",
+    //        headers: {"Content-Type": "application/json"},
+    //        body: json.encode(core.ToUserServerMessage.createHero(createMessage)));
+    //    Map<String, dynamic> responseBody = json.decode(response.body);
+    //    if (response.statusCode == 200) {
+    //      core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
+    //      core.CreateHero createdHero = message.getCreateHeroMessage;
+    //      print(createdHero.name);
+    //    } else {
+    //      message = responseBody["message"];
+    //      changeDetector.markForCheck();
+    //    }
   }
 
   void getHeroesToCreate() async {
@@ -117,5 +124,4 @@ class UserPanelComponent {
     saved = false;
     changeDetector.markForCheck();
   }
-
 }

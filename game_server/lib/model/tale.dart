@@ -207,9 +207,9 @@ class ServerTale {
   }
 }
 
-class ResponseWithPlayer {
-  http.Response response;
+class MessageWithPlayer {
+  core.HeroesAndUnitsOfPlayer response;
   ServerPlayer player;
 
-  ResponseWithPlayer(this.response, this.player);
+  MessageWithPlayer(this.response, this.player);
 }

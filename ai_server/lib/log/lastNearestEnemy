@@ -1,0 +1,2414 @@
+
+ getNearestEnemyByTerrain for unit 23 
+
+ generation 1 
+
+ currentGenPath 21_1 
+next field 21_0skipped waiting forest 
+next field 22_1added to possible paths 
+next field 22_2added to possible paths 
+next field 21_2added to possible paths 
+next field 20_2added to possible paths 
+next field 20_1added to possible paths 
+
+ generation 2 
+
+ currentGenPath 21_1 22_1 
+next field 22_0skipped waiting forest 
+next field 23_0added to possible paths 
+next field 23_1skipped waiting forest 
+next field 22_2skipped reached 
+next field 21_1added to possible paths 
+next field 21_0skipped waiting forest 
+
+ currentGenPath 21_1 22_2 
+next field 22_1skipped reached 
+next field 23_1skipped waiting forest 
+next field 23_2added to possible paths 
+next field 22_3added to possible paths 
+next field 21_2skipped reached 
+next field 21_1skipped reached 
+
+ currentGenPath 21_1 21_2 
+next field 21_1skipped reached 
+next field 22_2skipped reached 
+next field 22_3skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_2skipped reached 
+
+ currentGenPath 21_1 20_2 
+next field 20_1skipped reached 
+next field 21_1skipped reached 
+next field 21_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+next field 19_1added to possible paths 
+
+ currentGenPath 21_1 20_1 
+next field 20_0added to possible paths 
+next field 21_0skipped waiting forest 
+next field 21_1skipped reached 
+next field 20_2skipped reached 
+next field 19_1skipped reached 
+next field 19_0added to possible paths 
+
+ generation 3 
+
+ currentGenPath 21_1 22_1 23_0 
+next field nullnext field 24_0 - unit can end here by steps - 
+added to possible paths 
+next field 24_1 - unit can end here by steps - 
+added to possible paths 
+next field 23_1 - unit can end here by steps - 
+skipped waiting forest 
+next field 22_1skipped reached 
+next field 22_0 - unit can end here by steps - 
+skipped waiting forest 
+
+ currentGenPath 21_1 22_1 21_1 
+next field 21_0 - unit can end here by steps - 
+skipped waiting forest 
+next field 22_1skipped reached 
+next field 22_2skipped reached 
+next field 21_2skipped reached 
+next field 20_2skipped reached 
+next field 20_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 
+next field 23_1 - unit can end here by steps - 
+skipped waiting forest 
+next field 24_2 - unit can end here by steps - 
+skipped waiting forest 
+next field 24_3 - unit can end here by steps - 
+added to possible paths 
+next field 23_3 - unit can end here by steps - 
+added to possible paths 
+next field 22_3skipped reached 
+next field 22_2skipped reached 
+
+ currentGenPath 21_1 22_2 22_3 
+next field 22_2skipped reached 
+next field 23_2skipped reached 
+next field 23_3skipped reached 
+next field 22_4 - unit can end here by steps - 
+skipped waiting forest 
+next field 21_3 - unit can end here by steps - 
+skipped waiting forest 
+next field 21_2skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 
+next field 19_0skipped reached 
+next field 20_1skipped reached 
+next field 20_2skipped reached 
+next field 19_2 - unit can end here by steps - 
+skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_1 - unit can end here by steps - 
+added to possible paths 
+
+ currentGenPath 21_1 20_1 20_0 
+next field nullnext field nullnext field 21_0 - unit can end here by steps - 
+skipped waiting forest 
+next field 20_1skipped reached 
+next field 19_0skipped reached 
+next field null
+ currentGenPath 21_1 20_1 19_0 
+next field nullnext field 20_0skipped reached 
+next field 20_1skipped reached 
+next field 19_1skipped reached 
+next field 18_1skipped reached 
+next field 18_0 - unit can end here by steps - 
+added to possible paths 
+
+ currentGenPath 21_1 21_0 
+next field nullnext field 22_0 - unit can end here by steps - 
+skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ generation 4 
+
+ currentGenPath 21_1 22_1 23_0 24_0 
+next field nullnext field nullnext field 25_0added to possible paths 
+next field 24_1skipped reached 
+next field 23_0skipped reached 
+next field null
+ currentGenPath 21_1 22_1 23_0 24_1 
+next field 24_0skipped reached 
+next field 25_0skipped reached 
+next field 25_1skipped cannot go 
+next field 24_2skipped waiting forest 
+next field 23_1skipped waiting forest 
+next field 23_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 
+next field 24_2skipped waiting forest 
+next field 25_2skipped waiting forest 
+next field 25_3added to possible paths 
+next field 24_4added to possible paths 
+next field 23_3skipped reached 
+next field 23_2skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 
+next field 23_2skipped reached 
+next field 24_3skipped reached 
+next field 24_4skipped reached 
+next field 23_4added to possible paths 
+next field 22_4skipped waiting forest 
+next field 22_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 
+next field 18_0skipped reached 
+next field 19_0skipped reached 
+next field 19_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_1skipped waiting forest 
+next field 17_0added to possible paths 
+
+ currentGenPath 21_1 20_1 19_0 18_0 
+next field nullnext field nullnext field 19_0skipped reached 
+next field 18_1skipped reached 
+next field 17_0skipped reached 
+next field null
+ currentGenPath 21_1 22_1 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_1 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_1 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3added to possible paths 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_1 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ generation 5 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 
+next field nullnext field 26_0added to possible paths 
+next field 26_1added to possible paths 
+next field 25_1skipped cannot go 
+next field 24_1skipped reached 
+next field 24_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 
+next field 25_2skipped waiting forest 
+next field 26_3added to possible paths 
+next field 26_4added to possible paths 
+next field 25_4added to possible paths 
+next field 24_4skipped reached 
+next field 24_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 
+next field 24_3skipped reached 
+next field 25_3skipped reached 
+next field 25_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 23_4skipped reached 
+next field 23_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 
+next field 23_3skipped reached 
+next field 24_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 23_5skipped waiting forest 
+next field 22_5added to possible paths 
+next field 22_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 
+next field nullnext field 18_0skipped reached 
+next field 18_1skipped reached 
+next field 17_1skipped waiting forest 
+next field 16_1added to possible paths 
+next field 16_0skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 
+next field 18_2skipped cannot go 
+next field 19_2skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_4skipped waiting forest 
+next field 17_3added to possible paths 
+next field 17_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_1 21_1 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_1 20_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ generation 6 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 
+next field nullnext field nullnext field 27_0added to possible paths 
+next field 26_1skipped reached 
+next field 25_0skipped reached 
+next field null
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_1 
+next field 26_0skipped reached 
+next field 27_0skipped reached 
+next field 27_1skipped waiting forest 
+next field 26_2added to possible paths 
+next field 25_1skipped cannot go 
+next field 25_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 
+next field 26_2skipped reached 
+next field 27_2added to possible paths 
+next field 27_3added to possible paths 
+next field 26_4skipped reached 
+next field 25_3skipped reached 
+next field 25_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 
+next field 26_3skipped reached 
+next field 27_3skipped reached 
+next field 27_4added to possible paths 
+next field 26_5added to possible paths 
+next field 25_4skipped reached 
+next field 25_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 25_4 
+next field 25_3skipped reached 
+next field 26_4skipped reached 
+next field 26_5skipped reached 
+next field 25_5skipped waiting forest 
+next field 24_5skipped waiting forest 
+next field 24_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 
+next field 22_4skipped waiting forest 
+next field 23_4skipped reached 
+next field 23_5skipped waiting forest 
+next field 22_6added to possible paths 
+next field 21_5added to possible paths 
+next field 21_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 
+next field 16_0skipped waiting forest 
+next field 17_0skipped reached 
+next field 17_1skipped waiting forest 
+next field 16_2added to possible paths 
+next field 15_1added to possible paths 
+next field 15_0added to possible paths 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 
+next field 17_2skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_4skipped waiting forest 
+next field 17_4skipped waiting forest 
+next field 16_4skipped waiting forest 
+next field 16_3skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_1 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_1 
+next field 17_0skipped reached 
+next field 18_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_2skipped waiting forest 
+next field 16_2skipped reached 
+next field 16_1skipped reached 
+
+ currentGenPath 21_1 22_1 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_1 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_1 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_2 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5added to possible paths 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4added to possible paths 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 21_2 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_1 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ generation 7 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 27_0 
+next field nullnext field 28_0added to possible paths 
+next field 28_1skipped waiting forest 
+next field 27_1skipped waiting forest 
+next field 26_1skipped reached 
+next field 26_0skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_1 26_2 
+next field 26_1skipped reached 
+next field 27_1skipped waiting forest 
+next field 27_2skipped reached 
+next field 26_3skipped reached 
+next field 25_2skipped waiting forest 
+next field 25_1skipped cannot go 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 
+next field 27_1skipped waiting forest 
+next field 28_2added to possible paths 
+next field 28_3skipped waiting forest 
+next field 27_3skipped reached 
+next field 26_3skipped reached 
+next field 26_2skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_3 
+next field 27_2skipped reached 
+next field 28_3skipped waiting forest 
+next field 28_4skipped waiting forest 
+next field 27_4skipped reached 
+next field 26_4skipped reached 
+next field 26_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 
+next field 27_3skipped reached 
+next field 28_4skipped waiting forest 
+next field 28_5added to possible paths 
+next field 27_5added to possible paths 
+next field 26_5skipped reached 
+next field 26_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 26_5 
+next field 26_4skipped reached 
+next field 27_4skipped reached 
+next field 27_5skipped reached 
+next field 26_6skipped waiting forest 
+next field 25_5skipped waiting forest 
+next field 25_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 
+next field 22_5skipped reached 
+next field 23_5skipped waiting forest 
+next field 23_6skipped waiting forest 
+next field 22_7added to possible paths 
+next field 21_6skipped waiting forest 
+next field 21_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 21_5 
+next field 21_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 22_6skipped reached 
+next field 21_6skipped waiting forest 
+next field 20_6added to possible paths 
+next field 20_5skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_2 
+next field 16_1skipped reached 
+next field 17_1skipped waiting forest 
+next field 17_2skipped waiting forest 
+next field 16_3skipped waiting forest 
+next field 15_2skipped waiting forest 
+next field 15_1skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_1 
+next field 15_0skipped reached 
+next field 16_1skipped reached 
+next field 16_2skipped reached 
+next field 15_2skipped waiting forest 
+next field 14_2skipped cannot go 
+next field 14_1added to possible paths 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_0 
+next field nullnext field 16_0skipped waiting forest 
+next field 16_1skipped reached 
+next field 15_1skipped reached 
+next field 14_1skipped reached 
+next field 14_0added to possible paths 
+
+ currentGenPath 21_1 21_2 21_3 21_4 20_5 
+next field 20_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 21_5skipped reached 
+next field 20_6skipped reached 
+next field 19_5skipped waiting forest 
+next field 19_4skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 
+next field 19_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_5skipped waiting forest 
+next field 18_5added to possible paths 
+next field 18_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 
+next field 24_4skipped reached 
+next field 25_4skipped reached 
+next field 25_5skipped waiting forest 
+next field 24_6added to possible paths 
+next field 23_5skipped waiting forest 
+next field 23_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 24_5 
+next field 24_4skipped reached 
+next field 25_4skipped reached 
+next field 25_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_5skipped waiting forest 
+next field 23_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 23_5 
+next field 23_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 22_6skipped reached 
+next field 22_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 17_1 
+next field 17_0skipped reached 
+next field 18_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_2skipped waiting forest 
+next field 16_2skipped reached 
+next field 16_1skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_0 
+next field nullnext field nullnext field 17_0skipped reached 
+next field 16_1skipped reached 
+next field 15_0skipped reached 
+next field null
+ currentGenPath 21_1 20_2 19_2 18_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_2 
+next field 17_1skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_3skipped reached 
+next field 17_3skipped reached 
+next field 16_3skipped waiting forest 
+next field 16_2skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_1 21_1 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_2 23_2 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_1 20_0 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 21_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ generation 8 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 27_0 28_0 
+next field nullnext field nullnext field 29_0added to possible paths 
+next field 28_1skipped waiting forest 
+next field 27_0skipped reached 
+next field null
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 28_2 
+next field 28_1skipped waiting forest 
+next field 29_1added to possible paths 
+next field 29_2added to possible paths 
+next field 28_3skipped waiting forest 
+next field 27_2skipped reached 
+next field 27_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 28_5 
+next field 28_4skipped waiting forest 
+next field 29_4added to possible paths 
+next field 29_5added to possible paths 
+next field 28_6skipped waiting forest 
+next field 27_5skipped reached 
+next field 27_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 27_5 
+next field 27_4skipped reached 
+next field 28_5skipped reached 
+next field 28_6skipped waiting forest 
+next field 27_6added to possible paths 
+next field 26_6skipped waiting forest 
+next field 26_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 22_7 
+next field 22_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 23_7added to possible paths 
+next field 22_8added to possible paths 
+next field 21_7added to possible paths 
+next field 21_6skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 21_5 20_6 
+next field 20_5skipped reached 
+next field 21_5skipped reached 
+next field 21_6skipped waiting forest 
+next field 20_7skipped waiting forest 
+next field 19_6skipped waiting forest 
+next field 19_5skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_1 14_1 
+next field 14_0skipped reached 
+next field 15_0skipped reached 
+next field 15_1skipped reached 
+next field 14_2skipped cannot go 
+next field 13_1added to possible paths 
+next field 13_0added to possible paths 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_0 14_0 
+next field nullnext field nullnext field 15_0skipped reached 
+next field 14_1skipped reached 
+next field 13_0skipped reached 
+next field null
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 18_5 
+next field 18_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 19_5skipped waiting forest 
+next field 18_6skipped cannot go 
+next field 17_5skipped waiting forest 
+next field 17_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 24_6 
+next field 24_5skipped waiting forest 
+next field 25_5skipped waiting forest 
+next field 25_6added to possible paths 
+next field 24_7added to possible paths 
+next field 23_6skipped waiting forest 
+next field 23_5skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_1 27_1 
+next field 27_0skipped reached 
+next field 28_1skipped waiting forest 
+next field 28_2skipped reached 
+next field 27_2skipped reached 
+next field 26_2skipped reached 
+next field 26_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 25_4 25_5 
+next field 25_4skipped reached 
+next field 26_5skipped reached 
+next field 26_6skipped waiting forest 
+next field 25_6skipped reached 
+next field 24_6skipped reached 
+next field 24_5skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 25_4 24_5 
+next field 24_4skipped reached 
+next field 25_4skipped reached 
+next field 25_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_5skipped waiting forest 
+next field 23_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 23_5 
+next field 23_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 22_6skipped reached 
+next field 22_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_0 
+next field nullnext field nullnext field 17_0skipped reached 
+next field 16_1skipped reached 
+next field 15_0skipped reached 
+next field null
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 17_1 
+next field 17_0skipped reached 
+next field 18_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_2skipped waiting forest 
+next field 16_2skipped reached 
+next field 16_1skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 17_2 
+next field 17_1skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_3skipped reached 
+next field 17_3skipped reached 
+next field 16_3skipped waiting forest 
+next field 16_2skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 17_4 
+next field 17_3skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_5skipped reached 
+next field 17_5skipped waiting forest 
+next field 16_5added to possible paths 
+next field 16_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 16_4 
+next field 16_3skipped waiting forest 
+next field 17_3skipped reached 
+next field 17_4skipped waiting forest 
+next field 16_5skipped reached 
+next field 15_4skipped waiting forest 
+next field 15_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 16_3 
+next field 16_2skipped reached 
+next field 17_2skipped waiting forest 
+next field 17_3skipped reached 
+next field 16_4skipped waiting forest 
+next field 15_3skipped waiting forest 
+next field 15_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_1 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_1 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 24_1 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_2 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 22_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 22_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_1 17_2 
+next field 17_1skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_3skipped reached 
+next field 17_3skipped reached 
+next field 16_3skipped waiting forest 
+next field 16_2skipped reached 
+
+ currentGenPath 21_1 22_1 22_0 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_1 23_1 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_1 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_1 21_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_1 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_1 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 22_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 22_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 21_2 20_3 21_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 21_3 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 21_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 21_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 20_4 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 20_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 20_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 20_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 21_2 20_3 19_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 21_2 20_3 19_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 19_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 19_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 21_2 20_3 19_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 21_2 20_3 19_2 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 20_3 21_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 21_3 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 21_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 21_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 20_4 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 20_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 20_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 20_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 20_3 19_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 20_3 19_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 19_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 19_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_2 20_3 19_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 20_3 19_2 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_2 19_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_2 19_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 19_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 19_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_1 21_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ generation 9 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 27_0 28_0 29_0 
+next field nullnext field nullnext field nullnext field 29_1skipped reached 
+next field 28_1skipped waiting forest 
+next field 28_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 28_2 29_1 
+next field 29_0skipped reached 
+next field nullnext field nullnext field 29_2skipped reached 
+next field 28_2skipped reached 
+next field 28_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 28_2 29_2 
+next field 29_1skipped reached 
+next field nullnext field nullnext field 29_3added to possible paths 
+next field 28_3skipped waiting forest 
+next field 28_2skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 28_5 29_4 
+next field 29_3skipped reached 
+next field nullnext field nullnext field 29_5skipped reached 
+next field 28_5skipped reached 
+next field 28_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 28_5 29_5 
+next field 29_4skipped reached 
+next field nullnext field nullnext field 29_6added to possible paths 
+next field 28_6skipped waiting forest 
+next field 28_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 27_5 27_6 
+next field 27_5skipped reached 
+next field 28_6skipped waiting forest 
+next field 28_7added to possible paths 
+next field 27_7skipped waiting forest 
+next field 26_7added to possible paths 
+next field 26_6skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 22_7 23_7 
+next field 23_6skipped waiting forest 
+next field 24_7skipped reached 
+next field 24_8skipped waiting forest 
+next field 23_8skipped waiting forest 
+next field 22_8skipped reached 
+next field 22_7skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 22_7 22_8 
+next field 22_7skipped reached 
+next field 23_7skipped reached 
+next field 23_8skipped waiting forest 
+next field 22_9skipped waiting forest 
+next field 21_8skipped waiting forest 
+next field 21_7skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 22_7 21_7 
+next field 21_6skipped waiting forest 
+next field 22_7skipped reached 
+next field 22_8skipped reached 
+next field 21_8skipped waiting forest 
+next field 20_8added to possible paths 
+next field 20_7skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_1 14_1 13_1 
+next field 13_0skipped reached 
+next field 14_1skipped reached 
+next field 14_2skipped cannot go 
+next field 13_2added to possible paths 
+next field 12_2added to possible paths 
+next field 12_1added to possible paths 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_1 14_1 13_0 
+next field nullnext field 14_0skipped reached 
+next field 14_1skipped reached 
+next field 13_1skipped reached 
+next field 12_1skipped reached 
+next field 12_0added to possible paths 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 24_6 25_6 
+next field 25_5skipped waiting forest 
+next field 26_6skipped waiting forest 
+next field 26_7skipped reached 
+next field 25_7added to possible paths 
+next field 24_7skipped reached 
+next field 24_6skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 24_6 24_7 
+next field 24_6skipped reached 
+next field 25_6skipped reached 
+next field 25_7skipped reached 
+next field 24_8skipped waiting forest 
+next field 23_7skipped reached 
+next field 23_6skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_3 17_4 16_5 
+next field 16_4skipped waiting forest 
+next field 17_4skipped waiting forest 
+next field 17_5skipped waiting forest 
+next field 16_6added to possible paths 
+next field 15_5added to possible paths 
+next field 15_4skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 27_0 28_1 
+next field 28_0skipped reached 
+next field 29_0skipped reached 
+next field 29_1skipped reached 
+next field 28_2skipped reached 
+next field 27_1skipped waiting forest 
+next field 27_0skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_0 27_0 27_1 
+next field 27_0skipped reached 
+next field 28_1skipped waiting forest 
+next field 28_2skipped reached 
+next field 27_2skipped reached 
+next field 26_2skipped reached 
+next field 26_1skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_1 26_2 27_1 
+next field 27_0skipped reached 
+next field 28_1skipped waiting forest 
+next field 28_2skipped reached 
+next field 27_2skipped reached 
+next field 26_2skipped reached 
+next field 26_1skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 24_0 25_0 26_1 26_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 27_1 
+next field 27_0skipped reached 
+next field 28_1skipped waiting forest 
+next field 28_2skipped reached 
+next field 27_2skipped reached 
+next field 26_2skipped reached 
+next field 26_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_2 28_3 
+next field 28_2skipped reached 
+next field 29_2skipped reached 
+next field 29_3skipped reached 
+next field 28_4skipped waiting forest 
+next field 27_3skipped reached 
+next field 27_2skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_3 28_3 
+next field 28_2skipped reached 
+next field 29_2skipped reached 
+next field 29_3skipped reached 
+next field 28_4skipped waiting forest 
+next field 27_3skipped reached 
+next field 27_2skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_3 27_3 28_4 
+next field 28_3skipped waiting forest 
+next field 29_3skipped reached 
+next field 29_4skipped reached 
+next field 28_5skipped reached 
+next field 27_4skipped reached 
+next field 27_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 27_4 28_4 
+next field 28_3skipped waiting forest 
+next field 29_3skipped reached 
+next field 29_4skipped reached 
+next field 28_5skipped reached 
+next field 27_4skipped reached 
+next field 27_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 26_5 26_6 
+next field 26_5skipped reached 
+next field 27_5skipped reached 
+next field 27_6skipped reached 
+next field 26_7skipped reached 
+next field 25_6skipped reached 
+next field 25_5skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 26_4 26_5 25_5 
+next field 25_4skipped reached 
+next field 26_5skipped reached 
+next field 26_6skipped waiting forest 
+next field 25_6skipped reached 
+next field 24_6skipped reached 
+next field 24_5skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 23_5 
+next field 23_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 22_6skipped reached 
+next field 22_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 23_6 
+next field 23_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 24_7skipped reached 
+next field 23_7skipped reached 
+next field 22_7skipped reached 
+next field 22_6skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 22_6 21_6 
+next field 21_5skipped reached 
+next field 22_6skipped reached 
+next field 22_7skipped reached 
+next field 21_7skipped reached 
+next field 20_7skipped waiting forest 
+next field 20_6skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 21_5 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_5 21_5 21_6 
+next field 21_5skipped reached 
+next field 22_6skipped reached 
+next field 22_7skipped reached 
+next field 21_7skipped reached 
+next field 20_7skipped waiting forest 
+next field 20_6skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_2 17_1 
+next field 17_0skipped reached 
+next field 18_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_2skipped waiting forest 
+next field 16_2skipped reached 
+next field 16_1skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_2 17_2 
+next field 17_1skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_3skipped reached 
+next field 17_3skipped reached 
+next field 16_3skipped waiting forest 
+next field 16_2skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_2 16_3 
+next field 16_2skipped reached 
+next field 17_2skipped waiting forest 
+next field 17_3skipped reached 
+next field 16_4skipped waiting forest 
+next field 15_3skipped waiting forest 
+next field 15_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 16_2 15_2 
+next field 15_1skipped reached 
+next field 16_2skipped reached 
+next field 16_3skipped waiting forest 
+next field 15_3skipped waiting forest 
+next field 14_3added to possible paths 
+next field 14_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_1 15_2 
+next field 15_1skipped reached 
+next field 16_2skipped reached 
+next field 16_3skipped waiting forest 
+next field 15_3skipped waiting forest 
+next field 14_3skipped reached 
+next field 14_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 16_1 15_0 16_0 
+next field nullnext field nullnext field 17_0skipped reached 
+next field 16_1skipped reached 
+next field 15_0skipped reached 
+next field null
+ currentGenPath 21_1 21_2 21_3 21_4 20_5 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 20_5 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 21_4 20_5 19_5 
+next field 19_4skipped reached 
+next field 20_5skipped reached 
+next field 20_6skipped reached 
+next field 19_6skipped waiting forest 
+next field 18_6skipped cannot go 
+next field 18_5skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 19_5 
+next field 19_4skipped reached 
+next field 20_5skipped reached 
+next field 20_6skipped reached 
+next field 19_6skipped waiting forest 
+next field 18_6skipped cannot go 
+next field 18_5skipped reached 
+
+ currentGenPath 21_1 21_2 21_3 20_4 19_4 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_3 25_3 25_2 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 25_5 
+next field 25_4skipped reached 
+next field 26_5skipped reached 
+next field 26_6skipped waiting forest 
+next field 25_6skipped reached 
+next field 24_6skipped reached 
+next field 24_5skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_3 24_4 24_5 23_5 
+next field 23_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 22_6skipped reached 
+next field 22_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 24_5 25_5 
+next field 25_4skipped reached 
+next field 26_5skipped reached 
+next field 26_6skipped waiting forest 
+next field 25_6skipped reached 
+next field 24_6skipped reached 
+next field 24_5skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 24_5 23_5 
+next field 23_4skipped reached 
+next field 24_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_6skipped waiting forest 
+next field 22_6skipped reached 
+next field 22_5skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 23_5 24_5 
+next field 24_4skipped reached 
+next field 25_4skipped reached 
+next field 25_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 23_5skipped waiting forest 
+next field 23_4skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 23_5 23_6 
+next field 23_5skipped waiting forest 
+next field 24_6skipped reached 
+next field 24_7skipped reached 
+next field 23_7skipped reached 
+next field 22_7skipped reached 
+next field 22_6skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_3 23_4 22_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 18_1 17_0 17_1 17_2 
+next field 17_1skipped waiting forest 
+next field 18_2skipped cannot go 
+next field 18_3skipped reached 
+next field 17_3skipped reached 
+next field 16_3skipped waiting forest 
+next field 16_2skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_2 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_2 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 19_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 18_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 18_4 17_4 
+next field 17_3skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_5skipped reached 
+next field 17_5skipped waiting forest 
+next field 16_5skipped reached 
+next field 16_4skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_2 17_1 
+next field 17_0skipped reached 
+next field 18_1skipped reached 
+next field 18_2skipped cannot go 
+next field 17_2skipped waiting forest 
+next field 16_2skipped reached 
+next field 16_1skipped reached 
+
+ currentGenPath 21_1 20_2 19_2 18_3 17_2 16_3 
+next field 16_2skipped reached 
+next field 17_2skipped waiting forest 
+next field 17_3skipped reached 
+next field 16_4skipped waiting forest 
+next field 15_3skipped waiting forest 
+next field 15_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 23_1 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_1 23_0 23_1 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_1 23_0 22_0 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null
+ currentGenPath 21_1 22_1 21_1 21_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 23_1 24_2 25_2 
+next field 25_1skipped cannot go 
+next field 26_2skipped reached 
+next field 26_3skipped reached 
+next field 25_3skipped reached 
+next field 24_3skipped reached 
+next field 24_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 23_1 24_2 23_1 
+next field 23_0skipped reached 
+next field 24_1skipped reached 
+next field 24_2skipped waiting forest 
+next field 23_2skipped reached 
+next field 22_2skipped reached 
+next field 22_1skipped reached 
+
+ currentGenPath 21_1 22_2 23_2 24_2 25_2 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 23_2 24_2 23_1 24_2 
+next field 24_1skipped reached 
+next field 25_1skipped cannot go 
+next field 25_2skipped waiting forest 
+next field 24_3skipped reached 
+next field 23_2skipped reached 
+next field 23_1skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_4 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_4 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_3 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_3 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 22_4 21_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 22_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 22_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 21_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 21_4 22_4 
+next field 22_3skipped reached 
+next field 23_3skipped reached 
+next field 23_4skipped reached 
+next field 22_5skipped reached 
+next field 21_4skipped waiting forest 
+next field 21_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 21_4 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_4 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_4 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_4 21_4 
+next field 21_3skipped waiting forest 
+next field 22_4skipped waiting forest 
+next field 22_5skipped reached 
+next field 21_5skipped reached 
+next field 20_5skipped reached 
+next field 20_4skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_4 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 22_2 22_3 21_3 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_1 19_2 20_3 21_3 
+next field 21_2skipped reached 
+next field 22_3skipped reached 
+next field 22_4skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 20_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 20_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 20_3 19_3 
+next field 19_2skipped waiting forest 
+next field 20_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_4skipped waiting forest 
+next field 18_3skipped reached 
+
+ currentGenPath 21_1 20_2 19_1 19_2 20_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_1 19_2 19_3 19_2 
+next field 19_1skipped reached 
+next field 20_2skipped reached 
+next field 20_3skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 18_3skipped reached 
+next field 18_2skipped cannot go 
+
+ currentGenPath 21_1 20_2 19_1 19_2 19_3 20_3 
+next field 20_2skipped reached 
+next field 21_2skipped reached 
+next field 21_3skipped waiting forest 
+next field 20_4skipped waiting forest 
+next field 19_3skipped waiting forest 
+next field 19_2skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 19_3 20_4 
+next field 20_3skipped waiting forest 
+next field 21_3skipped waiting forest 
+next field 21_4skipped waiting forest 
+next field 20_5skipped reached 
+next field 19_4skipped reached 
+next field 19_3skipped waiting forest 
+
+ currentGenPath 21_1 20_2 19_1 19_2 19_3 18_4 
+next field 18_3skipped reached 
+next field 19_3skipped waiting forest 
+next field 19_4skipped reached 
+next field 18_5skipped reached 
+next field 17_4skipped waiting forest 
+next field 17_3skipped reached 
+
+ currentGenPath 21_1 20_1 20_0 21_0 22_0 21_0 
+next field nullnext field 22_0skipped waiting forest 
+next field 22_1skipped reached 
+next field 21_1skipped reached 
+next field 20_1skipped reached 
+next field 20_0skipped reached 
+
+ currentGenPath 21_1 21_0 22_0 21_0 22_0 
+next field nullnext field nullnext field 23_0skipped reached 
+next field 22_1skipped reached 
+next field 21_0skipped waiting forest 
+next field null

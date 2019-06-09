@@ -14,7 +14,7 @@ class GameService {
   }
 
   void handleEnterGame(MessageWithConnection message) {
-    String lobbyId = message.message.enterGameMessage.lobbyId;
+    String lobbyId = message.message.enterGameLobbyId;
     LobbyRoom room = lobbyService.getLobbyRoomById(lobbyId);
 
     if (room == null) {

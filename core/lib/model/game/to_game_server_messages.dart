@@ -25,11 +25,11 @@ class ToGameServerMessage {
 
   // ---
 
-  InitMessage get initMessage => InitMessage.fromJson(json.decode(content));
+  String get initMessageInnerToken => content;
 
   factory ToGameServerMessage.init(String innerToken) {
     return ToGameServerMessage()
-      ..content = jsonEncode((InitMessage()..innerToken = innerToken).toJson())
+      ..content = innerToken
       ..message = OnServerAction.init;
   }
 
@@ -48,21 +48,21 @@ class ToGameServerMessage {
 
   // ---
 
-  EnterLobby get enterLobbyMessage => EnterLobby.fromJson(json.decode(content));
+  String get enterLobbyOfId => content;
 
   factory ToGameServerMessage.enterLobby(String lobbyId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((EnterLobby()..lobbyId = lobbyId).toJson())
+      ..content = lobbyId
       ..message = OnServerAction.enterLobby;
   }
 
   // ---
 
-  EnterGame get enterGameMessage => EnterGame.fromJson(json.decode(content));
+  String get enterGameLobbyId => content;
 
   factory ToGameServerMessage.enterGame(String lobbyId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((EnterGame()..lobbyId = lobbyId).toJson())
+      ..content = lobbyId
       ..message = OnServerAction.enterGame;
   }
 
@@ -102,6 +102,16 @@ class ToGameServerMessage {
       ..content = ""
       ..message = OnServerAction.leaveGame;
   }
+  // ---
+
+  String get setHeroForNextGameHeroId => content;
+
+  factory ToGameServerMessage.fromHeroForNextGameMessage(String heroId) {
+    return ToGameServerMessage()
+      ..content = heroId
+      ..message = OnServerAction.setHeroForNextGame;
+  }
+// ---
 }
 
 @Typescript()
@@ -124,6 +134,8 @@ enum OnServerAction {
   playerGameIntention,
   @JsonValue('controlsAction')
   controlsAction,
+  @JsonValue('setHeroForNextGame')
+  setHeroForNextGame,
 }
 
 @JsonSerializable()
@@ -138,17 +150,6 @@ class GoToState extends MessageContent {
 }
 
 @JsonSerializable()
-class InitMessage extends MessageContent {
-  String innerToken;
-
-  static InitMessage fromJson(Map<String, dynamic> json) => _$InitMessageFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$InitMessageToJson(this);
-  }
-}
-
-@JsonSerializable()
 class CreateLobby extends MessageContent {
   String taleName;
   String name;
@@ -157,28 +158,6 @@ class CreateLobby extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$CreateLobbyToJson(this);
-  }
-}
-
-@JsonSerializable()
-class EnterLobby extends MessageContent {
-  String lobbyId;
-
-  static EnterLobby fromJson(Map<String, dynamic> json) => _$EnterLobbyFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$EnterLobbyToJson(this);
-  }
-}
-
-@JsonSerializable()
-class EnterGame extends MessageContent {
-  String lobbyId;
-
-  static EnterGame fromJson(Map<String, dynamic> json) => _$EnterGameFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$EnterGameToJson(this);
   }
 }
 

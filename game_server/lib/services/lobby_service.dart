@@ -8,6 +8,7 @@ class LobbyService {
   LobbyService() {
     gateway.handlers[core.OnServerAction.createLobby] = handleLobbyCreation;
     gateway.handlers[core.OnServerAction.enterLobby] = handleEnterLobby;
+    gateway.handlers[core.OnServerAction.setHeroForNextGame] = handleSetHero;
     openedLobbyRooms.listen((List<LobbyRoom> data) {
       print("opened lobby rooms changed ${openedLobbyRooms.value.map((v) => v.openedLobby.lobbyName).join(" ")}");
     });
@@ -58,6 +59,7 @@ class LobbyService {
     openedLobbyRooms.value.add(room);
     openedLobbyRooms.add(openedLobbyRooms.value);
     room.sendUpdateToPlayer(player);
+    player.room = room;
     return room;
   }
 
@@ -87,9 +89,7 @@ class LobbyService {
   void handleEnterLobby(MessageWithConnection messageWithConnection) async {
     ServerPlayer player = messageWithConnection.player;
 
-    core.EnterLobby message = messageWithConnection.message.enterLobbyMessage;
-
-    LobbyRoom room = getLobbyRoomById(message.lobbyId);
+    LobbyRoom room = getLobbyRoomById(messageWithConnection.message.enterLobbyOfId);
     if (room.connectedPlayers.length >= LobbyService.maximumPlayersInLobby) {
       throw "Player entering to full room";
     }
@@ -98,6 +98,7 @@ class LobbyService {
 
     room.openedLobby.players.add(lobbyPlayer);
     room.connectedPlayers[player.email] = player;
+    player.room = room;
     if (room.connectedPlayers.length == LobbyService.maximumPlayersInLobby) {
       removeLobbyRoom(room);
     }
@@ -111,4 +112,9 @@ class LobbyService {
         core.ToClientMessage.fromSetNavigationState(messageWithConnection.player.navigationState), player);
     room.sendUpdateToAllPlayers();
   }
+
+  void handleSetHero(MessageWithConnection messageWithConnection) async {
+    messageWithConnection.player.nextGameHeroId = messageWithConnection.message.setHeroForNextGameHeroId;
+  }
+
 }

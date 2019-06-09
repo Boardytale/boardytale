@@ -8,7 +8,8 @@ import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/game/world_component.dart';
 import 'package:core/model/model.dart' as core;
 
-@Component(selector: 'lobby', directives: [WorldComponent, LobbyPlayersComponent, coreDirectives], templateUrl: "lobby.html")
+@Component(
+    selector: 'lobby', directives: [WorldComponent, LobbyPlayersComponent, coreDirectives], templateUrl: "lobby.html")
 class LobbyComponent {
   final ChangeDetectorRef changeDetector;
   GatewayService gateway;
@@ -16,6 +17,7 @@ class LobbyComponent {
   core.OpenedLobby get lobby => lobbyService.openedLobby.value;
   LobbyService lobbyService;
   List<core.GameHeroCreateEnvelope> myHeroes;
+  core.GameHeroCreateEnvelope selectedHero;
   final AppService appService;
   final HeroService heroService;
 
@@ -36,8 +38,14 @@ class LobbyComponent {
 
   void refreshMyHeroes() async {
     myHeroes = await heroService.getMyHeroes();
+    if (myHeroes.isNotEmpty) {
+      selectedHero = myHeroes.first;
+    }
     changeDetector.markForCheck();
   }
 
-  void selectHero(core.GameHeroCreateEnvelope hero) {}
+  void selectHero(core.GameHeroCreateEnvelope hero) {
+    selectedHero = hero;
+    gateway.sendMessage(core.ToGameServerMessage.fromHeroForNextGameMessage(hero.id));
+  }
 }

@@ -13,19 +13,26 @@ class NavigationService {
   void restoreState(ServerPlayer player) {
     core.GameNavigationState newState = player.navigationState;
 
+    if(player.room != null){
+      newState = core.GameNavigationState.inLobby;
+    }
+
+    if (player.tale != null) {
+      newState = core.GameNavigationState.inGame;
+    }
+
     if (newState == core.GameNavigationState.createGame) {
       createGameService.sendGamesToCreate(player);
       player.unsubscribeFromOpenedLobbiesChanges();
     }
 
     if (newState == core.GameNavigationState.inLobby) {
-      LobbyRoom currentPlayerRoom = lobbyService.getLobbyRoomByPlayer(player);
-      if (currentPlayerRoom == null) {
+      if (player.room == null) {
         print("bad state player is in lobby, but no room found");
         newState = core.GameNavigationState.findLobby;
         player.navigationState = newState;
       } else {
-        currentPlayerRoom.sendUpdateToPlayer(player);
+        player.room.sendUpdateToPlayer(player);
         player.unsubscribeFromOpenedLobbiesChanges();
       }
     }

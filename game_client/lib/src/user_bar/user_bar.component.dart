@@ -31,7 +31,7 @@ class UserBarComponent {
   }
 
   void goToUserPanel() {
-    appService.noServerGoToState(core.GameNavigationState.userPanel);
+    appService.goToState(core.GameNavigationState.userPanel);
   }
 
   String getUserLabel() {
@@ -47,10 +47,12 @@ class UserBarComponent {
   }
 
   void returnToAppState() {
-    window.location.reload();
+    appService.goToState(core.GameNavigationState.findLobby);
   }
 
   bool showReturnToAppButton() {
-    return appService.navigationState.value.name == core.GameNavigationState.userPanel;
+    return appService.navigationState.value.name == core.GameNavigationState.userPanel &&
+        appService.currentUser.value != null &&
+        appService.currentUser.value.hasHero;
   }
 }

@@ -1,13 +1,12 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:core/model/model.dart' as core;
 import 'package:io_utils/aqueduct/wraps.dart';
 import 'package:aqueduct/aqueduct.dart';
+import 'package:user_server/controller/user_utils/user_utils.dart';
 import 'package:user_server/model/db_objects.dart';
-import 'package:http/http.dart' as http;
 import 'package:user_server/model/heroes.dart';
 import 'package:uuid/uuid.dart';
+
 
 Uuid uuid = Uuid();
 
@@ -23,32 +22,7 @@ class UserOuterMessageController extends ResourceController {
       message.addHeroes(heroesData);
     }
     if (message.message == core.OnUserServerAction.createHero) {
-      core.CreateHero heroToCreate = message.getCreateHeroMessage;
-      var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
-      User user = await query.fetchOne();
-      if (user != null) {
-        List<core.GameHeroCreateEnvelope> heroEnvelope = heroesData.where((hero) {
-          return hero.type.name == heroToCreate.typeName;
-        }).toList();
-
-        if (heroEnvelope.isEmpty) {
-          return Response.badRequest(body: "something wrong with data - probably not existing type name");
-        }
-
-        core.GameHeroCreateEnvelope copyOfHeroEnvelope = core.GameHeroCreateEnvelope.fromJson(heroEnvelope.first.toJson());
-        copyOfHeroEnvelope.name = heroToCreate.name;
-
-        Hero newHero = Hero()
-          ..level = 0
-          ..user = user
-          ..dataFormatVersion = 0
-          ..heroData = Document(copyOfHeroEnvelope.toJson());
-        newHero = await (Query<Hero>(context)..values = newHero).insert();
-        message.addHero(copyOfHeroEnvelope);
-      }
-      else{
-        return Response.badRequest(body: {"message": "bad inner token"});
-      }
+      return createHero(message, context);
     }
     if (message.message == core.OnUserServerAction.getMyHeroes) {
       var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);

@@ -6,6 +6,7 @@ class User {
   String name;
   String email;
   String innerToken;
+  bool hasHero;
 
   static User fromJson(Map data) {
     return _$UserFromJson(data);

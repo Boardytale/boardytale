@@ -24,24 +24,24 @@ class ToUserServerMessage {
 
   factory ToUserServerMessage.fromInnerToken(String innerToken) {
     return ToUserServerMessage()
-      ..message = OnUserServerAction.getUseresByInnerToken
+      ..message = OnUserServerAction.getUserByInnerToken
       ..content = json.encode((GetUserByInnerToken()..innerToken = innerToken).toJson());
   }
 
   // ---
 
-  GetHeroesOfPlayer get getHeroesOfPlayerMessage => GetHeroesOfPlayer.fromJson(json.decode(content));
+  HeroesAndUnitsOfPlayer get getStartingUnits => HeroesAndUnitsOfPlayer.fromJson(json.decode(content));
 
-  void addHeroesAndUnits(List<GameHeroCreateEnvelope> responseHeroes, List<UnitTypeCompiled> responseUnits) {
-    content = json.encode(getHeroesOfPlayerMessage
+  void addHeroesAndUnitsToStartingUnits(List<GameHeroCreateEnvelope> responseHeroes, List<UnitTypeCompiled> responseUnits) {
+    content = json.encode(getStartingUnits
       ..responseHeroes = responseHeroes
       ..responseUnits = responseUnits);
   }
 
-  factory ToUserServerMessage.fromPlayerEmail(String requestPlayerEmail) {
+  factory ToUserServerMessage.createGetStartingUnits(String playerEmail, String heroId) {
     return ToUserServerMessage()
-      ..message = OnUserServerAction.getHeroesOfPlayer
-      ..content = json.encode((GetHeroesOfPlayer()..requestPlayerEmail = requestPlayerEmail).toJson());
+      ..message = OnUserServerAction.getStartingUnits
+      ..content = json.encode((HeroesAndUnitsOfPlayer()..requestedPlayerEmail = playerEmail..requestedHeroId = heroId).toJson());
   }
 
   // ---
@@ -88,10 +88,10 @@ class ToUserServerMessage {
 
 @Typescript()
 enum OnUserServerAction {
-  @JsonValue('getUseresByInnerToken')
-  getUseresByInnerToken,
-  @JsonValue('getHeroesOfPlayer')
-  getHeroesOfPlayer,
+  @JsonValue('getUserByInnerToken')
+  getUserByInnerToken,
+  @JsonValue('getStartingUnits')
+  getStartingUnits,
   @JsonValue('getHeroesToCreate')
   getHeroesToCreate,
   @JsonValue('createHero')
@@ -113,15 +113,16 @@ class GetUserByInnerToken extends MessageContent {
 }
 
 @JsonSerializable()
-class GetHeroesOfPlayer extends MessageContent {
-  String requestPlayerEmail;
+class HeroesAndUnitsOfPlayer extends MessageContent {
+  String requestedPlayerEmail;
+  String requestedHeroId;
   List<GameHeroCreateEnvelope> responseHeroes;
   List<UnitTypeCompiled> responseUnits;
 
-  static GetHeroesOfPlayer fromJson(Map<String, dynamic> json) => _$GetHeroesOfPlayerFromJson(json);
+  static HeroesAndUnitsOfPlayer fromJson(Map<String, dynamic> json) => _$HeroesAndUnitsOfPlayerFromJson(json);
 
   Map<String, dynamic> toJson() {
-    return _$GetHeroesOfPlayerToJson(this);
+    return _$HeroesAndUnitsOfPlayerToJson(this);
   }
 }
 

@@ -29,4 +29,29 @@ class ServerGateway {
       messageWithConnection.connection.webSocket.sink.add("player not found - make init first");
     }
   }
+
+  Future<core.ToUserServerMessage> innerMessageToUserServer(core.ToUserServerMessage message) {
+    return toUserServerMessage(message, true);
+  }
+
+  Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message, [bool inner = false]) async {
+    var url = "http://localhost:${config.userServer.uris.first.port}/userApi/toUserMessage";
+    if (inner) {
+      url = "http://localhost:${config.userServer.innerPort}/";
+    }
+    http.Response response;
+    try {
+      response = await http.post(url,
+          headers: {"Content-Type": "application/json"},
+          body: json.encode(message));
+    } catch (e) {
+      return core.ToUserServerMessage()..error = "user server not working properly";
+    }
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      return core.ToUserServerMessage.fromJson(responseBody);
+    } else {
+      return core.ToUserServerMessage()..error = response.body;
+    }
+  }
 }

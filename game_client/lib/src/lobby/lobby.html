@@ -7,16 +7,29 @@
   <h2>Select hero:</h2>
   <div
       *ngFor="let hero of myHeroes"
-      class="hero-to-create-cont">
-    <h1>{{hero.name}}</h1>
-    <img [src]="hero.type.image.data">
-    <div class="hero-to-create-cont__card-body">
+      class="lobbyTile row"
+      (click)="selectHero(hero)"
+      [ngClass]="{'selected': hero.id == selectedHero.id }"
+  >
+    <div class="col-1">
+      <img [src]="hero.type.image.data">
+    </div>
+    <div class="col-2">
+      <h1>{{hero.name}}</h1>
+    </div>
+    <div class="col-4">
       <span>Health: {{hero.type.health}}</span>
+    </div>
+    <div class="col-3">
       <span>Armor: {{hero.type.armor}}</span>
-      <a href="javascript:" class="btn btn-primary" (click)="selectHero(hero)">Select</a>
+    </div>
+    <div class="col-2">
+      <button
+          type="button"
+          class="btn btn-primary mt-1"
+      >Select</button>
     </div>
   </div>
-
   <h2>Players:</h2>
   <lobby-players [players]="lobby.players"></lobby-players>
   <button

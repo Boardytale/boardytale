@@ -169,4 +169,7 @@ action-feedback {
     height: 90%;
     margin: auto;
   }
+  &.selected {
+    border: 3px solid greenyellow;
+  }
 }
