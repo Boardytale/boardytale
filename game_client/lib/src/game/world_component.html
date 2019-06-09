@@ -4,8 +4,11 @@
 <action-feedback style="z-index: 25"></action-feedback>
 <div  style="z-index: 30" id="eventOverlay" [ngStyle]="{'width': widthString, 'height': heightString}"
       (mousedown)="onMouseDown($event)"
+      (touchstart)="onTouchStart($event)"
       (mouseup)="onMouseUp($event)"
+      (touchend)="onTouchEnd($event)"
       (mousemove)="onMouseMove($event)"
+      (touchmove)="onTouchMove($event)"
       (mouseout)="onMouseOut($event)"
       (mousewheel)="onMouseWheel($event)"
 ></div>

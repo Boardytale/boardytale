@@ -1,0 +1,23 @@
+<div class="navbar navbar-expand-lg navbar-light bg-light justify-content-start">
+  <span *ngIf="appService.currentUser.value != null">
+  Logged user:
+    <a
+      href="javascript:;"
+      *ngIf="appService.currentUser.value != null && appService.navigationState.value.showUserPanelButton"
+      (click)="goToUserPanel()"
+    >
+      {{getUserLabel()}}
+    </a>
+</span>
+  <span *ngIf="appService.currentUser.value == null">
+  Boardytale
+</span>
+  <button
+    type="button"
+    class="btn btn-primary btn-sm ml-3"
+    *ngIf="appService.navigationState.value.showCreateGameButton"
+    (click)="goToCreate()"
+  >
+    Create new lobby
+  </button>
+</div>

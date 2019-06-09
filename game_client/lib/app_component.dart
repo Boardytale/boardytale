@@ -12,46 +12,11 @@ import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/user_bar/user_bar.component.dart';
 import 'package:game_client/src/user_panel/user_panel_component.dart';
+import 'package:game_client/src/user_login/user_login.dart';
 
 @Component(
     selector: 'my-app',
-    template: '''
-  <div class="main-wrapper">
-    <user-bar class="navbar navbar-expand-lg navbar-light bg-light"></user-bar>
-    <div
-     *ngIf="showLoading"
-    >
-    <span *ngIf="gateway.reconnecting">
-      RECONNECTING....
-      <span *ngIf="gateway.reconnectingTime.value > 3">
-      with delay: {{gateway.reconnectingTime.value}}s
-      </span>
-    </span>
-    <span *ngIf="!gateway.reconnecting">
-      LOADING....
-    </span>
-    </div>
-    <create-game
-      *ngIf="showCreateGame"
-    ></create-game>
-    <lobby
-     *ngIf="showLobby"
-    ></lobby>
-    <lobbies
-      *ngIf="showLobbies"
-    >
-    </lobbies>
-    <game
-    *ngIf="showGame"
-    >
-    </game>
-    <user-panel
-    *ngIf="showUserPanel"
-    >
-    </user-panel>
-  </div>
-  
-  ''',
+    templateUrl: 'app_component.html',
     directives: [
       UserBarComponent,
       CreateGameComponent,
@@ -59,7 +24,8 @@ import 'package:game_client/src/user_panel/user_panel_component.dart';
       LobbyComponent,
       LobbiesComponent,
       GameComponent,
-      UserPanelComponent
+      UserPanelComponent,
+      UserLoginComponent
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent {
@@ -67,23 +33,33 @@ class AppComponent {
   GameService gameService;
   final ChangeDetectorRef changeDetector;
 
-  bool get showCreateGame => appService.navigationState.value.name == GameNavigationState.createGame;
+  bool get showLogin =>
+      appService.navigationState.value.name == GameNavigationState.login;
 
-  bool get showLobby => appService.navigationState.value.name == GameNavigationState.inLobby;
+  bool get showCreateGame =>
+      appService.navigationState.value.name == GameNavigationState.createGame;
 
-  bool get showLobbies => appService.navigationState.value.name == GameNavigationState.findLobby;
+  bool get showLobby =>
+      appService.navigationState.value.name == GameNavigationState.inLobby;
 
-  bool get showGame => appService.navigationState.value.name == GameNavigationState.inGame;
+  bool get showLobbies =>
+      appService.navigationState.value.name == GameNavigationState.findLobby;
 
-  bool get showLoading => appService.navigationState.value.name == GameNavigationState.loading;
+  bool get showGame =>
+      appService.navigationState.value.name == GameNavigationState.inGame;
 
-  bool get showUserPanel => appService.navigationState.value.name == GameNavigationState.userPanel;
+  bool get showLoading =>
+      appService.navigationState.value.name == GameNavigationState.loading;
+
+  bool get showUserPanel =>
+      appService.navigationState.value.name == GameNavigationState.userPanel;
 
   LobbyService lobbyService;
   GatewayService gateway;
 
   // unused services are used for gateway handler injection
-  AppComponent(this.appService, this.changeDetector, this.gameService, this.lobbyService, this.gateway) {
+  AppComponent(this.appService, this.changeDetector, this.gameService,
+      this.lobbyService, this.gateway) {
     appService.navigationState.listen((navigation) {
       //      if (navigation.name == GameNavigationState.findLobby) {
       //        lobbyService.lobbies.listen((onData) {

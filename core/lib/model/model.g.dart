@@ -1105,7 +1105,8 @@ const _$GameNavigationStateEnumMap = <GameNavigationState, dynamic>{
   GameNavigationState.inGame: 'inGame',
   GameNavigationState.loading: 'loading',
   GameNavigationState.inLobby: 'inLobby',
-  GameNavigationState.userPanel: 'userPanel'
+  GameNavigationState.userPanel: 'userPanel',
+  GameNavigationState.login: 'login'
 };
 
 RefreshLobbyList _$RefreshLobbyListFromJson(Map<String, dynamic> json) {

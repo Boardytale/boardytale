@@ -13,14 +13,20 @@ part 'arrow_disk.dart';
 @Component(
     selector: 'lobby', directives: [WorldComponent, LobbyPlayersComponent, ArrowDisk, coreDirectives], template: '''
       <div 
-      *ngIf="lobby != null"
-      class="lobby-room"> 
+        *ngIf="lobby != null"
+        class="container-fluid lobby-room"
+      > 
         <h1>lobby {{lobby.lobbyName}}</h1>
         <img [src]="lobby.image.data">
-        <lobby-players
-          [players]="lobby.players"
-        ></lobby-players>
-        <button (click)="enterGame()">Start game</button>
+        <h2>Players:</h2>
+        <lobby-players [players]="lobby.players"></lobby-players>
+        <button
+          type="button"
+          class="btn btn-primary mt-3"
+          (click)="enterGame()"
+         >
+          Start game
+         </button>
       </div>
       ''')
 class LobbyComponent {

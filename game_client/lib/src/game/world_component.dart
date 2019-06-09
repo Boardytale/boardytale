@@ -27,6 +27,7 @@ class WorldComponent implements OnDestroy {
   final AppService appService;
   final GameService gameService;
   bool destroyed = false;
+  num touchesDistance;
   stage_lib.Stage worldStage;
   stage_lib.Stage unitStage;
   CanvasElement worldElement;
@@ -121,10 +122,8 @@ class WorldComponent implements OnDestroy {
     detectChanges();
   }
 
-  void onMouseDown(MouseEvent event) {
-    event.preventDefault();
-    event.stopPropagation();
-    ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
+  void userInteractionStart(Point startPosition) {
+    ClientField field = ClientWorldUtils.getFieldByMouseOffset(startPosition.x, startPosition.y, gameService);
     if (field != null) {
       ClientUnit unit = field.getFirstPlayableUnitOnField();
       trackFields = [field];
@@ -139,47 +138,21 @@ class WorldComponent implements OnDestroy {
       }
     }
     _moving = true;
-    _start = event.page;
+    _start = startPosition;
     _startOffsetTop = gameService.worldParams.userTopOffset;
     _startOffsetLeft = gameService.worldParams.userLeftOffset;
   }
 
-  void onMouseUp(MouseEvent event) {
-    event.preventDefault();
-    event.stopPropagation();
-    gameService.onUnitAssistanceChanged.add(null);
-    if (_draggedUnit != null) {
-      ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
-      core.Track track = core.Track.clean(trackFields, gameService.fields);
-      core.Ability ability = _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey);
-      if (ability != null) {
-        print(ability.name);
-        gatewayService.sendMessage(core.ToGameServerMessage.unitTrackAction(core.UnitTrackAction()
-          ..abilityName = ability.name
-          ..unitId = _draggedUnit.id
-          ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
-          ..track = ability.modifyTrack(_draggedUnit, track).toIds()));
-        gatewayService.sendIntention(field == null ? null : [field]);
-      } else {
-        appService.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
-      }
-    }
-    _moving = false;
-    _draggedUnit = null;
-  }
-
-  void onMouseMove(MouseEvent event) {
-    event.preventDefault();
-    event.stopPropagation();
+  void userInteractionMove(Point movePosition, {bool shift = false, bool alt = false, bool ctrl = false}) {
     if (!_moving) {
-      ClientField field = ClientWorldUtils.getFieldByMouseOffset(event.page.x, event.page.y, gameService);
+      ClientField field = ClientWorldUtils.getFieldByMouseOffset(movePosition.x, movePosition.y, gameService);
       if (field != _lastActiveField) {
         _lastActiveField = field;
         if (_draggedUnit != null) {
           trackFields.add(field);
           core.Track track = core.Track.clean(trackFields, gameService.fields);
           ClientAbility ability =
-              _draggedUnit.getAbility(track, event.shiftKey, event.altKey, event.ctrlKey) as ClientAbility;
+          _draggedUnit.getAbility(track, shift, alt, ctrl) as ClientAbility;
           if (ability != null) {
             print((ability as core.Ability).name);
             ability.show(_draggedUnit, track);
@@ -198,8 +171,8 @@ class WorldComponent implements OnDestroy {
       return;
     }
     if (_draggedUnit == null) {
-      int deltaX = (event.page.x - _start.x).toInt();
-      int deltaY = (event.page.y - _start.y).toInt();
+      int deltaX = (movePosition.x - _start.x).toInt();
+      int deltaY = (movePosition.y - _start.y).toInt();
       gameService.worldParams.userLeftOffset = _startOffsetLeft - deltaX;
       gameService.worldParams.userTopOffset = _startOffsetTop - deltaY;
       // TODO: stack on anim frame
@@ -208,23 +181,101 @@ class WorldComponent implements OnDestroy {
     }
   }
 
-  void onMouseWheel(WheelEvent event) {
-    // TODO: refactor mouse wheel to be working in firefox
-    event.preventDefault();
-    event.stopPropagation();
-    double zoomMultiply = event.deltaY < 0 ? 1.1 : 0.9;
+  void userInteractionEnd(Point endPosition, {bool shift = false, bool alt = false, bool ctrl = false}) {
+    gameService.onUnitAssistanceChanged.add(null);
+    if (_draggedUnit != null) {
+      ClientField field = ClientWorldUtils.getFieldByMouseOffset(endPosition.x, endPosition.y, gameService);
+      core.Track track = core.Track.clean(trackFields, gameService.fields);
+      core.Ability ability = _draggedUnit.getAbility(track, shift, alt, ctrl);
+      if (ability != null) {
+        print(ability.name);
+        gatewayService.sendMessage(core.ToGameServerMessage.unitTrackAction(core.UnitTrackAction()
+          ..abilityName = ability.name
+          ..unitId = _draggedUnit.id
+          ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"
+          ..track = ability.modifyTrack(_draggedUnit, track).toIds()));
+        gatewayService.sendIntention(field == null ? null : [field]);
+      } else {
+        appService.alertError("No ability for ${_draggedUnit.name} | ${_draggedUnit.whyNoAbility(track).join(" | ")}");
+      }
+    }
+    _moving = false;
+    _draggedUnit = null;
+  }
+
+  void userZoom(num delta, Point zoomPoint) {
+    double zoomMultiply = delta < 0 ? 1.1 : 0.9;
     gameService.worldParams.zoom *= zoomMultiply;
 
     if (gameService.worldParams.zoom < 0.3) {
       gameService.worldParams.zoom = 0.3;
     } else {
-      int topOfMap = (event.page.y + gameService.worldParams.userTopOffset).toInt();
-      int leftOfMap = (event.page.x + gameService.worldParams.userLeftOffset).toInt();
+      int topOfMap = (zoomPoint.y + gameService.worldParams.userTopOffset).toInt();
+      int leftOfMap = (zoomPoint.x + gameService.worldParams.userLeftOffset).toInt();
       gameService.worldParams.userLeftOffset += (leftOfMap * zoomMultiply - leftOfMap).toInt();
       gameService.worldParams.userTopOffset += (topOfMap * zoomMultiply - topOfMap).toInt();
     }
     gameService.recalculate();
     view.repaint();
+  }
+
+  void onMouseDown(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    userInteractionStart(event.page);
+  }
+
+  void onTouchStart(TouchEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    userInteractionStart(event.touches[0].page);
+  }
+
+  void onMouseUp(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    userInteractionEnd(event.page, shift: event.shiftKey, alt: event.altKey, ctrl: event.ctrlKey);
+  }
+
+  void onTouchEnd(TouchEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    touchesDistance = null;
+    Point touchEndPosition = event.changedTouches[event.changedTouches.length-1].page;
+    userInteractionEnd(touchEndPosition);
+  }
+
+  void onMouseMove(MouseEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    userInteractionMove(event.page, shift: event.shiftKey, alt: event.altKey, ctrl: event.ctrlKey);
+  }
+
+  void onTouchMove(TouchEvent event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.touches.length > 1) {
+      handleTouchZoom(event);
+    } else {
+      userInteractionMove(event.touches[0].page);
+    }
+  }
+
+  handleTouchZoom(TouchEvent event) {
+    num previousTouchesDistance = touchesDistance;
+    touchesDistance = event.touches[0].page.distanceTo(event.touches[1].page);
+    if (previousTouchesDistance != null) {
+      num delta = previousTouchesDistance - touchesDistance;
+      userZoom(delta, event.touches[0].page);
+    }
+  }
+
+  void onMouseWheel(WheelEvent event) {
+    print(event.deltaY);
+    // TODO: refactor mouse wheel to be working in firefox
+    event.preventDefault();
+    event.stopPropagation();
+    userZoom(event.deltaY, event.page);
   }
 
   void onMouseOut(MouseEvent event) {
