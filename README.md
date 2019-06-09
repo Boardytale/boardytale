@@ -18,7 +18,9 @@ open IDE, set dart executables
 
 run `npm run pub-get-all` to get dart dependencies for all packages, wait until finished
 
-run debug no all packages you are going to develop - suggesting to run debug game_server
+run `npm run set-config-dev` to create a config file
+
+run debug on all packages you are going to develop - suggesting to run debug game_server
  - right click on `game_server/bin/game_servers_start.dart` and click on debug icon
  
 run `npm run start-dev` to run all microservices
