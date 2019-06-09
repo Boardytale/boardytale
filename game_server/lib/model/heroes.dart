@@ -7,8 +7,8 @@ class HeroesHelper {
       Iterable<ServerPlayer> forPlayer, Iterable<ServerPlayer> emitToPlayers, ServerTale tale) async {
     List<Future<ResponseWithPlayer>> responses = [];
     forPlayer.forEach((player) {
-      var url = "http://localhost:${config.heroesServer.uris.first.port}/";
-      var message = core.ToHeroServerMessage.fromPlayerEmail(player.email);
+      var url = "http://localhost:${config.userServer.innerPort}/";
+      var message = core.ToUserServerMessage.fromPlayerEmail(player.email);
       responses.add(http.post(url, body: json.encode(message.toJson())).asStream().map((convert) {
         return ResponseWithPlayer(convert, player);
       }).first);
@@ -17,18 +17,15 @@ class HeroesHelper {
     List<core.UnitCreateOrUpdateAction> actions = [];
     List<core.UnitType> types = [];
     core.Assets assets = core.Assets();
+    Set<String> fieldsOccupied = {};
     data.forEach((ResponseWithPlayer item) {
-      var heroesAndUnits = core.ToHeroServerMessage.fromJson(json.decode(item.response.body));
+      var heroesAndUnits = core.ToUserServerMessage.fromJson(json.decode(item.response.body));
       heroesAndUnits.getHeroesOfPlayerMessage.responseHeroes.forEach((heroEnvelope) {
         var compiledType = heroEnvelope.type;
         compiledType.name = "hero${_lastHeroId++}";
         core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
-        var startingField;
-        try {
-          // TODO: rethink handle not available space
-          startingField =
-              tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
-        } catch (e) {
+        var startingField = tale.getFirstFreeStartingField(fieldsOccupied);
+        if(startingField == null){
           return;
         }
 
@@ -43,9 +40,10 @@ class HeroesHelper {
 
       heroesAndUnits.getHeroesOfPlayerMessage.responseUnits.forEach((core.UnitTypeCompiled compiledType) {
         core.UnitType type = core.UnitType()..fromCompiled(compiledType, assets);
-        var startingField =
-            tale.taleState.fields[tale.room.compiledTale.tale.world.startingFieldIds[tale.lastUsedStartingField++]];
-
+        var startingField = tale.getFirstFreeStartingField(fieldsOccupied);
+        if(startingField == null){
+          return;
+        }
         core.UnitCreateOrUpdateAction action = core.UnitCreateOrUpdateAction()
           ..unitId = "${tale.lastUnitId++}"
           ..moveToFieldId = startingField.id

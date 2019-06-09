@@ -383,11 +383,14 @@ export type OnServerAction =
 
 export type ControlsActionName = 'endOfTurn' | 'unitWillNotPlay';
 
-export type OnHeroServerAction = 'getHeroesOfPlayer';
-
 export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
 
-export type OnUserServerAction = 'getUseresByInnerToken';
+export type OnUserServerAction =
+    | 'getUseresByInnerToken'
+    | 'getHeroesOfPlayer'
+    | 'getHeroesToCreate'
+    | 'createHero'
+    | 'getMyHeroes';
 
 export type LoggerMessageType = 'initial' | 'taleUpdate' | 'trace';
 

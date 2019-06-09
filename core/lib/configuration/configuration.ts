@@ -48,7 +48,6 @@ export interface BoardytaleConfiguration extends Object {
     userDatabase: DatabaseConfiguration;
     editorDatabase: DatabaseConfiguration;
     userServer: ServerConfiguration;
-    heroesServer: ServerConfiguration;
     aiServer: ServerConfiguration;
     proxyServer: ServerConfiguration;
     loggerServer: ServerConfiguration;

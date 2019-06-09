@@ -67,7 +67,7 @@ export let config: BoardytaleConfiguration = {
         }],
         innerPort: 4500,
         executableType: 'dart',
-        pathToExecutable: 'user_server/bin/main.dart',
+        pathToExecutable: 'user_server/bin/user_server_start.dart',
         pathToWorkingDirectory: 'user_server'
     },
     editorStaticDev: {
@@ -79,18 +79,6 @@ export let config: BoardytaleConfiguration = {
         active: true,
         route: '/game',
         port: 4201,
-    },
-    heroesServer: {
-        route: '/heroes',
-        uris: [
-            {
-                port: 10000,
-                host: 'localhost',
-            }
-        ],
-        executableType: 'dart',
-        pathToExecutable: 'hero_server/bin/hero_server_start.dart',
-        pathToWorkingDirectory: 'hero_server'
     },
     proxyServer: {
         route: '/',

@@ -103,7 +103,6 @@ class ClientWorldUtils {
         gameService.fields[key] = field;
       }
     }
-    gameService.startingFieldIds = envelope.startingFieldIds;
   }
 
   static Map<String, core.FieldCreateEnvelope> createFieldsData(core.World envelope) {

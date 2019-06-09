@@ -26,9 +26,6 @@ main() async {
   runServerByServerConfiguration(config.userServer);
 
   runServerByServerConfiguration(config.editorServer);
-
-  runServerByServerConfiguration(config.heroesServer);
-
   runServerByServerConfiguration(config.aiServer);
 
   runServerByServerConfiguration(config.gameServer);
@@ -50,9 +47,10 @@ void runServerByServerConfiguration(ServerConfiguration config) {
   String executableFile = slashesInPath(projectDirectoryPath + "/" + config.pathToExecutable);
   String workingDirectory = slashesInPath(projectDirectoryPath + "/" + config.pathToWorkingDirectory);
 
-  print("Executable file: ${executableFile} ${File(executableFile).existsSync()}, wd: ${workingDirectory} ${Directory(workingDirectory).existsSync()}");
+  print(
+      "Executable file: ${executableFile} ${File(executableFile).existsSync()}, wd: ${workingDirectory} ${Directory(workingDirectory).existsSync()}");
 
-  if(!Directory(workingDirectory).existsSync()){
+  if (!Directory(workingDirectory).existsSync()) {
     Directory(workingDirectory).createSync(recursive: true);
   }
 

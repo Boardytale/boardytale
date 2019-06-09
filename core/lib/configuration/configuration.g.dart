@@ -154,10 +154,6 @@ BoardytaleConfiguration _$BoardytaleConfigurationFromJson(
         ? null
         : ServerConfiguration.fromJson(
             json['userServer'] as Map<String, dynamic>)
-    ..heroesServer = json['heroesServer'] == null
-        ? null
-        : ServerConfiguration.fromJson(
-            json['heroesServer'] as Map<String, dynamic>)
     ..aiServer = json['aiServer'] == null
         ? null
         : ServerConfiguration.fromJson(json['aiServer'] as Map<String, dynamic>)
@@ -187,7 +183,6 @@ Map<String, dynamic> _$BoardytaleConfigurationToJson(
       'userDatabase': instance.userDatabase?.toJson(),
       'editorDatabase': instance.editorDatabase?.toJson(),
       'userServer': instance.userServer?.toJson(),
-      'heroesServer': instance.heroesServer?.toJson(),
       'aiServer': instance.aiServer?.toJson(),
       'proxyServer': instance.proxyServer?.toJson(),
       'loggerServer': instance.loggerServer?.toJson(),

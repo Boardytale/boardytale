@@ -1,11 +1,49 @@
 <h1>User panel</h1>
 
+<div style="color: red; font-size: 18pt;" *ngIf="message!=null">{{message}}</div>
+
 <label>Name:<input [(ngModel)]="name"/></label><br>
 <span *ngIf="saved">User name saved successfully</span>
 
 <button
-(click)="save()"
->Save changes</button>
+    (click)="save()"
+>Save changes
+</button>
 <button
-(click)="returnToAppState()"
->Return to application</button>
+    (click)="returnToAppState()"
+>Return to application
+</button>
+
+<div class="row" style="height: 70%">
+  <div class="col-5" style="height: 100%;overflow: auto">
+    <h2>Create hero</h2>
+    <div
+        *ngFor="let hero of heroesToCreate"
+        class="hero-to-create-cont">
+      <h1>{{hero.type.name}}</h1>
+      <img [src]="hero.type.image.data">
+      <label>Name:<input [(ngModel)]="hero.name"/></label><br>
+      <button
+          (click)="createHero(hero)"
+      >Create hero
+      </button>
+      <span>Health: {{hero.type.health}}</span>
+      <span>Armor: {{hero.type.armor}}</span>
+    </div>
+  </div>
+  <div class="col-5" style="height: 100%;overflow: auto">
+    <h2>My heroes</h2>
+    <div
+        *ngFor="let hero of myHeroes"
+        class="hero-to-create-cont">
+      <h1>{{hero.name}}</h1>
+      <img [src]="hero.type.image.data">
+      <button
+          (click)="deleteHero(hero)"
+      >Delete hero
+      </button>
+      <span>Health: {{hero.type.health}}</span>
+      <span>Armor: {{hero.type.armor}}</span>
+    </div>
+  </div>
+</div>

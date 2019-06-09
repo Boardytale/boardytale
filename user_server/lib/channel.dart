@@ -3,16 +3,17 @@ import 'package:core/configuration/configuration.dart' as core;
 import 'package:user_server/controller/rename_user_controller.dart';
 import 'package:user_server/controller/temporary_user_controller.dart';
 import 'package:user_server/controller/user_controller.dart';
-import 'package:user_server/controller/user_inner_authentication.dart';
+import 'package:user_server/controller/user_inner.dart';
+import 'package:user_server/controller/user_outer_message.dart';
 
 import 'user_server.dart';
 
 class UserServerChannel extends ApplicationChannel {
   ManagedContext context;
-
+  core.BoardytaleConfiguration boardytaleConfiguration;
   @override
   Future prepare() async {
-    final core.BoardytaleConfiguration boardytaleConfiguration = getConfiguration();
+    boardytaleConfiguration = getConfiguration();
     core.DatabaseConfiguration database = boardytaleConfiguration.userDatabase;
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
     final ManagedDataModel dataModel = ManagedDataModel.fromCurrentMirrorSystem();
@@ -21,7 +22,7 @@ class UserServerChannel extends ApplicationChannel {
 
     context = ManagedContext(dataModel, psc);
 
-    UserInnerAuthController(context, boardytaleConfiguration);
+    UserInnerController(context, boardytaleConfiguration);
   }
 
   @override
@@ -30,7 +31,8 @@ class UserServerChannel extends ApplicationChannel {
     router.route("/login").link(() => UserController(context));
     router.route("/createTemporaryUser").link(() => TemporaryUserController(context));
     router.route("/renameUser").link(() => RenameUserController(context));
-    router.route("/*").link(() => FileController("../www/"));
+    router.route("/toUserMessage").link(() => UserOuterMessageController(context));
     return router;
   }
+
 }

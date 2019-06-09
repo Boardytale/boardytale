@@ -1392,47 +1392,6 @@ const _$ControlsActionNameEnumMap = <ControlsActionName, dynamic>{
   ControlsActionName.unitWillNotPlay: 'unitWillNotPlay'
 };
 
-ToHeroServerMessage _$ToHeroServerMessageFromJson(Map<String, dynamic> json) {
-  return ToHeroServerMessage()
-    ..message =
-        _$enumDecodeNullable(_$OnHeroServerActionEnumMap, json['message'])
-    ..content = json['content'] as String;
-}
-
-Map<String, dynamic> _$ToHeroServerMessageToJson(
-        ToHeroServerMessage instance) =>
-    <String, dynamic>{
-      'message': _$OnHeroServerActionEnumMap[instance.message],
-      'content': instance.content
-    };
-
-const _$OnHeroServerActionEnumMap = <OnHeroServerAction, dynamic>{
-  OnHeroServerAction.getHeroesOfPlayer: 'getHeroesOfPlayer'
-};
-
-GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
-  return GetHeroesOfPlayer()
-    ..requestPlayerEmail = json['requestPlayerEmail'] as String
-    ..responseHeroes = (json['responseHeroes'] as List)
-        ?.map((e) => e == null
-            ? null
-            : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..responseUnits = (json['responseUnits'] as List)
-        ?.map((e) => e == null
-            ? null
-            : UnitTypeCompiled.fromJson(e as Map<String, dynamic>))
-        ?.toList();
-}
-
-Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
-    <String, dynamic>{
-      'requestPlayerEmail': instance.requestPlayerEmail,
-      'responseHeroes':
-          instance.responseHeroes?.map((e) => e?.toJson())?.toList(),
-      'responseUnits': instance.responseUnits?.map((e) => e?.toJson())?.toList()
-    };
-
 ToAiServerMessage _$ToAiServerMessageFromJson(Map<String, dynamic> json) {
   return ToAiServerMessage()
     ..message = _$enumDecodeNullable(_$OnAiServerActionEnumMap, json['message'])
@@ -1506,7 +1465,11 @@ Map<String, dynamic> _$ToUserServerMessageToJson(
     };
 
 const _$OnUserServerActionEnumMap = <OnUserServerAction, dynamic>{
-  OnUserServerAction.getUseresByInnerToken: 'getUseresByInnerToken'
+  OnUserServerAction.getUseresByInnerToken: 'getUseresByInnerToken',
+  OnUserServerAction.getHeroesOfPlayer: 'getHeroesOfPlayer',
+  OnUserServerAction.getHeroesToCreate: 'getHeroesToCreate',
+  OnUserServerAction.createHero: 'createHero',
+  OnUserServerAction.getMyHeroes: 'getMyHeroes'
 };
 
 GetUserByInnerToken _$GetUserByInnerTokenFromJson(Map<String, dynamic> json) {
@@ -1522,6 +1485,81 @@ Map<String, dynamic> _$GetUserByInnerTokenToJson(
     <String, dynamic>{
       'user': instance.user?.toJson(),
       'innerToken': instance.innerToken
+    };
+
+GetHeroesOfPlayer _$GetHeroesOfPlayerFromJson(Map<String, dynamic> json) {
+  return GetHeroesOfPlayer()
+    ..requestPlayerEmail = json['requestPlayerEmail'] as String
+    ..responseHeroes = (json['responseHeroes'] as List)
+        ?.map((e) => e == null
+            ? null
+            : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..responseUnits = (json['responseUnits'] as List)
+        ?.map((e) => e == null
+            ? null
+            : UnitTypeCompiled.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$GetHeroesOfPlayerToJson(GetHeroesOfPlayer instance) =>
+    <String, dynamic>{
+      'requestPlayerEmail': instance.requestPlayerEmail,
+      'responseHeroes':
+          instance.responseHeroes?.map((e) => e?.toJson())?.toList(),
+      'responseUnits': instance.responseUnits?.map((e) => e?.toJson())?.toList()
+    };
+
+ListOfHeroes _$ListOfHeroesFromJson(Map<String, dynamic> json) {
+  return ListOfHeroes()
+    ..responseHeroes = (json['responseHeroes'] as List)
+        ?.map((e) => e == null
+            ? null
+            : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList();
+}
+
+Map<String, dynamic> _$ListOfHeroesToJson(ListOfHeroes instance) =>
+    <String, dynamic>{
+      'responseHeroes':
+          instance.responseHeroes?.map((e) => e?.toJson())?.toList()
+    };
+
+ListOfHeroesOfPlayer _$ListOfHeroesOfPlayerFromJson(Map<String, dynamic> json) {
+  return ListOfHeroesOfPlayer()
+    ..responseHeroes = (json['responseHeroes'] as List)
+        ?.map((e) => e == null
+            ? null
+            : GameHeroCreateEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..innerToken = json['innerToken'] as String;
+}
+
+Map<String, dynamic> _$ListOfHeroesOfPlayerToJson(
+        ListOfHeroesOfPlayer instance) =>
+    <String, dynamic>{
+      'responseHeroes':
+          instance.responseHeroes?.map((e) => e?.toJson())?.toList(),
+      'innerToken': instance.innerToken
+    };
+
+CreateHero _$CreateHeroFromJson(Map<String, dynamic> json) {
+  return CreateHero()
+    ..name = json['name'] as String
+    ..typeName = json['typeName'] as String
+    ..innerToken = json['innerToken'] as String
+    ..responseHero = json['responseHero'] == null
+        ? null
+        : GameHeroCreateEnvelope.fromJson(
+            json['responseHero'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CreateHeroToJson(CreateHero instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'typeName': instance.typeName,
+      'innerToken': instance.innerToken,
+      'responseHero': instance.responseHero?.toJson()
     };
 
 LoggerMessage _$LoggerMessageFromJson(Map<String, dynamic> json) {

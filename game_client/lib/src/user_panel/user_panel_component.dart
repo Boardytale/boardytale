@@ -23,23 +23,93 @@ class UserPanelComponent {
   String name;
   final http.Client _http;
   bool saved = false;
+  List<core.GameHeroCreateEnvelope> myHeroes;
+  List<core.GameHeroCreateEnvelope> heroesToCreate;
+  String message = null;
 
   UserPanelComponent(
     this.appService,
     this.changeDetector,
     this.settingsService,
-    this.gateway, this._http,
+    this.gateway,
+    this._http,
   ) {
     appService.currentUser.listen((onData) {
       name = onData.name;
       changeDetector.markForCheck();
     });
     name = appService.currentUser.value?.name;
+
+    getHeroesToCreate();
+    refreshMyHeroes();
+  }
+
+  void refreshMyHeroes() async {
+    http.Response response = await _http.post("/userApi/toUserMessage",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(core.ToUserServerMessage.requestMyHeroes(appService.currentUser.value.innerToken)));
+    Map<String, dynamic> responseBody = json.decode(response.body);
+    if (response.statusCode == 200) {
+      core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
+      myHeroes = message.getListOfHeroesOfPlayer.responseHeroes;
+    } else {
+      message = responseBody["message"];
+    }
+    changeDetector.markForCheck();
+  }
+
+  void createHero(core.GameHeroCreateEnvelope envelope) async {
+    core.CreateHero createMessage = core.CreateHero();
+
+    createMessage
+      ..name = envelope.name
+      ..innerToken = appService.currentUser.value.innerToken
+      ..typeName = envelope.type.name;
+
+    http.Response response = await _http.post("/userApi/toUserMessage",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(core.ToUserServerMessage.createHero(createMessage)));
+    Map<String, dynamic> responseBody = json.decode(response.body);
+    if (response.statusCode == 200) {
+      core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
+      core.CreateHero createdHero = message.getCreateHeroMessage;
+      refreshMyHeroes();
+      print(createdHero.name);
+    } else {
+      message = responseBody["message"];
+      changeDetector.markForCheck();
+    }
+  }
+
+  void deleteHero(core.GameHeroCreateEnvelope envelope) async {
+
+//    http.Response response = await _http.post("/userApi/toUserMessage",
+//        headers: {"Content-Type": "application/json"},
+//        body: json.encode(core.ToUserServerMessage.createHero(createMessage)));
+//    Map<String, dynamic> responseBody = json.decode(response.body);
+//    if (response.statusCode == 200) {
+//      core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
+//      core.CreateHero createdHero = message.getCreateHeroMessage;
+//      print(createdHero.name);
+//    } else {
+//      message = responseBody["message"];
+//      changeDetector.markForCheck();
+//    }
+  }
+
+  void getHeroesToCreate() async {
+    http.Response response = await _http.post("/userApi/toUserMessage",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(core.ToUserServerMessage.requestHeroesToCreate()));
+    core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(json.decode(response.body));
+    heroesToCreate = message.getListOfHeroes.responseHeroes;
+    changeDetector.markForCheck();
   }
 
   void save() async {
     http.Response loginResponse = await _http.post("/userApi/renameUser",
-        headers: {"Content-Type": "application/json"}, body: json.encode({"name": name, "innerToken": appService.currentUser.value.innerToken}));
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({"name": name, "innerToken": appService.currentUser.value.innerToken}));
     core.User currentUser = core.User.fromGoogleJson(json.decode(loginResponse.body));
     appService.currentUser.add(currentUser);
     saved = true;
@@ -49,7 +119,7 @@ class UserPanelComponent {
     changeDetector.markForCheck();
   }
 
-  void returnToAppState(){
+  void returnToAppState() {
     window.location.reload();
   }
 }

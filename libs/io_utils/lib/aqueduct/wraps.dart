@@ -1,6 +1,8 @@
 import 'package:aqueduct/aqueduct.dart';
 import 'dart:convert';
 
+import 'package:core/model/model.dart';
+
 class IdWrap implements Serializable {
   String id;
 
@@ -91,4 +93,30 @@ class RenameWrap implements Serializable {
           ..innerToken = innerToken)
         .asMap());
   }
+}
+
+
+class ToUserServerMessageWrap implements Serializable {
+  ToUserServerMessage message;
+
+  @override
+  Map<String, dynamic> asMap() {
+    return message.toJson();
+  }
+
+  @override
+  void readFromMap(Map<String, dynamic> requestBody) {
+    message = ToUserServerMessage.fromJson(requestBody);
+  }
+
+  void read(Map<String, dynamic> object, {Iterable<String> ignore, Iterable<String> reject, Iterable<String> require}) {
+    readFromMap(object);
+  }
+
+  @override
+  APISchemaObject documentSchema(APIDocumentContext context) {
+    // TODO: implement documentSchema
+    return null;
+  }
+
 }

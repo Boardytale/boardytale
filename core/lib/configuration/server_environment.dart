@@ -94,7 +94,6 @@ class BoardytaleConfiguration {
   DatabaseConfiguration userDatabase;
   DatabaseConfiguration editorDatabase;
   ServerConfiguration userServer;
-  ServerConfiguration heroesServer;
   ServerConfiguration aiServer;
   ServerConfiguration proxyServer;
   ServerConfiguration loggerServer;

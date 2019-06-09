@@ -91,6 +91,7 @@ class ServerTaleState {
       units.forEach((id, unit) {
         if (unit.player.id == action.removePlayerId) {
           outputTaleUpdate.unitToRemoveIds.add(id);
+          unit.field.removeUnit(unit);
         }
       });
       outputTaleUpdate.unitToRemoveIds.forEach((idToRemove) {

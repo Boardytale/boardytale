@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:io_utils/aqueduct/wraps.dart';
 import 'package:aqueduct/aqueduct.dart';
-import 'package:user_server/model/user.dart';
+import 'package:user_server/model/db_objects.dart';
 import 'package:uuid/uuid.dart';
 
 Uuid uuid = Uuid();

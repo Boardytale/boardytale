@@ -8,30 +8,34 @@ class ServerTale {
   int lastUnitId = 0;
   ServerTaleState taleState;
   core.AiGroup aiGroupOnMove = null;
-  int _lastAddedHumanPlayerIndex = 0;
   int _lastIndexOfPlayerGotPlayersUnit = 0;
   ServerTriggers triggers;
   ServerTaleEvents events;
   io.WebSocket currentAiPlayerSocket;
   int _messagesOverflowProtection = 0;
 
+  List<ServerPlayer> get humanPlayers {
+    return taleState.humanPlayers.values.toList();
+  }
+
   ServerTale(this.room) {
     events = ServerTaleEvents(this);
     triggers = ServerTriggers(this, room.compiledTale.tale.triggers);
     taleState = ServerTaleState(room.compiledTale.tale, this);
 
-    List<ServerPlayer> humanPlayers =
-    room.connectedPlayers.values.map(upgradeConnectedHumanPlayerToTalePlayer).toList();
+    for (var player in room.connectedPlayers.values) {
+      taleState.addTaleAction(TaleAction()..newPlayersToTale = [upgradeConnectedHumanPlayerToTalePlayer(player)]);
+    }
+
     List<ServerPlayer> aiPlayers = room.compiledTale.tale.aiPlayers.values.map((player) {
       player.taleId = player.taleId ?? player.id;
-      return ServerPlayer()
-        ..fromCorePlayer(player);
+      return ServerPlayer()..fromCorePlayer(player);
     }).toList();
     List<core.UnitCreateOrUpdateAction> actions =
-    room.compiledTale.tale.units.map((action) => upgradeInitUnitAction(action, humanPlayers)).toList();
+        room.compiledTale.tale.units.map((action) => upgradeInitUnitAction(action, humanPlayers)).toList();
 
     taleState.addTaleAction(TaleAction()
-      ..newPlayersToTale = [...humanPlayers, ...aiPlayers]
+      ..newPlayersToTale = [...aiPlayers]
       ..unitUpdates = actions
       ..playersOnMove = room.compiledTale.tale.humanPlayerIds);
     triggers.onInit();
@@ -65,8 +69,8 @@ class ServerTale {
     aiPlay();
   }
 
-  core.UnitCreateOrUpdateAction upgradeInitUnitAction(core.UnitCreateOrUpdateAction action,
-      List<ServerPlayer> humanPlayers) {
+  core.UnitCreateOrUpdateAction upgradeInitUnitAction(
+      core.UnitCreateOrUpdateAction action, List<ServerPlayer> humanPlayers) {
     action.unitId = action.unitId ?? "${lastUnitId++}";
     if (action.transferToPlayerId == "players") {
       action.transferToPlayerId = humanPlayers[_lastIndexOfPlayerGotPlayersUnit].id;
@@ -81,7 +85,7 @@ class ServerTale {
   String getFirstFreeTalePlayerId() {
     for (int i = 0; i < taleState.compiled.humanPlayerIds.length; i++) {
       String taleId = taleState.compiled.humanPlayerIds[i];
-      bool anyPlayerHasThisId = taleState.humanPlayers.values.any((player) => player.taleId == taleId);
+      bool anyPlayerHasThisId = humanPlayers.any((player) => player.taleId == taleId);
       if (!anyPlayerHasThisId) {
         return taleId;
       }
@@ -89,20 +93,30 @@ class ServerTale {
     throw "No available taleId for player";
   }
 
+  core.Field getFirstFreeStartingField(Set<String> fieldsOccupied) {
+    for (int i = 0; i < taleState.compiled.world.startingFieldIds.length; i++) {
+      String fieldId = taleState.compiled.world.startingFieldIds[i];
+      core.Field field = taleState.fields[fieldId];
+      if (field.units.isEmpty && !fieldsOccupied.contains(fieldId)) {
+        fieldsOccupied.add(fieldId);
+        return field;
+      }
+    }
+    print("No available field for starting position");
+    return null;
+  }
+
   ServerPlayer upgradeConnectedHumanPlayerToTalePlayer(ServerPlayer player) {
     player.taleId = getFirstFreeTalePlayerId();
-    int order = taleState.humanPlayers.values.length;
-    player.color = ServerTale.colors[order];
+    player.color = ServerTale.colors[taleState.compiled.humanPlayerIds.indexOf(player.taleId)];
     player.team = "players";
-    _lastAddedHumanPlayerIndex++;
     return player;
   }
 
   void newPlayerEntersTale(ServerPlayer player) {
     player.enterGame(room.tale);
     room.tale.taleState
-        .addTaleAction(TaleAction()
-      ..newPlayersToTale = [room.tale.upgradeConnectedHumanPlayerToTalePlayer(player)]);
+        .addTaleAction(TaleAction()..newPlayersToTale = [room.tale.upgradeConnectedHumanPlayerToTalePlayer(player)]);
     room.tale.sendTaleDataToPlayer(player);
     HeroesHelper.getHeroes([player], room.connectedPlayers.values, room.tale);
   }
@@ -142,8 +156,7 @@ class ServerTale {
           _messagesOverflowProtection = 0;
 
           // TODO: refresh only units currently beginning their move
-          taleState.addTaleAction(TaleAction()
-            ..playersOnMove = taleState.humanPlayers.keys.toList());
+          taleState.addTaleAction(TaleAction()..playersOnMove = taleState.humanPlayers.keys.toList());
         }
       } else if (message.message == core.OnServerAction.unitTrackAction) {
         handleUnitTrackAction(message.unitTrackActionMessage, aiPlayerSocket: currentAiPlayerSocket);
@@ -156,8 +169,7 @@ class ServerTale {
       ..image = null
       ..showTimeInMilliseconds = 10000
       ..title = {core.Lang.en: "Victory", core.Lang.cz: "Vítězství"};
-    taleState.addTaleAction(TaleAction()
-      ..banterAction = banter);
+    taleState.addTaleAction(TaleAction()..banterAction = banter);
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }
 
@@ -166,8 +178,7 @@ class ServerTale {
       ..image = null
       ..showTimeInMilliseconds = 10000
       ..title = {core.Lang.en: "Lost", core.Lang.cz: "Prohra"};
-    taleState.addTaleAction(TaleAction()
-      ..banterAction = banter);
+    taleState.addTaleAction(TaleAction()..banterAction = banter);
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }
 
@@ -192,8 +203,7 @@ class ServerTale {
   }
 
   void ejectPlayer(ServerPlayer player) {
-    taleState.addTaleAction(TaleAction()
-      ..removePlayerId = player.id);
+    taleState.addTaleAction(TaleAction()..removePlayerId = player.id);
   }
 }
 

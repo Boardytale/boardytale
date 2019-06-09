@@ -29,7 +29,6 @@ main() async {
     config.proxyServer,
     config.userServer,
     config.editorServer,
-    config.heroesServer,
     config.aiServer,
     config.gameServer,
   ];

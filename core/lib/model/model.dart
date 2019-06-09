@@ -56,8 +56,6 @@ part 'package:core/model/game/to_client_messages.dart';
 
 part 'package:core/model/game/to_game_server_messages.dart';
 
-part 'package:core/model/game/to_hero_server_message.dart';
-
 part 'package:core/model/game/to_ai_server_message.dart';
 
 part 'package:core/model/game/to_user_server_message.dart';
