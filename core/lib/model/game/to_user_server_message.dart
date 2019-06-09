@@ -4,6 +4,7 @@ part of model;
 class ToUserServerMessage {
   OnUserServerAction message;
   String content;
+  String error;
 
   ToUserServerMessage();
 

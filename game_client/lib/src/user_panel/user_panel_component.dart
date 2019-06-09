@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:async';
-import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -119,7 +118,4 @@ class UserPanelComponent {
     changeDetector.markForCheck();
   }
 
-  void returnToAppState() {
-    window.location.reload();
-  }
 }

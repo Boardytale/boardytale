@@ -50,6 +50,7 @@ class AppService {
     core.GameNavigationState.userPanel: ClientGameState()
       ..name = core.GameNavigationState.userPanel
       ..showCreateGameButton = false
+      ..showUserPanelButton = true
       ..allowedNoServer = true,
     core.GameNavigationState.login: ClientGameState()
       ..name = core.GameNavigationState.login

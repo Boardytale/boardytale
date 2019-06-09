@@ -2,9 +2,9 @@
   <span *ngIf="appService.currentUser.value != null">
   Logged user:
     <a
-      href="javascript:;"
-      *ngIf="appService.currentUser.value != null && appService.navigationState.value.showUserPanelButton"
-      (click)="goToUserPanel()"
+        href="javascript:"
+        *ngIf="appService.currentUser.value != null && appService.navigationState.value.showUserPanelButton"
+        (click)="goToUserPanel()"
     >
       {{getUserLabel()}}
     </a>
@@ -13,10 +13,16 @@
   Boardytale
 </span>
   <button
-    type="button"
-    class="btn btn-primary btn-sm ml-3"
-    *ngIf="appService.navigationState.value.showCreateGameButton"
-    (click)="goToCreate()"
+      *ngIf="showReturnToAppButton()"
+      class="btn btn-primary btn-sm ml-3"
+      (click)="returnToAppState()"
+  >Return to application
+  </button>
+  <button
+      type="button"
+      class="btn btn-primary btn-sm ml-3"
+      *ngIf="appService.navigationState.value.showCreateGameButton"
+      (click)="goToCreate()"
   >
     Create new lobby
   </button>

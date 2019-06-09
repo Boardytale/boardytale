@@ -3,6 +3,7 @@ import 'package:game_client/app_component.template.dart' as ng;
 import 'package:game_client/src/game_view/world_view_service.dart';
 import 'package:game_client/src/services/create_game_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
+import 'package:game_client/src/services/hero_service.dart';
 import 'package:game_client/src/services/lobby_service.dart';
 import 'package:game_client/src/services/settings_service.dart';
 import 'package:game_client/src/services/app_service.dart';
@@ -20,6 +21,7 @@ import 'main.template.dart' as self;
   ClassProvider(CreateGameService),
   ClassProvider(GameService),
   ClassProvider(WorldViewService),
+  ClassProvider(HeroService),
 ])
 final InjectorFactory injector = self.injector$Injector;
 

@@ -1,0 +1,29 @@
+<div
+    *ngIf="lobby != null"
+    class="container-fluid lobby-room"
+>
+  <h1>lobby {{lobby.lobbyName}}</h1>
+  <img [src]="lobby.image.data">
+  <h2>Select hero:</h2>
+  <div
+      *ngFor="let hero of myHeroes"
+      class="hero-to-create-cont">
+    <h1>{{hero.name}}</h1>
+    <img [src]="hero.type.image.data">
+    <div class="hero-to-create-cont__card-body">
+      <span>Health: {{hero.type.health}}</span>
+      <span>Armor: {{hero.type.armor}}</span>
+      <a href="javascript:" class="btn btn-primary" (click)="selectHero(hero)">Select</a>
+    </div>
+  </div>
+
+  <h2>Players:</h2>
+  <lobby-players [players]="lobby.players"></lobby-players>
+  <button
+      type="button"
+      class="btn btn-primary mt-3"
+      (click)="enterGame()"
+  >
+    Start game
+  </button>
+</div>

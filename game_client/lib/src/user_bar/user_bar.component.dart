@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';
@@ -33,15 +34,23 @@ class UserBarComponent {
     appService.noServerGoToState(core.GameNavigationState.userPanel);
   }
 
-  String getUserLabel(){
+  String getUserLabel() {
     core.User user = appService.currentUser.value;
-    if(user == null){
+    if (user == null) {
       return "";
     }
-    if(user.name != null){
+    if (user.name != null) {
       return user.name;
-    }else{
+    } else {
       return user.email;
     }
+  }
+
+  void returnToAppState() {
+    window.location.reload();
+  }
+
+  bool showReturnToAppButton() {
+    return appService.navigationState.value.name == core.GameNavigationState.userPanel;
   }
 }

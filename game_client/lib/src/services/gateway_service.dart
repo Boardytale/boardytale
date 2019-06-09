@@ -8,6 +8,7 @@ import 'package:angular/di.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:game_client/project_settings.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:http/http.dart' as http;
 
 @Injectable()
 class GatewayService {
@@ -17,8 +18,9 @@ class GatewayService {
   BehaviorSubject<int> reconnectingTime = BehaviorSubject(seedValue: 0);
   List<core.ToGameServerMessage> _beforeOpenBuffer = [];
   Map<core.OnClientAction, void Function(core.ToClientMessage message)> handlers = {};
+  final http.Client _http;
 
-  GatewayService() {
+  GatewayService(this._http) {
     var loc = window.location;
     String newUri;
     if (loc.protocol == "https:") {
@@ -92,5 +94,18 @@ class GatewayService {
     sendMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f) {
       return f.id;
     })?.toList()));
+  }
+
+  Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message) async {
+    http.Response response = await _http.post("/userApi/toUserMessage",
+        headers: {"Content-Type": "application/json"},
+        body: json.encode(message));
+    print(response);
+    Map<String, dynamic> responseBody = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return core.ToUserServerMessage.fromJson(responseBody);
+    } else {
+      return core.ToUserServerMessage()..error = responseBody["message"];
+    }
   }
 }
