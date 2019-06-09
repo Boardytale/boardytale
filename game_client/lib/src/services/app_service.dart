@@ -16,10 +16,11 @@ class AppService {
   AppService(this.settings, this.gatewayService, this.lobbyService, this.createGameService) {
     if (html.window.localStorage.containsKey("innerToken")) {
       gatewayService.initMessages(html.window.localStorage["innerToken"]);
+      navigationState.add(states[core.GameNavigationState.loading]);
     } else {
       showSignInButton = true;
+      noServerGoToState(core.GameNavigationState.login);
     }
-    navigationState.add(states[core.GameNavigationState.loading]);
     this.gatewayService.handlers[core.OnClientAction.setNavigationState] = setState;
     this.gatewayService.handlers[core.OnClientAction.setCurrentUser] = setUser;
   }
@@ -48,6 +49,10 @@ class AppService {
       ..showUserPanelButton = true,
     core.GameNavigationState.userPanel: ClientGameState()
       ..name = core.GameNavigationState.userPanel
+      ..showCreateGameButton = false
+      ..allowedNoServer = true,
+    core.GameNavigationState.login: ClientGameState()
+      ..name = core.GameNavigationState.login
       ..showCreateGameButton = false
       ..allowedNoServer = true,
   };

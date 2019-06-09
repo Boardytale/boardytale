@@ -17,7 +17,7 @@ class CreateGameComponent {
   SettingsService settingsService;
   GatewayService gateway;
   String selectedTaleId;
-  String roomName = "aa";
+  String roomName = "Untitled lobby";
 
   core.LobbyTale get selectedTale {
     for (var tale in createGameService.talesToCreate.value) {
