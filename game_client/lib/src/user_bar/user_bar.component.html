@@ -3,11 +3,14 @@
   Logged user:
     <a
         href="javascript:"
-        *ngIf="appService.currentUser.value != null && appService.navigationState.value.showUserPanelButton"
+        *ngIf="appService.navigationState.value.showUserPanelButton"
         (click)="goToUserPanel()"
     >
       {{getUserLabel()}}
     </a>
+    <span *ngIf="!appService.navigationState.value.showUserPanelButton">
+      {{getUserLabel()}}
+    </span>
 </span>
   <span *ngIf="appService.currentUser.value == null">
   Boardytale

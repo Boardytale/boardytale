@@ -97,7 +97,7 @@ class ToGameServerMessage {
   }
   // ---
 
-  factory ToGameServerMessage.leaveGameAction() {
+  factory ToGameServerMessage.leaveGame() {
     return ToGameServerMessage()
       ..content = ""
       ..message = OnServerAction.leaveGame;
@@ -106,7 +106,7 @@ class ToGameServerMessage {
 
   String get setHeroForNextGameHeroId => content;
 
-  factory ToGameServerMessage.fromHeroForNextGameMessage(String heroId) {
+  factory ToGameServerMessage.createSetHeroForNextGame(String heroId) {
     return ToGameServerMessage()
       ..content = heroId
       ..message = OnServerAction.setHeroForNextGame;

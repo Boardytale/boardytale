@@ -19,6 +19,6 @@ class LobbiesComponent {
   }
 
   void enterGame(core.OpenedLobby lobby) {
-    gateway.sendMessage(core.ToGameServerMessage.enterLobby(lobby.id));
+    gateway.toGameServerMessage(core.ToGameServerMessage.enterLobby(lobby.id));
   }
 }

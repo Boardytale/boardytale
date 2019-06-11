@@ -46,7 +46,7 @@ class AppService {
     core.GameNavigationState.inLobby: ClientGameState()
       ..name = core.GameNavigationState.inLobby
       ..showCreateGameButton = false
-      ..showUserPanelButton = true,
+      ..showUserPanelButton = false,
     core.GameNavigationState.userPanel: ClientGameState()
       ..name = core.GameNavigationState.userPanel
       ..showCreateGameButton = false
@@ -102,7 +102,7 @@ class AppService {
   }
 
   void goToState(core.GameNavigationState newState) {
-    gatewayService.sendMessage(core.ToGameServerMessage.fromGoToState(newState));
+    gatewayService.toGameServerMessage(core.ToGameServerMessage.fromGoToState(newState));
   }
 
   void noServerGoToState(core.GameNavigationState newState) {

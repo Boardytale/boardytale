@@ -36,7 +36,7 @@ class GatewayService {
     });
     _socket.onOpen.listen((_) {
       _opened = true;
-      _beforeOpenBuffer.forEach((message) => sendMessage(message));
+      _beforeOpenBuffer.forEach((message) => toGameServerMessage(message));
       _beforeOpenBuffer.clear();
     });
     _socket.onClose.listen(reconnect);
@@ -71,10 +71,10 @@ class GatewayService {
   }
 
   void initMessages(String innerToken) {
-    sendMessage(core.ToGameServerMessage.init(innerToken));
+    toGameServerMessage(core.ToGameServerMessage.init(innerToken));
   }
 
-  void sendMessage(core.ToGameServerMessage message) {
+  void toGameServerMessage(core.ToGameServerMessage message) {
     if (!_opened) {
       _beforeOpenBuffer.add(message);
     } else {
@@ -91,7 +91,7 @@ class GatewayService {
   }
 
   void sendIntention(List<core.Field> fields) {
-    sendMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f) {
+    toGameServerMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f) {
       return f.id;
     })?.toList()));
   }

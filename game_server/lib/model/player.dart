@@ -73,8 +73,14 @@ class ServerPlayer extends core.Player {
   }
 
   void leaveGame() {
+    if(room != null){
+      room.ejectPlayer(this);
+      if (room.connectedPlayers.isEmpty) {
+        room.destroy();
+      }
+      room = null;
+    }
     if(tale != null){
-      tale.room.ejectPlayer(this);
       tale = null;
     }
     navigationState = core.GameNavigationState.findLobby;

@@ -33,24 +33,29 @@ class LobbyRoom {
   }
 
   void destroy() {
-    connectedPlayers.forEach((key, player) {
-      player.leaveRoom();
-    });
-    connectedPlayers = null;
+    if (connectedPlayers != null) {
+      connectedPlayers.forEach((key, player) {
+        player.leaveRoom();
+      });
+      connectedPlayers = null;
+      print("destroyed lobby room ${id}");
+    }
     lobbyService.removeLobbyRoom(this);
-    print("destroyed lobby room ${id}");
   }
 
   void ejectPlayer(ServerPlayer player) {
-    if(openedLobby != null){
-      openedLobby.players.removeWhere((p)=>p.id==player.id);
+    if (openedLobby != null) {
+      openedLobby.players.removeWhere((p) => p.id == player.id);
     }
     connectedPlayers.remove(player.email);
-    tale.ejectPlayer(player);
-    if(connectedPlayers.isEmpty){
-      tale.destroy();
+    if (tale != null) {
+      tale.ejectPlayer(player);
+      if (connectedPlayers.isEmpty) {
+        tale.destroy();
+      }
     }
     print("player ejected ${player.email}");
+    sendUpdateToAllPlayers();
   }
 }
 

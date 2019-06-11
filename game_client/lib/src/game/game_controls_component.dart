@@ -35,11 +35,11 @@ class GameControlsComponent {
   }
 
   void endTurn() {
-    gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
+    gateway.toGameServerMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
   }
 
   void leaveGame() {
-    gateway.sendMessage(core.ToGameServerMessage.leaveGameAction());
+    gateway.toGameServerMessage(core.ToGameServerMessage.leaveGame());
   }
 
   void switchShowCoordinates() {

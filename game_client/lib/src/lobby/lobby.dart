@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/lobby/lobby_players/lobby_players.dart';
@@ -28,15 +29,18 @@ class LobbyComponent {
       //        gateway.sendMessage(core.ToGameServerMessage.enterGame(onData.id));
       //      }
     });
-
     refreshMyHeroes();
   }
 
   void enterGame() {
-    gateway.sendMessage(core.ToGameServerMessage.enterGame(lobby.id));
+    gateway.toGameServerMessage(core.ToGameServerMessage.enterGame(lobby.id));
   }
 
-  void refreshMyHeroes() async {
+  void leaveLobby() {
+    gateway.toGameServerMessage(core.ToGameServerMessage.leaveGame());
+  }
+
+  Future<Null> refreshMyHeroes() async {
     myHeroes = await heroService.getMyHeroes();
     if (myHeroes.isNotEmpty) {
       selectedHero = myHeroes.first;
@@ -46,6 +50,6 @@ class LobbyComponent {
 
   void selectHero(core.GameHeroCreateEnvelope hero) {
     selectedHero = hero;
-    gateway.sendMessage(core.ToGameServerMessage.fromHeroForNextGameMessage(hero.id));
+    gateway.toGameServerMessage(core.ToGameServerMessage.createSetHeroForNextGame(hero.id));
   }
 }

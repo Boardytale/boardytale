@@ -39,11 +39,16 @@ class UserBarComponent {
     if (user == null) {
       return "";
     }
+    String out;
     if (user.name != null) {
-      return user.name;
+      out = user.name;
     } else {
-      return user.email;
+      out = user.email;
     }
+    if (out.length > 20) {
+      out = out.substring(0, 17) + "...";
+    }
+    return out;
   }
 
   void returnToAppState() {
