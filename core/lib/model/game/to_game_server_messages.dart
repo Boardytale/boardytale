@@ -15,9 +15,9 @@ class ToGameServerMessage {
 
   // ---
 
-  GoToState get goToStateMessage => GoToState.fromJson(json.decode(content));
+  GoToState get goToState => GoToState.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.fromGoToState(GameNavigationState newState) {
+  factory ToGameServerMessage.createGoToState(GameNavigationState newState) {
     return ToGameServerMessage()
       ..message = OnServerAction.goToState
       ..content = json.encode((GoToState()..newState = newState).toJson());
@@ -25,9 +25,9 @@ class ToGameServerMessage {
 
   // ---
 
-  String get initMessageInnerToken => content;
+  String get initInnerToken => content;
 
-  factory ToGameServerMessage.init(String innerToken) {
+  factory ToGameServerMessage.createInit(String innerToken) {
     return ToGameServerMessage()
       ..content = innerToken
       ..message = OnServerAction.init;
@@ -35,9 +35,9 @@ class ToGameServerMessage {
 
   // ---
 
-  CreateLobby get createLobbyMessage => CreateLobby.fromJson(json.decode(content));
+  CreateLobby get getCreateLobby => CreateLobby.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.createLobby(String taleName, String roomName) {
+  factory ToGameServerMessage.createCreateLobby(String taleName, String roomName) {
     return ToGameServerMessage()
       ..content = jsonEncode((CreateLobby()
             ..taleName = taleName
@@ -50,7 +50,7 @@ class ToGameServerMessage {
 
   String get enterLobbyOfId => content;
 
-  factory ToGameServerMessage.enterLobby(String lobbyId) {
+  factory ToGameServerMessage.createEnterLobby(String lobbyId) {
     return ToGameServerMessage()
       ..content = lobbyId
       ..message = OnServerAction.enterLobby;
@@ -60,7 +60,7 @@ class ToGameServerMessage {
 
   String get enterGameLobbyId => content;
 
-  factory ToGameServerMessage.enterGame(String lobbyId) {
+  factory ToGameServerMessage.createEnterGame(String lobbyId) {
     return ToGameServerMessage()
       ..content = lobbyId
       ..message = OnServerAction.enterGame;
@@ -68,9 +68,9 @@ class ToGameServerMessage {
 
   // ---
 
-  UnitTrackAction get unitTrackActionMessage => UnitTrackAction.fromJson(json.decode(content));
+  UnitTrackAction get unitTrackAction => UnitTrackAction.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.unitTrackAction(UnitTrackAction action) {
+  factory ToGameServerMessage.createUnitTrackAction(UnitTrackAction action) {
     return ToGameServerMessage()
       ..content = jsonEncode(action.toJson())
       ..message = OnServerAction.unitTrackAction;
@@ -78,19 +78,19 @@ class ToGameServerMessage {
 
   // ---
 
-  PlayerGameIntention get playerGameIntentionMessage => PlayerGameIntention.fromJson(json.decode(content));
+  PlayerIntention get playerIntention => PlayerIntention.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.playerGameIntention(List<String> fieldsId) {
+  factory ToGameServerMessage.createPlayerIntention(List<String> fieldsId) {
     return ToGameServerMessage()
-      ..content = jsonEncode((PlayerGameIntention()..fieldsId = fieldsId).toJson())
+      ..content = jsonEncode((PlayerIntention()..fieldsId = fieldsId).toJson())
       ..message = OnServerAction.playerGameIntention;
   }
 
   // ---
 
-  ControlsAction get controlsActionMessage => ControlsAction.fromJson(json.decode(content));
+  ControlsAction get controlsAction => ControlsAction.fromJson(json.decode(content));
 
-  factory ToGameServerMessage.controlsAction(ControlsActionName actionName) {
+  factory ToGameServerMessage.createControlsAction(ControlsActionName actionName) {
     return ToGameServerMessage()
       ..content = jsonEncode((ControlsAction()..actionName = actionName).toJson())
       ..message = OnServerAction.controlsAction;
@@ -178,10 +178,10 @@ class UnitTrackAction extends MessageContent {
 }
 
 @JsonSerializable()
-class PlayerGameIntention extends MessageContent {
+class PlayerIntention extends MessageContent {
   List<String> fieldsId;
 
-  static PlayerGameIntention fromJson(Map<String, dynamic> json) => _$PlayerGameIntentionFromJson(json);
+  static PlayerIntention fromJson(Map<String, dynamic> json) => _$PlayerGameIntentionFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$PlayerGameIntentionToJson(this);

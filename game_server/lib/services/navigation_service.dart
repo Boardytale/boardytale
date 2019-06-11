@@ -6,7 +6,7 @@ class NavigationService {
   }
 
   void handle(MessageWithConnection messageWithConnection) async {
-    messageWithConnection.player.navigationState = messageWithConnection.message.goToStateMessage.newState;
+    messageWithConnection.player.navigationState = messageWithConnection.message.goToState.newState;
     restoreState(messageWithConnection.player);
   }
 

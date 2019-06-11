@@ -71,7 +71,7 @@ class GatewayService {
   }
 
   void initMessages(String innerToken) {
-    toGameServerMessage(core.ToGameServerMessage.init(innerToken));
+    toGameServerMessage(core.ToGameServerMessage.createInit(innerToken));
   }
 
   void toGameServerMessage(core.ToGameServerMessage message) {
@@ -91,7 +91,7 @@ class GatewayService {
   }
 
   void sendIntention(List<core.Field> fields) {
-    toGameServerMessage(core.ToGameServerMessage.playerGameIntention(fields?.map((f) {
+    toGameServerMessage(core.ToGameServerMessage.createPlayerIntention(fields?.map((f) {
       return f.id;
     })?.toList()));
   }

@@ -42,7 +42,7 @@ class CreateGameComponent {
   }
 
   void createLobby() {
-    gateway.toGameServerMessage(core.ToGameServerMessage.createLobby(selectedTaleId, roomName));
+    gateway.toGameServerMessage(core.ToGameServerMessage.createCreateLobby(selectedTaleId, roomName));
   }
 
   void selectLobby(String id) {

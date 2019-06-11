@@ -1,7 +1,7 @@
 name: user_server
-description: An empty Aqueduct application.
+description: User and heroes component of Boardytale application
 version: 0.0.1
-author: stable|kernel <jobs@stablekernel.com>
+author: Boardytale team - see Git log form more information
 
 environment:
   sdk: ">=2.3.0 <3.0.0"

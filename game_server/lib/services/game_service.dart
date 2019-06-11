@@ -53,7 +53,7 @@ class GameService {
   }
 
   void handleUnitTrackAction(MessageWithConnection message) {
-    message.player.tale.handleUnitTrackAction(message.message.unitTrackActionMessage);
+    message.player.tale.handleUnitTrackAction(message.message.unitTrackAction);
   }
 
   void handleLeaveGame(MessageWithConnection message) {
@@ -61,7 +61,7 @@ class GameService {
   }
 
   void handleControlsAction(MessageWithConnection message) {
-    if (message.message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
+    if (message.message.controlsAction.actionName == core.ControlsActionName.endOfTurn) {
       message.player.tale.endOfTurn();
     }
   }

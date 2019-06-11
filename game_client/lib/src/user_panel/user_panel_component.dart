@@ -48,7 +48,7 @@ class UserPanelComponent {
     await appService.currentUser.first;
     http.Response response = await _http.post("/userApi/toUserMessage",
         headers: {"Content-Type": "application/json"},
-        body: json.encode(core.ToUserServerMessage.requestMyHeroes(appService.currentUser.value.innerToken)));
+        body: json.encode(core.ToUserServerMessage.createRequestForMyHeroes(appService.currentUser.value.innerToken)));
     Map<String, dynamic> responseBody = json.decode(response.body);
     if (response.statusCode == 200) {
       core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
@@ -66,7 +66,7 @@ class UserPanelComponent {
   }
 
   void createHero(core.GameHeroCreateEnvelope envelope) async {
-    core.CreateHero createMessage = core.CreateHero();
+    core.CreateHeroData createMessage = core.CreateHeroData();
 
     createMessage
       ..name = envelope.name
@@ -75,11 +75,11 @@ class UserPanelComponent {
 
     http.Response response = await _http.post("/userApi/toUserMessage",
         headers: {"Content-Type": "application/json"},
-        body: json.encode(core.ToUserServerMessage.createHero(createMessage)));
+        body: json.encode(core.ToUserServerMessage.createCreateHeroData(createMessage)));
     Map<String, dynamic> responseBody = json.decode(response.body);
     if (response.statusCode == 200) {
       core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(responseBody);
-      core.CreateHero createdHero = message.getCreateHeroMessage;
+      core.CreateHeroData createdHero = message.getCreateHeroData;
       refreshMyHeroes();
       print(createdHero.name);
     } else {
@@ -106,7 +106,7 @@ class UserPanelComponent {
   void getHeroesToCreate() async {
     http.Response response = await _http.post("/userApi/toUserMessage",
         headers: {"Content-Type": "application/json"},
-        body: json.encode(core.ToUserServerMessage.requestHeroesToCreate()));
+        body: json.encode(core.ToUserServerMessage.createRequestForListOfDefaultHeroesToCreate()));
     core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(json.decode(response.body));
     heroesToCreate = message.getListOfHeroes.responseHeroes;
     changeDetector.markForCheck();

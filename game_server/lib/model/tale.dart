@@ -150,7 +150,7 @@ class ServerTale {
       print(messageString);
       core.ToGameServerMessage message = core.ToGameServerMessage.fromJson(json.decode(messageString));
       if (message.message == core.OnServerAction.controlsAction) {
-        if (message.controlsActionMessage.actionName == core.ControlsActionName.endOfTurn) {
+        if (message.controlsAction.actionName == core.ControlsActionName.endOfTurn) {
           currentAiPlayerSocket.close();
           currentAiPlayerSocket = null;
           _messagesOverflowProtection = 0;
@@ -159,7 +159,7 @@ class ServerTale {
           taleState.addTaleAction(TaleAction()..playersOnMove = taleState.humanPlayers.keys.toList());
         }
       } else if (message.message == core.OnServerAction.unitTrackAction) {
-        handleUnitTrackAction(message.unitTrackActionMessage, aiPlayerSocket: currentAiPlayerSocket);
+        handleUnitTrackAction(message.unitTrackAction, aiPlayerSocket: currentAiPlayerSocket);
       }
     });
   }

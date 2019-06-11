@@ -10,7 +10,7 @@ class InitGameService {
   }
 
   void handle(MessageWithConnection messageWithConnection) async {
-    String innerToken = messageWithConnection.message.initMessageInnerToken;
+    String innerToken = messageWithConnection.message.initInnerToken;
     ServerPlayer player;
     if (innerToken == null) {
       print("inner token not given");
@@ -55,7 +55,7 @@ class InitGameService {
 
   Future<core.User> getUser(String innerToken) async{
     core.ToUserServerMessage responseMessage =
-        await gateway.innerMessageToUserServer(core.ToUserServerMessage.fromInnerToken(innerToken));
+        await gateway.innerMessageToUserServer(core.ToUserServerMessage.createGetUserByInnerToken(innerToken));
     core.User user;
     if (responseMessage.error == null) {
       user = responseMessage.getUser.user;

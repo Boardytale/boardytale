@@ -189,7 +189,7 @@ class WorldComponent implements OnDestroy {
       core.Ability ability = _draggedUnit.getAbility(track, shift, alt, ctrl);
       if (ability != null) {
         print(ability.name);
-        gatewayService.toGameServerMessage(core.ToGameServerMessage.unitTrackAction(core.UnitTrackAction()
+        gatewayService.toGameServerMessage(core.ToGameServerMessage.createUnitTrackAction(core.UnitTrackAction()
           ..abilityName = ability.name
           ..unitId = _draggedUnit.id
           ..actionId = "${appService.currentPlayer.id}_${_lastActionId++}"

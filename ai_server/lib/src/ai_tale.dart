@@ -82,7 +82,7 @@ class AiTale {
       action.track = track.toIds();
     }
     playedUnits.add(unitOnMove);
-    gateway.sendMessage(core.ToGameServerMessage.unitTrackAction(action), connection);
+    gateway.sendMessage(core.ToGameServerMessage.createUnitTrackAction(action), connection);
   }
 
   core.Unit getFirstPlayCapableUnitOfMine() {
@@ -100,7 +100,7 @@ class AiTale {
   }
 
   void endAiTurn() {
-    gateway.sendMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn), connection);
+    gateway.sendMessage(core.ToGameServerMessage.createControlsAction(core.ControlsActionName.endOfTurn), connection);
   }
 
   void applyPatch(core.GetNextMoveByUpdate update) {

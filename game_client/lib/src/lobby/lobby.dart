@@ -33,7 +33,7 @@ class LobbyComponent {
   }
 
   void enterGame() {
-    gateway.toGameServerMessage(core.ToGameServerMessage.enterGame(lobby.id));
+    gateway.toGameServerMessage(core.ToGameServerMessage.createEnterGame(lobby.id));
   }
 
   void leaveLobby() {

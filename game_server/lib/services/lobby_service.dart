@@ -79,7 +79,7 @@ class LobbyService {
     gateway.sendMessage(
         core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), messageWithConnection.player);
 
-    core.CreateLobby message = messageWithConnection.message.createLobbyMessage;
+    core.CreateLobby message = messageWithConnection.message.getCreateLobby;
 
     createLobbyRoom(messageWithConnection.player, message.taleName, message.name);
 

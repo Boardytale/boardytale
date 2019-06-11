@@ -11,7 +11,7 @@ class IntentionService {
         if (player != message.player) {
           gateway.sendMessage(
               core.ToClientMessage.fromIntentionUpdate(
-                  message.player.id, message.message.playerGameIntentionMessage.fieldsId),
+                  message.player.id, message.message.playerIntention.fieldsId),
               player);
         }
       });

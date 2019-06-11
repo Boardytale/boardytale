@@ -35,7 +35,7 @@ class GameControlsComponent {
   }
 
   void endTurn() {
-    gateway.toGameServerMessage(core.ToGameServerMessage.controlsAction(core.ControlsActionName.endOfTurn));
+    gateway.toGameServerMessage(core.ToGameServerMessage.createControlsAction(core.ControlsActionName.endOfTurn));
   }
 
   void leaveGame() {

@@ -31,26 +31,10 @@ class UserInnerController extends ResourceController {
     String body = await request.readAsString();
     core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(json.decode(body) as Map<String, dynamic>);
     if (message.message == core.OnUserServerAction.getUserByInnerToken) {
-      var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
-      User user = await query.fetchOne();
-      if (user != null) {
-        core.User coreUser = core.User.fromJson(user.asMap());
-        coreUser.hasHero = (await getFirstHero(user.id, context)) != null;
-        message.addUser(coreUser);
-      }
-      return shelf.Response.ok(json.encode(message.toJson()));
+      return getUserByInnerToken(message.getUser.innerToken, context, message);
     }
     if (message.message == core.OnUserServerAction.getStartingUnits) {
-
-      return getStartingUnits(message.getStartingUnits.requestedPlayerEmail, message.getStartingUnits.requestedHeroId, context);
-//      //      core.GetHeroesOfPlayer heroes = message.getHeroesOfPlayerMessage;
-//      //      message.addHeroesAndUnits([mockedHeroes[3]], [pikeman]);
-//      message.addHeroesAndUnits([heroesData[counter]], [pikeman]);
-//      counter++;
-//      if (counter >= heroesData.length) {
-//        counter = 0;
-//      }
-//      return shelf.Response.ok(json.encode(message.toJson()));
+      return getStartingUnits(message.getStartingUnits.requestedPlayerEmail, message.getStartingUnits.requestedHeroId, context, message);
     }
     return shelf.Response.notFound(json.encode({"error": "${message.message} is not known message"}));
   }

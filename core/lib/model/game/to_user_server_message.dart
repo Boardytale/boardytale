@@ -22,7 +22,7 @@ class ToUserServerMessage {
     content = json.encode(getUser..user = responseUser);
   }
 
-  factory ToUserServerMessage.fromInnerToken(String innerToken) {
+  factory ToUserServerMessage.createGetUserByInnerToken(String innerToken) {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getUserByInnerToken
       ..content = json.encode((GetUserByInnerToken()..innerToken = innerToken).toJson());
@@ -52,20 +52,20 @@ class ToUserServerMessage {
     content = json.encode(getListOfHeroes..responseHeroes = responseHeroes);
   }
 
-  factory ToUserServerMessage.requestHeroesToCreate() {
+  factory ToUserServerMessage.createRequestForListOfDefaultHeroesToCreate() {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getHeroesToCreate
       ..content = "{}";
   }
   // ---
 
-  CreateHero get getCreateHeroMessage => CreateHero.fromJson(json.decode(content));
+  CreateHeroData get getCreateHeroData => CreateHeroData.fromJson(json.decode(content));
 
   void addHero(GameHeroCreateEnvelope responseHero) {
-    content = json.encode(getCreateHeroMessage..responseHero = responseHero);
+    content = json.encode(getCreateHeroData..responseHero = responseHero);
   }
 
-  factory ToUserServerMessage.createHero(CreateHero createHero) {
+  factory ToUserServerMessage.createCreateHeroData(CreateHeroData createHero) {
     return ToUserServerMessage()
       ..message = OnUserServerAction.createHero
       ..content = json.encode(createHero.toJson());
@@ -79,7 +79,7 @@ class ToUserServerMessage {
   }
 
   // use list of heroes for request
-  factory ToUserServerMessage.requestMyHeroes(String innerToken) {
+  factory ToUserServerMessage.createRequestForMyHeroes(String innerToken) {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getMyHeroes
       ..content = json.encode((ListOfHeroesOfPlayer()..innerToken = innerToken).toJson());
@@ -150,13 +150,13 @@ class ListOfHeroesOfPlayer extends MessageContent {
 }
 
 @JsonSerializable()
-class CreateHero extends MessageContent {
+class CreateHeroData extends MessageContent {
   String name;
   String typeName;
   String innerToken;
   GameHeroCreateEnvelope responseHero;
 
-  static CreateHero fromJson(Map<String, dynamic> json) => _$CreateHeroFromJson(json);
+  static CreateHeroData fromJson(Map<String, dynamic> json) => _$CreateHeroFromJson(json);
 
   Map<String, dynamic> toJson() {
     return _$CreateHeroToJson(this);

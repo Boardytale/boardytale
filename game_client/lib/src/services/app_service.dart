@@ -102,7 +102,7 @@ class AppService {
   }
 
   void goToState(core.GameNavigationState newState) {
-    gatewayService.toGameServerMessage(core.ToGameServerMessage.fromGoToState(newState));
+    gatewayService.toGameServerMessage(core.ToGameServerMessage.createGoToState(newState));
   }
 
   void noServerGoToState(core.GameNavigationState newState) {

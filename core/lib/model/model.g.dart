@@ -1352,13 +1352,13 @@ const _$AbilityNameEnumMap = <AbilityName, dynamic>{
   AbilityName.raise: 'raise'
 };
 
-PlayerGameIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
-  return PlayerGameIntention()
+PlayerIntention _$PlayerGameIntentionFromJson(Map<String, dynamic> json) {
+  return PlayerIntention()
     ..fieldsId = (json['fieldsId'] as List)?.map((e) => e as String)?.toList();
 }
 
 Map<String, dynamic> _$PlayerGameIntentionToJson(
-        PlayerGameIntention instance) =>
+        PlayerIntention instance) =>
     <String, dynamic>{'fieldsId': instance.fieldsId};
 
 ControlsAction _$ControlsActionFromJson(Map<String, dynamic> json) {
@@ -1534,8 +1534,8 @@ Map<String, dynamic> _$ListOfHeroesOfPlayerToJson(
       'innerToken': instance.innerToken
     };
 
-CreateHero _$CreateHeroFromJson(Map<String, dynamic> json) {
-  return CreateHero()
+CreateHeroData _$CreateHeroFromJson(Map<String, dynamic> json) {
+  return CreateHeroData()
     ..name = json['name'] as String
     ..typeName = json['typeName'] as String
     ..innerToken = json['innerToken'] as String
@@ -1545,7 +1545,7 @@ CreateHero _$CreateHeroFromJson(Map<String, dynamic> json) {
             json['responseHero'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$CreateHeroToJson(CreateHero instance) =>
+Map<String, dynamic> _$CreateHeroToJson(CreateHeroData instance) =>
     <String, dynamic>{
       'name': instance.name,
       'typeName': instance.typeName,

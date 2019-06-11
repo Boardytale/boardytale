@@ -15,7 +15,7 @@ class HeroService {
   Future<List<core.GameHeroCreateEnvelope>> getMyHeroes() async {
     await appService.currentUser.first;
     core.ToUserServerMessage message = await gatewayService
-        .toUserServerMessage(core.ToUserServerMessage.requestMyHeroes(appService.currentUser.value.innerToken));
+        .toUserServerMessage(core.ToUserServerMessage.createRequestForMyHeroes(appService.currentUser.value.innerToken));
     if (message.error == null) {
       return message.getListOfHeroesOfPlayer.responseHeroes;
     } else {
