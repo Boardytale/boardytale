@@ -1,5 +1,7 @@
 part of model;
 
+// TODO: rethink to split to outer and inner messages
+
 @JsonSerializable()
 class ToUserServerMessage {
   OnUserServerAction message;
@@ -32,7 +34,7 @@ class ToUserServerMessage {
 
   HeroesAndUnitsOfPlayer get getStartingUnits => HeroesAndUnitsOfPlayer.fromJson(json.decode(content));
 
-  void addHeroesAndUnitsToStartingUnits(List<GameHeroCreateEnvelope> responseHeroes, List<UnitTypeCompiled> responseUnits) {
+  void addHeroesAndUnitsToStartingUnits(List<GameHeroEnvelope> responseHeroes, List<UnitTypeCompiled> responseUnits) {
     content = json.encode(getStartingUnits
       ..responseHeroes = responseHeroes
       ..responseUnits = responseUnits);
@@ -48,7 +50,7 @@ class ToUserServerMessage {
 
   ListOfHeroes get getListOfHeroes => ListOfHeroes.fromJson(json.decode(content));
 
-  void addHeroes(List<GameHeroCreateEnvelope> responseHeroes) {
+  void addHeroes(List<GameHeroEnvelope> responseHeroes) {
     content = json.encode(getListOfHeroes..responseHeroes = responseHeroes);
   }
 
@@ -61,7 +63,7 @@ class ToUserServerMessage {
 
   CreateHeroData get getCreateHeroData => CreateHeroData.fromJson(json.decode(content));
 
-  void addHero(GameHeroCreateEnvelope responseHero) {
+  void addHero(GameHeroEnvelope responseHero) {
     content = json.encode(getCreateHeroData..responseHero = responseHero);
   }
 
@@ -74,7 +76,7 @@ class ToUserServerMessage {
 
   ListOfHeroesOfPlayer get getListOfHeroesOfPlayer => ListOfHeroesOfPlayer.fromJson(json.decode(content));
 
-  void addHeroesOfPlayer(List<GameHeroCreateEnvelope> responseHeroes) {
+  void addHeroesOfPlayer(List<GameHeroEnvelope> responseHeroes) {
     content = json.encode(getListOfHeroesOfPlayer..responseHeroes = responseHeroes);
   }
 
@@ -83,6 +85,25 @@ class ToUserServerMessage {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getMyHeroes
       ..content = json.encode((ListOfHeroesOfPlayer()..innerToken = innerToken).toJson());
+  }
+  // ---
+
+  HeroAfterGameGain get getHeroAfterGameGain => HeroAfterGameGain.fromJson(json.decode(content));
+
+  factory ToUserServerMessage.createHeroAfterGameGain(HeroAfterGameGain gain) {
+    return ToUserServerMessage()
+      ..message = OnUserServerAction.setHeroAfterGameGain
+      ..content = json.encode(gain.toJson());
+  }
+
+  // ---
+
+  User get getUpdateUser => User.fromJson(json.decode(content));
+
+  factory ToUserServerMessage.createUpdateUser(User user) {
+    return ToUserServerMessage()
+      ..message = OnUserServerAction.updateUser
+      ..content = json.encode(user.toJson());
   }
 }
 
@@ -98,6 +119,10 @@ enum OnUserServerAction {
   createHero,
   @JsonValue('getMyHeroes')
   getMyHeroes,
+  @JsonValue('setHeroAfterGameGain')
+  setHeroAfterGameGain,
+  @JsonValue('updateUser')
+  updateUser,
 }
 
 @JsonSerializable()
@@ -116,7 +141,7 @@ class GetUserByInnerToken extends MessageContent {
 class HeroesAndUnitsOfPlayer extends MessageContent {
   String requestedPlayerEmail;
   String requestedHeroId;
-  List<GameHeroCreateEnvelope> responseHeroes;
+  List<GameHeroEnvelope> responseHeroes;
   List<UnitTypeCompiled> responseUnits;
 
   static HeroesAndUnitsOfPlayer fromJson(Map<String, dynamic> json) => _$HeroesAndUnitsOfPlayerFromJson(json);
@@ -128,7 +153,7 @@ class HeroesAndUnitsOfPlayer extends MessageContent {
 
 @JsonSerializable()
 class ListOfHeroes extends MessageContent {
-  List<GameHeroCreateEnvelope> responseHeroes;
+  List<GameHeroEnvelope> responseHeroes;
 
   static ListOfHeroes fromJson(Map<String, dynamic> json) => _$ListOfHeroesFromJson(json);
 
@@ -139,7 +164,7 @@ class ListOfHeroes extends MessageContent {
 
 @JsonSerializable()
 class ListOfHeroesOfPlayer extends MessageContent {
-  List<GameHeroCreateEnvelope> responseHeroes;
+  List<GameHeroEnvelope> responseHeroes;
   String innerToken;
 
   static ListOfHeroesOfPlayer fromJson(Map<String, dynamic> json) => _$ListOfHeroesOfPlayerFromJson(json);
@@ -154,11 +179,25 @@ class CreateHeroData extends MessageContent {
   String name;
   String typeName;
   String innerToken;
-  GameHeroCreateEnvelope responseHero;
+  GameHeroEnvelope responseHero;
 
-  static CreateHeroData fromJson(Map<String, dynamic> json) => _$CreateHeroFromJson(json);
+  static CreateHeroData fromJson(Map<String, dynamic> json) => _$CreateHeroDataFromJson(json);
 
   Map<String, dynamic> toJson() {
-    return _$CreateHeroToJson(this);
+    return _$CreateHeroDataToJson(this);
+  }
+}
+
+@JsonSerializable()
+class HeroAfterGameGain extends MessageContent {
+  int xp;
+  int money;
+  List<ItemEnvelope> items;
+  String heroId;
+
+  static HeroAfterGameGain fromJson(Map<String, dynamic> json) => _$HeroAfterGameGainFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$HeroAfterGameGainToJson(this);
   }
 }

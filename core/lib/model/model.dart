@@ -32,8 +32,6 @@ part 'package:core/model/unit/unit_create_or_update_action.dart';
 
 part 'package:core/model/unit/unit_type.dart';
 
-part 'package:core/model/unit/hero.dart';
-
 part 'package:core/model/map/field.dart';
 
 part 'package:core/model/map/world.dart';
@@ -74,6 +72,11 @@ part "package:core/model/abilities/shoot.dart";
 part 'package:core/model/abilities/targets.dart';
 
 part 'package:core/model/map/track.dart';
+
+part 'package:core/model/heroes/item.dart';
+part 'package:core/model/heroes/hero.dart';
+part 'package:core/model/heroes/hero_envelopes.dart';
+part 'package:core/model/heroes/from_previous_project_classes_to_refactor.dart';
 
 part "abilities/heal.dart";
 //part "abilities/raise.dart";

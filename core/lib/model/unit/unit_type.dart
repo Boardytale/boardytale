@@ -78,16 +78,16 @@ class UnitType extends UnitTypeCommons {
 
 @Typescript()
 @JsonSerializable()
-class UnitTypeCreateEnvelope extends UnitType {
+class UnitTypeEnvelope extends UnitType {
   String authorEmail;
   String created;
 
-  static UnitTypeCreateEnvelope fromJson(Map data) {
-    return _$UnitTypeCreateEnvelopeFromJson(data);
+  static UnitTypeEnvelope fromJson(Map data) {
+    return _$UnitTypeEnvelopeFromJson(data);
   }
 
   Map<String, dynamic> toJson() {
-    return _$UnitTypeCreateEnvelopeToJson(this);
+    return _$UnitTypeEnvelopeToJson(this);
   }
 }
 

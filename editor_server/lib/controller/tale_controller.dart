@@ -116,7 +116,7 @@ class TaleController extends ResourceController {
 }
 
 class TaleWrap implements Serializable {
-  core.TaleCreateEnvelope content;
+  core.TaleEnvelope content;
 
   @override
   Map<String, dynamic> asMap() {
@@ -125,7 +125,7 @@ class TaleWrap implements Serializable {
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    content = core.TaleCreateEnvelope.fromJson(requestBody);
+    content = core.TaleEnvelope.fromJson(requestBody);
   }
 
   @override

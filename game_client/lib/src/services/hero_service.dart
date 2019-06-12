@@ -12,7 +12,7 @@ class HeroService {
 
   HeroService(this.gatewayService, this.appService) {}
 
-  Future<List<core.GameHeroCreateEnvelope>> getMyHeroes() async {
+  Future<List<core.GameHeroEnvelope>> getMyHeroes() async {
     await appService.currentUser.first;
     core.ToUserServerMessage message = await gatewayService
         .toUserServerMessage(core.ToUserServerMessage.createRequestForMyHeroes(appService.currentUser.value.innerToken));

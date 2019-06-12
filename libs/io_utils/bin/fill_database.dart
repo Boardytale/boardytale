@@ -32,7 +32,7 @@ createUnits() async {
         response = await http.post(url + "/compile",
             headers: {"Content-Type": "application/json"},
             body: json
-                .encode({"id": model.UnitTypeCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).name}));
+                .encode({"id": model.UnitTypeEnvelope.fromJson(json.decode(entity.readAsStringSync())).name}));
         print(
             "compiled unit: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
         entity.delete();
@@ -79,7 +79,7 @@ createTale() async {
         response = await http.post(url + "/compile",
             headers: {"Content-Type": "application/json"},
             body: json
-                .encode({"id": model.TaleCreateEnvelope.fromJson(json.decode(entity.readAsStringSync())).tale.name}));
+                .encode({"id": model.TaleEnvelope.fromJson(json.decode(entity.readAsStringSync())).tale.name}));
         print(
             "compiled tale: ${entity.path}: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 300))}");
         entity.delete();

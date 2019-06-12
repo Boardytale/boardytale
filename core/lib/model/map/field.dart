@@ -2,15 +2,15 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class FieldCreateEnvelope {
+class FieldEnvelope {
   Terrain terrain;
 
   Map toJson() {
-    return _$FieldCreateEnvelopeToJson(this);
+    return _$FieldEnvelopeToJson(this);
   }
 
-  static FieldCreateEnvelope fromJson(Map json) {
-    return _$FieldCreateEnvelopeFromJson(json);
+  static FieldEnvelope fromJson(Map json) {
+    return _$FieldEnvelopeFromJson(json);
   }
 }
 

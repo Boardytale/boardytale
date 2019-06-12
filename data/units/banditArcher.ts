@@ -1,6 +1,6 @@
-import { UnitTypeCreateEnvelope } from '../../core/lib/model/model';
+import { UnitTypeEnvelope } from '../../core/lib/model/model';
 
-export let data: UnitTypeCreateEnvelope = {
+export let data: UnitTypeEnvelope = {
     authorEmail: 'moravcikjosef0810@gmail.com',
     name: 'banditArcher',
     created: '2011-10-05T14:48:00.000Z',

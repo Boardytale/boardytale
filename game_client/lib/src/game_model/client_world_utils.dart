@@ -105,16 +105,16 @@ class ClientWorldUtils {
     }
   }
 
-  static Map<String, core.FieldCreateEnvelope> createFieldsData(core.World envelope) {
-    Map<String, core.FieldCreateEnvelope> fieldsData = envelope.fields;
-    Map<String, core.FieldCreateEnvelope> indexedFieldsData = {};
+  static Map<String, core.FieldEnvelope> createFieldsData(core.World envelope) {
+    Map<String, core.FieldEnvelope> fieldsData = envelope.fields;
+    Map<String, core.FieldEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
-      fieldsData.forEach((String k, core.FieldCreateEnvelope v) {
+      fieldsData.forEach((String k, core.FieldEnvelope v) {
         if (v is int) {
           indexedFieldsData[k] = v;
         }
         if (v is Map<String, dynamic>) {
-          indexedFieldsData[k] = core.FieldCreateEnvelope()..terrain = envelope.baseTerrain;
+          indexedFieldsData[k] = core.FieldEnvelope()..terrain = envelope.baseTerrain;
         }
       });
     }

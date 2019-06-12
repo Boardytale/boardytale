@@ -18,27 +18,21 @@ class UserOuterMessageController extends ResourceController {
   @Operation.post()
   Future<Response> toUserMessage(@Bind.body() ToUserServerMessageWrap messageWrap) async {
     core.ToUserServerMessage message = messageWrap.message;
+    if(message.message == core.OnUserServerAction.updateUser){
+      return updateUser(message, context);
+    }
     if (message.message == core.OnUserServerAction.getHeroesToCreate) {
-      message.addHeroes(heroesData);
+      message.addHeroes(heroesData.map((envelope){
+        return envelope.gameHeroEnvelope;
+      }).toList());
+      return Response.ok(messageWrap.asMap());
     }
     if (message.message == core.OnUserServerAction.createHero) {
       return createHero(message, context);
     }
     if (message.message == core.OnUserServerAction.getMyHeroes) {
-      var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
-      User user = await query.fetchOne();
-      if (user != null) {
-        var heroesQuery = Query<Hero>(context)..where((hero) => hero.user.id).equalTo(user.id);
-
-        List<Hero> heroesData = await heroesQuery.fetch();
-        message.addHeroesOfPlayer(heroesData.map((Hero heroData){
-          return core.GameHeroCreateEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>);
-        }).toList());
-      }
-      else{
-        return Response.badRequest(body: {"message": "bad inner token"});
-      }
+      return getMyHeroes(message, context);
     }
-    return Response.ok(messageWrap.asMap());
+    return Response.forbidden(body: "${message.message} is not handled");
   }
 }

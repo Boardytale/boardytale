@@ -35,4 +35,22 @@ class _Hero {
 
   @Relate(#heroes, isRequired: true, onDelete: DeleteRule.cascade)
   User user;
+
+  ManagedSet<HeroAfterGameGain> gains;
+}
+
+class HeroAfterGameGain extends ManagedObject<_HeroAfterGameGain> implements _HeroAfterGameGain {}
+
+class _HeroAfterGameGain {
+  @Column(autoincrement: true, primaryKey: true)
+  int gainId;
+
+  @Column(defaultValue: "0")
+  int dataFormatVersion;
+
+  @Column()
+  Document gainData;
+
+  @Relate(#gains, isRequired: true, onDelete: DeleteRule.cascade)
+  Hero hero;
 }

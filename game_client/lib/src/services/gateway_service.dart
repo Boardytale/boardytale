@@ -98,10 +98,14 @@ class GatewayService {
 
   Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message) async {
     http.Response response = await _http.post("/userApi/toUserMessage",
-        headers: {"Content-Type": "application/json"},
-        body: json.encode(message));
-    print(response);
-    Map<String, dynamic> responseBody = json.decode(response.body);
+        headers: {"Content-Type": "application/json"}, body: json.encode(message));
+    Map<String, dynamic> responseBody;
+    try{
+      responseBody = json.decode(response.body);
+    }catch(e){
+      print(response.body);
+      return core.ToUserServerMessage()..error = response.body;
+    }
     if (response.statusCode == 200) {
       return core.ToUserServerMessage.fromJson(responseBody);
     } else {

@@ -113,7 +113,7 @@ class MockedEditor {
   }
 
   Future<core.TaleCompiled> getCompiledTale(String name) async {
-    core.TaleCreateEnvelope tale = await getTaleByName(name);
+    core.TaleEnvelope tale = await getTaleByName(name);
     Set<String> unitTypeNeededNames = Set();
     var taleInnerDataEnvelope = tale.tale;
     core.TaleCompiled taleCompiled = core.TaleCompiled();
@@ -136,15 +136,15 @@ class MockedEditor {
     Stopwatch stopwatch = Stopwatch()..start();
     List<FileSystemEntity> entities =
         Directory("${projectDirectoryPath}/data/units").listSync(recursive: true);
-    Map<String, core.UnitTypeCreateEnvelope> envelopes = {};
+    Map<String, core.UnitTypeEnvelope> envelopes = {};
     Set<String> imageNames = Set();
 
     Future getType(String path) async {
       String outString = await getFileByPath(path);
       try {
         print("success ${path}");
-        core.UnitTypeCreateEnvelope unitEnvelope =
-            core.UnitTypeCreateEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
+        core.UnitTypeEnvelope unitEnvelope =
+            core.UnitTypeEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
         if (unitTypeNeededNames.contains(unitEnvelope.name)) {
           envelopes[unitEnvelope.name] = unitEnvelope;
           imageNames.add(unitEnvelope.bigImageName);
@@ -212,7 +212,7 @@ class MockedEditor {
     return images;
   }
 
-  Future<core.TaleCreateEnvelope> getTaleByName(String name) async {
+  Future<core.TaleEnvelope> getTaleByName(String name) async {
     List<FileSystemEntity> entities =
         Directory("${projectDirectoryPath}/data/tales").listSync(recursive: true);
     for (FileSystemEntity entity in entities) {
@@ -221,8 +221,8 @@ class MockedEditor {
           String outString = await getFileByPath(entity.path);
           try {
             print("success ${entity.path}");
-            core.TaleCreateEnvelope tale =
-                core.TaleCreateEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
+            core.TaleEnvelope tale =
+                core.TaleEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
             if (tale.tale.name == name) {
               File imageFile = File("${projectDirectoryPath}/data/image_sources/${tale.lobby.image.data}");
               List<int> imageBytes = imageFile.readAsBytesSync();

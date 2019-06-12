@@ -6,7 +6,7 @@ class World {
   int width;
   int height;
   Terrain baseTerrain = Terrain.grass;
-  Map<String, FieldCreateEnvelope> fields = {};
+  Map<String, FieldEnvelope> fields = {};
   List<String> startingFieldIds = [];
 
   World();
@@ -34,16 +34,16 @@ class World {
     return fields;
   }
 
-  static Map<String, FieldCreateEnvelope> createFieldsData(World envelope) {
-    Map<String, FieldCreateEnvelope> fieldsData = envelope.fields;
-    Map<String, FieldCreateEnvelope> indexedFieldsData = {};
+  static Map<String, FieldEnvelope> createFieldsData(World envelope) {
+    Map<String, FieldEnvelope> fieldsData = envelope.fields;
+    Map<String, FieldEnvelope> indexedFieldsData = {};
     if (fieldsData != null) {
-      fieldsData.forEach((String k, FieldCreateEnvelope v) {
+      fieldsData.forEach((String k, FieldEnvelope v) {
         if (v is int) {
           indexedFieldsData[k] = v;
         }
         if (v is Map<String, dynamic>) {
-          indexedFieldsData[k] = FieldCreateEnvelope()..terrain = envelope.baseTerrain;
+          indexedFieldsData[k] = FieldEnvelope()..terrain = envelope.baseTerrain;
         }
       });
     }

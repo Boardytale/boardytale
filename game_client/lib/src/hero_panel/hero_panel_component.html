@@ -1,0 +1,18 @@
+<div *ngIf="selectedHero == null">
+  <h3>Select hero to show inventory</h3>
+  <div
+      *ngFor="let hero of myHeroes"
+      class="hero-to-create-cont">
+    <h1>{{hero.name}}</h1>
+    <img [src]="hero.type.image.data">
+    <button
+        (click)="selectHero(hero)"
+    >Open hero panel
+    </button>
+    <span>Health: {{hero.type.health}}</span>
+    <span>Armor: {{hero.type.armor}}</span>
+  </div>
+</div>
+<div *ngIf="selectedHero != null">
+  <h2>{{selectedHero.name}} inventory</h2>
+</div>

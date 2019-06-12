@@ -262,14 +262,14 @@ export interface UnitType extends UnitTypeCommons {
     abilities: AbilitiesEnvelope;
 }
 
-export interface UnitTypeCreateEnvelope extends UnitType {
+export interface UnitTypeEnvelope extends UnitType {
     authorEmail: string;
     created: string;
 }
 
 export type Terrain = 'grass' | 'rock' | 'water' | 'forest';
 
-export interface FieldCreateEnvelope extends Object {
+export interface FieldEnvelope extends Object {
     terrain: Terrain;
 }
 
@@ -277,7 +277,7 @@ export interface World extends Object {
     width: number;
     height: number;
     baseTerrain: Terrain;
-    fields: { [key: string]: FieldCreateEnvelope };
+    fields: { [key: string]: FieldEnvelope };
     startingFieldIds: Array<string>;
 }
 
@@ -294,7 +294,7 @@ export interface Dialog extends Object {
     name: string;
 }
 
-export interface TaleCreateEnvelope extends Object {
+export interface TaleEnvelope extends Object {
     authorEmail: string;
     tale: TaleInnerEnvelope;
     lobby: LobbyTale;
@@ -319,6 +319,7 @@ export interface TaleInnerEnvelope extends Object {
     humanPlayerIds: Array<string>;
     taleAttributes: { [key: string]: any };
     triggers: Triggers;
+    experienceForHeroes: number;
 }
 
 export interface TaleInnerCompiled extends Object {
@@ -335,6 +336,7 @@ export interface TaleInnerCompiled extends Object {
     images: { [key: string]: Image };
     unitTypes: { [key: string]: UnitTypeCompiled };
     triggers: Triggers;
+    experienceForHeroes: number;
 }
 
 export interface LobbyTale extends Object {
@@ -356,7 +358,8 @@ export type GameNavigationState =
     | 'loading'
     | 'inLobby'
     | 'userPanel'
-    | 'login';
+    | 'login'
+    | 'heroPanel';
 
 export type OnClientAction =
     | 'setNavigationState'
@@ -393,7 +396,9 @@ export type OnUserServerAction =
     | 'getStartingUnits'
     | 'getHeroesToCreate'
     | 'createHero'
-    | 'getMyHeroes';
+    | 'getMyHeroes'
+    | 'setHeroAfterGameGain'
+    | 'updateUser';
 
 export type LoggerMessageType = 'initial' | 'taleUpdate' | 'trace';
 
@@ -455,6 +460,63 @@ export interface ShootAbilityEnvelope extends Object {
     steps?: number;
     // annotation @TypescriptOptional() → TypescriptOptional
     attack?: string;
+}
+
+export type ItemType =
+    | 'body'
+    | 'weapon'
+    | 'helm'
+    | 'gauntlet'
+    | 'boots'
+    | 'ring'
+    | 'amulet'
+    | 'shield';
+
+export interface GameHeroEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    id?: string;
+    level: number;
+    name: string;
+    type: UnitTypeCompiled;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    unit?: UnitCreateOrUpdateAction;
+}
+
+export interface HeroEnvelope extends Object {
+    gameHeroEnvelope: GameHeroEnvelope;
+    inventoryItems: Array<ItemEnvelope>;
+    strength: number;
+    agility: number;
+    intelligence: number;
+    precision: number;
+    spirituality: number;
+    energy: number;
+    experience: number;
+    money: number;
+}
+
+export interface ItemEnvelope extends Object {
+    itemType: ItemType;
+    name: string;
+    id: string;
+    heroId: string;
+    weight: number;
+    armorPoints: number;
+    healthBonus: number;
+    manaBonus: number;
+    strengthBonus: number;
+    agilityBonus: number;
+    intelligenceBonus: number;
+    spiritualityBonus: number;
+    energyBonus: number;
+    precisionBonus: number;
+    suggestedPrice: number;
+    recommendedPrice: number;
+}
+
+export interface WeaponEnvelope extends Object {
+    baseAttack: Array<number>;
+    bonusAttack: Array<number>;
 }
 
 export interface HealAbilityEnvelope extends Object {

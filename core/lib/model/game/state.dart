@@ -16,4 +16,6 @@ enum GameNavigationState {
   userPanel,
   @JsonValue('login')
   login,
+  @JsonValue('heroPanel')
+  heroPanel,
 }

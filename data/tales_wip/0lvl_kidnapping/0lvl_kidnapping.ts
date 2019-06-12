@@ -1,4 +1,4 @@
-import { TaleCreateEnvelope, Player } from '../../../core/lib/model/model';
+import { TaleEnvelope, Player } from '../../../core/lib/model/model';
 import { world } from './0lvl_kidnapping_world';
 
 /**
@@ -122,7 +122,7 @@ const aiPlayers: { [key: string]: Player } = {
     },
 };
 
-export let data: TaleCreateEnvelope = {
+export let data: TaleEnvelope = {
     lobby: {
         description: {
             en: 'A very simple tale for newbies.',

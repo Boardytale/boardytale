@@ -4,6 +4,7 @@ import 'package:core/model/model.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/create_game/create_game_component.dart';
 import 'package:game_client/src/game/game.dart';
+import 'package:game_client/src/hero_panel/hero_panel_component.dart';
 import 'package:game_client/src/lobby/lobbies.dart';
 import 'package:game_client/src/lobby/lobby.dart';
 import 'package:game_client/src/services/app_service.dart';
@@ -25,7 +26,8 @@ import 'package:game_client/src/user_login/user_login.dart';
       LobbiesComponent,
       GameComponent,
       UserPanelComponent,
-      UserLoginComponent
+      UserLoginComponent,
+      HeroPanelComponent,
     ],
     changeDetection: ChangeDetectionStrategy.OnPush)
 class AppComponent {
@@ -53,6 +55,9 @@ class AppComponent {
 
   bool get showUserPanel =>
       appService.navigationState.value.name == GameNavigationState.userPanel;
+
+  bool get showHeroPanel =>
+      appService.navigationState.value.name == GameNavigationState.heroPanel;
 
   LobbyService lobbyService;
   GatewayService gateway;

@@ -1,4 +1,4 @@
-import { TaleCreateEnvelope, Player } from '../../../core/lib/model/model';
+import { TaleEnvelope, Player } from '../../../core/lib/model/model';
 import { world } from './world';
 
 const bandits: Player = {
@@ -14,7 +14,7 @@ const bandits: Player = {
     team: 'bandits',
 };
 
-export let data: TaleCreateEnvelope = {
+export let data: TaleEnvelope = {
     lobby: {
         description: {
             en: 'A very simple tale for newbies.',
@@ -43,6 +43,7 @@ export let data: TaleCreateEnvelope = {
     },
     authorEmail: 'mlcoch.zdenek@gmail.com',
     tale: {
+        experienceForHeroes: 100,
         humanPlayerIds: ['0', '1', '2', '3'],
         dialogs: {},
         events: {},
@@ -110,76 +111,6 @@ export let data: TaleCreateEnvelope = {
             },
             {
                 moveToFieldId: '5_4',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '14_7',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '14_6',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '14_8',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '15_7',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '15_6',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '18_15',
-                changeToTypeName: 'banditMaceman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '19_14',
-                changeToTypeName: 'banditMaceman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '17_15',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '2_13',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '3_13',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '2_14',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '20_1',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '20_2',
-                changeToTypeName: 'banditPikeman',
-                transferToPlayerId: 'bandits',
-            },
-            {
-                moveToFieldId: '21_1',
                 changeToTypeName: 'banditPikeman',
                 transferToPlayerId: 'bandits',
             },

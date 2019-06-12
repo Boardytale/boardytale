@@ -10,6 +10,8 @@ class ServerPlayer extends core.Player {
 
   String nextGameHeroId;
 
+  String usedHeroId;
+
   String get email => user.email;
 
   String get innerToken => user.innerToken;

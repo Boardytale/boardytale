@@ -13,6 +13,8 @@ import 'package:core/model/model.dart' as core;
 
 @Injectable()
 class AppService {
+  core.GameHeroEnvelope currentHero;
+
   AppService(this.settings, this.gatewayService, this.lobbyService, this.createGameService) {
     if (html.window.localStorage.containsKey("innerToken")) {
       gatewayService.initMessages(html.window.localStorage["innerToken"]);
@@ -50,12 +52,15 @@ class AppService {
     core.GameNavigationState.userPanel: ClientGameState()
       ..name = core.GameNavigationState.userPanel
       ..showCreateGameButton = false
-      ..showUserPanelButton = true
-      ..allowedNoServer = true,
+      ..showUserPanelButton = true,
     core.GameNavigationState.login: ClientGameState()
       ..name = core.GameNavigationState.login
       ..showCreateGameButton = false
       ..allowedNoServer = true,
+    core.GameNavigationState.heroPanel: ClientGameState()
+      ..name = core.GameNavigationState.heroPanel
+      ..showCreateGameButton = false
+      ..showUserPanelButton = true,
   };
 
   Map<String, ClientPlayer> players = {};

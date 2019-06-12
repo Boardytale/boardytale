@@ -28,7 +28,7 @@ class UnitController extends ResourceController {
       }).equalTo(unitWrap.content.name);
     List<UnitType> existingImages = await query.fetch();
     if (existingImages.isEmpty) {
-      model.UnitTypeCreateEnvelope content = unitWrap.content;
+      model.UnitTypeEnvelope content = unitWrap.content;
       final query = Query<UnitType>(context)
         ..values.name = content.name
         ..values.authorEmail = content.authorEmail
@@ -38,7 +38,7 @@ class UnitController extends ResourceController {
       UnitType created = await query.insert();
       return Response.ok(created);
     } else {
-      model.UnitTypeCreateEnvelope content = unitWrap.content;
+      model.UnitTypeEnvelope content = unitWrap.content;
       query
         ..values.name = content.name
         ..values.authorEmail = content.authorEmail
@@ -65,7 +65,7 @@ class UnitController extends ResourceController {
     UnitType unitTypeData = (await notCompiledQuery.fetch()).first;
 
     // get images
-    var unitTypeEnvelope = model.UnitTypeCreateEnvelope.fromJson(unitTypeData.unitTypeData.data as Map);
+    var unitTypeEnvelope = model.UnitTypeEnvelope.fromJson(unitTypeData.unitTypeData.data as Map);
 
     model.Image image;
     model.Image icon;
@@ -112,7 +112,7 @@ class UnitController extends ResourceController {
 }
 
 class UnitWrap implements Serializable {
-  model.UnitTypeCreateEnvelope content;
+  model.UnitTypeEnvelope content;
 
   @override
   Map<String, dynamic> asMap() {
@@ -121,7 +121,7 @@ class UnitWrap implements Serializable {
 
   @override
   void readFromMap(Map<String, dynamic> requestBody) {
-    content = model.UnitTypeCreateEnvelope.fromJson(requestBody);
+    content = model.UnitTypeEnvelope.fromJson(requestBody);
   }
 
   @override

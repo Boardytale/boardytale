@@ -1,6 +1,5 @@
 import 'package:io_utils/io_utils.dart';
 import 'package:core/configuration/configuration.dart' as core;
-import 'package:user_server/controller/rename_user_controller.dart';
 import 'package:user_server/controller/temporary_user_controller.dart';
 import 'package:user_server/controller/user_controller.dart';
 import 'package:user_server/controller/user_inner.dart';
@@ -30,7 +29,6 @@ class UserServerChannel extends ApplicationChannel {
     final router = Router();
     router.route("/login").link(() => UserController(context));
     router.route("/createTemporaryUser").link(() => TemporaryUserController(context));
-    router.route("/renameUser").link(() => RenameUserController(context));
     router.route("/toUserMessage").link(() => UserOuterMessageController(context));
     return router;
   }

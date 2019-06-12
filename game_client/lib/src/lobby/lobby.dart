@@ -17,8 +17,8 @@ class LobbyComponent {
 
   core.OpenedLobby get lobby => lobbyService.openedLobby.value;
   LobbyService lobbyService;
-  List<core.GameHeroCreateEnvelope> myHeroes;
-  core.GameHeroCreateEnvelope selectedHero;
+  List<core.GameHeroEnvelope> myHeroes;
+  core.GameHeroEnvelope selectedHero;
   final AppService appService;
   final HeroService heroService;
 
@@ -48,7 +48,7 @@ class LobbyComponent {
     changeDetector.markForCheck();
   }
 
-  void selectHero(core.GameHeroCreateEnvelope hero) {
+  void selectHero(core.GameHeroEnvelope hero) {
     selectedHero = hero;
     gateway.toGameServerMessage(core.ToGameServerMessage.createSetHeroForNextGame(hero.id));
   }

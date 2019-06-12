@@ -49,6 +49,10 @@
           class="hero-to-create-cont">
         <h1>{{hero.name}}</h1>
         <img [src]="hero.type.image.data">
+        <button
+            (click)="goToHeroPanel(hero)"
+        >Open hero panel
+        </button>
         <span>Health: {{hero.type.health}}</span>
         <span>Armor: {{hero.type.armor}}</span>
       </div>

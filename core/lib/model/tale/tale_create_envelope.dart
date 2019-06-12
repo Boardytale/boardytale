@@ -2,7 +2,7 @@ part of model;
 
 @Typescript()
 @JsonSerializable()
-class TaleCreateEnvelope {
+class TaleEnvelope {
   String authorEmail;
   TaleInnerEnvelope tale;
   LobbyTale lobby;
@@ -10,11 +10,11 @@ class TaleCreateEnvelope {
   final int taleDataVersion = 0;
 
   Map toJson() {
-    return _$TaleCreateEnvelopeToJson(this);
+    return _$TaleEnvelopeToJson(this);
   }
 
-  static TaleCreateEnvelope fromJson(Map<String, dynamic> json) {
-    return _$TaleCreateEnvelopeFromJson(json);
+  static TaleEnvelope fromJson(Map<String, dynamic> json) {
+    return _$TaleEnvelopeFromJson(json);
   }
 }
 
@@ -51,6 +51,7 @@ class TaleInnerEnvelope {
   List<String> humanPlayerIds = [];
   Map<String, dynamic> taleAttributes = {};
   Triggers triggers;
+  int experienceForHeroes;
 
   static TaleInnerEnvelope fromJson(Map json) {
     return _$TaleInnerEnvelopeFromJson(json);
@@ -77,6 +78,7 @@ class TaleInnerCompiled {
   Map<String, Image> images = {};
   Map<String, UnitTypeCompiled> unitTypes = {};
   Triggers triggers;
+  int experienceForHeroes;
 
   static TaleInnerCompiled fromJson(Map json) {
     utils.retypeMapInJsonToStringDynamic(json, ["langs", "langName"]);

@@ -33,13 +33,10 @@ class LobbyRoom {
   }
 
   void destroy() {
-    if (connectedPlayers != null) {
-      connectedPlayers.forEach((key, player) {
-        player.leaveRoom();
-      });
-      connectedPlayers = null;
-      print("destroyed lobby room ${id}");
-    }
+    connectedPlayers.forEach((key, player) {
+      player.leaveRoom();
+    });
+    connectedPlayers.clear();
     lobbyService.removeLobbyRoom(this);
   }
 

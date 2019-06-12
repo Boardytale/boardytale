@@ -25,7 +25,7 @@ class _Tale {
   @Column(defaultValue: '0')
   int taleVersion;
 
-  /// match to class model.TaleCreateEnvelope or model.TaleCompiled if ${name}Compiled
+  /// match to class model.TaleEnvelope or model.TaleCompiled if ${name}Compiled
   @Column()
   Document taleData;
 }

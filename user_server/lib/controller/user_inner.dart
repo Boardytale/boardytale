@@ -36,6 +36,9 @@ class UserInnerController extends ResourceController {
     if (message.message == core.OnUserServerAction.getStartingUnits) {
       return getStartingUnits(message.getStartingUnits.requestedPlayerEmail, message.getStartingUnits.requestedHeroId, context, message);
     }
+    if(message.message == core.OnUserServerAction.setHeroAfterGameGain){
+      return setAfterGameGain(message, context);
+    }
     return shelf.Response.notFound(json.encode({"error": "${message.message} is not known message"}));
   }
 

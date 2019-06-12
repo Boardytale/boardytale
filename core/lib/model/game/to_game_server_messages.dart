@@ -181,10 +181,10 @@ class UnitTrackAction extends MessageContent {
 class PlayerIntention extends MessageContent {
   List<String> fieldsId;
 
-  static PlayerIntention fromJson(Map<String, dynamic> json) => _$PlayerGameIntentionFromJson(json);
+  static PlayerIntention fromJson(Map<String, dynamic> json) => _$PlayerIntentionFromJson(json);
 
   Map<String, dynamic> toJson() {
-    return _$PlayerGameIntentionToJson(this);
+    return _$PlayerIntentionToJson(this);
   }
 }
 

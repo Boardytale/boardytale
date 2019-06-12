@@ -170,6 +170,15 @@ class ServerTale {
       ..showTimeInMilliseconds = 10000
       ..title = {core.Lang.en: "Victory", core.Lang.cz: "Vítězství"};
     taleState.addTaleAction(TaleAction()..banterAction = banter);
+    room.connectedPlayers.forEach((key, player) {
+      core.HeroAfterGameGain gain = core.HeroAfterGameGain()
+        ..heroId = player.usedHeroId
+        ..items = []
+        ..money = 0
+        ..xp = taleState.compiled.experienceForHeroes ~/ room.connectedPlayers.length;
+      ;
+      gateway.innerMessageToUserServer(core.ToUserServerMessage.createHeroAfterGameGain(gain));
+    });
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }
 
