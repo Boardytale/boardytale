@@ -26,7 +26,7 @@ Future<shelf.Response> getStartingUnits(
     }
     core.GameHeroEnvelope envelope;
     try{
-      envelope = core.GameHeroEnvelope.fromJson(hero.heroData.data as Map<String, dynamic>);
+      envelope = core.HeroEnvelope.fromJson(hero.heroData.data as Map<String, dynamic>).gameHeroEnvelope;
     }catch(e){
       return shelf.Response.notFound("bad format of hero ${heroId} for player ${userEmail}");
     }

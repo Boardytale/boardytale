@@ -9,7 +9,13 @@ class HeroesHelper {
     forPlayer.forEach((player) {
       var message = core.ToUserServerMessage.createGetStartingUnits(player.email, player.nextGameHeroId);
       responses.add(gateway.innerMessageToUserServer(message).asStream().map((core.ToUserServerMessage convert) {
-        return MessageWithPlayer(convert.getStartingUnits, player);
+        core.HeroesAndUnitsOfPlayer units;
+        try{
+          units = convert.getStartingUnits;
+        }catch(e){
+          print("cannot deserialize starting units ${convert.content}");
+        }
+        return MessageWithPlayer(units, player);
       }).first);
     });
     List<MessageWithPlayer> data = await Future.wait(responses);

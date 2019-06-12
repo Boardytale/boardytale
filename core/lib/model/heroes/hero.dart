@@ -5,26 +5,30 @@ class Hero {
   AbilitiesEnvelope abilities = AbilitiesEnvelope();
   ItemSum itemSum = ItemSum();
   HeroState state;
+
   Hero(this.envelope) {
     itemSum.recalculate(envelope.equippedItems.equippedItemsList());
     state = HeroState(this);
   }
 
-  ItemEnvelope getFirstWeapon(){
-    if(envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.itemType == ItemType.weapon){
+  ItemEnvelope getFirstWeapon() {
+    if (envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.itemType == ItemType.weapon) {
       return envelope.equippedItems.leftHand;
     }
-    if(envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.itemType == ItemType.weapon){
+    if (envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.itemType == ItemType.weapon) {
       return envelope.equippedItems.rightHand;
     }
     return null;
   }
+  bool get isLowLevel => envelope.gameHeroEnvelope.level < 6;
 
-  bool get isMidLevel => envelope.gameHeroEnvelope.level > 5;
+  bool get isMidLevel => envelope.gameHeroEnvelope.level > 5 && envelope.gameHeroEnvelope.level < 12;
+
+  bool get isMidOrHighLevel => envelope.gameHeroEnvelope.level > 5;
 
   bool get isHighLevel => envelope.gameHeroEnvelope.level > 11;
-}
 
+}
 
 class HeroState {
   Hero hero;
@@ -54,16 +58,17 @@ class HeroState {
     recalculate();
   }
 
-  void recalculate(){
+  void recalculate() {
     ItemSum items = hero.itemSum;
-    if(hero.isHighLevel){
+    if (hero.isHighLevel) {
       itemWeight = items.weight;
       _effectivePrecision = hero.envelope.precision + items.precisionBonus;
       _effectiveEnergy = hero.envelope.energy + items.energyBonus;
       _effectiveSpirituality = hero.envelope.spirituality + items.spiritualityBonus;
       effectiveStrength = hero.envelope.strength + items.strengthBonus;
       weightLimit = Calculations.weightLimitForStrength(effectiveStrength);
-      effectiveAgility = Calculations.getEffectiveAgility(hero.envelope.agility, items.agilityBonus, itemWeight, weightLimit);
+      effectiveAgility =
+          Calculations.getEffectiveAgility(hero.envelope.agility, items.agilityBonus, itemWeight, weightLimit);
       baseHealth = Calculations.healthForStrength(effectiveStrength);
       ownAttack = Calculations.getDmgFromAttributes(effectiveStrength, effectiveAgility);
       maxAttack = Calculations.getMaxAttackFromAttributes(effectiveStrength, effectiveAgility);
@@ -76,20 +81,20 @@ class HeroState {
           itemBonusAttack, Calculations.capAttack(Calculations.sumAttacks(ownAttack, itemAttack), maxAttack));
       health = baseHealth + items.healthBonus;
       mana = 10 * _effectiveEnergy + items.manaBonus;
-    }else if(hero.isMidLevel){
+    } else if (hero.isMidLevel) {
       UnitTypeCompiled type = hero.envelope.gameHeroEnvelope.type;
       health = type.health + items.healthBonus;
       armor = type.armor + items.armorPoints * 0;
       range = type.range;
       speed = type.speed;
-      attack = type.attack.split((" ")).map((item)=>int.tryParse(item)).toList();
-    }else{
+      attack = type.attack.split((" ")).map((item) => int.tryParse(item)).toList();
+    } else {
       UnitTypeCompiled type = hero.envelope.gameHeroEnvelope.type;
       health = type.health + items.healthBonus;
       armor = type.armor + items.armorPoints * 0;
       range = type.range;
       speed = type.speed;
-      attack = type.attack.split((" ")).map((item)=>int.tryParse(item)).toList();
+      attack = type.attack.split((" ")).map((item) => int.tryParse(item)).toList();
     }
   }
 }

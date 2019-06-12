@@ -1,9 +1,10 @@
 <div
     *ngIf="hero != null"
-    style="height: 90%;overflow: auto"
+    class="container-fluid"
+    style="height: calc(100% - 40px);overflow-y: auto;"
 >
   <div class="row">
-    <div class="col-4">
+    <div class="col-4 border">
       <h3>Postava</h3>
       Úroveň: {{hero.state.level}}<br>
       Životy: {{hero.state.health}}<br>
@@ -11,44 +12,33 @@
       Rychlost: {{hero.state.speed}}<br>
       Útok {{hero.state.attack}}<br>
     </div>
-    <div class="col-4">
-      <h3>Vlastnosti postavy</h3>
-      <span>
-        Jméno:<input [(ngModel)]="envelope.gameHeroEnvelope.name"><br>
-       </span>
-      <span *ngIf="heroIsMidLevel">
-            Síla:       <buttoned-input [(value)]="envelope.strength"></buttoned-input><br>
-       </span>
-      <span *ngIf="heroIsHighLevel">
-         Inteligence:       <buttoned-input [(value)]="envelope.intelligence"></buttoned-input><br>
-       </span>
-      <span *ngIf="heroIsHighLevel">
-        Obratnost:<buttoned-input [(value)]="envelope.agility"></buttoned-input><br>
-       </span>
+    <character
+        class="col-4 border" style="display:block"
+        [hero]="hero"
+    >
 
-      <span
-          *ngIf="heroIsHighLevel"
-      >Přesnost:   <buttoned-input [(value)]="envelope.precision" [decimal]="true"></buttoned-input><br>
-      </span>
-
-      <span *ngIf="heroIsHighLevel">
-        Spiritualita: <buttoned-input [(value)]="envelope.spirituality" [decimal]="true"></buttoned-input><br>
-       </span>
-
-      <span *ngIf="heroIsHighLevel">
-        Energie:    <buttoned-input [(value)]="envelope.energy" [decimal]="true"></buttoned-input><br>
-       </span>
-      <span>
-        Zkušenosti:  {{envelope.experience}}<br>
-       </span>
-      <span>
-        Hotovost:   {{envelope.money}}<br>
-       </span>
-      <button (click)="save()">Uložit změny</button>
+    </character>
+    <div
+        *ngIf="hero.getFirstWeapon() != null"
+        class="col-4 border">
+      <h3>Zbraň</h3>
+      Název: {{hero.getFirstWeapon()?.name}}<br>
+      Základní útok: {{hero.getFirstWeapon()?.weapon?.baseAttack}}<br>
+      Bonus k útoku: {{hero.getFirstWeapon()?.weapon?.bonusAttack}}<br>
+      Útok: {{hero.state.attack}}<br/>
+      <button (click)="removeWeapon()">Odebrat</button>
 
     </div>
-    <div class="col-4">
-      <h3>Předměty</h3>
+    <div
+        *ngIf="hero.getFirstWeapon() == null"
+        class="col-4 border">
+      <h3>Hrdina nemá žádnou zbraň</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4 border">
+      <h3>Vlastnosti předmětů</h3>
       Hmotnost: {{hero.itemSum.weight}} <br>
       Body zbroje: {{hero.itemSum.armorPoints}} <br>
       Bonus k životu: {{hero.itemSum.healthBonus}} <br>
@@ -58,24 +48,25 @@
       Bonus ke spiritualitě: {{hero.itemSum.spiritualityBonus}}<br>
       Bonus k preciznosti: {{hero.itemSum.precisionBonus}} <br>
       Bonus k energii: {{hero.itemSum.energyBonus}} <br>
-
     </div>
-    <div
-        *ngIf="hero.getFirstWeapon() != null"
-        class="col-4">
-      <h3>Zbraň</h3>
-      Název: {{hero.getFirstWeapon()?.name}}<br>
-      Základní útok: {{hero.getFirstWeapon()?.weapon?.baseAttack}}<br>
-      Bonus k útoku: {{hero.getFirstWeapon()?.weapon?.bonusAttack}}<br>
-      Útok: {{hero.state.attack}}<br/>
-      <button (click)="removeWeapon()">Odebrat</button>
-
+    <div class="col-4 border">
+      <h3>Seznam vybavení</h3>
+      <div *ngFor="let item of envelope.equippedItems.equippedItemsList()">{{item.name}} - {{item.itemType}}
+        <button (click)="sellItem(item)">Prodat ({{(item.suggestedPrice / 2).floor()}})</button>
+      </div>
     </div>
+    <div class="col-4 border">
+      <h3>Zisky z odehrátých her</h3>
+      <div *ngFor="let item of envelope.equippedItems.equippedItemsList()">{{item.name}} - {{item.itemType}}
+        <button (click)="sellItem(item)">Prodat ({{(item.suggestedPrice / 2).floor()}})</button>
+      </div>
+    </div>
+
   </div>
   <div class="row">
     <div
         *ngIf="heroIsMidLevel"
-        class="col-4">
+        class="col-4 border">
       <h3>Mezivýpočty</h3>
       Hmotnost výbavy: {{hero.state.itemWeight}}<br>
       Mana: {{hero.state.mana}}<br>
@@ -83,22 +74,19 @@
       Síla(+items): {{hero.state.effectiveStrength}} = {{envelope.strength}} (+{{hero.itemSum.strengthBonus}})<br>
       Základ počtu životů (6 + 2*síla)(+items): {{hero.state.baseHealth}}(+{{hero.itemSum.healthBonus}})<br>
     </div>
-    <div class="col-4">
-      <h3>Seznam vybavení</h3>
-      <div *ngFor="let item of envelope.equippedItems.equippedItemsList()">{{item.name}} - {{item.itemType}}
-        <button (click)="sellItem(item)">Prodat ({{(item.suggestedPrice / 2).floor()}})</button>
-      </div>
+    <div
+        *ngIf="heroIsLowLevel"
+        class="col-4 border">
+      <h3>Mezivýpočty budou k dispozici od 6. úrovně</h3>
     </div>
-  </div>
-  <div class="row">
-    <div  *ngIf="heroIsMidLevel" class="col-3">
+    <div *ngIf="heroIsMidLevel" class="col-3 border">
       <h3>Rychlost</h3>
       Hmotnost: {{hero.state.itemWeight}}<br>
       Síla (nosnost): {{hero.state.effectiveStrength}} ({{hero.state.weightLimit}})<br>
       Rychlost: {{hero.state.speed}}<br>
       Potřeba pro +1: TODO
     </div>
-    <div class="col-3">
+    <div class="col-3 border">
       <h3>Zbroj</h3>
       Hmotnost: {{hero.state.itemWeight}}<br>
       Obratnost: {{hero.state.effectiveAgility}} (TODO chybí do dalšího brnění)<br>

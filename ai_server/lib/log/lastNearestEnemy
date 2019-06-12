@@ -1,18 +1,22 @@
 
- getNearestEnemyByTerrain for unit 7 
+ getNearestEnemyByTerrain for unit 8 
 
  generation 1 
 
- currentGenPath 4_2 
-next field 4_1added to possible paths 
-next field 5_1added to possible paths 
-next field 5_2added to possible paths 
-next field 4_3skipped cannot end on last 
-next field 3_2added to possible paths 
-next field 3_1added to possible paths 
+ currentGenPath 8_2 
+next field 8_1added to possible paths 
+next field 9_1skipped waiting forest 
+next field 9_2skipped waiting forest 
+next field 8_3added to possible paths 
+next field 7_2added to possible paths 
+next field 7_1added to possible paths 
 
  generation 2 
 
- currentGenPath 4_2 4_1 
-next field 4_0added to possible paths 
-next field 5_0returned is enemy 
+ currentGenPath 8_2 8_1 
+next field 8_0added to possible paths 
+next field 9_0added to possible paths 
+next field 9_1skipped waiting forest 
+next field 8_2added to possible paths 
+next field 7_1skipped reached 
+next field 7_0returned is enemy 

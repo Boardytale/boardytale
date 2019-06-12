@@ -1,0 +1,41 @@
+<h3>Vlastnosti postavy</h3>
+<span>
+  Jméno: <input [(ngModel)]="envelope.gameHeroEnvelope.name"><br>
+</span>
+
+<span *ngIf="heroIsMidLevel">
+  Síla: <buttoned-input [(value)]="envelope.strength"></buttoned-input><br>
+</span>
+
+<span *ngIf="heroIsHighLevel">
+  Inteligence: <buttoned-input [(value)]="envelope.intelligence"></buttoned-input><br>
+</span>
+
+<span *ngIf="heroIsHighLevel">
+  Obratnost: <buttoned-input [(value)]="envelope.agility"></buttoned-input><br>
+</span>
+
+<span *ngIf="heroIsHighLevel">
+  Přesnost: <buttoned-input [(value)]="envelope.precision" [decimal]="true"></buttoned-input><br>
+</span>
+
+<span *ngIf="heroIsHighLevel">
+  Spiritualita: <buttoned-input [(value)]="envelope.spirituality" [decimal]="true"></buttoned-input><br>
+</span>
+
+<span *ngIf="heroIsHighLevel">
+  Energie: <buttoned-input [(value)]="envelope.energy" [decimal]="true"></buttoned-input><br>
+</span>
+
+<span>
+  Zkušenosti: {{envelope.experience}}<br>
+</span>
+
+<span>
+  Hotovost: {{envelope.money}}<br>
+</span>
+
+<span
+ *ngIf="heroIsLowLevel"
+>Více možností se otevře na 6. úrovni</span>
+
