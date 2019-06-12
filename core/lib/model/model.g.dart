@@ -1431,7 +1431,8 @@ const _$OnUserServerActionEnumMap = <OnUserServerAction, dynamic>{
   OnUserServerAction.createHero: 'createHero',
   OnUserServerAction.getMyHeroes: 'getMyHeroes',
   OnUserServerAction.setHeroAfterGameGain: 'setHeroAfterGameGain',
-  OnUserServerAction.updateUser: 'updateUser'
+  OnUserServerAction.updateUser: 'updateUser',
+  OnUserServerAction.getHeroDetail: 'getHeroDetail'
 };
 
 GetUserByInnerToken _$GetUserByInnerTokenFromJson(Map<String, dynamic> json) {
@@ -1545,6 +1546,22 @@ Map<String, dynamic> _$HeroAfterGameGainToJson(HeroAfterGameGain instance) =>
       'money': instance.money,
       'items': instance.items?.map((e) => e?.toJson())?.toList(),
       'heroId': instance.heroId
+    };
+
+GetHeroDetail _$GetHeroDetailFromJson(Map<String, dynamic> json) {
+  return GetHeroDetail()
+    ..heroId = json['heroId'] as String
+    ..innerToken = json['innerToken'] as String
+    ..responseHero = json['responseHero'] == null
+        ? null
+        : HeroEnvelope.fromJson(json['responseHero'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$GetHeroDetailToJson(GetHeroDetail instance) =>
+    <String, dynamic>{
+      'heroId': instance.heroId,
+      'innerToken': instance.innerToken,
+      'responseHero': instance.responseHero?.toJson()
     };
 
 LoggerMessage _$LoggerMessageFromJson(Map<String, dynamic> json) {
@@ -1760,6 +1777,52 @@ Map<String, dynamic> _$WeaponEnvelopeToJson(WeaponEnvelope instance) =>
     <String, dynamic>{
       'baseAttack': instance.baseAttack,
       'bonusAttack': instance.bonusAttack
+    };
+
+EquippedItemsEnvelope _$EquippedItemsEnvelopeFromJson(
+    Map<String, dynamic> json) {
+  return EquippedItemsEnvelope()
+    ..head = json['head'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['head'] as Map<String, dynamic>)
+    ..neck = json['neck'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['neck'] as Map<String, dynamic>)
+    ..body = json['body'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['body'] as Map<String, dynamic>)
+    ..elbows = json['elbows'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['elbows'] as Map<String, dynamic>)
+    ..leftHand = json['leftHand'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['leftHand'] as Map<String, dynamic>)
+    ..rightHand = json['rightHand'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['rightHand'] as Map<String, dynamic>)
+    ..leftWrist = json['leftWrist'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['leftWrist'] as Map<String, dynamic>)
+    ..rightWrist = json['rightWrist'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['rightWrist'] as Map<String, dynamic>)
+    ..legs = json['legs'] == null
+        ? null
+        : ItemEnvelope.fromJson(json['legs'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$EquippedItemsEnvelopeToJson(
+        EquippedItemsEnvelope instance) =>
+    <String, dynamic>{
+      'head': instance.head?.toJson(),
+      'neck': instance.neck?.toJson(),
+      'body': instance.body?.toJson(),
+      'elbows': instance.elbows?.toJson(),
+      'leftHand': instance.leftHand?.toJson(),
+      'rightHand': instance.rightHand?.toJson(),
+      'leftWrist': instance.leftWrist?.toJson(),
+      'rightWrist': instance.rightWrist?.toJson(),
+      'legs': instance.legs?.toJson()
     };
 
 HealAbilityEnvelope _$HealAbilityEnvelopeFromJson(Map<String, dynamic> json) {

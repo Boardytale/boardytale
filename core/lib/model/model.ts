@@ -398,7 +398,8 @@ export type OnUserServerAction =
     | 'createHero'
     | 'getMyHeroes'
     | 'setHeroAfterGameGain'
-    | 'updateUser';
+    | 'updateUser'
+    | 'getHeroDetail';
 
 export type LoggerMessageType = 'initial' | 'taleUpdate' | 'trace';
 
@@ -517,6 +518,18 @@ export interface ItemEnvelope extends Object {
 export interface WeaponEnvelope extends Object {
     baseAttack: Array<number>;
     bonusAttack: Array<number>;
+}
+
+export interface EquippedItemsEnvelope extends Object {
+    head: ItemEnvelope;
+    neck: ItemEnvelope;
+    body: ItemEnvelope;
+    elbows: ItemEnvelope;
+    leftHand: ItemEnvelope;
+    rightHand: ItemEnvelope;
+    leftWrist: ItemEnvelope;
+    rightWrist: ItemEnvelope;
+    legs: ItemEnvelope;
 }
 
 export interface HealAbilityEnvelope extends Object {

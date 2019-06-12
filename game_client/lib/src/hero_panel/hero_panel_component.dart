@@ -1,6 +1,7 @@
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
+import 'package:game_client/src/hero_panel/edit_hero/edit_component.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/hero_service.dart';
@@ -9,7 +10,7 @@ import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'hero-panel',
-    directives: [coreDirectives, formDirectives],
+    directives: [coreDirectives, formDirectives, EditHeroComponent],
     templateUrl: "hero_panel_component.html",
     changeDetection: ChangeDetectionStrategy.OnPush)
 class HeroPanelComponent {
@@ -18,6 +19,7 @@ class HeroPanelComponent {
   AppService appService;
   SettingsService settingsService;
   GatewayService gateway;
+  core.HeroEnvelope heroEnvelope;
   core.Hero hero;
   List<core.GameHeroEnvelope> myHeroes;
 
@@ -25,10 +27,13 @@ class HeroPanelComponent {
     this.appService,
     this.changeDetector,
     this.settingsService,
-    this.gateway, this.heroService,
+    this.gateway,
+    this.heroService,
   ) {
-    if(selectedHero == null){
+    if (selectedHero == null) {
       getMyHeroes();
+    } else {
+      getHeroDetail();
     }
   }
 
@@ -39,8 +44,18 @@ class HeroPanelComponent {
     changeDetector.markForCheck();
   }
 
-  void selectHero(core.GameHeroEnvelope hero){
+  void selectHero(core.GameHeroEnvelope hero) {
     appService.currentHero = hero;
+    getHeroDetail();
+    changeDetector.markForCheck();
+  }
+
+  void getHeroDetail() async {
+    await appService.currentUser.first;
+    core.ToUserServerMessage message = await gateway.toUserServerMessage(
+        core.ToUserServerMessage.createGetHeroDetail(appService.currentUser.value.innerToken, selectedHero.id));
+    heroEnvelope = message.getHeroDetail.responseHero;
+    hero = core.Hero(heroEnvelope);
     changeDetector.markForCheck();
   }
 }

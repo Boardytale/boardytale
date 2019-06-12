@@ -33,6 +33,9 @@ class UserOuterMessageController extends ResourceController {
     if (message.message == core.OnUserServerAction.getMyHeroes) {
       return getMyHeroes(message, context);
     }
+    if (message.message == core.OnUserServerAction.getHeroDetail) {
+      return getMyHeroDetail(message, context);
+    }
     return Response.forbidden(body: "${message.message} is not handled");
   }
 }

@@ -13,6 +13,9 @@
     <span>Armor: {{hero.type.armor}}</span>
   </div>
 </div>
-<div *ngIf="selectedHero != null">
-  <h2>{{selectedHero.name}} inventory</h2>
+<div *ngIf="hero != null" style="height: 100%">
+  <edit-hero
+   [hero]="hero"
+   style="height: 100%;display:block"
+  ></edit-hero>
 </div>

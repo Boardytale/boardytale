@@ -23,6 +23,7 @@ class GameHeroEnvelope {
 class HeroEnvelope {
   GameHeroEnvelope gameHeroEnvelope;
   List<ItemEnvelope> inventoryItems = [];
+  EquippedItemsEnvelope equippedItems = EquippedItemsEnvelope();
   num strength = 1;
   int agility = 1;
   num intelligence = 1;
@@ -58,6 +59,7 @@ class ItemEnvelope {
   num precisionBonus = 0;
   num suggestedPrice = 100;
   int recommendedPrice = 100;
+  WeaponEnvelope weapon;
 
   static ItemEnvelope fromJson(Map<String, dynamic> json) => _$ItemEnvelopeFromJson(json);
 
@@ -76,6 +78,41 @@ class WeaponEnvelope {
 
   Map<String, dynamic> toJson() {
     return _$WeaponEnvelopeToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class EquippedItemsEnvelope {
+  @TypescriptOptional()
+  ItemEnvelope head;
+  @TypescriptOptional()
+  ItemEnvelope neck;
+  @TypescriptOptional()
+  ItemEnvelope body;
+  @TypescriptOptional()
+  ItemEnvelope elbows;
+  @TypescriptOptional()
+  ItemEnvelope leftHand;
+  @TypescriptOptional()
+  ItemEnvelope rightHand;
+  @TypescriptOptional()
+  ItemEnvelope leftWrist;
+  @TypescriptOptional()
+  ItemEnvelope rightWrist;
+  @TypescriptOptional()
+  ItemEnvelope legs;
+
+  List<ItemEnvelope> equippedItemsList() {
+    return [head, neck, body, elbows, leftHand, rightHand, leftWrist, rightWrist, legs].where((item) {
+      return item != null;
+    }).toList();
+  }
+
+  static EquippedItemsEnvelope fromJson(Map<String, dynamic> json) => _$EquippedItemsEnvelopeFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$EquippedItemsEnvelopeToJson(this);
   }
 }
 

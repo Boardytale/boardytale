@@ -105,6 +105,19 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.updateUser
       ..content = json.encode(user.toJson());
   }
+  // ---
+
+  GetHeroDetail get getHeroDetail => GetHeroDetail.fromJson(json.decode(content));
+
+  void addHeroDetail(HeroEnvelope responseHero) {
+    content = json.encode(getHeroDetail..responseHero = responseHero);
+  }
+
+  factory ToUserServerMessage.createGetHeroDetail(String innerToken, String heroId) {
+    return ToUserServerMessage()
+      ..message = OnUserServerAction.getHeroDetail
+      ..content = json.encode((GetHeroDetail()..innerToken = innerToken..heroId = heroId).toJson());
+  }
 }
 
 @Typescript()
@@ -123,6 +136,8 @@ enum OnUserServerAction {
   setHeroAfterGameGain,
   @JsonValue('updateUser')
   updateUser,
+  @JsonValue('getHeroDetail')
+  getHeroDetail,
 }
 
 @JsonSerializable()
@@ -199,5 +214,18 @@ class HeroAfterGameGain extends MessageContent {
 
   Map<String, dynamic> toJson() {
     return _$HeroAfterGameGainToJson(this);
+  }
+}
+
+@JsonSerializable()
+class GetHeroDetail extends MessageContent {
+  String heroId;
+  String innerToken;
+  HeroEnvelope responseHero;
+
+  static GetHeroDetail fromJson(Map<String, dynamic> json) => _$GetHeroDetailFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$GetHeroDetailToJson(this);
   }
 }

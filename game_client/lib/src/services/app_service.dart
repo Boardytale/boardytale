@@ -1,6 +1,7 @@
 library state_service;
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html' as html;
 import 'package:game_client/src/game_model/model.dart';
 import 'package:game_client/src/services/create_game_service.dart';
@@ -13,9 +14,23 @@ import 'package:core/model/model.dart' as core;
 
 @Injectable()
 class AppService {
-  core.GameHeroEnvelope currentHero;
+  core.GameHeroEnvelope _currentHero;
+
+  core.GameHeroEnvelope get currentHero => _currentHero;
+
+  set currentHero(core.GameHeroEnvelope value) {
+    html.window.localStorage["editedHero"] = json.encode(value.toJson());
+    _currentHero = value;
+  }
 
   AppService(this.settings, this.gatewayService, this.lobbyService, this.createGameService) {
+    if (html.window.localStorage.containsKey("editedHero")) {
+      try{
+        _currentHero = core.GameHeroEnvelope.fromJson(json.decode(html.window.localStorage["editedHero"]));
+      }catch(e){
+        // do nothing
+      }
+    }
     if (html.window.localStorage.containsKey("innerToken")) {
       gatewayService.initMessages(html.window.localStorage["innerToken"]);
       navigationState.add(states[core.GameNavigationState.loading]);
