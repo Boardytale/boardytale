@@ -4,13 +4,26 @@
     style="height: calc(100% - 40px);overflow-y: auto;"
 >
   <div class="row">
+    <div class="col">
+      <h3>Zjednodušený Deník {{hero.envelope.gameHeroEnvelope.name}} pro postavy do 6. úrovně</h3>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-4 border">
       <h3>Postava</h3>
-      Úroveň: {{hero.state.level}}<br>
-      Životy: {{hero.state.health}}<br>
-      Zbroj: {{hero.state.armor}}<br>
-      Rychlost: {{hero.state.speed}}<br>
-      Útok {{hero.state.attack}}<br>
+      <div class="row">
+        <div class="col-3 text-center">
+          <img
+              [src]="hero.envelope.gameHeroEnvelope.type.image.data">
+        </div>
+        <div class="col-9">
+          Úroveň: {{hero.state.level}}<br>
+          Životy: {{hero.state.health}}<br>
+          Zbroj: {{hero.state.armor}}<br>
+          Rychlost: {{hero.state.speed}}<br>
+          Útok {{hero.state.attack}}<br>
+        </div>
+      </div>
     </div>
     <character
         class="col-4 border" style="display:block"

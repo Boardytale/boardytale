@@ -463,15 +463,17 @@ export interface ShootAbilityEnvelope extends Object {
     attack?: string;
 }
 
-export type ItemType =
+export type ItemPosition =
+    | 'head'
+    | 'neck'
     | 'body'
-    | 'weapon'
-    | 'helm'
-    | 'gauntlet'
-    | 'boots'
-    | 'ring'
-    | 'amulet'
-    | 'shield';
+    | 'elbows'
+    | 'leftHand'
+    | 'rightHand'
+    | 'leftWrist'
+    | 'rightWrist'
+    | 'legs'
+    | 'bothHands';
 
 export interface GameHeroEnvelope extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
@@ -486,6 +488,7 @@ export interface GameHeroEnvelope extends Object {
 export interface HeroEnvelope extends Object {
     gameHeroEnvelope: GameHeroEnvelope;
     inventoryItems: Array<ItemEnvelope>;
+    equippedItems: EquippedItemsEnvelope;
     strength: number;
     agility: number;
     intelligence: number;
@@ -497,7 +500,7 @@ export interface HeroEnvelope extends Object {
 }
 
 export interface ItemEnvelope extends Object {
-    itemType: ItemType;
+    possiblePositions: Array<ItemPosition>;
     name: string;
     id: string;
     heroId: string;
@@ -513,6 +516,7 @@ export interface ItemEnvelope extends Object {
     precisionBonus: number;
     suggestedPrice: number;
     recommendedPrice: number;
+    weapon: WeaponEnvelope;
 }
 
 export interface WeaponEnvelope extends Object {
@@ -521,15 +525,44 @@ export interface WeaponEnvelope extends Object {
 }
 
 export interface EquippedItemsEnvelope extends Object {
-    head: ItemEnvelope;
-    neck: ItemEnvelope;
-    body: ItemEnvelope;
-    elbows: ItemEnvelope;
-    leftHand: ItemEnvelope;
-    rightHand: ItemEnvelope;
-    leftWrist: ItemEnvelope;
-    rightWrist: ItemEnvelope;
-    legs: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    head?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    neck?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    body?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    elbows?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    leftHand?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    rightHand?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    leftWrist?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    rightWrist?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    legs?: ItemEnvelope;
+}
+
+export interface HeroUpdate extends Object {
+    name: string;
+    strength: number;
+    agility: number;
+    intelligence: number;
+    precision: number;
+    spirituality: number;
+    energy: number;
+    pickGainId: number;
+    equipItemId: string;
+}
+
+export interface HeroAfterGameGain extends MessageContent {
+    id: number;
+    xp: number;
+    money: number;
+    items: Array<ItemEnvelope>;
+    heroId: string;
 }
 
 export interface HealAbilityEnvelope extends Object {

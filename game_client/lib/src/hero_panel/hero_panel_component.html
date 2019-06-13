@@ -14,8 +14,20 @@
   </div>
 </div>
 <div *ngIf="hero != null" style="height: 100%">
+  <edit-low-level
+      *ngIf="hero.isLowLevel"
+      [hero]="hero"
+      style="height: 100%;display:block"
+  ></edit-low-level>
   <edit-hero
-   [hero]="hero"
-   style="height: 100%;display:block"
+      *ngIf="hero.isHighLevel"
+      [hero]="hero"
+      style="height: 100%;display:block"
   ></edit-hero>
+</div>
+
+<div class="navbar navbar-expand-lg navbar-light bg-light justify-content-start hero-controls">
+  <button
+   (click)="save()"
+  >Save</button>
 </div>

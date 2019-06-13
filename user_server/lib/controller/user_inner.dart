@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/controller/user_utils/user_utils.dart';
-import 'package:user_server/model/db_objects.dart';
 import 'package:core/configuration/configuration.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:shelf/shelf.dart' as shelf;

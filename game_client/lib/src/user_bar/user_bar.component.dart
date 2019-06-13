@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:game_client/src/services/gateway_service.dart';

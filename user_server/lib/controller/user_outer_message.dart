@@ -3,10 +3,8 @@ import 'package:core/model/model.dart' as core;
 import 'package:io_utils/aqueduct/wraps.dart';
 import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/controller/user_utils/user_utils.dart';
-import 'package:user_server/model/db_objects.dart';
 import 'package:user_server/model/heroes.dart';
 import 'package:uuid/uuid.dart';
-
 
 Uuid uuid = Uuid();
 

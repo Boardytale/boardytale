@@ -27,7 +27,7 @@ class ButtonedNumberInputComponent {
     _value = val;
   }
 
-  final _valueChange = new StreamController<int>();
+  final _valueChange = StreamController<int>();
   @Output()
   Stream<int> get valueChange => _valueChange.stream;
 

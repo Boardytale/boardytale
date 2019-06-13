@@ -48,15 +48,15 @@ part 'package:core/model/tale/tale_create_envelope.dart';
 
 part 'package:core/model/tale/lobby_tale.dart';
 
-part 'package:core/model/game/state.dart';
+part 'package:core/model/messages/state.dart';
 
-part 'package:core/model/game/to_client_messages.dart';
+part 'package:core/model/messages/to_client_messages.dart';
 
-part 'package:core/model/game/to_game_server_messages.dart';
+part 'package:core/model/messages/to_game_server_messages.dart';
 
-part 'package:core/model/game/to_ai_server_message.dart';
+part 'package:core/model/messages/to_ai_server_message.dart';
 
-part 'package:core/model/game/to_user_server_message.dart';
+part 'package:core/model/messages/to_user_server_message.dart';
 
 part 'package:core/model/logger/logger_message.dart';
 

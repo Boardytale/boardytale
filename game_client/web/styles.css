@@ -9818,3 +9818,8 @@ action-feedback .col {
 .lobbyTile.selected {
   border: 3px solid greenyellow;
 }
+
+.hero-controls {
+  bottom: 0;
+  position: fixed;
+}

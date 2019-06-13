@@ -43,7 +43,7 @@ class HeroEnvelope {
 @Typescript()
 @JsonSerializable()
 class ItemEnvelope {
-  ItemType itemType;
+  List<ItemPosition> possiblePositions = [];
   String name = "name";
   String id;
   String heroId;
@@ -60,6 +60,8 @@ class ItemEnvelope {
   num suggestedPrice = 100;
   int recommendedPrice = 100;
   WeaponEnvelope weapon;
+
+  bool get isWeapon => weapon != null;
 
   static ItemEnvelope fromJson(Map<String, dynamic> json) => _$ItemEnvelopeFromJson(json);
 
@@ -117,21 +119,65 @@ class EquippedItemsEnvelope {
 }
 
 @Typescript()
-enum ItemType {
+enum ItemPosition {
+  @JsonValue('head')
+  head,
+  @JsonValue('neck')
+  neck,
   @JsonValue('body')
   body,
-  @JsonValue('weapon')
-  weapon,
-  @JsonValue('helm')
-  helm,
-  @JsonValue('gauntlet')
-  gauntlet,
-  @JsonValue('boots')
-  boots,
-  @JsonValue('ring')
-  ring,
-  @JsonValue('amulet')
-  amulet,
-  @JsonValue('shield')
-  shield,
+  @JsonValue('elbows')
+  elbows,
+  @JsonValue('leftHand')
+  leftHand,
+  @JsonValue('rightHand')
+  rightHand,
+  @JsonValue('leftWrist')
+  leftWrist,
+  @JsonValue('rightWrist')
+  rightWrist,
+  @JsonValue('legs')
+  legs,
+  @JsonValue('bothHands')
+  bothHands,
+}
+
+@Typescript()
+@JsonSerializable()
+class HeroUpdate {
+  String name;
+  num strength;
+  int agility;
+  num intelligence;
+  num precision;
+  num spirituality;
+  num energy;
+  int pickGainId;
+  String equipItemId;
+  ItemPosition equipTo;
+  String moveToInventoryItemId;
+  String sellItemId;
+  String buyItemId;
+
+  static HeroUpdate fromJson(Map<String, dynamic> json) => _$HeroUpdateFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$HeroUpdateToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class HeroAfterGameGain extends MessageContent {
+  int id;
+  int xp;
+  int money;
+  List<ItemEnvelope> items;
+  String heroId;
+
+  static HeroAfterGameGain fromJson(Map<String, dynamic> json) => _$HeroAfterGameGainFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$HeroAfterGameGainToJson(this);
+  }
 }

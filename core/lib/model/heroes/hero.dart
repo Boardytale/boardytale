@@ -12,10 +12,10 @@ class Hero {
   }
 
   ItemEnvelope getFirstWeapon() {
-    if (envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.itemType == ItemType.weapon) {
+    if (envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.isWeapon) {
       return envelope.equippedItems.leftHand;
     }
-    if (envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.itemType == ItemType.weapon) {
+    if (envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.isWeapon) {
       return envelope.equippedItems.rightHand;
     }
     return null;
@@ -34,9 +34,7 @@ class HeroState {
   Hero hero;
   num effectiveStrength = 1;
   num effectiveAgility = 1;
-  num _effectivePrecision = 1;
   num _effectiveEnergy = 1;
-  num _effectiveSpirituality = 1;
   num level = 0;
   num baseHealth = 0;
   num weightLimit = 0;
@@ -62,9 +60,7 @@ class HeroState {
     ItemSum items = hero.itemSum;
     if (hero.isHighLevel) {
       itemWeight = items.weight;
-      _effectivePrecision = hero.envelope.precision + items.precisionBonus;
       _effectiveEnergy = hero.envelope.energy + items.energyBonus;
-      _effectiveSpirituality = hero.envelope.spirituality + items.spiritualityBonus;
       effectiveStrength = hero.envelope.strength + items.strengthBonus;
       weightLimit = Calculations.weightLimitForStrength(effectiveStrength);
       effectiveAgility =
