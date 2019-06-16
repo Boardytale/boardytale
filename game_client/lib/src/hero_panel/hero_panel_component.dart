@@ -2,6 +2,7 @@ import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:game_client/src/hero_panel/edit_hero/edit_component.dart';
+import 'package:game_client/src/hero_panel/edit_hero/edit_low_level/edit_low_level_component.dart';
 import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/hero_service.dart';
@@ -10,7 +11,7 @@ import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'hero-panel',
-    directives: [coreDirectives, formDirectives, EditHeroComponent],
+    directives: [coreDirectives, formDirectives, EditHeroComponent, EditLowLevelComponent],
     templateUrl: "hero_panel_component.html",
     changeDetection: ChangeDetectionStrategy.OnPush)
 class HeroPanelComponent {
@@ -57,5 +58,9 @@ class HeroPanelComponent {
     heroEnvelope = message.getHeroDetail.responseHero;
     hero = core.Hero(heroEnvelope);
     changeDetector.markForCheck();
+  }
+
+  void save(){
+
   }
 }

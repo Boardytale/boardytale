@@ -17,10 +17,10 @@ class Hero {
   }
 
   ItemEnvelope getFirstWeapon() {
-    if (envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.itemType == ItemType.weapon) {
+    if (envelope.equippedItems.leftHand != null && envelope.equippedItems.leftHand.isWeapon) {
       return envelope.equippedItems.leftHand;
     }
-    if (envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.itemType == ItemType.weapon) {
+    if (envelope.equippedItems.rightHand != null && envelope.equippedItems.rightHand.isWeapon) {
       return envelope.equippedItems.rightHand;
     }
     return null;

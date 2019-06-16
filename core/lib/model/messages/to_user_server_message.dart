@@ -204,20 +204,6 @@ class CreateHeroData extends MessageContent {
 }
 
 @JsonSerializable()
-class HeroAfterGameGain extends MessageContent {
-  int xp;
-  int money;
-  List<ItemEnvelope> items;
-  String heroId;
-
-  static HeroAfterGameGain fromJson(Map<String, dynamic> json) => _$HeroAfterGameGainFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$HeroAfterGameGainToJson(this);
-  }
-}
-
-@JsonSerializable()
 class GetHeroDetail extends MessageContent {
   String heroId;
   String innerToken;
