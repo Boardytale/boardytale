@@ -1529,25 +1529,6 @@ Map<String, dynamic> _$CreateHeroDataToJson(CreateHeroData instance) =>
       'responseHero': instance.responseHero?.toJson()
     };
 
-HeroAfterGameGain _$HeroAfterGameGainFromJson(Map<String, dynamic> json) {
-  return HeroAfterGameGain()
-    ..xp = json['xp'] as int
-    ..money = json['money'] as int
-    ..items = (json['items'] as List)
-        ?.map((e) =>
-            e == null ? null : ItemEnvelope.fromJson(e as Map<String, dynamic>))
-        ?.toList()
-    ..heroId = json['heroId'] as String;
-}
-
-Map<String, dynamic> _$HeroAfterGameGainToJson(HeroAfterGameGain instance) =>
-    <String, dynamic>{
-      'xp': instance.xp,
-      'money': instance.money,
-      'items': instance.items?.map((e) => e?.toJson())?.toList(),
-      'heroId': instance.heroId
-    };
-
 GetHeroDetail _$GetHeroDetailFromJson(Map<String, dynamic> json) {
   return GetHeroDetail()
     ..heroId = json['heroId'] as String
@@ -1722,7 +1703,9 @@ Map<String, dynamic> _$HeroEnvelopeToJson(HeroEnvelope instance) =>
 
 ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
   return ItemEnvelope()
-    ..itemType = _$enumDecodeNullable(_$ItemTypeEnumMap, json['itemType'])
+    ..possiblePositions = (json['possiblePositions'] as List)
+        ?.map((e) => _$enumDecodeNullable(_$ItemPositionEnumMap, e))
+        ?.toList()
     ..name = json['name'] as String
     ..id = json['id'] as String
     ..heroId = json['heroId'] as String
@@ -1747,7 +1730,9 @@ ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
     <String, dynamic>{
-      'itemType': _$ItemTypeEnumMap[instance.itemType],
+      'possiblePositions': instance.possiblePositions
+          ?.map((e) => _$ItemPositionEnumMap[e])
+          ?.toList(),
       'name': instance.name,
       'id': instance.id,
       'heroId': instance.heroId,
@@ -1768,15 +1753,17 @@ Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
       'weapon': instance.weapon?.toJson()
     };
 
-const _$ItemTypeEnumMap = <ItemType, dynamic>{
-  ItemType.body: 'body',
-  ItemType.weapon: 'weapon',
-  ItemType.helm: 'helm',
-  ItemType.gauntlet: 'gauntlet',
-  ItemType.boots: 'boots',
-  ItemType.ring: 'ring',
-  ItemType.amulet: 'amulet',
-  ItemType.shield: 'shield'
+const _$ItemPositionEnumMap = <ItemPosition, dynamic>{
+  ItemPosition.head: 'head',
+  ItemPosition.neck: 'neck',
+  ItemPosition.body: 'body',
+  ItemPosition.elbows: 'elbows',
+  ItemPosition.leftHand: 'leftHand',
+  ItemPosition.rightHand: 'rightHand',
+  ItemPosition.leftWrist: 'leftWrist',
+  ItemPosition.rightWrist: 'rightWrist',
+  ItemPosition.legs: 'legs',
+  ItemPosition.bothHands: 'bothHands'
 };
 
 WeaponEnvelope _$WeaponEnvelopeFromJson(Map<String, dynamic> json) {
@@ -1844,6 +1831,61 @@ Map<String, dynamic> _$EquippedItemsEnvelopeToJson(
       'leftWrist': instance.leftWrist?.toJson(),
       'rightWrist': instance.rightWrist?.toJson(),
       'legs': instance.legs?.toJson()
+    };
+
+HeroUpdate _$HeroUpdateFromJson(Map<String, dynamic> json) {
+  return HeroUpdate()
+    ..name = json['name'] as String
+    ..strength = json['strength'] as num
+    ..agility = json['agility'] as int
+    ..intelligence = json['intelligence'] as num
+    ..precision = json['precision'] as num
+    ..spirituality = json['spirituality'] as num
+    ..energy = json['energy'] as num
+    ..pickGainId = json['pickGainId'] as int
+    ..equipItemId = json['equipItemId'] as String
+    ..equipTo = _$enumDecodeNullable(_$ItemPositionEnumMap, json['equipTo'])
+    ..moveToInventoryItemId = json['moveToInventoryItemId'] as String
+    ..sellItemId = json['sellItemId'] as String
+    ..buyItemId = json['buyItemId'] as String;
+}
+
+Map<String, dynamic> _$HeroUpdateToJson(HeroUpdate instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'strength': instance.strength,
+      'agility': instance.agility,
+      'intelligence': instance.intelligence,
+      'precision': instance.precision,
+      'spirituality': instance.spirituality,
+      'energy': instance.energy,
+      'pickGainId': instance.pickGainId,
+      'equipItemId': instance.equipItemId,
+      'equipTo': _$ItemPositionEnumMap[instance.equipTo],
+      'moveToInventoryItemId': instance.moveToInventoryItemId,
+      'sellItemId': instance.sellItemId,
+      'buyItemId': instance.buyItemId
+    };
+
+HeroAfterGameGain _$HeroAfterGameGainFromJson(Map<String, dynamic> json) {
+  return HeroAfterGameGain()
+    ..id = json['id'] as int
+    ..xp = json['xp'] as int
+    ..money = json['money'] as int
+    ..items = (json['items'] as List)
+        ?.map((e) =>
+            e == null ? null : ItemEnvelope.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..heroId = json['heroId'] as String;
+}
+
+Map<String, dynamic> _$HeroAfterGameGainToJson(HeroAfterGameGain instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'xp': instance.xp,
+      'money': instance.money,
+      'items': instance.items?.map((e) => e?.toJson())?.toList(),
+      'heroId': instance.heroId
     };
 
 HealAbilityEnvelope _$HealAbilityEnvelopeFromJson(Map<String, dynamic> json) {

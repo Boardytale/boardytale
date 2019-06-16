@@ -463,15 +463,17 @@ export interface ShootAbilityEnvelope extends Object {
     attack?: string;
 }
 
-export type ItemType =
+export type ItemPosition =
+    | 'head'
+    | 'neck'
     | 'body'
-    | 'weapon'
-    | 'helm'
-    | 'gauntlet'
-    | 'boots'
-    | 'ring'
-    | 'amulet'
-    | 'shield';
+    | 'elbows'
+    | 'leftHand'
+    | 'rightHand'
+    | 'leftWrist'
+    | 'rightWrist'
+    | 'legs'
+    | 'bothHands';
 
 export interface GameHeroEnvelope extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
@@ -498,7 +500,7 @@ export interface HeroEnvelope extends Object {
 }
 
 export interface ItemEnvelope extends Object {
-    itemType: ItemType;
+    possiblePositions: Array<ItemPosition>;
     name: string;
     id: string;
     // annotation @TypescriptOptional() → TypescriptOptional
@@ -567,6 +569,30 @@ export interface EquippedItemsEnvelope extends Object {
     rightWrist?: ItemEnvelope;
     // annotation @TypescriptOptional() → TypescriptOptional
     legs?: ItemEnvelope;
+}
+
+export interface HeroUpdate extends Object {
+    name: string;
+    strength: number;
+    agility: number;
+    intelligence: number;
+    precision: number;
+    spirituality: number;
+    energy: number;
+    pickGainId: number;
+    equipItemId: string;
+    equipTo: ItemPosition;
+    moveToInventoryItemId: string;
+    sellItemId: string;
+    buyItemId: string;
+}
+
+export interface HeroAfterGameGain extends MessageContent {
+    id: number;
+    xp: number;
+    money: number;
+    items: Array<ItemEnvelope>;
+    heroId: string;
 }
 
 export interface HealAbilityEnvelope extends Object {
