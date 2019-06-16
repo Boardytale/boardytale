@@ -68,30 +68,40 @@ Future<bool> waitForSignal(Process process, String signal, {String printPrefix: 
   return completer.future;
 }
 
-void printFromOutputStreams(Object process, String prefix, String color) {
+Stream<String> printFromOutputStreams(Object process, String prefix, String color) {
+  StreamController<String> out = StreamController<String>();
   Console.init();
   int colorCode = _getColor(color).id;
   if (process is Process) {
     process.stdout.transform(convert.utf8.decoder).listen((String data) {
       _outToConsole(prefix, data, colorCode);
+      out.add(data);
     });
     process.stderr.transform(convert.utf8.decoder).listen((String data) {
       _errToConsole(prefix, data, colorCode);
+      out.add(data);
     });
   } else if (process is ProcessResult) {
     if (process.stdout is String) {
       _outToConsole(prefix, process.stdout, colorCode);
+      out.add(process.stdout);
     } else {
-      _outToConsole(prefix, new String.fromCharCodes(process.stdout as List<int>), colorCode);
+      String data = String.fromCharCodes(process.stdout as List<int>);
+      _outToConsole(prefix, data, colorCode);
+      out.add(data);
     }
     if (process.stderr is String) {
       _errToConsole(prefix, process.stderr, colorCode);
+      out.add(process.stderr);
     } else {
-      _errToConsole(prefix, new String.fromCharCodes(process.stderr as List<int>), colorCode);
+      String data = String.fromCharCodes(process.stderr as List<int>);
+      _errToConsole(prefix, data, colorCode);
+      out.add(data);
     }
   } else {
     throw new ArgumentError("unknown type - cannot extract stdout and stderr");
   }
+  return out.stream.asBroadcastStream();
 }
 
 void _errToConsole(String prefix, String data, int color) {

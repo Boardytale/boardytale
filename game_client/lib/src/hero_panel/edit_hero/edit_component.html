@@ -6,11 +6,11 @@
   <div class="row">
     <div class="col-4 border">
       <h3>Postava</h3>
-      Úroveň: {{hero.state.level}}<br>
-      Životy: {{hero.state.health}}<br>
-      Zbroj: {{hero.state.armor}}<br>
-      Rychlost: {{hero.state.speed}}<br>
-      Útok {{hero.state.attack}}<br>
+      Úroveň: {{hero.envelope.gameHeroEnvelope.level}}<br>
+      Životy: {{hero.heroSum.health}}<br>
+      Zbroj: {{hero.envelope.gameHeroEnvelope.type.armor}}<br>
+      Rychlost: {{hero.envelope.gameHeroEnvelope.type.speed}}<br>
+      Útok {{hero.envelope.gameHeroEnvelope.type.attack}}<br>
     </div>
     <character
         class="col-4 border" style="display:block"
@@ -25,7 +25,7 @@
       Název: {{hero.getFirstWeapon()?.name}}<br>
       Základní útok: {{hero.getFirstWeapon()?.weapon?.baseAttack}}<br>
       Bonus k útoku: {{hero.getFirstWeapon()?.weapon?.bonusAttack}}<br>
-      Útok: {{hero.state.attack}}<br/>
+      Útok: {{hero.heroSum.attack}}<br/>
       <button (click)="removeWeapon()">Odebrat</button>
 
     </div>
@@ -68,11 +68,8 @@
         *ngIf="heroIsMidLevel"
         class="col-4 border">
       <h3>Mezivýpočty</h3>
-      Hmotnost výbavy: {{hero.state.itemWeight}}<br>
-      Mana: {{hero.state.mana}}<br>
-      Obratnost (+items): {{hero.state.effectiveAgility}} = {{envelope.agility}} (+{{hero.itemSum.agilityBonus}})<br>
-      Síla(+items): {{hero.state.effectiveStrength}} = {{envelope.strength}} (+{{hero.itemSum.strengthBonus}})<br>
-      Základ počtu životů (6 + 2*síla)(+items): {{hero.state.baseHealth}}(+{{hero.itemSum.healthBonus}})<br>
+      Hmotnost výbavy: {{hero.heroSum.itemWeight}}<br>
+      Mana: {{hero.heroSum.mana}}<br>
     </div>
     <div
         *ngIf="heroIsLowLevel"
@@ -81,17 +78,15 @@
     </div>
     <div *ngIf="heroIsMidLevel" class="col-3 border">
       <h3>Rychlost</h3>
-      Hmotnost: {{hero.state.itemWeight}}<br>
-      Síla (nosnost): {{hero.state.effectiveStrength}} ({{hero.state.weightLimit}})<br>
-      Rychlost: {{hero.state.speed}}<br>
+      Hmotnost: {{hero.heroSum.itemWeight}}<br>
+      Rychlost: {{hero.envelope.gameHeroEnvelope.type}}<br>
       Potřeba pro +1: TODO
     </div>
     <div class="col-3 border">
       <h3>Zbroj</h3>
-      Hmotnost: {{hero.state.itemWeight}}<br>
-      Obratnost: {{hero.state.effectiveAgility}} (TODO chybí do dalšího brnění)<br>
+      Hmotnost: {{hero.heroSum.itemWeight}}<br>
       Body zbroje: {{hero.itemSum.armorPoints.toStringAsFixed(2)}}<br>
-      Zbroj: {{hero.state.armor}}<br>
+      Zbroj: {{hero.envelope.gameHeroEnvelope.type.armor}}<br>
     </div>
   </div>
   <br>

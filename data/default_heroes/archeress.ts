@@ -1,15 +1,16 @@
 import {HeroEnvelope} from "../../core/lib/model/model";
 
 export let data: HeroEnvelope = {
-    intelligence: 3,
+    intelligence: 9,
     inventoryItems: [],
-    strength:3,
-    agility: 4,
+    strength:8,
+    agility: 13,
     precision: 33,
     spirituality: 33,
     energy: 33,
     experience: 0,
     money: 50,
+    equippedItems: {},
     gameHeroEnvelope:{
         "name": "Unnamed",
         "level": 1,

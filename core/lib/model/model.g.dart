@@ -1690,6 +1690,10 @@ HeroEnvelope _$HeroEnvelopeFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : ItemEnvelope.fromJson(e as Map<String, dynamic>))
         ?.toList()
+    ..equippedItems = json['equippedItems'] == null
+        ? null
+        : EquippedItemsEnvelope.fromJson(
+            json['equippedItems'] as Map<String, dynamic>)
     ..strength = json['strength'] as num
     ..agility = json['agility'] as int
     ..intelligence = json['intelligence'] as num
@@ -1705,6 +1709,7 @@ Map<String, dynamic> _$HeroEnvelopeToJson(HeroEnvelope instance) =>
       'gameHeroEnvelope': instance.gameHeroEnvelope?.toJson(),
       'inventoryItems':
           instance.inventoryItems?.map((e) => e?.toJson())?.toList(),
+      'equippedItems': instance.equippedItems?.toJson(),
       'strength': instance.strength,
       'agility': instance.agility,
       'intelligence': instance.intelligence,
@@ -1723,6 +1728,7 @@ ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
     ..heroId = json['heroId'] as String
     ..weight = json['weight'] as num
     ..armorPoints = json['armorPoints'] as num
+    ..speedPoints = json['speedPoints'] as num
     ..healthBonus = json['healthBonus'] as num
     ..manaBonus = json['manaBonus'] as num
     ..strengthBonus = json['strengthBonus'] as num
@@ -1732,7 +1738,11 @@ ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
     ..energyBonus = json['energyBonus'] as num
     ..precisionBonus = json['precisionBonus'] as num
     ..suggestedPrice = json['suggestedPrice'] as num
-    ..recommendedPrice = json['recommendedPrice'] as int;
+    ..recommendedPrice = json['recommendedPrice'] as int
+    ..requiredLevel = json['requiredLevel'] as int
+    ..weapon = json['weapon'] == null
+        ? null
+        : WeaponEnvelope.fromJson(json['weapon'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
@@ -1743,6 +1753,7 @@ Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
       'heroId': instance.heroId,
       'weight': instance.weight,
       'armorPoints': instance.armorPoints,
+      'speedPoints': instance.speedPoints,
       'healthBonus': instance.healthBonus,
       'manaBonus': instance.manaBonus,
       'strengthBonus': instance.strengthBonus,
@@ -1752,7 +1763,9 @@ Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
       'energyBonus': instance.energyBonus,
       'precisionBonus': instance.precisionBonus,
       'suggestedPrice': instance.suggestedPrice,
-      'recommendedPrice': instance.recommendedPrice
+      'recommendedPrice': instance.recommendedPrice,
+      'requiredLevel': instance.requiredLevel,
+      'weapon': instance.weapon?.toJson()
     };
 
 const _$ItemTypeEnumMap = <ItemType, dynamic>{
@@ -1768,15 +1781,23 @@ const _$ItemTypeEnumMap = <ItemType, dynamic>{
 
 WeaponEnvelope _$WeaponEnvelopeFromJson(Map<String, dynamic> json) {
   return WeaponEnvelope()
+    ..requiredStrength = json['requiredStrength'] as int
+    ..requiredAgility = json['requiredAgility'] as int
+    ..requiredIntelligence = json['requiredIntelligence'] as int
     ..baseAttack = (json['baseAttack'] as List)?.map((e) => e as int)?.toList()
     ..bonusAttack =
-        (json['bonusAttack'] as List)?.map((e) => e as int)?.toList();
+        (json['bonusAttack'] as List)?.map((e) => e as int)?.toList()
+    ..range = json['range'] as int;
 }
 
 Map<String, dynamic> _$WeaponEnvelopeToJson(WeaponEnvelope instance) =>
     <String, dynamic>{
+      'requiredStrength': instance.requiredStrength,
+      'requiredAgility': instance.requiredAgility,
+      'requiredIntelligence': instance.requiredIntelligence,
       'baseAttack': instance.baseAttack,
-      'bonusAttack': instance.bonusAttack
+      'bonusAttack': instance.bonusAttack,
+      'range': instance.range
     };
 
 EquippedItemsEnvelope _$EquippedItemsEnvelopeFromJson(

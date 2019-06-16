@@ -1,21 +1,23 @@
 part of model;
 
 class ItemSum {
-  num weight = 0;
-  num armorPoints = 0;
-  num healthBonus = 0;
-  num manaBonus = 0;
-  num strengthBonus = 0;
-  num agilityBonus = 0;
-  num intelligenceBonus = 0;
-  num spiritualityBonus = 0;
-  num precisionBonus = 0;
-  num energyBonus = 0;
+  double weight = 0;
+  int armorPoints = 0;
+  int speedPoints = 0;
+  int healthBonus = 0;
+  int manaBonus = 0;
+  int strengthBonus = 0;
+  int agilityBonus = 0;
+  int intelligenceBonus = 0;
+  int spiritualityBonus = 0;
+  int precisionBonus = 0;
+  int energyBonus = 0;
 
   void recalculate(List<ItemEnvelope> items) {
     items.forEach((ItemEnvelope item) {
       weight += item.weight;
       armorPoints += item.armorPoints;
+      speedPoints += item.speedPoints;
 
       healthBonus += item.healthBonus;
       manaBonus += item.manaBonus;

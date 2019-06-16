@@ -486,6 +486,7 @@ export interface GameHeroEnvelope extends Object {
 export interface HeroEnvelope extends Object {
     gameHeroEnvelope: GameHeroEnvelope;
     inventoryItems: Array<ItemEnvelope>;
+    equippedItems: EquippedItemsEnvelope;
     strength: number;
     agility: number;
     intelligence: number;
@@ -500,36 +501,72 @@ export interface ItemEnvelope extends Object {
     itemType: ItemType;
     name: string;
     id: string;
-    heroId: string;
-    weight: number;
-    armorPoints: number;
-    healthBonus: number;
-    manaBonus: number;
-    strengthBonus: number;
-    agilityBonus: number;
-    intelligenceBonus: number;
-    spiritualityBonus: number;
-    energyBonus: number;
-    precisionBonus: number;
-    suggestedPrice: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    heroId?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    weight?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    armorPoints?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    speedPoints?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    healthBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    manaBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    strengthBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    agilityBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    intelligenceBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    spiritualityBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    energyBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    precisionBonus?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    suggestedPrice?: number;
     recommendedPrice: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    requiredLevel?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    weapon?: WeaponEnvelope;
 }
 
 export interface WeaponEnvelope extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    requiredStrength?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    requiredAgility?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    requiredIntelligence?: number;
     baseAttack: Array<number>;
-    bonusAttack: Array<number>;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    bonusAttack?: Array<number>;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    range?: number;
 }
 
 export interface EquippedItemsEnvelope extends Object {
-    head: ItemEnvelope;
-    neck: ItemEnvelope;
-    body: ItemEnvelope;
-    elbows: ItemEnvelope;
-    leftHand: ItemEnvelope;
-    rightHand: ItemEnvelope;
-    leftWrist: ItemEnvelope;
-    rightWrist: ItemEnvelope;
-    legs: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    head?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    neck?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    body?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    elbows?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    leftHand?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    rightHand?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    leftWrist?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    rightWrist?: ItemEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    legs?: ItemEnvelope;
 }
 
 export interface HealAbilityEnvelope extends Object {

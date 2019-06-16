@@ -6,10 +6,10 @@ const app = express();
 let port = parseInt(process.argv[2]);
 
 app.use(bodyParser.text()); // for parsing application/json
-app.listen(port, () => console.log(`Typescript service listening on port ${port}!`))
+app.listen(port, () => console.log(`:::running:::Typescript service listening on port ${port}!`))
 
 app.post('/', (req, res) => {
-    var input = req.body;
+    let input = req.body;
     try {
         import(input).then((file: any) => {
             let out;

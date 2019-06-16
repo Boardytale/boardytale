@@ -46,19 +46,36 @@ class ItemEnvelope {
   ItemType itemType;
   String name = "name";
   String id;
+  @TypescriptOptional()
   String heroId;
+  @TypescriptOptional()
   num weight = 0;
+  @TypescriptOptional()
   num armorPoints = 0;
+  @TypescriptOptional()
+  num speedPoints = 0;
+  @TypescriptOptional()
   num healthBonus = 0;
+  @TypescriptOptional()
   num manaBonus = 0;
+  @TypescriptOptional()
   num strengthBonus = 0;
+  @TypescriptOptional()
   num agilityBonus = 0;
+  @TypescriptOptional()
   num intelligenceBonus = 0;
+  @TypescriptOptional()
   num spiritualityBonus = 0;
+  @TypescriptOptional()
   num energyBonus = 0;
+  @TypescriptOptional()
   num precisionBonus = 0;
+  @TypescriptOptional()
   num suggestedPrice = 100;
   int recommendedPrice = 100;
+  @TypescriptOptional()
+  int requiredLevel = 0;
+  @TypescriptOptional()
   WeaponEnvelope weapon;
 
   static ItemEnvelope fromJson(Map<String, dynamic> json) => _$ItemEnvelopeFromJson(json);
@@ -71,9 +88,17 @@ class ItemEnvelope {
 @Typescript()
 @JsonSerializable()
 class WeaponEnvelope {
+  @TypescriptOptional()
+  int requiredStrength = 0;
+  @TypescriptOptional()
+  int requiredAgility = 0;
+  @TypescriptOptional()
+  int requiredIntelligence = 0;
   List<int> baseAttack = [0, 0, 0, 0, 0, 0];
+  @TypescriptOptional()
   List<int> bonusAttack = [0, 0, 0, 0, 0, 0];
-
+  @TypescriptOptional()
+  int range = 0;
   static WeaponEnvelope fromJson(Map<String, dynamic> json) => _$WeaponEnvelopeFromJson(json);
 
   Map<String, dynamic> toJson() {

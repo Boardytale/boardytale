@@ -30,30 +30,30 @@ class MockedEditor {
   void run() async {
     tsProcess = await Process.start("npm", ["run", "ts-node", "libs/generate-data-json-service.ts", "$tsPort"],
         workingDirectory: projectDirectoryPath, runInShell: true);
-    printFromOutputStreams(tsProcess, "ts:", "blue");
+    Stream<String> output = printFromOutputStreams(tsProcess, "ts:", "blue");
+    output.listen((String data){
+      if(data.contains(":::running:::")){
+        createEnvelopes();
+      }
+    });
+  }
 
-    await Future.delayed(Duration(milliseconds: 50));
-
+  void createEnvelopes() async{
     List<core.HeroEnvelope> heroEnvelopes = await getDefaultHeroes();
     String out = """
-    part of heroes;
-    
-    // generated from data/default_heroes by user_server/bin/generate_default_heroes_data.dart
-    
-    List<core.HeroEnvelope> heroesData = [
-    
-    ${heroEnvelopes.map((envelope){
+        part of heroes;
+        // generated from data/default_heroes by user_server/bin/generate_default_heroes_data.dart
+        List<core.HeroEnvelope> heroesData = [
+        ${heroEnvelopes.map((envelope){
       return "core.HeroEnvelope.fromJson(${json.encode(envelope.toJson())})";
     }).join(",\n")}
-    
-    ];
-    """;
+        ];
+        """;
     File("${projectDirectoryPath}/user_server/lib/model/src/heroes_data.g.dart").writeAsStringSync(out);
     Process dartfmt = await Process.start("dartfmt", ["-w", "${projectDirectoryPath}/user_server/lib/model/src/heroes_data.g.dart"],
         workingDirectory: projectDirectoryPath, runInShell: true);
     printFromOutputStreams(dartfmt, "dartfmt:", "blue");
   }
-
 
   Future<String> getFileByPath(String path) async {
     String harmonizedPath = path.replaceAll("\\", "/");

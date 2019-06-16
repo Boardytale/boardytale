@@ -1,7 +1,6 @@
 part of heroes;
 
 // generated from data/default_heroes by user_server/bin/generate_default_heroes_data.dart
-
 List<core.HeroEnvelope> heroesData = [
   core.HeroEnvelope.fromJson({
     "gameHeroEnvelope": {
@@ -52,9 +51,20 @@ List<core.HeroEnvelope> heroesData = [
       "unit": null
     },
     "inventoryItems": [],
-    "strength": 3,
-    "agility": 4,
-    "intelligence": 3,
+    "equippedItems": {
+      "head": null,
+      "neck": null,
+      "body": null,
+      "elbows": null,
+      "leftHand": null,
+      "rightHand": null,
+      "leftWrist": null,
+      "rightWrist": null,
+      "legs": null
+    },
+    "strength": 15,
+    "agility": 20,
+    "intelligence": 15,
     "precision": 33,
     "spirituality": 33,
     "energy": 33,
@@ -110,6 +120,17 @@ List<core.HeroEnvelope> heroesData = [
       "unit": null
     },
     "inventoryItems": [],
+    "equippedItems": {
+      "head": null,
+      "neck": null,
+      "body": null,
+      "elbows": null,
+      "leftHand": null,
+      "rightHand": null,
+      "leftWrist": null,
+      "rightWrist": null,
+      "legs": null
+    },
     "strength": 3,
     "agility": 4,
     "intelligence": 3,
@@ -168,6 +189,17 @@ List<core.HeroEnvelope> heroesData = [
       "unit": null
     },
     "inventoryItems": [],
+    "equippedItems": {
+      "head": null,
+      "neck": null,
+      "body": null,
+      "elbows": null,
+      "leftHand": null,
+      "rightHand": null,
+      "leftWrist": null,
+      "rightWrist": null,
+      "legs": null
+    },
     "strength": 4,
     "agility": 3,
     "intelligence": 3,
@@ -226,6 +258,17 @@ List<core.HeroEnvelope> heroesData = [
       "unit": null
     },
     "inventoryItems": [],
+    "equippedItems": {
+      "head": null,
+      "neck": null,
+      "body": null,
+      "elbows": null,
+      "leftHand": null,
+      "rightHand": null,
+      "leftWrist": null,
+      "rightWrist": null,
+      "legs": null
+    },
     "strength": 3,
     "agility": 4,
     "intelligence": 3,

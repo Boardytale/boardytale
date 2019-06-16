@@ -1,14 +1,19 @@
 part of model;
 
 class Hero {
+  static double baseWeight = 70;
+  static int baseHealth = 7;
+  static List<int> armorStops = const [15, 30, 60, 120];
+  static List<int> speedStops = const [0, 2, 10, 20, 40, 80, 120];
   final HeroEnvelope envelope;
   AbilitiesEnvelope abilities = AbilitiesEnvelope();
   ItemSum itemSum = ItemSum();
-  HeroState state;
+  HeroSum heroSum;
 
   Hero(this.envelope) {
+    envelope.gameHeroEnvelope.level = Math.pow(envelope.experience, 0.3).floor();
     itemSum.recalculate(envelope.equippedItems.equippedItemsList());
-    state = HeroState(this);
+    heroSum = HeroSum(envelope, itemSum, getFirstWeapon());
   }
 
   ItemEnvelope getFirstWeapon() {
@@ -20,6 +25,7 @@ class Hero {
     }
     return null;
   }
+
   bool get isLowLevel => envelope.gameHeroEnvelope.level < 6;
 
   bool get isMidLevel => envelope.gameHeroEnvelope.level > 5 && envelope.gameHeroEnvelope.level < 12;
@@ -28,73 +34,95 @@ class Hero {
 
   bool get isHighLevel => envelope.gameHeroEnvelope.level > 11;
 
+  void updateType() {
+    UnitTypeCompiled type = envelope.gameHeroEnvelope.type;
+    heroSum.updateUnitType(type);
+  }
 }
 
-class HeroState {
-  Hero hero;
-  num effectiveStrength = 1;
-  num effectiveAgility = 1;
-  num _effectivePrecision = 1;
-  num _effectiveEnergy = 1;
-  num _effectiveSpirituality = 1;
-  num level = 0;
-  num baseHealth = 0;
-  num weightLimit = 0;
-  num itemsArmorPoints = 0;
-  num speedPoints = 1;
-  int itemWeight = 0;
-  num armor = 0;
-  num speed = 1;
-  num mana = 0;
-  num health;
-  num range;
-  List<int> ownAttack = [0, 0, 0, 0, 0, 0];
-  List<int> maxAttack = [0, 0, 0, 0, 0, 0];
-  List<int> itemAttack = [0, 0, 0, 0, 0, 0];
-  List<int> itemBonusAttack = [0, 0, 0, 0, 0, 0];
+class HeroSum {
+  int strength = 0;
+  int agility = 0;
+  int intelligence = 0;
+  int precision = 0;
+  int spirituality = 0;
+  int energy = 0;
+  double weight = Hero.baseWeight;
+  int armorPoints = 0;
+  int speedPoints = 0;
+  double itemWeight = 0;
+  int mana = 0;
+  int health = 7;
+  int range = 0;
   List<int> attack = [0, 0, 0, 0, 0, 0];
 
-  HeroState(this.hero) {
-    recalculate();
+  HeroSum(HeroEnvelope envelope, ItemSum items, ItemEnvelope weapon) {
+    strength = envelope.strength + items.strengthBonus;
+    agility = envelope.agility + items.agilityBonus;
+    intelligence = envelope.intelligence + items.intelligenceBonus;
+    precision = envelope.precision + items.precisionBonus;
+    spirituality = envelope.spirituality + items.spiritualityBonus;
+    energy = envelope.energy + items.energyBonus;
+    weight += items.weight;
+    itemWeight += items.weight;
+
+    armorPoints = items.armorPoints + ((agility / weight) * 100).floor();
+
+    int highSpeedPart = ((agility ~/ Math.max(weight - Hero.baseWeight + 2, 1)));
+    int lowSpeedPart = (((Math.sqrt((strength + weight) / weight)) - 1) * 100).floor();
+    int lowLevelBonus = ((Math.sqrt(strength + agility) / (itemWeight + 20)) * 20).floor();
+    speedPoints = items.speedPoints + highSpeedPart + lowSpeedPart + lowLevelBonus;
+
+    mana = items.manaBonus + intelligence;
+
+    health = items.healthBonus + (strength ~/ 3) + Hero.baseHealth;
+
+    if (weapon != null) {
+      attack = weapon.weapon.baseAttack;
+      range = weapon.weapon.range;
+    } else {
+      int attackPrecision = 2;
+      if (agility > 5) {
+        attackPrecision = 3;
+      }
+      if (agility > 15) {
+        attackPrecision = 4;
+      }
+      if (agility > 45) {
+        attackPrecision = 5;
+      }
+      int damage = (strength ~/ 8) + 1;
+      attack = [0, 0, 0, 0, 0, 0];
+      bool firstRun = true;
+      while (damage > 0) {
+        for (int i = 5; i > 5 - attackPrecision; i--) {
+          if (firstRun) {
+            attack[i]++;
+          } else if (damage > 0) {
+            damage--;
+            attack[i]++;
+          }
+        }
+        firstRun = false;
+      }
+    }
   }
 
-  void recalculate() {
-    ItemSum items = hero.itemSum;
-    if (hero.isHighLevel) {
-      itemWeight = items.weight;
-      _effectivePrecision = hero.envelope.precision + items.precisionBonus;
-      _effectiveEnergy = hero.envelope.energy + items.energyBonus;
-      _effectiveSpirituality = hero.envelope.spirituality + items.spiritualityBonus;
-      effectiveStrength = hero.envelope.strength + items.strengthBonus;
-      weightLimit = Calculations.weightLimitForStrength(effectiveStrength);
-      effectiveAgility =
-          Calculations.getEffectiveAgility(hero.envelope.agility, items.agilityBonus, itemWeight, weightLimit);
-      baseHealth = Calculations.healthForStrength(effectiveStrength);
-      ownAttack = Calculations.getDmgFromAttributes(effectiveStrength, effectiveAgility);
-      maxAttack = Calculations.getMaxAttackFromAttributes(effectiveStrength, effectiveAgility);
-      level = Calculations.levelForExperience(hero.envelope.experience);
-      armor = Calculations.getArmor(effectiveAgility, items.armorPoints);
-      speed = Calculations.getSpeed(itemWeight, weightLimit);
-      itemAttack = hero.getFirstWeapon() == null ? [0, 0, 0, 0, 0, 0] : hero.getFirstWeapon().weapon.baseAttack;
-      itemBonusAttack = hero.getFirstWeapon() == null ? [0, 0, 0, 0, 0, 0] : hero.getFirstWeapon().weapon.bonusAttack;
-      attack = Calculations.sumAttacks(
-          itemBonusAttack, Calculations.capAttack(Calculations.sumAttacks(ownAttack, itemAttack), maxAttack));
-      health = baseHealth + items.healthBonus;
-      mana = 10 * _effectiveEnergy + items.manaBonus;
-    } else if (hero.isMidLevel) {
-      UnitTypeCompiled type = hero.envelope.gameHeroEnvelope.type;
-      health = type.health + items.healthBonus;
-      armor = type.armor + items.armorPoints * 0;
-      range = type.range;
-      speed = type.speed;
-      attack = type.attack.split((" ")).map((item) => int.tryParse(item)).toList();
-    } else {
-      UnitTypeCompiled type = hero.envelope.gameHeroEnvelope.type;
-      health = type.health + items.healthBonus;
-      armor = type.armor + items.armorPoints * 0;
-      range = type.range;
-      speed = type.speed;
-      attack = type.attack.split((" ")).map((item) => int.tryParse(item)).toList();
+  void updateUnitType(UnitTypeCompiled type) {
+    type.range = range;
+    type.health = health;
+    type.attack = attack.join(" ");
+    type.armor = 0;
+    for (int i = 0; i < Hero.armorStops.length; i++) {
+      if (armorPoints > Hero.armorStops[i]) {
+        type.armor++;
+      }
+    }
+    type.speed = 0;
+    for (int i = 0; i < Hero.speedStops.length; i++) {
+      if (speedPoints > Hero.speedStops[i]) {
+        type.speed++;
+      }
     }
   }
 }
