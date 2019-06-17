@@ -6,13 +6,14 @@ import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/character.dart';
+import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/items.dart';
 import 'package:game_client/src/services/hero_service.dart';
 import 'package:game_client/src/shared/buttoned_number_input_component.dart';
 
 @Component(
     selector: 'edit-hero',
     templateUrl: 'edit_component.html',
-    directives: [coreDirectives, formDirectives, ButtonedNumberInputComponent, CharacterComponent])
+    directives: [coreDirectives, formDirectives, ButtonedNumberInputComponent, CharacterComponent, ItemsComponent])
 class EditHeroComponent {
   @Input()
   core.Hero hero;
@@ -22,6 +23,8 @@ class EditHeroComponent {
   EditHeroComponent(this.heroService);
 
   core.HeroEnvelope get envelope => hero.envelope;
+
+  bool get showStrAgiInt => hero.showStrAgiInt;
 
   bool get heroIsMidLevel => hero.isMidLevel;
 
@@ -42,7 +45,6 @@ class EditHeroComponent {
 
   void sellItem(core.ItemEnvelope item) {
     //    hero.items.removeWhere((Item value) => value == item);
-    //    hero.money += (item.suggestedPrice / 2).floor();
     //    save();
   }
 }

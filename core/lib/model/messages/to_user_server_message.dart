@@ -141,7 +141,7 @@ enum OnUserServerAction {
 }
 
 @JsonSerializable()
-class GetUserByInnerToken extends MessageContent {
+class GetUserByInnerToken {
   User user;
   String innerToken;
 
@@ -153,7 +153,7 @@ class GetUserByInnerToken extends MessageContent {
 }
 
 @JsonSerializable()
-class HeroesAndUnitsOfPlayer extends MessageContent {
+class HeroesAndUnitsOfPlayer {
   String requestedPlayerEmail;
   String requestedHeroId;
   List<GameHeroEnvelope> responseHeroes;
@@ -167,7 +167,7 @@ class HeroesAndUnitsOfPlayer extends MessageContent {
 }
 
 @JsonSerializable()
-class ListOfHeroes extends MessageContent {
+class ListOfHeroes {
   List<GameHeroEnvelope> responseHeroes;
 
   static ListOfHeroes fromJson(Map<String, dynamic> json) => _$ListOfHeroesFromJson(json);
@@ -178,7 +178,7 @@ class ListOfHeroes extends MessageContent {
 }
 
 @JsonSerializable()
-class ListOfHeroesOfPlayer extends MessageContent {
+class ListOfHeroesOfPlayer {
   List<GameHeroEnvelope> responseHeroes;
   String innerToken;
 
@@ -190,7 +190,7 @@ class ListOfHeroesOfPlayer extends MessageContent {
 }
 
 @JsonSerializable()
-class CreateHeroData extends MessageContent {
+class CreateHeroData {
   String name;
   String typeName;
   String innerToken;
@@ -204,7 +204,7 @@ class CreateHeroData extends MessageContent {
 }
 
 @JsonSerializable()
-class GetHeroDetail extends MessageContent {
+class GetHeroDetail {
   String heroId;
   String innerToken;
   HeroEnvelope responseHero;

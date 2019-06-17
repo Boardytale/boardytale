@@ -152,10 +152,9 @@ enum OnClientAction {
   addUnitType
 }
 
-abstract class MessageContent {}
 
 @JsonSerializable()
-class SetNavigationState extends MessageContent {
+class SetNavigationState {
   GameNavigationState newState;
   bool destroyCurrentTale = false;
 
@@ -167,7 +166,7 @@ class SetNavigationState extends MessageContent {
 }
 
 @JsonSerializable()
-class RefreshLobbyList extends MessageContent {
+class RefreshLobbyList {
   List<OpenedLobby> lobbies;
 
   static RefreshLobbyList fromJson(Map<String, dynamic> json) => _$RefreshLobbyListFromJson(json);
@@ -178,7 +177,7 @@ class RefreshLobbyList extends MessageContent {
 }
 
 @JsonSerializable()
-class GetGamesToCreate extends MessageContent {
+class GetGamesToCreate {
   List<LobbyTale> games;
 
   static GetGamesToCreate fromJson(Map<String, dynamic> json) => _$GetGamesToCreateFromJson(json);
@@ -189,7 +188,7 @@ class GetGamesToCreate extends MessageContent {
 }
 
 @JsonSerializable()
-class SetCurrentUser extends MessageContent {
+class SetCurrentUser {
   User user;
 
   static SetCurrentUser fromJson(Map<String, dynamic> json) => _$SetCurrentUserFromJson(json);
@@ -200,7 +199,7 @@ class SetCurrentUser extends MessageContent {
 }
 
 @JsonSerializable()
-class OpenedLobbyData extends MessageContent {
+class OpenedLobbyData {
   OpenedLobby lobby;
 
   static OpenedLobbyData fromJson(Map<String, dynamic> json) => _$OpenedLobbyDataFromJson(json);
@@ -211,7 +210,7 @@ class OpenedLobbyData extends MessageContent {
 }
 
 @JsonSerializable()
-class TaleData extends MessageContent {
+class TaleData {
   Tale tale;
   Assets assets;
   String playerIdOnThisClientMachine;
@@ -224,7 +223,7 @@ class TaleData extends MessageContent {
 }
 
 @JsonSerializable()
-class TaleUpdate extends MessageContent {
+class TaleUpdate {
   List<UnitCreateOrUpdateAction> actions;
   Iterable<String> playerOnMoveIds;
   @TypescriptOptional()
@@ -259,7 +258,7 @@ class TaleUpdate extends MessageContent {
 }
 
 @JsonSerializable()
-class UnitDelete extends MessageContent {
+class UnitDelete {
   List<UnitDeleteAction> actions;
 
   static UnitDelete fromJson(Map<String, dynamic> json) => _$UnitDeleteFromJson(json);
@@ -270,7 +269,7 @@ class UnitDelete extends MessageContent {
 }
 
 @JsonSerializable()
-class CancelOnField extends MessageContent {
+class CancelOnField {
   List<CancelOnFieldAction> actions;
 
   static CancelOnField fromJson(Map<String, dynamic> json) => _$CancelOnFieldFromJson(json);
@@ -281,7 +280,7 @@ class CancelOnField extends MessageContent {
 }
 
 @JsonSerializable()
-class IntentionUpdate extends MessageContent {
+class IntentionUpdate {
   String playerId;
   List<String> trackFieldsId;
 

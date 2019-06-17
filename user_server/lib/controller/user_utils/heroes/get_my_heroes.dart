@@ -7,23 +7,25 @@ Future<Response> getMyHeroes(core.ToUserServerMessage message, ManagedContext co
     var heroesQuery = Query<Hero>(context)..where((hero) => hero.user.id).equalTo(user.id);
 
     List<Hero> heroesData = await heroesQuery.fetch();
-    message.addHeroesOfPlayer(heroesData.map((Hero heroData){
-      return core.HeroEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>).gameHeroEnvelope;
-    }).toList());
+    message.addHeroesOfPlayer(heroesData
+        .map((Hero heroData) {
+          return core.HeroEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>).gameHeroEnvelope;
+        })
+        .where((hero) => hero != null)
+        .toList());
     return Response.ok(message.toJson());
-  }
-  else{
+  } else {
     return Response.badRequest(body: {"message": "bad inner token"});
   }
 }
 
 Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContext context) async {
   core.GetHeroDetail getHeroDetail = message.getHeroDetail;
-  if(getHeroDetail.innerToken == null || getHeroDetail.heroId == null){
+  if (getHeroDetail.innerToken == null || getHeroDetail.heroId == null) {
     return Response.badRequest(body: "bad inner token or heroId");
   }
   int heroIdInt = int.tryParse(getHeroDetail.heroId);
-  if(heroIdInt == null){
+  if (heroIdInt == null) {
     return Response.badRequest(body: "bad format of heroId");
   }
 
@@ -32,15 +34,15 @@ Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContex
   if (user != null) {
     var heroesQuery = Query<Hero>(context)
       ..where((hero) => hero.user.id).equalTo(user.id)
-      ..where((hero) => hero.heroId).equalTo(heroIdInt)
-    ;
+      ..where((hero) => hero.heroId).equalTo(heroIdInt);
 
     Hero heroData = await heroesQuery.fetchOne();
+    if (heroData == null) {
+      return Response.notFound();
+    }
     message.addHeroDetail(core.HeroEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>));
     return Response.ok(message.toJson());
-  }
-  else{
+  } else {
     return Response.badRequest(body: {"message": "bad inner token"});
   }
 }
-

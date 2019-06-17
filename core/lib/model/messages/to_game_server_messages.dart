@@ -139,7 +139,7 @@ enum OnServerAction {
 }
 
 @JsonSerializable()
-class GoToState extends MessageContent {
+class GoToState {
   GameNavigationState newState;
 
   static GoToState fromJson(Map<String, dynamic> json) => _$GoToStateFromJson(json);
@@ -150,7 +150,7 @@ class GoToState extends MessageContent {
 }
 
 @JsonSerializable()
-class CreateLobby extends MessageContent {
+class CreateLobby {
   String taleName;
   String name;
 
@@ -162,7 +162,7 @@ class CreateLobby extends MessageContent {
 }
 
 @JsonSerializable()
-class UnitTrackAction extends MessageContent {
+class UnitTrackAction {
   AbilityName abilityName;
   String unitId;
   List<String> track;
@@ -178,7 +178,7 @@ class UnitTrackAction extends MessageContent {
 }
 
 @JsonSerializable()
-class PlayerIntention extends MessageContent {
+class PlayerIntention {
   List<String> fieldsId;
 
   static PlayerIntention fromJson(Map<String, dynamic> json) => _$PlayerIntentionFromJson(json);
@@ -189,7 +189,7 @@ class PlayerIntention extends MessageContent {
 }
 
 @JsonSerializable()
-class ControlsAction extends MessageContent {
+class ControlsAction {
   ControlsActionName actionName;
 
   static ControlsAction fromJson(Map<String, dynamic> json) => _$ControlsActionFromJson(json);

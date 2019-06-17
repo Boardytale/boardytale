@@ -31,3 +31,94 @@ class ItemSum {
     });
   }
 }
+
+
+@Typescript()
+@JsonSerializable()
+class ItemEnvelope {
+  List<ItemPosition> possiblePositions = [];
+  String id;
+  String name = "name";
+  Map<Lang, String> langName;
+  String mapImageData;
+  String inventoryImageData;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String heroId;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num weight = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num armorPoints = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num speedPoints = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num healthBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num manaBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num strengthBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num agilityBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num intelligenceBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num spiritualityBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num energyBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  num precisionBonus = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 100)
+  int recommendedPrice = 100;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  int requiredLevel = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  WeaponEnvelope weapon;
+
+  bool get isWeapon => weapon != null;
+
+  static ItemEnvelope fromJson(Map<String, dynamic> json) => _$ItemEnvelopeFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ItemEnvelopeToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class WeaponEnvelope {
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  int requiredStrength = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  int requiredAgility = 0;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  int requiredIntelligence = 0;
+  List<int> baseAttack = [0, 0, 0, 0, 0, 0];
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: [0, 0, 0, 0, 0, 0])
+  List<int> bonusAttack = [0, 0, 0, 0, 0, 0];
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 0)
+  int range = 0;
+  static WeaponEnvelope fromJson(Map<String, dynamic> json) => _$WeaponEnvelopeFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$WeaponEnvelopeToJson(this);
+  }
+}

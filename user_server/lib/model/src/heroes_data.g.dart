@@ -47,24 +47,32 @@ List<core.HeroEnvelope> heroesData = [
         },
         "icon": null,
         "bigImage": null
-      },
-      "unit": null
+      }
     },
     "inventoryItems": [],
     "equippedItems": {
-      "head": null,
-      "neck": null,
-      "body": null,
-      "elbows": null,
-      "leftHand": null,
-      "rightHand": null,
-      "leftWrist": null,
-      "rightWrist": null,
-      "legs": null
+      "rightHand": {
+        "possiblePositions": ["bothHands"],
+        "name": "wooden bow",
+        "id": "heroDefaultBow",
+        "weight": 1,
+        "recommendedPrice": 1,
+        "weapon": {
+          "baseAttack": [0, 0, 1, 2, 2, 2]
+        }
+      },
+      "legs": {
+        "possiblePositions": ["legs"],
+        "name": "simple shoes",
+        "id": "heroDefaultShoes",
+        "weight": 1,
+        "speedPoints": 3,
+        "recommendedPrice": 1
+      }
     },
-    "strength": 15,
-    "agility": 20,
-    "intelligence": 15,
+    "strength": 8,
+    "agility": 13,
+    "intelligence": 9,
     "precision": 33,
     "spirituality": 33,
     "energy": 33,
@@ -116,24 +124,32 @@ List<core.HeroEnvelope> heroesData = [
         },
         "icon": null,
         "bigImage": null
-      },
-      "unit": null
+      }
     },
     "inventoryItems": [],
     "equippedItems": {
-      "head": null,
-      "neck": null,
-      "body": null,
-      "elbows": null,
-      "leftHand": null,
-      "rightHand": null,
-      "leftWrist": null,
-      "rightWrist": null,
-      "legs": null
+      "rightHand": {
+        "possiblePositions": ["bothHands"],
+        "name": "wooden bow",
+        "id": "heroDefaultBow",
+        "weight": 1,
+        "recommendedPrice": 1,
+        "weapon": {
+          "baseAttack": [0, 0, 1, 2, 2, 2]
+        }
+      },
+      "legs": {
+        "possiblePositions": ["legs"],
+        "name": "simple shoes",
+        "id": "heroDefaultShoes",
+        "weight": 1,
+        "speedPoints": 3,
+        "recommendedPrice": 1
+      }
     },
-    "strength": 3,
-    "agility": 4,
-    "intelligence": 3,
+    "strength": 9,
+    "agility": 13,
+    "intelligence": 8,
     "precision": 33,
     "spirituality": 33,
     "energy": 33,
@@ -185,24 +201,13 @@ List<core.HeroEnvelope> heroesData = [
         },
         "icon": null,
         "bigImage": null
-      },
-      "unit": null
+      }
     },
     "inventoryItems": [],
-    "equippedItems": {
-      "head": null,
-      "neck": null,
-      "body": null,
-      "elbows": null,
-      "leftHand": null,
-      "rightHand": null,
-      "leftWrist": null,
-      "rightWrist": null,
-      "legs": null
-    },
-    "strength": 4,
-    "agility": 3,
-    "intelligence": 3,
+    "equippedItems": {},
+    "strength": 13,
+    "agility": 9,
+    "intelligence": 8,
     "precision": 33,
     "spirituality": 33,
     "energy": 33,
@@ -254,24 +259,13 @@ List<core.HeroEnvelope> heroesData = [
         },
         "icon": null,
         "bigImage": null
-      },
-      "unit": null
+      }
     },
     "inventoryItems": [],
-    "equippedItems": {
-      "head": null,
-      "neck": null,
-      "body": null,
-      "elbows": null,
-      "leftHand": null,
-      "rightHand": null,
-      "leftWrist": null,
-      "rightWrist": null,
-      "legs": null
-    },
-    "strength": 3,
-    "agility": 4,
-    "intelligence": 3,
+    "equippedItems": {},
+    "strength": 6,
+    "agility": 6,
+    "intelligence": 18,
     "precision": 33,
     "spirituality": 33,
     "energy": 33,

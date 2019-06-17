@@ -3,16 +3,24 @@
   Jméno: <input [(ngModel)]="envelope.gameHeroEnvelope.name"><br>
 </span>
 
-<span *ngIf="heroIsMidLevel">
+<span *ngIf="showStrAgiInt">
   Síla: <buttoned-input [(value)]="envelope.strength"></buttoned-input><br>
 </span>
 
-<span *ngIf="heroIsHighLevel">
+<span *ngIf="showStrAgiInt">
   Inteligence: <buttoned-input [(value)]="envelope.intelligence"></buttoned-input><br>
 </span>
 
-<span *ngIf="heroIsHighLevel">
+<span *ngIf="showStrAgiInt">
   Obratnost: <buttoned-input [(value)]="envelope.agility"></buttoned-input><br>
+</span>
+
+<span *ngIf="showStrAgiInt">
+  Body zbroje: {{hero.heroSum.armorPoints}}<br>
+</span>
+
+<span *ngIf="showStrAgiInt">
+  Body pohybu: {{hero.heroSum.speedPoints}}<br>
 </span>
 
 <span *ngIf="heroIsHighLevel">

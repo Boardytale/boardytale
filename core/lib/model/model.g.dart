@@ -1638,6 +1638,116 @@ Map<String, dynamic> _$ShootAbilityEnvelopeToJson(
         ShootAbilityEnvelope instance) =>
     <String, dynamic>{'steps': instance.steps, 'attack': instance.attack};
 
+ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
+  return ItemEnvelope()
+    ..possiblePositions = (json['possiblePositions'] as List)
+        ?.map((e) => _$enumDecodeNullable(_$ItemPositionEnumMap, e))
+        ?.toList()
+    ..id = json['id'] as String
+    ..name = json['name'] as String
+    ..langName = (json['langName'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(_$enumDecodeNullable(_$LangEnumMap, k), e as String),
+    )
+    ..mapImageData = json['mapImageData'] as String
+    ..inventoryImageData = json['inventoryImageData'] as String
+    ..heroId = json['heroId'] as String
+    ..weight = json['weight'] as num ?? 0
+    ..armorPoints = json['armorPoints'] as num ?? 0
+    ..speedPoints = json['speedPoints'] as num ?? 0
+    ..healthBonus = json['healthBonus'] as num ?? 0
+    ..manaBonus = json['manaBonus'] as num ?? 0
+    ..strengthBonus = json['strengthBonus'] as num ?? 0
+    ..agilityBonus = json['agilityBonus'] as num ?? 0
+    ..intelligenceBonus = json['intelligenceBonus'] as num ?? 0
+    ..spiritualityBonus = json['spiritualityBonus'] as num ?? 0
+    ..energyBonus = json['energyBonus'] as num ?? 0
+    ..precisionBonus = json['precisionBonus'] as num ?? 0
+    ..recommendedPrice = json['recommendedPrice'] as int ?? 100
+    ..requiredLevel = json['requiredLevel'] as int ?? 0
+    ..weapon = json['weapon'] == null
+        ? null
+        : WeaponEnvelope.fromJson(json['weapon'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) {
+  final val = <String, dynamic>{
+    'possiblePositions': instance.possiblePositions
+        ?.map((e) => _$ItemPositionEnumMap[e])
+        ?.toList(),
+    'id': instance.id,
+    'name': instance.name,
+    'langName': instance.langName?.map((k, e) => MapEntry(_$LangEnumMap[k], e)),
+    'mapImageData': instance.mapImageData,
+    'inventoryImageData': instance.inventoryImageData,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('heroId', instance.heroId);
+  writeNotNull('weight', instance.weight);
+  writeNotNull('armorPoints', instance.armorPoints);
+  writeNotNull('speedPoints', instance.speedPoints);
+  writeNotNull('healthBonus', instance.healthBonus);
+  writeNotNull('manaBonus', instance.manaBonus);
+  writeNotNull('strengthBonus', instance.strengthBonus);
+  writeNotNull('agilityBonus', instance.agilityBonus);
+  writeNotNull('intelligenceBonus', instance.intelligenceBonus);
+  writeNotNull('spiritualityBonus', instance.spiritualityBonus);
+  writeNotNull('energyBonus', instance.energyBonus);
+  writeNotNull('precisionBonus', instance.precisionBonus);
+  writeNotNull('recommendedPrice', instance.recommendedPrice);
+  writeNotNull('requiredLevel', instance.requiredLevel);
+  writeNotNull('weapon', instance.weapon?.toJson());
+  return val;
+}
+
+const _$ItemPositionEnumMap = <ItemPosition, dynamic>{
+  ItemPosition.head: 'head',
+  ItemPosition.neck: 'neck',
+  ItemPosition.body: 'body',
+  ItemPosition.elbows: 'elbows',
+  ItemPosition.leftHand: 'leftHand',
+  ItemPosition.rightHand: 'rightHand',
+  ItemPosition.leftWrist: 'leftWrist',
+  ItemPosition.rightWrist: 'rightWrist',
+  ItemPosition.legs: 'legs',
+  ItemPosition.bothHands: 'bothHands'
+};
+
+WeaponEnvelope _$WeaponEnvelopeFromJson(Map<String, dynamic> json) {
+  return WeaponEnvelope()
+    ..requiredStrength = json['requiredStrength'] as int ?? 0
+    ..requiredAgility = json['requiredAgility'] as int ?? 0
+    ..requiredIntelligence = json['requiredIntelligence'] as int ?? 0
+    ..baseAttack = (json['baseAttack'] as List)?.map((e) => e as int)?.toList()
+    ..bonusAttack =
+        (json['bonusAttack'] as List)?.map((e) => e as int)?.toList() ??
+            [0, 0, 0, 0, 0, 0]
+    ..range = json['range'] as int ?? 0;
+}
+
+Map<String, dynamic> _$WeaponEnvelopeToJson(WeaponEnvelope instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('requiredStrength', instance.requiredStrength);
+  writeNotNull('requiredAgility', instance.requiredAgility);
+  writeNotNull('requiredIntelligence', instance.requiredIntelligence);
+  val['baseAttack'] = instance.baseAttack;
+  writeNotNull('bonusAttack', instance.bonusAttack);
+  writeNotNull('range', instance.range);
+  return val;
+}
+
 GameHeroEnvelope _$GameHeroEnvelopeFromJson(Map<String, dynamic> json) {
   return GameHeroEnvelope()
     ..id = json['id'] as String
@@ -1652,14 +1762,23 @@ GameHeroEnvelope _$GameHeroEnvelopeFromJson(Map<String, dynamic> json) {
             json['unit'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$GameHeroEnvelopeToJson(GameHeroEnvelope instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'level': instance.level,
-      'name': instance.name,
-      'type': instance.type?.toJson(),
-      'unit': instance.unit?.toJson()
-    };
+Map<String, dynamic> _$GameHeroEnvelopeToJson(GameHeroEnvelope instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'level': instance.level,
+    'name': instance.name,
+    'type': instance.type?.toJson(),
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('unit', instance.unit?.toJson());
+  return val;
+}
 
 HeroEnvelope _$HeroEnvelopeFromJson(Map<String, dynamic> json) {
   return HeroEnvelope()
@@ -1701,92 +1820,6 @@ Map<String, dynamic> _$HeroEnvelopeToJson(HeroEnvelope instance) =>
       'money': instance.money
     };
 
-ItemEnvelope _$ItemEnvelopeFromJson(Map<String, dynamic> json) {
-  return ItemEnvelope()
-    ..possiblePositions = (json['possiblePositions'] as List)
-        ?.map((e) => _$enumDecodeNullable(_$ItemPositionEnumMap, e))
-        ?.toList()
-    ..name = json['name'] as String
-    ..id = json['id'] as String
-    ..heroId = json['heroId'] as String
-    ..weight = json['weight'] as num
-    ..armorPoints = json['armorPoints'] as num
-    ..speedPoints = json['speedPoints'] as num
-    ..healthBonus = json['healthBonus'] as num
-    ..manaBonus = json['manaBonus'] as num
-    ..strengthBonus = json['strengthBonus'] as num
-    ..agilityBonus = json['agilityBonus'] as num
-    ..intelligenceBonus = json['intelligenceBonus'] as num
-    ..spiritualityBonus = json['spiritualityBonus'] as num
-    ..energyBonus = json['energyBonus'] as num
-    ..precisionBonus = json['precisionBonus'] as num
-    ..suggestedPrice = json['suggestedPrice'] as num
-    ..recommendedPrice = json['recommendedPrice'] as int
-    ..requiredLevel = json['requiredLevel'] as int
-    ..weapon = json['weapon'] == null
-        ? null
-        : WeaponEnvelope.fromJson(json['weapon'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$ItemEnvelopeToJson(ItemEnvelope instance) =>
-    <String, dynamic>{
-      'possiblePositions': instance.possiblePositions
-          ?.map((e) => _$ItemPositionEnumMap[e])
-          ?.toList(),
-      'name': instance.name,
-      'id': instance.id,
-      'heroId': instance.heroId,
-      'weight': instance.weight,
-      'armorPoints': instance.armorPoints,
-      'speedPoints': instance.speedPoints,
-      'healthBonus': instance.healthBonus,
-      'manaBonus': instance.manaBonus,
-      'strengthBonus': instance.strengthBonus,
-      'agilityBonus': instance.agilityBonus,
-      'intelligenceBonus': instance.intelligenceBonus,
-      'spiritualityBonus': instance.spiritualityBonus,
-      'energyBonus': instance.energyBonus,
-      'precisionBonus': instance.precisionBonus,
-      'suggestedPrice': instance.suggestedPrice,
-      'recommendedPrice': instance.recommendedPrice,
-      'requiredLevel': instance.requiredLevel,
-      'weapon': instance.weapon?.toJson()
-    };
-
-const _$ItemPositionEnumMap = <ItemPosition, dynamic>{
-  ItemPosition.head: 'head',
-  ItemPosition.neck: 'neck',
-  ItemPosition.body: 'body',
-  ItemPosition.elbows: 'elbows',
-  ItemPosition.leftHand: 'leftHand',
-  ItemPosition.rightHand: 'rightHand',
-  ItemPosition.leftWrist: 'leftWrist',
-  ItemPosition.rightWrist: 'rightWrist',
-  ItemPosition.legs: 'legs',
-  ItemPosition.bothHands: 'bothHands'
-};
-
-WeaponEnvelope _$WeaponEnvelopeFromJson(Map<String, dynamic> json) {
-  return WeaponEnvelope()
-    ..requiredStrength = json['requiredStrength'] as int
-    ..requiredAgility = json['requiredAgility'] as int
-    ..requiredIntelligence = json['requiredIntelligence'] as int
-    ..baseAttack = (json['baseAttack'] as List)?.map((e) => e as int)?.toList()
-    ..bonusAttack =
-        (json['bonusAttack'] as List)?.map((e) => e as int)?.toList()
-    ..range = json['range'] as int;
-}
-
-Map<String, dynamic> _$WeaponEnvelopeToJson(WeaponEnvelope instance) =>
-    <String, dynamic>{
-      'requiredStrength': instance.requiredStrength,
-      'requiredAgility': instance.requiredAgility,
-      'requiredIntelligence': instance.requiredIntelligence,
-      'baseAttack': instance.baseAttack,
-      'bonusAttack': instance.bonusAttack,
-      'range': instance.range
-    };
-
 EquippedItemsEnvelope _$EquippedItemsEnvelopeFromJson(
     Map<String, dynamic> json) {
   return EquippedItemsEnvelope()
@@ -1820,18 +1853,26 @@ EquippedItemsEnvelope _$EquippedItemsEnvelopeFromJson(
 }
 
 Map<String, dynamic> _$EquippedItemsEnvelopeToJson(
-        EquippedItemsEnvelope instance) =>
-    <String, dynamic>{
-      'head': instance.head?.toJson(),
-      'neck': instance.neck?.toJson(),
-      'body': instance.body?.toJson(),
-      'elbows': instance.elbows?.toJson(),
-      'leftHand': instance.leftHand?.toJson(),
-      'rightHand': instance.rightHand?.toJson(),
-      'leftWrist': instance.leftWrist?.toJson(),
-      'rightWrist': instance.rightWrist?.toJson(),
-      'legs': instance.legs?.toJson()
-    };
+    EquippedItemsEnvelope instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('head', instance.head?.toJson());
+  writeNotNull('neck', instance.neck?.toJson());
+  writeNotNull('body', instance.body?.toJson());
+  writeNotNull('elbows', instance.elbows?.toJson());
+  writeNotNull('leftHand', instance.leftHand?.toJson());
+  writeNotNull('rightHand', instance.rightHand?.toJson());
+  writeNotNull('leftWrist', instance.leftWrist?.toJson());
+  writeNotNull('rightWrist', instance.rightWrist?.toJson());
+  writeNotNull('legs', instance.legs?.toJson());
+  return val;
+}
 
 HeroUpdate _$HeroUpdateFromJson(Map<String, dynamic> json) {
   return HeroUpdate()

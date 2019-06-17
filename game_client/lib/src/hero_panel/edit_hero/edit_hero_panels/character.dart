@@ -22,6 +22,8 @@ class CharacterComponent {
 
   core.HeroEnvelope get envelope => hero.envelope;
 
+  bool get showStrAgiInt => hero.showStrAgiInt;
+
   bool get heroIsMidLevel => hero.isMidLevel;
 
   bool get heroIsHighLevel => hero.isHighLevel;

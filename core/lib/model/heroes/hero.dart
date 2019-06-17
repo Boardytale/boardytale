@@ -26,6 +26,8 @@ class Hero {
     return null;
   }
 
+  bool get showStrAgiInt => true;
+
   bool get isLowLevel => envelope.gameHeroEnvelope.level < 6;
 
   bool get isMidLevel => envelope.gameHeroEnvelope.level > 5 && envelope.gameHeroEnvelope.level < 12;
@@ -70,7 +72,8 @@ class HeroSum {
 
     int highSpeedPart = ((agility ~/ Math.max(weight - Hero.baseWeight + 2, 1)));
     int lowSpeedPart = (((Math.sqrt((strength + weight) / weight)) - 1) * 100).floor();
-    int lowLevelBonus = ((Math.sqrt(strength + agility) / (itemWeight + 20)) * 20).floor();
+    int lowLevelBonus = ((Math.sqrt(strength + agility) / (itemWeight + 5)) * 30).floor();
+    print("speed ${highSpeedPart} ${lowSpeedPart} ${lowLevelBonus}");
     speedPoints = items.speedPoints + highSpeedPart + lowSpeedPart + lowLevelBonus;
 
     mana = items.manaBonus + intelligence;

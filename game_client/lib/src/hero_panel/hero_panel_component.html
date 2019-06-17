@@ -14,13 +14,7 @@
   </div>
 </div>
 <div *ngIf="hero != null" style="height: 100%">
-  <edit-low-level
-      *ngIf="hero.isLowLevel"
-      [hero]="hero"
-      style="height: 100%;display:block"
-  ></edit-low-level>
   <edit-hero
-      *ngIf="hero.isHighLevel"
       [hero]="hero"
       style="height: 100%;display:block"
   ></edit-hero>

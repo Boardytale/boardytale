@@ -57,7 +57,7 @@ enum OnAiServerAction {
 }
 
 @JsonSerializable()
-class GetNextMoveByState extends MessageContent {
+class GetNextMoveByState {
   UnitTrackAction responseAction;
   Tale requestData;
   AiEngine requestEngine;
@@ -71,7 +71,7 @@ class GetNextMoveByState extends MessageContent {
 }
 
 @JsonSerializable()
-class GetNextMoveByUpdate extends MessageContent {
+class GetNextMoveByUpdate {
   UnitTrackAction responseAction;
   TaleUpdate requestUpdateData;
 
