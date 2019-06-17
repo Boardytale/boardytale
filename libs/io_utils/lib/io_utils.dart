@@ -283,6 +283,12 @@ String slashesInPath(String path) {
   return path.replaceAll('\\', '/');
 }
 
+String createImageData(String filePath) {
+  File imageFile = File(filePath);
+  List<int> imageBytes = imageFile.readAsBytesSync();
+  return "data:image/${path_lib.extension(imageFile.path)};base64,${convert.base64Encode(imageBytes)}";
+}
+
 //arg_lib.ArgResults parseServerRunnerArgs(List<String> args) {
 //  arg_lib.ArgParser parser = new arg_lib.ArgParser();
 //  parser.addOption("database",

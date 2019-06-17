@@ -10,7 +10,10 @@ export let data: HeroEnvelope = {
     energy: 33,
     experience: 0,
     money: 50,
-    equippedItems: {},
+    equippedItemNames:{
+      rightHand: "ironShortSword",
+      leftHand: "woodenBuckler"
+    },
     gameHeroEnvelope: {
         "name": "Unnamed",
         "level": 1,

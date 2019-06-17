@@ -189,9 +189,7 @@ class MockedEditor {
         print("success ${entity.path}");
         core.Image image = core.Image.fromJson(json.decode(outString) as Map<String, dynamic>);
         if (names.contains(image.name)) {
-          File imageFile = File("${projectDirectoryPath}/data/image_sources/${image.data}");
-          List<int> imageBytes = imageFile.readAsBytesSync();
-          image.data = "data:image/${path.extension(imageFile.path)};base64,${base64Encode(imageBytes)}";
+          image.data = createImageData("${projectDirectoryPath}/data/image_sources/${image.data}");
           images[image.name] = image;
         }
       } catch (e) {
@@ -224,10 +222,7 @@ class MockedEditor {
             core.TaleEnvelope tale =
                 core.TaleEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
             if (tale.tale.name == name) {
-              File imageFile = File("${projectDirectoryPath}/data/image_sources/${tale.lobby.image.data}");
-              List<int> imageBytes = imageFile.readAsBytesSync();
-              tale.lobby.image.data =
-                  "data:image/${path.extension(imageFile.path).replaceAll(".", "")};base64,${base64Encode(imageBytes)}";
+              tale.lobby.image.data = createImageData("${projectDirectoryPath}/data/image_sources/${tale.lobby.image.data}");
               return tale;
             }
           } catch (e) {

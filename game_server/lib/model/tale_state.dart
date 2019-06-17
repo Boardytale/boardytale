@@ -65,18 +65,24 @@ class ServerTaleState {
 
     if (action.unitUpdates != null) {
       List<core.UnitCreateOrUpdateAction> actionsWithEffect = [];
-      action.unitUpdates.forEach((core.UnitCreateOrUpdateAction action) {
-        if (units.containsKey(action.unitId)) {
-          core.Unit unit = units[action.unitId];
-          var report = unit.addUnitUpdateAction(action, fields[action.moveToFieldId]);
+      action.unitUpdates.forEach((core.UnitCreateOrUpdateAction unitAction) {
+        core.Unit unit;
+        if (units.containsKey(unitAction.unitId)) {
+          unit = units[unitAction.unitId];
+          var report = unit.addUnitUpdateAction(unitAction, fields[unitAction.moveToFieldId]);
           if (report != null) {
-            actionsWithEffect.add(action);
-            tale.events.setUnitReport(report);
+            actionsWithEffect.add(unitAction);
+            tale.events.setUnitReport(ServerUnitUpdateReport()
+              ..coreReport = report
+              ..taleAction = action);
           }
         } else {
-          core.Unit unit = core.Unit(createServerAbilityList, action, fields, players, unitTypes);
+          unit = core.Unit(createServerAbilityList, unitAction, fields, players, unitTypes);
           units[unit.id] = unit;
-          actionsWithEffect.add(action);
+          actionsWithEffect.add(unitAction);
+        }
+        if(unitAction.itemDrops != null){
+          tale.events.registerItemDrop(unitAction.itemDrops, unit);
         }
       });
       outputTaleUpdate.actions = actionsWithEffect;

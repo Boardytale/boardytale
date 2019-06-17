@@ -56,6 +56,10 @@ class UnitCreateOrUpdateAction {
   @JsonKey(includeIfNull: false)
   String explainFirstValue;
 
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  ItemDrops itemDrops;
+
   static UnitCreateOrUpdateAction fromJson(Map data) {
     return _$UnitCreateOrUpdateActionFromJson(data);
   }

@@ -43,7 +43,10 @@ class ToUserServerMessage {
   factory ToUserServerMessage.createGetStartingUnits(String playerEmail, String heroId) {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getStartingUnits
-      ..content = json.encode((HeroesAndUnitsOfPlayer()..requestedPlayerEmail = playerEmail..requestedHeroId = heroId).toJson());
+      ..content = json.encode((HeroesAndUnitsOfPlayer()
+            ..requestedPlayerEmail = playerEmail
+            ..requestedHeroId = heroId)
+          .toJson());
   }
 
   // ---
@@ -59,6 +62,7 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.getHeroesToCreate
       ..content = "{}";
   }
+
   // ---
 
   CreateHeroData get getCreateHeroData => CreateHeroData.fromJson(json.decode(content));
@@ -72,6 +76,7 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.createHero
       ..content = json.encode(createHero.toJson());
   }
+
   // ---
 
   ListOfHeroesOfPlayer get getListOfHeroesOfPlayer => ListOfHeroesOfPlayer.fromJson(json.decode(content));
@@ -86,6 +91,7 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.getMyHeroes
       ..content = json.encode((ListOfHeroesOfPlayer()..innerToken = innerToken).toJson());
   }
+
   // ---
 
   HeroAfterGameGain get getHeroAfterGameGain => HeroAfterGameGain.fromJson(json.decode(content));
@@ -105,18 +111,25 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.updateUser
       ..content = json.encode(user.toJson());
   }
+
   // ---
 
   GetHeroDetail get getHeroDetail => GetHeroDetail.fromJson(json.decode(content));
 
-  void addHeroDetail(HeroEnvelope responseHero) {
-    content = json.encode(getHeroDetail..responseHero = responseHero);
+  void addHeroDetail(HeroEnvelope responseHero, List<HeroAfterGameGain> gains, Map<String, ItemEnvelope> gainItems) {
+    content = json.encode(getHeroDetail
+      ..responseHero = responseHero
+      ..gains = gains
+      ..gainItems = gainItems);
   }
 
   factory ToUserServerMessage.createGetHeroDetail(String innerToken, String heroId) {
     return ToUserServerMessage()
       ..message = OnUserServerAction.getHeroDetail
-      ..content = json.encode((GetHeroDetail()..innerToken = innerToken..heroId = heroId).toJson());
+      ..content = json.encode((GetHeroDetail()
+            ..innerToken = innerToken
+            ..heroId = heroId)
+          .toJson());
   }
 }
 
@@ -208,6 +221,8 @@ class GetHeroDetail {
   String heroId;
   String innerToken;
   HeroEnvelope responseHero;
+  List<HeroAfterGameGain> gains;
+  Map<String, ItemEnvelope> gainItems;
 
   static GetHeroDetail fromJson(Map<String, dynamic> json) => _$GetHeroDetailFromJson(json);
 

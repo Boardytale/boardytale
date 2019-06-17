@@ -17,6 +17,10 @@ import 'package:game_client/src/shared/buttoned_number_input_component.dart';
 class EditHeroComponent {
   @Input()
   core.Hero hero;
+  @Input()
+  List<core.HeroAfterGameGain> gains;
+  @Input()
+  Map<String, core.ItemEnvelope> gainItems;
 
   final HeroService heroService;
 
@@ -46,5 +50,9 @@ class EditHeroComponent {
   void sellItem(core.ItemEnvelope item) {
     //    hero.items.removeWhere((Item value) => value == item);
     //    save();
+  }
+
+  void getGain(core.HeroAfterGameGain gain){
+
   }
 }

@@ -20,6 +20,9 @@ class HeroPanelComponent {
   SettingsService settingsService;
   GatewayService gateway;
   core.HeroEnvelope heroEnvelope;
+  List<core.HeroAfterGameGain> gains;
+  Map<String, core.ItemEnvelope> gainItems;
+
   core.Hero hero;
   List<core.GameHeroEnvelope> myHeroes;
 
@@ -54,14 +57,15 @@ class HeroPanelComponent {
     await appService.currentUser.first;
     core.ToUserServerMessage message = await gateway.toUserServerMessage(
         core.ToUserServerMessage.createGetHeroDetail(appService.currentUser.value.innerToken, selectedHero.id));
-    heroEnvelope = message.getHeroDetail.responseHero;
+    core.GetHeroDetail detail = message.getHeroDetail;
+    heroEnvelope = detail.responseHero;
+    gainItems = detail.gainItems;
+    gains = detail.gains;
     hero = core.Hero(heroEnvelope);
     // TODO: remove after debugging
     hero.updateType();
     changeDetector.markForCheck();
   }
 
-  void save(){
-
-  }
+  void save() {}
 }

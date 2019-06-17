@@ -103,11 +103,25 @@ export let data: TaleEnvelope = {
                 moveToFieldId: '4_4',
                 changeToTypeName: 'elvenLizard',
                 transferToPlayerId: 'bandits',
+                itemDrops: {
+                    items: [
+                        {
+                            byName: "leatherBoots"
+                        }
+                    ]
+                }
             },
             {
                 moveToFieldId: '5_5',
                 changeToTypeName: 'banditPikeman',
                 transferToPlayerId: 'bandits',
+                itemDrops: {
+                    items: [
+                        {
+                            byName: "rubyRing"
+                        }
+                    ]
+                }
             },
             {
                 moveToFieldId: '5_4',

@@ -2,17 +2,19 @@ import {ItemEnvelope} from "../../core/lib/model/model";
 
 export let data: ItemEnvelope = {
     id: 'shortWoodenBow',
-    name: 'wooden bow',
+    name: 'shortWoodenBow',
     langName: {
         cz: 'dřevěný krátký luk',
         en: 'short wooden bow'
     },
-    inventoryImageData: "inventory_items/shortWoodenBow.png",
-    mapImageData: "map_items/shortWoodenBow.png",
-    recommendedPrice: 1,
+    inventoryImageData: "rltiles/item/weapon/ranged/shortbow_1.png",
+    mapImageData: "rltiles/item/weapon/ranged/shortbow_1.png",
+    recommendedPrice: 50,
     weight: 1,
     possiblePositions: ["bothHands"],
     weapon: {
-        baseAttack: [0,0,1,2,2,2]
+        baseAttack: [0,0,1,2,2,2],
+        range: 5,
+        requiredAgility: 10
     }
 };

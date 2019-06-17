@@ -48,8 +48,14 @@
     </div>
     <div class="col-4 border">
       <h3>Zisky z odehrátých her</h3>
-      <div *ngFor="let item of envelope.equippedItems.equippedItemsList()">{{item.name}}
-        <button (click)="sellItem(item)">Prodat ({{(item.recommendedPrice / 2).floor()}})</button>
+      <div *ngFor="let gain of gains">
+        <span>Money: {{gain.money}}</span><br>
+        <span>Experience: {{gain.xp}}</span><br>
+        <h5>Items:</h5>
+        <span
+          *ngFor="let item of gain.itemIds"
+        >ItemName: {{item}}<br></span>
+        <button (click)="getGain(gain)">Get gain</button>
       </div>
     </div>
 

@@ -40,7 +40,22 @@ Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContex
     if (heroData == null) {
       return Response.notFound();
     }
-    message.addHeroDetail(core.HeroEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>));
+    core.HeroEnvelope heroEnvelope = core.HeroEnvelope.fromJson(heroData.heroData.data as Map<String, dynamic>);
+    var gainQuery = Query<HeroAfterGameGain>(context)
+      ..where((gain) => gain.hero.heroId).equalTo(heroData.heroId);
+    List<HeroAfterGameGain> gains = await gainQuery.fetch();
+    List<core.HeroAfterGameGain> coreGains = gains.map((gain){
+      return core.HeroAfterGameGain.fromJson(gain.gainData.data as Map<String, dynamic>);
+    }).toList();
+    Map<String, core.ItemEnvelope> items = {};
+    coreGains.forEach((gain){
+      gain.itemIds.forEach((itemId){
+        if(!items.containsKey(itemId)){
+          items[itemId] = itemsData[itemId];
+        }
+      });
+    });
+    message.addHeroDetail(heroEnvelope, coreGains, items);
     return Response.ok(message.toJson());
   } else {
     return Response.badRequest(body: {"message": "bad inner token"});

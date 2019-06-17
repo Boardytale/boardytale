@@ -18,6 +18,8 @@ class ServerPlayer extends core.Player {
 
   StreamSubscription _lobbyRoomsSubscription;
 
+  List<String> currentGameGain = [];
+
   ServerPlayer();
 
   void subscribeToOpenedLobbiesChanges() {

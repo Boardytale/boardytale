@@ -3,34 +3,18 @@ import {HeroEnvelope} from "../../core/lib/model/model";
 export let data: HeroEnvelope = {
     intelligence: 9,
     inventoryItems: [],
-    strength:8,
+    strength: 8,
     agility: 13,
     precision: 33,
     spirituality: 33,
     energy: 33,
     experience: 0,
     money: 50,
-    equippedItems: {
-        rightHand: {
-            id: 'heroDefaultBow',
-            name: 'wooden bow',
-            recommendedPrice: 1,
-            weight: 1,
-            possiblePositions: ["bothHands"],
-            weapon: {
-                baseAttack: [0,0,1,2,2,2]
-            }
-        },
-        legs: {
-            id: 'heroDefaultShoes',
-            name: 'simple shoes',
-            recommendedPrice: 1,
-            weight: 1,
-            possiblePositions: ["legs"],
-            speedPoints: 3
-        }
+    equippedItemNames: {
+        rightHand: 'shortWoodenBow',
+        legs: 'leatherBoots'
     },
-    gameHeroEnvelope:{
+    gameHeroEnvelope: {
         "name": "Unnamed",
         "level": 1,
         "type": {

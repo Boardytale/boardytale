@@ -227,6 +227,9 @@ export interface UnitCreateOrUpdateAction extends Object {
     // annotation @TypescriptOptional() → TypescriptOptional
     // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
     explainFirstValue?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    itemDrops?: ItemDrops;
 }
 
 export type UnitTypeTag = 'undead' | 'ethernal' | 'mechanic';
@@ -536,6 +539,28 @@ export interface WeaponEnvelope extends Object {
     range?: number;
 }
 
+export interface ItemDrops extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    maxItemDrops?: number;
+    items: Array<ItemDrop>;
+}
+
+export interface ItemDrop extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    probability?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    byName?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    byItemPriceFrom?: number;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    byItemPriceTo?: number;
+}
+
 export type ItemPosition =
     | 'head'
     | 'neck'
@@ -562,7 +587,12 @@ export interface GameHeroEnvelope extends Object {
 export interface HeroEnvelope extends Object {
     gameHeroEnvelope: GameHeroEnvelope;
     inventoryItems: Array<ItemEnvelope>;
-    equippedItems: EquippedItemsEnvelope;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    equippedItemNames?: EquippedItemNames;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    equippedItems?: EquippedItemsEnvelope;
     strength: number;
     agility: number;
     intelligence: number;
@@ -603,6 +633,36 @@ export interface EquippedItemsEnvelope extends Object {
     legs?: ItemEnvelope;
 }
 
+export interface EquippedItemNames extends Object {
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    head?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    neck?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    body?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    elbows?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    leftHand?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    rightHand?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    leftWrist?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    rightWrist?: string;
+    // annotation @TypescriptOptional() → TypescriptOptional
+    // annotation @JsonKey({Object defaultValue, bool disallowNullValue, bool encodeEmptyCollection, Function fromJson, bool ignore, bool includeIfNull, String name, bool nullable, bool required, Function toJson}) → JsonKey
+    legs?: string;
+}
+
 export interface HeroUpdate extends Object {
     name: string;
     strength: number;
@@ -623,7 +683,7 @@ export interface HeroAfterGameGain extends Object {
     id: number;
     xp: number;
     money: number;
-    items: Array<ItemEnvelope>;
+    itemIds: Array<string>;
     heroId: string;
 }
 

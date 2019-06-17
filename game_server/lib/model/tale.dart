@@ -173,10 +173,11 @@ class ServerTale {
     room.connectedPlayers.forEach((key, player) {
       core.HeroAfterGameGain gain = core.HeroAfterGameGain()
         ..heroId = player.usedHeroId
-        ..items = []
+        ..itemIds = player.currentGameGain
         ..money = 0
         ..xp = taleState.compiled.experienceForHeroes ~/ room.connectedPlayers.length;
       ;
+      player.currentGameGain = [];
       gateway.innerMessageToUserServer(core.ToUserServerMessage.createHeroAfterGameGain(gain));
     });
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);

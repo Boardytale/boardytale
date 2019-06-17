@@ -3,20 +3,23 @@
 
  generation 1 
 
- currentGenPath 8_2 
+ currentGenPath 8_0 
+next field nullnext field nullnext field 9_0added to possible paths 
 next field 8_1added to possible paths 
-next field 9_1skipped waiting forest 
-next field 9_2skipped waiting forest 
-next field 8_3added to possible paths 
-next field 7_2added to possible paths 
-next field 7_1added to possible paths 
-
+next field 7_0added to possible paths 
+next field null
  generation 2 
 
- currentGenPath 8_2 8_1 
+ currentGenPath 8_0 9_0 
+next field nullnext field 10_0added to possible paths 
+next field 10_1added to possible paths 
+next field 9_1skipped waiting forest 
+next field 8_1skipped reached 
 next field 8_0added to possible paths 
-next field 9_0added to possible paths 
+
+ currentGenPath 8_0 8_1 
+next field 8_0skipped reached 
+next field 9_0skipped reached 
 next field 9_1skipped waiting forest 
 next field 8_2added to possible paths 
-next field 7_1skipped reached 
-next field 7_0returned is enemy 
+next field 7_1returned is enemy 

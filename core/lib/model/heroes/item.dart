@@ -90,7 +90,10 @@ class ItemEnvelope {
 
   bool get isWeapon => weapon != null;
 
-  static ItemEnvelope fromJson(Map<String, dynamic> json) => _$ItemEnvelopeFromJson(json);
+  static ItemEnvelope fromJson(Map<String, dynamic> json){
+    utils.retypeMapInJsonToStringDynamic(json, ["langName"]);
+    return _$ItemEnvelopeFromJson(json);
+  }
 
   Map<String, dynamic> toJson() {
     return _$ItemEnvelopeToJson(this);
@@ -120,5 +123,42 @@ class WeaponEnvelope {
 
   Map<String, dynamic> toJson() {
     return _$WeaponEnvelopeToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class ItemDrops {
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 1)
+  int maxItemDrops = 1;
+  List<ItemDrop> items = [];
+  static ItemDrops fromJson(Map<String, dynamic> json) => _$ItemDropsFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ItemDropsToJson(this);
+  }
+}
+
+@Typescript()
+@JsonSerializable()
+class ItemDrop {
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false, defaultValue: 1)
+  double probability = 1;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  String byName;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  int byItemPriceFrom;
+  @TypescriptOptional()
+  @JsonKey(includeIfNull: false)
+  int byItemPriceTo;
+
+  static ItemDrop fromJson(Map<String, dynamic> json) => _$ItemDropFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ItemDropToJson(this);
   }
 }
