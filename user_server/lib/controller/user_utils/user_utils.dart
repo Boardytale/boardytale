@@ -10,6 +10,7 @@ import 'package:shelf/shelf.dart' as shelf;
 
 part 'get_user_by_inner_token.dart';
 part 'heroes/create_hero.dart';
+part 'heroes/update_hero.dart';
 part 'heroes/get_first_hero.dart';
 part 'heroes/get_starting_units.dart';
 part 'heroes/set_gain.dart';

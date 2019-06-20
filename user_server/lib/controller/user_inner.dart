@@ -28,14 +28,14 @@ class UserInnerController extends ResourceController {
 
   Future<shelf.Response> _echoRequest(shelf.Request request) async {
     String body = await request.readAsString();
-    core.ToUserServerMessage message = core.ToUserServerMessage.fromJson(json.decode(body) as Map<String, dynamic>);
-    if (message.message == core.OnUserServerAction.getUserByInnerToken) {
+    core.ToUserServerInnerMessage message = core.ToUserServerInnerMessage.fromJson(json.decode(body) as Map<String, dynamic>);
+    if (message.message == core.OnUserServerInnerAction.getUserByInnerToken) {
       return getUserByInnerToken(message.getUser.innerToken, context, message);
     }
-    if (message.message == core.OnUserServerAction.getStartingUnits) {
+    if (message.message == core.OnUserServerInnerAction.getStartingUnits) {
       return getStartingUnits(message.getStartingUnits.requestedPlayerEmail, message.getStartingUnits.requestedHeroId, context, message);
     }
-    if(message.message == core.OnUserServerAction.setHeroAfterGameGain){
+    if(message.message == core.OnUserServerInnerAction.setHeroAfterGameGain){
       return setAfterGameGain(message, context);
     }
     return shelf.Response.notFound(json.encode({"error": "${message.message} is not known message"}));

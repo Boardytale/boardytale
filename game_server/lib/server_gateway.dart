@@ -30,20 +30,27 @@ class ServerGateway {
     }
   }
 
-  Future<core.ToUserServerMessage> innerMessageToUserServer(core.ToUserServerMessage message) {
-    return toUserServerMessage(message, true);
-  }
-
-  Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message, [bool inner = false]) async {
-    var url = "http://localhost:${config.userServer.uris.first.port}/userApi/toUserMessage";
-    if (inner) {
-      url = "http://localhost:${config.userServer.innerPort}/";
-    }
+  Future<core.ToUserServerInnerMessage> innerMessageToUserServer(core.ToUserServerInnerMessage message) async {
+    var url = "http://localhost:${config.userServer.innerPort}/";
     http.Response response;
     try {
-      response = await http.post(url,
-          headers: {"Content-Type": "application/json"},
-          body: json.encode(message));
+      response = await http.post(url, headers: {"Content-Type": "application/json"}, body: json.encode(message));
+    } catch (e) {
+      return core.ToUserServerInnerMessage()..error = "user server not working properly";
+    }
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseBody = json.decode(response.body);
+      return core.ToUserServerInnerMessage.fromJson(responseBody);
+    } else {
+      return core.ToUserServerInnerMessage()..error = response.body;
+    }
+  }
+
+  Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message) async {
+    var url = "http://localhost:${config.userServer.uris.first.port}/userApi/toUserMessage";
+    http.Response response;
+    try {
+      response = await http.post(url, headers: {"Content-Type": "application/json"}, body: json.encode(message));
     } catch (e) {
       return core.ToUserServerMessage()..error = "user server not working properly";
     }

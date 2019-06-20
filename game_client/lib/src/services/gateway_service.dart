@@ -19,6 +19,8 @@ class GatewayService {
   List<core.ToGameServerMessage> _beforeOpenBuffer = [];
   Map<core.OnClientAction, void Function(core.ToClientMessage message)> handlers = {};
   final http.Client _http;
+  // cannot grab from app service due to circular dependency
+  String innerToken;
 
   GatewayService(this._http) {
     var loc = window.location;
@@ -97,6 +99,7 @@ class GatewayService {
   }
 
   Future<core.ToUserServerMessage> toUserServerMessage(core.ToUserServerMessage message) async {
+    message.innerToken = innerToken;
     http.Response response = await _http.post("/userApi/toUserMessage",
         headers: {"Content-Type": "application/json"}, body: json.encode(message));
     Map<String, dynamic> responseBody;

@@ -160,6 +160,7 @@ enum ItemPosition {
 @Typescript()
 @JsonSerializable()
 class HeroUpdate {
+  String heroId;
   String name;
   num strength;
   int agility;
@@ -173,6 +174,7 @@ class HeroUpdate {
   String moveToInventoryItemId;
   String sellItemId;
   String buyItemId;
+  HeroEnvelope responseHero;
 
   static HeroUpdate fromJson(Map<String, dynamic> json) => _$HeroUpdateFromJson(json);
 

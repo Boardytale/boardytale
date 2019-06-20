@@ -1,6 +1,6 @@
 part of user_utils;
 
-Future<shelf.Response> getUserByInnerToken(String innerToken, ManagedContext context, core.ToUserServerMessage message) async {
+Future<shelf.Response> getUserByInnerToken(String innerToken, ManagedContext context, core.ToUserServerInnerMessage message) async {
   var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
   User user = await query.fetchOne();
   if (user != null) {

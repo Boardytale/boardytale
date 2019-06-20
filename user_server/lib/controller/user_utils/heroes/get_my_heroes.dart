@@ -1,7 +1,7 @@
 part of user_utils;
 
 Future<Response> getMyHeroes(core.ToUserServerMessage message, ManagedContext context) async {
-  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
+  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.innerToken);
   User user = await query.fetchOne();
   if (user != null) {
     var heroesQuery = Query<Hero>(context)..where((hero) => hero.user.id).equalTo(user.id);
@@ -21,7 +21,7 @@ Future<Response> getMyHeroes(core.ToUserServerMessage message, ManagedContext co
 
 Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContext context) async {
   core.GetHeroDetail getHeroDetail = message.getHeroDetail;
-  if (getHeroDetail.innerToken == null || getHeroDetail.heroId == null) {
+  if (message.innerToken == null || getHeroDetail.heroId == null) {
     return Response.badRequest(body: "bad inner token or heroId");
   }
   int heroIdInt = int.tryParse(getHeroDetail.heroId);
@@ -29,7 +29,7 @@ Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContex
     return Response.badRequest(body: "bad format of heroId");
   }
 
-  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(getHeroDetail.innerToken);
+  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.innerToken);
   User user = await query.fetchOne();
   if (user != null) {
     var heroesQuery = Query<Hero>(context)
@@ -45,7 +45,7 @@ Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContex
       ..where((gain) => gain.hero.heroId).equalTo(heroData.heroId);
     List<HeroAfterGameGain> gains = await gainQuery.fetch();
     List<core.HeroAfterGameGain> coreGains = gains.map((gain){
-      return core.HeroAfterGameGain.fromJson(gain.gainData.data as Map<String, dynamic>);
+      return core.HeroAfterGameGain.fromJson(gain.gainData.data as Map<String, dynamic>)..id = gain.gainId;
     }).toList();
     Map<String, core.ItemEnvelope> items = {};
     coreGains.forEach((gain){

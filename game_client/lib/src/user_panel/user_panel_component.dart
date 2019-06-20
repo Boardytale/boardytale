@@ -59,7 +59,6 @@ class UserPanelComponent {
 
     createMessage
       ..name = envelope.name
-      ..innerToken = appService.currentUser.value.innerToken
       ..typeName = envelope.type.name;
 
     core.ToUserServerMessage message =

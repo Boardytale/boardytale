@@ -57,6 +57,7 @@ part 'package:core/model/messages/to_game_server_messages.dart';
 part 'package:core/model/messages/to_ai_server_message.dart';
 
 part 'package:core/model/messages/to_user_server_message.dart';
+part 'package:core/model/messages/to_user_server_inner_message.dart';
 
 part 'package:core/model/logger/logger_message.dart';
 

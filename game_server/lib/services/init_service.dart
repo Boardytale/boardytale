@@ -54,8 +54,8 @@ class InitGameService {
   }
 
   Future<core.User> getUser(String innerToken) async{
-    core.ToUserServerMessage responseMessage =
-        await gateway.innerMessageToUserServer(core.ToUserServerMessage.createGetUserByInnerToken(innerToken));
+    core.ToUserServerInnerMessage responseMessage =
+        await gateway.innerMessageToUserServer(core.ToUserServerInnerMessage.createGetUserByInnerToken(innerToken));
     core.User user;
     if (responseMessage.error == null) {
       user = responseMessage.getUser.user;

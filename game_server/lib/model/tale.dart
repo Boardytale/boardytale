@@ -178,7 +178,7 @@ class ServerTale {
         ..xp = taleState.compiled.experienceForHeroes ~/ room.connectedPlayers.length;
       ;
       player.currentGameGain = [];
-      gateway.innerMessageToUserServer(core.ToUserServerMessage.createHeroAfterGameGain(gain));
+      gateway.innerMessageToUserServer(core.ToUserServerInnerMessage.createHeroAfterGameGain(gain));
     });
     Future.delayed(Duration(milliseconds: 10000)).then(endGame);
   }

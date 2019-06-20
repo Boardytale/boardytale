@@ -10,6 +10,8 @@ class Hero {
   ItemSum itemSum = ItemSum();
   HeroSum heroSum;
 
+  String get id => envelope.gameHeroEnvelope.id;
+
   Hero(this.envelope) {
     envelope.gameHeroEnvelope.level = Math.pow(envelope.experience, 0.3).floor();
     itemSum.recalculate(envelope.equippedItems.equippedItemsList());

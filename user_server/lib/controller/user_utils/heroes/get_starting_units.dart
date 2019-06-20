@@ -1,7 +1,7 @@
 part of user_utils;
 
 Future<shelf.Response> getStartingUnits(
-    String userEmail, String heroId, ManagedContext context, core.ToUserServerMessage message) async {
+    String userEmail, String heroId, ManagedContext context, core.ToUserServerInnerMessage message) async {
   var query = Query<User>(context)..where((u) => u.email).equalTo(userEmail);
   User user = await query.fetchOne();
   if (user != null) {

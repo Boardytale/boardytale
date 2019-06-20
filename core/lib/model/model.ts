@@ -395,14 +395,17 @@ export type ControlsActionName = 'endOfTurn' | 'unitWillNotPlay';
 export type OnAiServerAction = 'getNextMoveByState' | 'getNextMoveByUpdate';
 
 export type OnUserServerAction =
-    | 'getUserByInnerToken'
-    | 'getStartingUnits'
     | 'getHeroesToCreate'
     | 'createHero'
     | 'getMyHeroes'
-    | 'setHeroAfterGameGain'
     | 'updateUser'
-    | 'getHeroDetail';
+    | 'getHeroDetail'
+    | 'updateHero';
+
+export type OnUserServerInnerAction =
+    | 'getUserByInnerToken'
+    | 'getStartingUnits'
+    | 'setHeroAfterGameGain';
 
 export type LoggerMessageType = 'initial' | 'taleUpdate' | 'trace';
 
@@ -664,6 +667,7 @@ export interface EquippedItemNames extends Object {
 }
 
 export interface HeroUpdate extends Object {
+    heroId: string;
     name: string;
     strength: number;
     agility: number;
@@ -677,6 +681,7 @@ export interface HeroUpdate extends Object {
     moveToInventoryItemId: string;
     sellItemId: string;
     buyItemId: string;
+    responseHero: HeroEnvelope;
 }
 
 export interface HeroAfterGameGain extends Object {

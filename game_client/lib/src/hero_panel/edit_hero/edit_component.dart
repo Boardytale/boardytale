@@ -7,6 +7,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/character.dart';
 import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/items.dart';
+import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/hero_service.dart';
 import 'package:game_client/src/shared/buttoned_number_input_component.dart';
 
@@ -23,8 +24,9 @@ class EditHeroComponent {
   Map<String, core.ItemEnvelope> gainItems;
 
   final HeroService heroService;
+  final GatewayService gatewayService;
 
-  EditHeroComponent(this.heroService);
+  EditHeroComponent(this.heroService, this.gatewayService);
 
   core.HeroEnvelope get envelope => hero.envelope;
 
@@ -52,7 +54,10 @@ class EditHeroComponent {
     //    save();
   }
 
-  void getGain(core.HeroAfterGameGain gain){
-
+  void getGain(core.HeroAfterGameGain gain) async {
+    core.ToUserServerMessage message = await gatewayService.toUserServerMessage(core.ToUserServerMessage.createHeroUpdate(core.HeroUpdate()
+      ..pickGainId = gain.id
+      ..heroId = hero.id));
+    heroService.currentHero.add(core.Hero(message.getHeroUpdate.responseHero));
   }
 }

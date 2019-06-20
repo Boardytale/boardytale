@@ -104,6 +104,7 @@ class AppService {
 
   void setUser(core.ToClientMessage message) {
     currentUser.add(message.getCurrentUser.user);
+    gatewayService.innerToken = currentUser.value.innerToken;
     if (message.getCurrentUser.user == null) {
       showSignInButton = true;
     }

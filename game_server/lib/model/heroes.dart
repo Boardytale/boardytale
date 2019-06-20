@@ -7,8 +7,8 @@ class HeroesHelper {
       Iterable<ServerPlayer> forPlayer, Iterable<ServerPlayer> emitToPlayers, ServerTale tale) async {
     List<Future<MessageWithPlayer>> responses = [];
     forPlayer.forEach((player) {
-      var message = core.ToUserServerMessage.createGetStartingUnits(player.email, player.nextGameHeroId);
-      responses.add(gateway.innerMessageToUserServer(message).asStream().map((core.ToUserServerMessage convert) {
+      var message = core.ToUserServerInnerMessage.createGetStartingUnits(player.email, player.nextGameHeroId);
+      responses.add(gateway.innerMessageToUserServer(message).asStream().map((core.ToUserServerInnerMessage convert) {
         core.HeroesAndUnitsOfPlayer units;
         try{
           units = convert.getStartingUnits;

@@ -2,7 +2,7 @@ part of user_utils;
 
 Future<Response> createHero(core.ToUserServerMessage message, ManagedContext context) async {
   core.CreateHeroData heroToCreate = message.getCreateHeroData;
-  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.getUser.innerToken);
+  var query = Query<User>(context)..where((u) => u.innerToken).equalTo(message.innerToken);
   User user = await query.fetchOne();
   if (user != null) {
     List<core.HeroEnvelope> heroEnvelope = heroesData.where((hero) {
