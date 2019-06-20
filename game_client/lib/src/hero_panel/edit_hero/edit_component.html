@@ -48,7 +48,7 @@
     </div>
     <div class="col-4 border">
       <h3>Zisky z odehrátých her</h3>
-      <div *ngFor="let gain of gains">
+      <div *ngFor="let gain of heroService.gains.value">
         <span>Money: {{gain.money}}</span><br>
         <span>Experience: {{gain.xp}}</span><br>
         <h5>Items:</h5>

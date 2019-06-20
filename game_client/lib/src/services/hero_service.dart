@@ -12,6 +12,9 @@ class HeroService {
   final AppService appService;
 
   BehaviorSubject<core.Hero> currentHero = BehaviorSubject<core.Hero>(seedValue: null);
+  BehaviorSubject<List<core.HeroAfterGameGain>> gains = BehaviorSubject<List<core.HeroAfterGameGain>>(seedValue: null);
+
+  Map<String, core.ItemEnvelope> gainItemsData;
 
   HeroService(this.gatewayService, this.appService) {}
 

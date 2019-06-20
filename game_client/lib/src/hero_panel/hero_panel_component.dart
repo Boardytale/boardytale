@@ -20,8 +20,6 @@ class HeroPanelComponent {
   SettingsService settingsService;
   GatewayService gateway;
   core.HeroEnvelope heroEnvelope;
-  List<core.HeroAfterGameGain> gains;
-  Map<String, core.ItemEnvelope> gainItems;
 
   core.Hero get hero => heroService.currentHero.value;
   List<core.GameHeroEnvelope> myHeroes;
@@ -39,6 +37,9 @@ class HeroPanelComponent {
       getHeroDetail();
     }
     heroService.currentHero.listen((_){
+      changeDetector.markForCheck();
+    });
+    heroService.gains.listen((_){
       changeDetector.markForCheck();
     });
   }
@@ -62,8 +63,8 @@ class HeroPanelComponent {
         core.ToUserServerMessage.createGetHeroDetail(appService.currentUser.value.innerToken, selectedHero.id));
     core.GetHeroDetail detail = message.getHeroDetail;
     heroEnvelope = detail.responseHero;
-    gainItems = detail.gainItems;
-    gains = detail.gains;
+    heroService.gainItemsData = detail.gainItems;
+    heroService.gains.add(detail.gains);
     heroService.currentHero.add(core.Hero(heroEnvelope));
     // TODO: remove after debugging
     hero.updateType();

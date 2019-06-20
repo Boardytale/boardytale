@@ -16,12 +16,7 @@ import 'package:game_client/src/shared/buttoned_number_input_component.dart';
     templateUrl: 'edit_component.html',
     directives: [coreDirectives, formDirectives, ButtonedNumberInputComponent, CharacterComponent, ItemsComponent])
 class EditHeroComponent {
-  @Input()
-  core.Hero hero;
-  @Input()
-  List<core.HeroAfterGameGain> gains;
-  @Input()
-  Map<String, core.ItemEnvelope> gainItems;
+  core.Hero get hero => heroService.currentHero.value;
 
   final HeroService heroService;
   final GatewayService gatewayService;
@@ -59,5 +54,6 @@ class EditHeroComponent {
       ..pickGainId = gain.id
       ..heroId = hero.id));
     heroService.currentHero.add(core.Hero(message.getHeroUpdate.responseHero));
+    heroService.gains.add(heroService.gains.value..remove(gain));
   }
 }
