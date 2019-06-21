@@ -6,7 +6,6 @@ class Hero {
   static List<int> armorStops = const [15, 30, 60, 120];
   static List<int> speedStops = const [0, 2, 10, 20, 40, 80, 120];
   final HeroEnvelope serverState;
-  final Map<String, ItemEnvelope> itemsData;
   AbilitiesEnvelope abilities = AbilitiesEnvelope();
   HeroState currentState;
 
@@ -19,7 +18,7 @@ class Hero {
     return (level * 3 + 30) > (strength + intelligence + agility);
   }
 
-  Hero(this.serverState, this.itemsData) {
+  Hero(this.serverState) {
     serverState.gameHeroEnvelope.level = Math.pow(serverState.experience, 0.3).floor();
     currentState = HeroState(serverState);
   }

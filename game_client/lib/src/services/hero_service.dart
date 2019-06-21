@@ -16,8 +16,6 @@ class HeroService {
   BehaviorSubject<core.Hero> currentHero = BehaviorSubject<core.Hero>(seedValue: null);
   BehaviorSubject<List<core.HeroAfterGameGain>> gains = BehaviorSubject<List<core.HeroAfterGameGain>>(seedValue: null);
 
-  Map<String, core.ItemEnvelope> get itemDB => currentHero.value.itemsData;
-
   int get nextArmor {
     for (int i = 0; i < core.Hero.armorStops.length; i++) {
       if (currentHero.value.currentState.armorPoints < core.Hero.armorStops[i]) {
@@ -63,13 +61,7 @@ class HeroService {
   }
 
   void setHero(core.HeroEnvelope responseHero, Map<String, core.ItemEnvelope> itemDB) {
-    if (itemDB == null) {
-      itemDB = this.itemDB;
-    }
-    responseHero.inventoryItems.forEach((item) {
-      itemDB[item.id] = item;
-    });
-    currentHero.add(core.Hero(responseHero, itemDB));
+    currentHero.add(core.Hero(responseHero));
   }
 
   void save() async {

@@ -37,34 +37,57 @@ class EditHeroComponent {
 
   bool get heroIsMidOrHighLevel => hero.isMidOrHighLevel;
 
-  void save() {
-    //    this.heroService.createOrEditHero(hero);
+  bool canEquip(core.ItemEnvelope item) {
+    if (item.weapon == null) {
+      return true;
+    }
+    item.weapon.requiredAgility = item.weapon.requiredAgility ?? 0;
+    item.weapon.requiredStrength = item.weapon.requiredStrength ?? 0;
+    item.weapon.requiredIntelligence = item.weapon.requiredIntelligence ?? 0;
+
+    return !(item.weapon.requiredAgility > hero.currentState.agility ||
+        item.weapon.requiredIntelligence > hero.currentState.intelligence ||
+        item.weapon.requiredStrength > hero.currentState.strength);
+  }
+
+  bool canSimpleEquip(core.ItemEnvelope item) {
+    if (item.possiblePositions.length > 1) {
+      return false;
+    } else {
+      return canEquip(item);
+    }
+  }
+
+  List<core.ItemPosition> getMultiPositions(core.ItemEnvelope item) {
+    if (item.possiblePositions.length > 1 && canEquip(item)) {
+      return item.possiblePositions;
+    } else {
+      return [];
+    }
   }
 
   void toInventory(core.ItemEnvelope item) {
-    //    hero.items.removeWhere((Item item) => item is Weapon);
-    //    save();
-  }
-
-  void sellItem(core.ItemEnvelope item) {
-    heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()
-      ..sellItemId = item.id
-    );
+    heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()..moveToInventoryItemId = item.id);
     heroService.statsChanged();
   }
 
-  void equip(core.ItemEnvelope item, core.ItemPosition position) async {
+  void sellItem(core.ItemEnvelope item) {
+    heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()..sellItemId = item.id);
+    heroService.statsChanged();
+  }
+
+  void equip(core.ItemEnvelope item, [core.ItemPosition position]) async {
     heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()
       ..equipItemId = item.id
-      ..equipTo = position
-    );
+      ..equipTo = position ?? item.possiblePositions.first);
     heroService.statsChanged();
   }
 
   void getGain(core.HeroAfterGameGain gain) async {
-    core.ToUserServerMessage message = await gatewayService.toUserServerMessage(core.ToUserServerMessage.createHeroUpdate(core.HeroUpdate()
-      ..pickGainId = gain.id
-      ..heroId = hero.id));
+    core.ToUserServerMessage message =
+        await gatewayService.toUserServerMessage(core.ToUserServerMessage.createHeroUpdate(core.HeroUpdate()
+          ..pickGainId = gain.id
+          ..heroId = hero.id));
     core.HeroUpdate update = message.getHeroUpdate;
     heroService.setHero(update.responseHero, null);
     heroService.gains.add(heroService.gains.value..remove(gain));

@@ -16,7 +16,12 @@ Future<Response> createHero(core.ToUserServerMessage message, ManagedContext con
     core.HeroEnvelope copyOfHeroEnvelope = core.HeroEnvelope.fromJson(heroEnvelope.first.toJson());
     copyOfHeroEnvelope.gameHeroEnvelope.name = heroToCreate.name;
 
-    core.Hero coreHero = core.Hero(copyOfHeroEnvelope, itemsData);
+    core.Hero coreHero = core.Hero(copyOfHeroEnvelope);
+
+    copyOfHeroEnvelope.equippedItemNames.forEach((position, itemTypeName){
+      copyOfHeroEnvelope.equippedItems[position] = itemsData[itemTypeName].createCopy(uuid.v4().toString());
+    });
+
     coreHero.updateType();
 
     Hero newHero = Hero()

@@ -56,7 +56,10 @@
         {{appService.translate(item.langName)}}
         <button (click)="sellItem(item)">Prodat ({{(item.recommendedPrice / 2).floor()}})</button>
         <button
-            *ngFor="let position of item.possiblePositions"
+            *ngIf="canSimpleEquip(item)"
+            (click)="equip(item)">Nasadit</button>
+        <button
+            *ngFor="let position of getMultiPositions(item)"
             (click)="equip(item, position)">Nasadit {{position}}</button>
       </div>
     </div>

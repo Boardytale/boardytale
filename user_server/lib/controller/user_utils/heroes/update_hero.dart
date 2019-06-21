@@ -1,7 +1,5 @@
 part of user_utils;
 
-Uuid uuid = Uuid();
-
 Future<Response> updateHero(core.ToUserServerMessage message, ManagedContext context) async {
   core.HeroUpdate update = message.getHeroUpdate;
 
@@ -59,7 +57,7 @@ Future<Response> updateHero(core.ToUserServerMessage message, ManagedContext con
       heroEnvelope.intelligence = intelligence;
     }
 
-    core.Hero(heroEnvelope, itemsData).updateType();
+    core.Hero(heroEnvelope).updateType();
     heroQuery.values.heroData = Document(heroEnvelope.toJson());
     await heroQuery.updateOne();
     message.addHeroDetailToUpdate(heroEnvelope);
