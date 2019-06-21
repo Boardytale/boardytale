@@ -24,6 +24,9 @@ class AppService {
   }
 
   AppService(this.settings, this.gatewayService, this.lobbyService, this.createGameService) {
+    gatewayService.handlers[core.OnClientAction.setCurrentHero] = (core.ToClientMessage message) {
+      currentHero = message.getCurrentHero;
+    };
     if (html.window.localStorage.containsKey("editedHero")) {
       try{
         _currentHero = core.GameHeroEnvelope.fromJson(json.decode(html.window.localStorage["editedHero"]));
@@ -103,9 +106,9 @@ class AppService {
   }
 
   void setUser(core.ToClientMessage message) {
-    currentUser.add(message.getCurrentUser.user);
+    currentUser.add(message.getCurrentUser);
     gatewayService.innerToken = currentUser.value.innerToken;
-    if (message.getCurrentUser.user == null) {
+    if (message.getCurrentUser == null) {
       showSignInButton = true;
     }
   }

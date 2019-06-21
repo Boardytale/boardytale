@@ -104,7 +104,6 @@ class HeroState implements ItemManipulable {
     int highSpeedPart = ((agility ~/ Math.max(weight - Hero.baseWeight + 2, 1)));
     int lowSpeedPart = (((Math.sqrt((strength + weight) / weight)) - 1) * 100).floor();
     int lowLevelBonus = ((Math.sqrt(strength + agility) / (itemWeight + 5)) * 30).floor();
-    print("speed ${highSpeedPart} ${lowSpeedPart} ${lowLevelBonus}");
     speedPoints = equippedItemsSum.speedPoints + highSpeedPart + lowSpeedPart + lowLevelBonus;
 
     mana = equippedItemsSum.manaBonus + intelligence;

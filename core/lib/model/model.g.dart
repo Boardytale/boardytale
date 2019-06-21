@@ -1064,7 +1064,8 @@ const _$OnClientActionEnumMap = <OnClientAction, dynamic>{
   OnClientAction.cancelOnField: 'cancelOnField',
   OnClientAction.intentionUpdate: 'intentionUpdate',
   OnClientAction.playersOnMove: 'playersOnMove',
-  OnClientAction.addUnitType: 'addUnitType'
+  OnClientAction.addUnitType: 'addUnitType',
+  OnClientAction.setCurrentHero: 'setCurrentHero'
 };
 
 SetNavigationState _$SetNavigationStateFromJson(Map<String, dynamic> json) {
@@ -1116,26 +1117,6 @@ Map<String, dynamic> _$GetGamesToCreateToJson(GetGamesToCreate instance) =>
     <String, dynamic>{
       'games': instance.games?.map((e) => e?.toJson())?.toList()
     };
-
-SetCurrentUser _$SetCurrentUserFromJson(Map<String, dynamic> json) {
-  return SetCurrentUser()
-    ..user = json['user'] == null
-        ? null
-        : User.fromJson(json['user'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$SetCurrentUserToJson(SetCurrentUser instance) =>
-    <String, dynamic>{'user': instance.user?.toJson()};
-
-OpenedLobbyData _$OpenedLobbyDataFromJson(Map<String, dynamic> json) {
-  return OpenedLobbyData()
-    ..lobby = json['lobby'] == null
-        ? null
-        : OpenedLobby.fromJson(json['lobby'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$OpenedLobbyDataToJson(OpenedLobbyData instance) =>
-    <String, dynamic>{'lobby': instance.lobby?.toJson()};
 
 TaleData _$TaleDataFromJson(Map<String, dynamic> json) {
   return TaleData()

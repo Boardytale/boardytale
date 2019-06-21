@@ -9,7 +9,7 @@ abstract class ServerAbility extends core.Ability {
     cancelOnFieldAction.fieldId = unitOnMove.field.id;
     if (unitOnMoveConnection != null) {
       gateway.sendMessageByConnection(
-          core.ToClientMessage.fromCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
+          core.ToClientMessage.createCancelOnField([cancelOnFieldAction]), unitOnMoveConnection);
     } else {
       print("AI action canceled ${json.encode(track.toIds())}");
       // TODO: handle reporting errors to AI

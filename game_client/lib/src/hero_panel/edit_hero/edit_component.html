@@ -23,6 +23,7 @@
         *ngIf="hero.currentState.weaponItem != null"
         class="col-4 border">
       <h3>Zbraň</h3>
+      <img [src]="hero.currentState.weaponItem.inventoryImageData" class="inventory__item-image">
       Název: {{appService.translate(hero.currentState.weaponItem.langName)}}<br>
       Základní útok: {{hero.currentState.weaponItem.weapon?.baseAttack}}<br>
       Bonus k útoku: {{hero.currentState.weaponItem.weapon?.bonusAttack}}<br>
@@ -43,12 +44,16 @@
     </items>
     <div class="col-4 border">
       <h3>Seznam vybavení</h3>
-      <div *ngFor="let item of hero.currentState.equippedItems.values">{{appService.translate(item.langName)}}
+      <div *ngFor="let item of hero.currentState.equippedItems.values">
+        <img [src]="item.inventoryImageData" class="inventory__item-image">
+        {{appService.translate(item.langName)}}
         <button (click)="sellItem(item)">Prodat ({{(item.recommendedPrice / 2).floor()}})</button>
         <button (click)="toInventory(item)">Do inventáře</button>
       </div>
       <span>V inventáři:</span>
-      <div *ngFor="let item of hero.currentState.inventoryItems">{{appService.translate(item.langName)}}
+      <div *ngFor="let item of hero.currentState.inventoryItems">
+        <img [src]="item.inventoryImageData" class="inventory__item-image">
+        {{appService.translate(item.langName)}}
         <button (click)="sellItem(item)">Prodat ({{(item.recommendedPrice / 2).floor()}})</button>
         <button
             *ngFor="let position of item.possiblePositions"

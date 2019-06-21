@@ -17,7 +17,7 @@ class ToClientMessage {
 
   RefreshLobbyList get refreshLobbyListMessage => RefreshLobbyList.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromLobbyList(List<OpenedLobby> lobbyList) {
+  factory ToClientMessage.createLobbyList(List<OpenedLobby> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.refreshLobbyList
       ..content = json.encode((RefreshLobbyList()..lobbies = lobbyList).toJson());
@@ -27,7 +27,7 @@ class ToClientMessage {
 
   SetNavigationState get navigationStateMessage => SetNavigationState.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromSetNavigationState(GameNavigationState newState, {bool destroyCurrentTale: false}) {
+  factory ToClientMessage.createSetNavigationState(GameNavigationState newState, {bool destroyCurrentTale: false}) {
     return ToClientMessage()
       ..message = OnClientAction.setNavigationState
       ..content = json.encode((SetNavigationState()
@@ -40,7 +40,7 @@ class ToClientMessage {
 
   GetGamesToCreate get getGamesToCreateMessage => GetGamesToCreate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromGamesToCreateMessage(List<LobbyTale> lobbyList) {
+  factory ToClientMessage.createGamesToCreateMessage(List<LobbyTale> lobbyList) {
     return ToClientMessage()
       ..message = OnClientAction.getGamesToCreate
       ..content = json.encode((GetGamesToCreate()..games = lobbyList).toJson());
@@ -48,29 +48,29 @@ class ToClientMessage {
 
   // ---
 
-  SetCurrentUser get getCurrentUser => SetCurrentUser.fromJson(json.decode(content));
+  User get getCurrentUser => User.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromCurrentUser(User user) {
+  factory ToClientMessage.createSetCurrentUser(User user) {
     return ToClientMessage()
       ..message = OnClientAction.setCurrentUser
-      ..content = json.encode((SetCurrentUser()..user = user).toJson());
+      ..content = json.encode(user.toJson());
   }
 
   // ---
 
-  OpenedLobbyData get getOpenedLobbyData => OpenedLobbyData.fromJson(json.decode(content));
+  OpenedLobby get getOpenedLobbyData => OpenedLobby.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromOpenedLobby(OpenedLobby lobby) {
+  factory ToClientMessage.createOpenedLobby(OpenedLobby lobby) {
     return ToClientMessage()
       ..message = OnClientAction.openedLobbyData
-      ..content = json.encode((OpenedLobbyData()..lobby = lobby).toJson());
+      ..content = json.encode(lobby.toJson());
   }
 
   // ---
 
   TaleData get getTaleDataMessage => TaleData.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromTaleData(Tale data, Assets assets, String playerIdOnThisClientMachine) {
+  factory ToClientMessage.createTaleData(Tale data, Assets assets, String playerIdOnThisClientMachine) {
     return ToClientMessage()
       ..message = OnClientAction.taleData
       ..content = json.encode((TaleData()
@@ -84,7 +84,7 @@ class ToClientMessage {
 
   TaleUpdate get getUnitCreateOrUpdate => TaleUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitCreateOrUpdate(TaleUpdate taleUpdate) {
+  factory ToClientMessage.createUnitCreateOrUpdate(TaleUpdate taleUpdate) {
     return ToClientMessage()
       ..message = OnClientAction.unitCreateOrUpdate
       ..content = json.encode(taleUpdate.toJson());
@@ -94,7 +94,7 @@ class ToClientMessage {
 
   UnitDelete get getUnitDelete => UnitDelete.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromUnitDelete(List<UnitDeleteAction> actions) {
+  factory ToClientMessage.createUnitDelete(List<UnitDeleteAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.unitDelete
       ..content = json.encode((UnitDelete()..actions = actions).toJson());
@@ -104,7 +104,7 @@ class ToClientMessage {
 
   CancelOnField get getCancelOnField => CancelOnField.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromCancelOnField(List<CancelOnFieldAction> actions) {
+  factory ToClientMessage.createCancelOnField(List<CancelOnFieldAction> actions) {
     return ToClientMessage()
       ..message = OnClientAction.cancelOnField
       ..content = json.encode((CancelOnField()..actions = actions).toJson());
@@ -114,13 +114,22 @@ class ToClientMessage {
 
   IntentionUpdate get getIntentionUpdate => IntentionUpdate.fromJson(json.decode(content));
 
-  factory ToClientMessage.fromIntentionUpdate(String playerId, List<String> trackFieldsId) {
+  factory ToClientMessage.createIntentionUpdate(String playerId, List<String> trackFieldsId) {
     return ToClientMessage()
       ..message = OnClientAction.intentionUpdate
       ..content = json.encode((IntentionUpdate()
             ..playerId = playerId
             ..trackFieldsId = trackFieldsId)
           .toJson());
+  }
+  // ---
+
+  GameHeroEnvelope get getCurrentHero => GameHeroEnvelope.fromJson(json.decode(content));
+
+  factory ToClientMessage.createSetCurrentHero(GameHeroEnvelope hero) {
+    return ToClientMessage()
+      ..message = OnClientAction.setCurrentHero
+      ..content = json.encode(hero.toJson());
   }
 }
 
@@ -149,7 +158,9 @@ enum OnClientAction {
   @JsonValue('playersOnMove')
   playersOnMove,
   @JsonValue('addUnitType')
-  addUnitType
+  addUnitType,
+  @JsonValue('setCurrentHero')
+  setCurrentHero
 }
 
 
@@ -184,28 +195,6 @@ class GetGamesToCreate {
 
   Map<String, dynamic> toJson() {
     return _$GetGamesToCreateToJson(this);
-  }
-}
-
-@JsonSerializable()
-class SetCurrentUser {
-  User user;
-
-  static SetCurrentUser fromJson(Map<String, dynamic> json) => _$SetCurrentUserFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$SetCurrentUserToJson(this);
-  }
-}
-
-@JsonSerializable()
-class OpenedLobbyData {
-  OpenedLobby lobby;
-
-  static OpenedLobbyData fromJson(Map<String, dynamic> json) => _$OpenedLobbyDataFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$OpenedLobbyDataToJson(this);
   }
 }
 

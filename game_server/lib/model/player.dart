@@ -10,7 +10,7 @@ class ServerPlayer extends core.Player {
 
   String nextGameHeroId;
 
-  String usedHeroId;
+  core.GameHeroEnvelope usedHero;
 
   String get email => user.email;
 
@@ -24,7 +24,7 @@ class ServerPlayer extends core.Player {
 
   void subscribeToOpenedLobbiesChanges() {
     _lobbyRoomsSubscription = lobbyService.openedLobbyRooms.listen((onData) {
-      gateway.sendMessage(core.ToClientMessage.fromLobbyList(lobbyService.getOpenedRoomsClientData()), this);
+      gateway.toClientMessage(core.ToClientMessage.createLobbyList(lobbyService.getOpenedRoomsClientData()), this);
     });
   }
 
@@ -46,7 +46,7 @@ class ServerPlayer extends core.Player {
   void enterGame(ServerTale tale) {
     this.tale = tale;
     navigationState = core.GameNavigationState.inGame;
-    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(navigationState), this);
+    gateway.toClientMessage(core.ToClientMessage.createSetNavigationState(navigationState), this);
   }
 
   core.Player createGamePlayer() {
@@ -76,7 +76,7 @@ class ServerPlayer extends core.Player {
     }
   }
 
-  void leaveGame() {
+  void leaveGame(core.GameNavigationState navigationState) {
     if(room != null){
       room.ejectPlayer(this);
       if (room.connectedPlayers.isEmpty) {
@@ -87,8 +87,7 @@ class ServerPlayer extends core.Player {
     if(tale != null){
       tale = null;
     }
-    navigationState = core.GameNavigationState.findLobby;
-    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(navigationState, destroyCurrentTale: true), this);
+    gateway.toClientMessage(core.ToClientMessage.createSetNavigationState(navigationState, destroyCurrentTale: true), this);
   }
 
   void leaveRoom() {

@@ -45,7 +45,7 @@ class GameService {
       Future.delayed(Duration(minutes: GameService.minutesToEndGame)).then((_) {
         room.connectedPlayers.values.toList().forEach((player) {
           if (player.tale.room == room) {
-            player.leaveGame();
+            player.leaveGame(core.GameNavigationState.findLobby);
           }
         });
       });
@@ -57,7 +57,7 @@ class GameService {
   }
 
   void handleLeaveGame(MessageWithConnection message) {
-    message.player.leaveGame();
+    message.player.leaveGame(core.GameNavigationState.findLobby);
   }
 
   void handleControlsAction(MessageWithConnection message) {

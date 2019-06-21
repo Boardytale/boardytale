@@ -3,7 +3,7 @@ part of game_server;
 class ServerGateway {
   Map<core.OnServerAction, void Function(MessageWithConnection message)> handlers = {};
 
-  void sendMessage(core.ToClientMessage message, ServerPlayer player) {
+  void toClientMessage(core.ToClientMessage message, ServerPlayer player) {
     player.connection.webSocket.sink.add(json.encode(message.toJson()));
   }
 

@@ -44,6 +44,6 @@ class NavigationService {
     if (newState == core.GameNavigationState.inGame) {
       player.tale.sendTaleDataToPlayer(player);
     }
-    gateway.sendMessage(core.ToClientMessage.fromSetNavigationState(newState), player);
+    gateway.toClientMessage(core.ToClientMessage.createSetNavigationState(newState), player);
   }
 }

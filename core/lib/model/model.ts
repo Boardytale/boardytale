@@ -376,7 +376,8 @@ export type OnClientAction =
     | 'cancelOnField'
     | 'intentionUpdate'
     | 'playersOnMove'
-    | 'addUnitType';
+    | 'addUnitType'
+    | 'setCurrentHero';
 
 export type OnServerAction =
     | 'goToState'

@@ -25,7 +25,7 @@ class LobbyRoom {
     if (gameRunning && player.tale != null) {
       return;
     }
-    gateway.sendMessage(core.ToClientMessage.fromOpenedLobby(openedLobby), player);
+    gateway.toClientMessage(core.ToClientMessage.createOpenedLobby(openedLobby), player);
   }
 
   void sendUpdateToAllPlayers() {

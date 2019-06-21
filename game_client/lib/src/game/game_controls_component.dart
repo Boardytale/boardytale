@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/core.dart';
 import 'package:angular_forms/angular_forms.dart';
@@ -12,7 +13,7 @@ import 'package:core/model/model.dart' as core;
     directives: [coreDirectives, formDirectives],
     template: """
       <div class='game-controls-cont'>
-        <button (click)='endTurn()'>End turn</button>
+        <button (click)='endTurn()'><u>E</u>nd turn</button>
         <button (click)='switchShowCoordinates()'>{{gameService.showCoordinateLabels.value?"Hide coordinate labels": "Show coordinate labels"}}</button>
         <button (click)='leaveGame()'>Leave game</button>
         <span *ngIf='gameService.playersOnMove.value != null'>Players on move:
@@ -32,6 +33,11 @@ class GameControlsComponent {
   GameControlsComponent(this.gameService, this.gateway, this.changeDetector, this.appService) {
     this.gameService.showCoordinateLabels.listen((_) => changeDetector.markForCheck());
     this.gameService.playersOnMove.listen((_) => changeDetector.markForCheck());
+    window.onKeyUp.listen((event){
+      if(event.key == "E" || event.key == "e"){
+        endTurn();
+      }
+    });
   }
 
   void endTurn() {

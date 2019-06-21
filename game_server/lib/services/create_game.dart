@@ -19,7 +19,7 @@ class CreateGameService {
   }
 
   void sendGamesToCreate(ServerPlayer player) async {
-    gateway.sendMessage(
-        core.ToClientMessage.fromGamesToCreateMessage(await createGameService.getGamesToCreate()), player);
+    gateway.toClientMessage(
+        core.ToClientMessage.createGamesToCreateMessage(await createGameService.getGamesToCreate()), player);
   }
 }

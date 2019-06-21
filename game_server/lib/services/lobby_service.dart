@@ -76,8 +76,8 @@ class LobbyService {
   }
 
   void handleLobbyCreation(MessageWithConnection messageWithConnection) async {
-    gateway.sendMessage(
-        core.ToClientMessage.fromSetNavigationState(core.GameNavigationState.inLobby), messageWithConnection.player);
+    gateway.toClientMessage(
+        core.ToClientMessage.createSetNavigationState(core.GameNavigationState.inLobby), messageWithConnection.player);
 
     core.CreateLobby message = messageWithConnection.message.getCreateLobby;
 
@@ -108,8 +108,8 @@ class LobbyService {
     } else {
       messageWithConnection.player.navigationState = core.GameNavigationState.inLobby;
     }
-    gateway.sendMessage(
-        core.ToClientMessage.fromSetNavigationState(messageWithConnection.player.navigationState), player);
+    gateway.toClientMessage(
+        core.ToClientMessage.createSetNavigationState(messageWithConnection.player.navigationState), player);
     room.sendUpdateToAllPlayers();
   }
 

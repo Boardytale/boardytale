@@ -41,7 +41,7 @@ class HeroesHelper {
         types.add(type);
         actions.add(action);
 
-        item.player.usedHeroId = heroEnvelope.id;
+        item.player.usedHero = heroEnvelope;
       });
 
       item.response.responseUnits.forEach((core.UnitTypeCompiled compiledType) {

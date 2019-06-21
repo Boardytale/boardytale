@@ -26,12 +26,12 @@ class InitGameService {
       }
       player.setConnection(messageWithConnection.connection);
       navigationService.restoreState(player);
-      gateway.sendMessage(core.ToClientMessage.fromCurrentUser(player.user), player);
+      gateway.toClientMessage(core.ToClientMessage.createSetCurrentUser(player.user), player);
     } else {
       core.User user = await getUser(innerToken);
       if (user == null) {
         // user not in database - reset login
-        gateway.sendMessageByConnection(core.ToClientMessage.fromCurrentUser(null), messageWithConnection.connection);
+        gateway.sendMessageByConnection(core.ToClientMessage.createSetCurrentUser(null), messageWithConnection.connection);
         return;
       }
 
@@ -47,7 +47,7 @@ class InitGameService {
 
       playerService.setPlayer(player, messageWithConnection.connection);
 
-      gateway.sendMessage(core.ToClientMessage.fromCurrentUser(user), player);
+      gateway.toClientMessage(core.ToClientMessage.createSetCurrentUser(user), player);
 
       navigationService.restoreState(player);
     }

@@ -19,6 +19,6 @@ class LobbyService {
   }
 
   void enteredToLobby(core.ToClientMessage message) {
-    openedLobby.add(message.getOpenedLobbyData.lobby);
+    openedLobby.add(message.getOpenedLobbyData);
   }
 }

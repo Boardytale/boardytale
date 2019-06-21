@@ -47,8 +47,9 @@ class ServerTale {
   }
 
   void sendTaleDataToPlayer(ServerPlayer player) {
-    gateway.sendMessage(
-        core.ToClientMessage.fromTaleData(taleState.createTaleForPlayer(player), taleState.assets, player.id), player);
+    gateway.toClientMessage(
+        core.ToClientMessage.createTaleData(taleState.createTaleForPlayer(player), taleState.assets, player.id),
+        player);
   }
 
   void handleUnitTrackAction(core.UnitTrackAction action, {io.WebSocket aiPlayerSocket}) {
@@ -127,7 +128,7 @@ class ServerTale {
       endOfTurn();
     }
     taleState.humanPlayers.forEach((key, player) {
-      gateway.sendMessage(core.ToClientMessage.fromUnitCreateOrUpdate(outputTaleUpdate), player);
+      gateway.toClientMessage(core.ToClientMessage.createUnitCreateOrUpdate(outputTaleUpdate), player);
     });
 
     if (currentAiPlayerSocket != null) {
@@ -167,12 +168,12 @@ class ServerTale {
   void victory() {
     core.ShowBanterAction banter = core.ShowBanterAction()
       ..image = null
-      ..showTimeInMilliseconds = 10000
+      ..showTimeInMilliseconds = 5000
       ..title = {core.Lang.en: "Victory", core.Lang.cz: "Vítězství"};
     taleState.addTaleAction(TaleAction()..banterAction = banter);
     room.connectedPlayers.forEach((key, player) {
       core.HeroAfterGameGain gain = core.HeroAfterGameGain()
-        ..heroId = player.usedHeroId
+        ..heroId = player.usedHero.id
         ..itemTypeNames = player.currentGameGain
         ..money = 0
         ..xp = taleState.compiled.experienceForHeroes ~/ room.connectedPlayers.length;
@@ -180,21 +181,27 @@ class ServerTale {
       player.currentGameGain = [];
       gateway.innerMessageToUserServer(core.ToUserServerInnerMessage.createHeroAfterGameGain(gain));
     });
-    Future.delayed(Duration(milliseconds: 10000)).then(endGame);
+    Future.delayed(Duration(milliseconds: 5000)).then((_) {
+      room.connectedPlayers.forEach((key, player) {
+        player.navigationState = core.GameNavigationState.heroPanel;
+        gateway.toClientMessage(core.ToClientMessage.createSetCurrentHero(player.usedHero), player);
+      });
+      endGame(core.GameNavigationState.heroPanel);
+    });
   }
 
   void lost() {
     core.ShowBanterAction banter = core.ShowBanterAction()
       ..image = null
-      ..showTimeInMilliseconds = 10000
+      ..showTimeInMilliseconds = 5000
       ..title = {core.Lang.en: "Lost", core.Lang.cz: "Prohra"};
     taleState.addTaleAction(TaleAction()..banterAction = banter);
-    Future.delayed(Duration(milliseconds: 10000)).then(endGame);
+    Future.delayed(Duration(milliseconds: 5000)).then((_) => endGame(core.GameNavigationState.findLobby));
   }
 
-  void endGame([_]) {
+  void endGame(core.GameNavigationState navigationState) {
     taleState.humanPlayers.values.toList().forEach((player) {
-      player.leaveGame();
+      player.leaveGame(navigationState);
     });
     destroy();
   }
