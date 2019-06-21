@@ -13,8 +13,8 @@ class ItemSum {
   int precisionBonus = 0;
   int energyBonus = 0;
 
-  void recalculate(List<ItemEnvelope> items) {
-    items.forEach((ItemEnvelope item) {
+  void recalculate(Map<ItemPosition, ItemEnvelope> items) {
+    items.values.forEach((ItemEnvelope item) {
       weight += item.weight;
       armorPoints += item.armorPoints;
       speedPoints += item.speedPoints;
@@ -32,13 +32,13 @@ class ItemSum {
   }
 }
 
-
 @Typescript()
 @JsonSerializable()
 class ItemEnvelope {
   List<ItemPosition> possiblePositions = [];
+  @TypescriptOptional()
   String id;
-  String name = "name";
+  String typeName = "name";
   Map<Lang, String> langName;
   String mapImageData;
   String inventoryImageData;
@@ -81,6 +81,7 @@ class ItemEnvelope {
   @TypescriptOptional()
   @JsonKey(includeIfNull: false, defaultValue: 100)
   int recommendedPrice = 100;
+  int sellPrice = 50;
   @TypescriptOptional()
   @JsonKey(includeIfNull: false, defaultValue: 0)
   int requiredLevel = 0;
@@ -90,13 +91,17 @@ class ItemEnvelope {
 
   bool get isWeapon => weapon != null;
 
-  static ItemEnvelope fromJson(Map<String, dynamic> json){
+  static ItemEnvelope fromJson(Map<String, dynamic> json) {
     utils.retypeMapInJsonToStringDynamic(json, ["langName"]);
     return _$ItemEnvelopeFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
     return _$ItemEnvelopeToJson(this);
+  }
+
+  ItemEnvelope createCopy(String uniqueId) {
+    return ItemEnvelope.fromJson(toJson())..id = uniqueId;
   }
 }
 
@@ -119,6 +124,7 @@ class WeaponEnvelope {
   @TypescriptOptional()
   @JsonKey(includeIfNull: false, defaultValue: 0)
   int range = 0;
+
   static WeaponEnvelope fromJson(Map<String, dynamic> json) => _$WeaponEnvelopeFromJson(json);
 
   Map<String, dynamic> toJson() {
@@ -133,6 +139,7 @@ class ItemDrops {
   @JsonKey(includeIfNull: false, defaultValue: 1)
   int maxItemDrops = 1;
   List<ItemDrop> items = [];
+
   static ItemDrops fromJson(Map<String, dynamic> json) => _$ItemDropsFromJson(json);
 
   Map<String, dynamic> toJson() {
@@ -160,5 +167,48 @@ class ItemDrop {
 
   Map<String, dynamic> toJson() {
     return _$ItemDropToJson(this);
+  }
+}
+
+class ItemManipulable {
+  Map<ItemPosition, ItemEnvelope> equippedItems;
+  List<ItemEnvelope> inventoryItems = [];
+  int money = 100;
+
+  static void applyManipulations(HeroUpdate update, ItemManipulable manipulable) {
+    update.itemManipulations.forEach((manipulation) {
+      if (manipulation.equipItemId != null) {
+        ItemEnvelope toMove =
+            manipulable.inventoryItems.firstWhere((item) => item.id == manipulation.equipItemId, orElse: () => null);
+        if(toMove != null){
+          if (manipulable.equippedItems.containsKey(manipulation.equipTo)) {
+            manipulable.inventoryItems.add(manipulable.equippedItems[manipulation.equipTo]);
+          }
+          manipulable.equippedItems[manipulation.equipTo] = toMove;
+          manipulable.inventoryItems.remove(toMove);
+        }
+      }
+      if (manipulation.sellItemId != null) {
+        if (manipulable.equippedItems.containsKey(manipulation.sellItemId)) {
+          ItemEnvelope toRemove = manipulable.equippedItems.values
+              .firstWhere((item) => item.id == manipulation.sellItemId, orElse: () => null);
+          manipulable.equippedItems.removeWhere((key, value) => value == toRemove);
+          manipulable.money += toRemove.sellPrice;
+        } else {
+          ItemEnvelope toRemove =
+              manipulable.inventoryItems.firstWhere((item) => item.id == manipulation.sellItemId, orElse: () => null);
+          if (toRemove != null) {
+            manipulable.inventoryItems.remove(toRemove);
+            manipulable.money += toRemove.sellPrice;
+          }
+        }
+      }
+      if (manipulation.moveToInventoryItemId != null) {
+        ItemEnvelope toMove = manipulable.equippedItems.values
+            .firstWhere((item) => item.id == manipulation.moveToInventoryItemId, orElse: () => null);
+        manipulable.equippedItems.removeWhere((key, value) => value == toMove);
+        manipulable.inventoryItems.add(toMove);
+      }
+    });
   }
 }

@@ -9822,4 +9822,5 @@ action-feedback .col {
 .hero-controls {
   bottom: 0;
   position: fixed;
+  width: 100%;
 }

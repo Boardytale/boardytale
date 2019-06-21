@@ -7,20 +7,26 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
   selector: 'buttoned-input',
   template: '''
-  <button *ngIf="decimal" (click)="decreaseDecimal()">--</button>
-  <button (click)="decrease()">-</button>
+  <button *ngIf="decimal && enabledMinus" (click)="decreaseDecimal()">--</button>
+  <button *ngIf="enabledMinus" (click)="decrease()">-</button>
   {{value}}
-  <button (click)="increase()">+</button>
-  <button *ngIf="decimal" (click)="increaseDecimal()">++</button>
+  <button
+   *ngIf="enabledPlus"
+   (click)="increase()">+</button>
+  <button *ngIf="decimal && enabledPlus" (click)="increaseDecimal()">++</button>
   ''',
-  directives: [
-    coreDirectives, formDirectives
-  ],
+  directives: [coreDirectives, formDirectives],
 )
 class ButtonedNumberInputComponent {
   int _value = 1;
 
   int get value => _value;
+
+  @Input()
+  bool enabledMinus = false;
+
+  @Input()
+  bool enabledPlus = true;
 
   @Input("value")
   void set value(int val) {
@@ -28,6 +34,7 @@ class ButtonedNumberInputComponent {
   }
 
   final _valueChange = StreamController<int>();
+
   @Output()
   Stream<int> get valueChange => _valueChange.stream;
 

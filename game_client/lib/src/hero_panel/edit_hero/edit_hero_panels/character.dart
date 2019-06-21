@@ -20,7 +20,14 @@ class CharacterComponent {
 
   CharacterComponent(this.heroService);
 
-  core.HeroEnvelope get envelope => hero.envelope;
+  core.HeroEnvelope get envelope => hero.serverState;
+
+  int get agility => heroService.nextUpdate.agility != null ? heroService.nextUpdate.agility : envelope.agility;
+
+  int get strength => heroService.nextUpdate.strength != null ? heroService.nextUpdate.strength : envelope.strength;
+
+  int get intelligence =>
+      heroService.nextUpdate.intelligence != null ? heroService.nextUpdate.intelligence : envelope.intelligence;
 
   bool get showStrAgiInt => hero.showStrAgiInt;
 
@@ -31,4 +38,27 @@ class CharacterComponent {
   bool get heroIsLowLevel => hero.isLowLevel;
 
   bool get heroIsMidOrHighLevel => hero.isMidOrHighLevel;
+
+  bool get enablePhysicals => hero.enableAddPhysicalPoint;
+
+  void setStrength(int newValue) {
+    if (newValue > hero.serverState.strength) {
+      heroService.nextUpdate.strength = newValue;
+      heroService.statsChanged();
+    }
+  }
+
+  void setAgility(int newValue) {
+    if (newValue > hero.serverState.agility) {
+      heroService.nextUpdate.agility = newValue;
+      heroService.statsChanged();
+    }
+  }
+
+  void setIntelligence(int newValue) {
+    if (newValue > hero.serverState.intelligence) {
+      heroService.nextUpdate.intelligence = newValue;
+      heroService.statsChanged();
+    }
+  }
 }

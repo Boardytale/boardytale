@@ -1,8 +1,7 @@
 import {ItemEnvelope} from "../../core/lib/model/model";
 
 export let data: ItemEnvelope = {
-    id: 'ironKatana',
-    name: 'ironKatana',
+    typeName: 'ironKatana',
     langName: {
         cz: 'železná katana',
         en: 'iron katana'
@@ -10,6 +9,7 @@ export let data: ItemEnvelope = {
     inventoryImageData: "rltiles/item/weapon/artefact/urand_katana.png",
     mapImageData: "rltiles/item/weapon/artefact/urand_katana.png",
     recommendedPrice: 50,
+    sellPrice: 25,
     weight: 1,
     possiblePositions: ["bothHands"],
     weapon: {

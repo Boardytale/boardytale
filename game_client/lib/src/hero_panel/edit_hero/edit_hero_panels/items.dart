@@ -20,7 +20,7 @@ class ItemsComponent {
 
   ItemsComponent(this.heroService);
 
-  core.HeroEnvelope get envelope => hero.envelope;
+  core.ItemSum get items => hero.currentState.equippedItemsSum;
 
   bool get showStrAgiInt => hero.showStrAgiInt;
 

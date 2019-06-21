@@ -7,6 +7,7 @@ import 'package:aqueduct/aqueduct.dart';
 import 'package:user_server/model/db_objects.dart';
 import 'package:user_server/model/heroes.dart';
 import 'package:shelf/shelf.dart' as shelf;
+import 'package:uuid/uuid.dart';
 
 part 'get_user_by_inner_token.dart';
 part 'heroes/create_hero.dart';

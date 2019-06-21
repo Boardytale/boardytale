@@ -1,5 +1,7 @@
 part of user_utils;
 
+Uuid uuid = Uuid();
+
 Future<Response> updateHero(core.ToUserServerMessage message, ManagedContext context) async {
   core.HeroUpdate update = message.getHeroUpdate;
 
@@ -35,16 +37,29 @@ Future<Response> updateHero(core.ToUserServerMessage message, ManagedContext con
         core.HeroAfterGameGain coreGain = core.HeroAfterGameGain.fromJson(gain.gainData.data as Map<String, dynamic>);
         heroEnvelope.money += coreGain.money;
         heroEnvelope.experience += coreGain.xp;
-        coreGain.itemIds.forEach((itemId){
-          heroEnvelope.inventoryItems.add(itemsData[itemId]);
+        coreGain.itemTypeNames.forEach((itemTypeName){
+          heroEnvelope.inventoryItems.add(itemsData[itemTypeName].createCopy(uuid.v4().toString()));
         });
       }else{
         return Response.notFound(body: "Gain was not found");
       }
       await gainQuery.delete();
     }
+    if(update.itemManipulations != null){
+      core.ItemManipulable.applyManipulations(update, heroEnvelope);
+    }
+    int strength = update.strength ?? heroEnvelope.strength;
+    int agility = update.agility ?? heroEnvelope.agility;
+    int intelligence = update.intelligence ?? heroEnvelope.intelligence;
+    // -1 hack of method to resolve correct state
+    // TODO: refactor this check
+    if(core.Hero.enableAddPhysicalPointStatic(heroEnvelope.gameHeroEnvelope.level, strength, agility, intelligence -1)){
+      heroEnvelope.strength = strength;
+      heroEnvelope.agility = agility;
+      heroEnvelope.intelligence = intelligence;
+    }
 
-    core.Hero(heroEnvelope).updateType();
+    core.Hero(heroEnvelope, itemsData).updateType();
     heroQuery.values.heroData = Document(heroEnvelope.toJson());
     await heroQuery.updateOne();
     message.addHeroDetailToUpdate(heroEnvelope);

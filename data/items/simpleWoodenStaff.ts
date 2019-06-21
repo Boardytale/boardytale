@@ -1,8 +1,7 @@
 import {ItemEnvelope} from "../../core/lib/model/model";
 
 export let data: ItemEnvelope = {
-    id: 'simpleWoodenStaff',
-    name: 'simpleWoodenStaff',
+    typeName: 'simpleWoodenStaff',
     langName: {
         cz: 'dřevěný hůl',
         en: 'simple wooden staff'
@@ -10,6 +9,7 @@ export let data: ItemEnvelope = {
     inventoryImageData: "data/image_sources/rltiles/item/staff/staff_4.png",
     mapImageData: "data/image_sources/rltiles/item/staff/staff_4.png",
     recommendedPrice: 50,
+    sellPrice: 25,
     weight: 1,
     possiblePositions: ["bothHands"],
     weapon: {

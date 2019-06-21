@@ -63,13 +63,8 @@ class HeroPanelComponent {
         core.ToUserServerMessage.createGetHeroDetail(appService.currentUser.value.innerToken, selectedHero.id));
     core.GetHeroDetail detail = message.getHeroDetail;
     heroEnvelope = detail.responseHero;
-    heroService.gainItemsData = detail.gainItems;
     heroService.gains.add(detail.gains);
-    heroService.currentHero.add(core.Hero(heroEnvelope));
-    // TODO: remove after debugging
-    hero.updateType();
+    heroService.setHero(heroEnvelope, detail.gainItems);
     changeDetector.markForCheck();
   }
-
-  void save() {}
 }

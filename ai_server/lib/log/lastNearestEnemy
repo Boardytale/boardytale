@@ -3,23 +3,15 @@
 
  generation 1 
 
- currentGenPath 8_0 
-next field nullnext field nullnext field 9_0added to possible paths 
-next field 8_1added to possible paths 
-next field 7_0added to possible paths 
-next field null
+ currentGenPath 7_0 
+next field nullnext field 8_0skipped cannot end on last 
+next field 8_1skipped cannot end on last 
+next field 7_1added to possible paths 
+next field 6_1skipped cannot end on last 
+next field 6_0skipped cannot end on last 
+
  generation 2 
 
- currentGenPath 8_0 9_0 
-next field nullnext field 10_0added to possible paths 
-next field 10_1added to possible paths 
-next field 9_1skipped waiting forest 
-next field 8_1skipped reached 
-next field 8_0added to possible paths 
-
- currentGenPath 8_0 8_1 
-next field 8_0skipped reached 
-next field 9_0skipped reached 
-next field 9_1skipped waiting forest 
-next field 8_2added to possible paths 
-next field 7_1returned is enemy 
+ currentGenPath 7_0 7_1 
+next field 7_0added to possible paths 
+next field 8_1returned is enemy 

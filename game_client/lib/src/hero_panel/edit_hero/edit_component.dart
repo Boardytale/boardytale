@@ -7,6 +7,7 @@ import 'package:angular_forms/angular_forms.dart';
 import 'package:core/model/model.dart' as core;
 import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/character.dart';
 import 'package:game_client/src/hero_panel/edit_hero/edit_hero_panels/items.dart';
+import 'package:game_client/src/services/app_service.dart';
 import 'package:game_client/src/services/gateway_service.dart';
 import 'package:game_client/src/services/hero_service.dart';
 import 'package:game_client/src/shared/buttoned_number_input_component.dart';
@@ -20,10 +21,11 @@ class EditHeroComponent {
 
   final HeroService heroService;
   final GatewayService gatewayService;
+  final AppService appService;
 
-  EditHeroComponent(this.heroService, this.gatewayService);
+  EditHeroComponent(this.heroService, this.gatewayService, this.appService);
 
-  core.HeroEnvelope get envelope => hero.envelope;
+  core.HeroEnvelope get envelope => hero.serverState;
 
   bool get showStrAgiInt => hero.showStrAgiInt;
 
@@ -39,21 +41,32 @@ class EditHeroComponent {
     //    this.heroService.createOrEditHero(hero);
   }
 
-  void removeWeapon() {
+  void toInventory(core.ItemEnvelope item) {
     //    hero.items.removeWhere((Item item) => item is Weapon);
     //    save();
   }
 
   void sellItem(core.ItemEnvelope item) {
-    //    hero.items.removeWhere((Item value) => value == item);
-    //    save();
+    heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()
+      ..sellItemId = item.id
+    );
+    heroService.statsChanged();
+  }
+
+  void equip(core.ItemEnvelope item, core.ItemPosition position) async {
+    heroService.nextUpdate.itemManipulations.add(core.ItemManipulation()
+      ..equipItemId = item.id
+      ..equipTo = position
+    );
+    heroService.statsChanged();
   }
 
   void getGain(core.HeroAfterGameGain gain) async {
     core.ToUserServerMessage message = await gatewayService.toUserServerMessage(core.ToUserServerMessage.createHeroUpdate(core.HeroUpdate()
       ..pickGainId = gain.id
       ..heroId = hero.id));
-    heroService.currentHero.add(core.Hero(message.getHeroUpdate.responseHero));
+    core.HeroUpdate update = message.getHeroUpdate;
+    heroService.setHero(update.responseHero, null);
     heroService.gains.add(heroService.gains.value..remove(gain));
   }
 }

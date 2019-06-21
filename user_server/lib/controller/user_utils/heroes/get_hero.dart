@@ -54,9 +54,9 @@ Future<Response> getMyHeroDetail(core.ToUserServerMessage message, ManagedContex
     }).toList();
     Map<String, core.ItemEnvelope> items = {};
     coreGains.forEach((gain){
-      gain.itemIds.forEach((itemId){
-        if(!items.containsKey(itemId)){
-          items[itemId] = itemsData[itemId];
+      gain.itemTypeNames.forEach((typeName){
+        if(!items.containsKey(typeName)){
+          items[typeName] = itemsData[typeName];
         }
       });
     });

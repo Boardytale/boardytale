@@ -68,7 +68,7 @@ class MockedEditor {
         // generated from data/default_heroes by user_server/bin/generate_default_heroes_data.dart
         Map<String, core.ItemEnvelope> itemsData = {
         ${items.values.map((envelope) {
-      return "\"${envelope.id}\": core.ItemEnvelope.fromJson(${json.encode(envelope.toJson())})";
+      return "\"${envelope.typeName}\": core.ItemEnvelope.fromJson(${json.encode(envelope.toJson())})";
     }).join(",\n")}
         };
         """;
@@ -86,7 +86,7 @@ class MockedEditor {
     return response.body;
   }
 
-  Future<List<core.HeroEnvelope>> getDefaultHeroes(Map<String, core.ItemEnvelope> itemsDB) async {
+  Future<List<core.HeroEnvelope>> getDefaultHeroes(Map<String, core.ItemEnvelope> itemsData) async {
     List<FileSystemEntity> entities =
         Directory("${projectDirectoryPath}/data/default_heroes").listSync(recursive: true);
     List<core.HeroEnvelope> out = [];
@@ -97,36 +97,12 @@ class MockedEditor {
           try {
             print("success ${entity.path}");
             core.HeroEnvelope heroEnvelope = core.HeroEnvelope.fromJson(json.decode(outString) as Map<String, dynamic>);
-            core.EquippedItemNames names = heroEnvelope.equippedItemNames;
-            if (heroEnvelope.equippedItems == null) {
-              heroEnvelope.equippedItems = core.EquippedItemsEnvelope();
-            }
-            core.EquippedItemsEnvelope items = heroEnvelope.equippedItems;
+            Map<core.ItemPosition, String> names = heroEnvelope.equippedItemNames;
+            heroEnvelope.equippedItems = {};
             if (names != null) {
-              if (names.head != null) {
-                items.head = itemsDB[names.head];
-              }
-              if (names.elbows != null) {
-                items.elbows = itemsDB[names.elbows];
-              }
-              if (names.rightHand != null) {
-                items.rightHand = itemsDB[names.rightHand];
-              }
-              if (names.leftHand != null) {
-                items.leftHand =itemsDB[names.leftHand];
-              }
-              if (names.rightWrist != null) {
-                items.rightWrist = itemsDB[names.rightWrist];
-              }
-              if (names.leftWrist != null) {
-                items.leftWrist = itemsDB[names.leftWrist];
-              }
-              if (names.body != null) {
-                items.body = itemsDB[names.body];
-              }
-              if (names.legs != null) {
-                items.legs = itemsDB[names.legs];
-              }
+              names.forEach((key, id){
+                heroEnvelope.equippedItems[key] =  itemsData[id];
+              });
             }
             out.add(heroEnvelope);
           } catch (e) {

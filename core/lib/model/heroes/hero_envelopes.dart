@@ -21,115 +21,33 @@ class GameHeroEnvelope {
 
 @Typescript()
 @JsonSerializable()
-class HeroEnvelope {
+class HeroEnvelope implements ItemManipulable{
   GameHeroEnvelope gameHeroEnvelope;
   List<ItemEnvelope> inventoryItems = [];
   /// for hero creation
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
-  EquippedItemNames equippedItemNames;
+  Map<ItemPosition, String> equippedItemNames;
   /// compiled
   @TypescriptOptional()
   @JsonKey(includeIfNull: false)
-  EquippedItemsEnvelope equippedItems;
-  num strength = 1;
+  Map<ItemPosition, ItemEnvelope> equippedItems;
+  int strength = 1;
   int agility = 1;
-  num intelligence = 1;
-  num precision = 10;
-  num spirituality = 10;
-  num energy = 10;
-  num experience = 0;
-  num money = 100;
+  int intelligence = 1;
+  int precision = 10;
+  int spirituality = 10;
+  int energy = 10;
+  int experience = 0;
+  int money = 100;
 
   static HeroEnvelope fromJson(Map<String, dynamic> json){
-    utils.retypeMapInJsonToStringDynamic(json, ["equippedItems"]);
+    utils.retypeMapInJsonToStringDynamic(json, ["equippedItems", "equippedItemNames"]);
     return _$HeroEnvelopeFromJson(json);
   }
 
   Map<String, dynamic> toJson() {
     return _$HeroEnvelopeToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
-class EquippedItemsEnvelope {
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope head;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope neck;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope body;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope elbows;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope leftHand;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope rightHand;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope leftWrist;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope rightWrist;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  ItemEnvelope legs;
-
-  List<ItemEnvelope> equippedItemsList() {
-    return [head, neck, body, elbows, leftHand, rightHand, leftWrist, rightWrist, legs].where((item) {
-      return item != null;
-    }).toList();
-  }
-
-  static EquippedItemsEnvelope fromJson(Map<String, dynamic> json) => _$EquippedItemsEnvelopeFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$EquippedItemsEnvelopeToJson(this);
-  }
-}
-
-@Typescript()
-@JsonSerializable()
-class EquippedItemNames {
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String head;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String neck;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String body;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String elbows;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String leftHand;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String rightHand;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String leftWrist;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String rightWrist;
-  @TypescriptOptional()
-  @JsonKey(includeIfNull: false)
-  String legs;
-
-  static EquippedItemNames fromJson(Map<String, dynamic> json) => _$EquippedItemNamesFromJson(json);
-
-  Map<String, dynamic> toJson() {
-    return _$EquippedItemNamesToJson(this);
   }
 }
 
@@ -162,18 +80,14 @@ enum ItemPosition {
 class HeroUpdate {
   String heroId;
   String name;
-  num strength;
+  int strength;
   int agility;
-  num intelligence;
-  num precision;
-  num spirituality;
-  num energy;
+  int intelligence;
+  int precision;
+  int spirituality;
+  int energy;
   int pickGainId;
-  String equipItemId;
-  ItemPosition equipTo;
-  String moveToInventoryItemId;
-  String sellItemId;
-  String buyItemId;
+  List<ItemManipulation> itemManipulations = [];
   HeroEnvelope responseHero;
 
   static HeroUpdate fromJson(Map<String, dynamic> json) => _$HeroUpdateFromJson(json);
@@ -185,11 +99,27 @@ class HeroUpdate {
 
 @Typescript()
 @JsonSerializable()
+class ItemManipulation {
+  String equipItemId;
+  ItemPosition equipTo;
+  String moveToInventoryItemId;
+  String sellItemId;
+
+  static ItemManipulation fromJson(Map<String, dynamic> json) => _$ItemManipulationFromJson(json);
+
+  Map<String, dynamic> toJson() {
+    return _$ItemManipulationToJson(this);
+  }
+}
+
+
+@Typescript()
+@JsonSerializable()
 class HeroAfterGameGain {
   int id;
   int xp;
   int money;
-  List<String> itemIds;
+  List<String> itemTypeNames;
   String heroId;
 
   static HeroAfterGameGain fromJson(Map<String, dynamic> json) => _$HeroAfterGameGainFromJson(json);

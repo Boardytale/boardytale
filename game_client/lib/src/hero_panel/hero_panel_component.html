@@ -21,6 +21,11 @@
 
 <div class="navbar navbar-expand-lg navbar-light bg-light justify-content-start hero-controls">
   <button
-   (click)="save()"
+   (click)="heroService.save()"
+   [disabled]="heroService.saveDisabled"
   >Save</button>
+  <button
+   (click)="heroService.discard()"
+   [disabled]="heroService.saveDisabled"
+  >Discard changes</button>
 </div>

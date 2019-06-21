@@ -4,25 +4,28 @@
 </span>
 
 <span *ngIf="showStrAgiInt">
-  Síla: <buttoned-input [(value)]="envelope.strength"></buttoned-input><br>
+  Síla: <buttoned-input
+    [value]="strength"
+    (valueChange)="setStrength($event)"
+    [enabledPlus]="enablePhysicals"
+></buttoned-input><br>
 </span>
 
 <span *ngIf="showStrAgiInt">
-  Inteligence: <buttoned-input [(value)]="envelope.intelligence"></buttoned-input><br>
+  Inteligence: <buttoned-input
+    [value]="intelligence"
+    (valueChange)="setIntelligence($event)"
+    [enabledPlus]="enablePhysicals"
+></buttoned-input><br>
 </span>
 
 <span *ngIf="showStrAgiInt">
-  Obratnost: <buttoned-input [(value)]="envelope.agility"></buttoned-input><br>
+  Obratnost: <buttoned-input
+    [value]="agility"
+    (valueChange)="setAgility($event)"
+    [enabledPlus]="enablePhysicals"
+></buttoned-input><br>
 </span>
-
-<span *ngIf="showStrAgiInt">
-  Body zbroje: {{hero.heroSum.armorPoints}}<br>
-</span>
-
-<span *ngIf="showStrAgiInt">
-  Body pohybu: {{hero.heroSum.speedPoints}}<br>
-</span>
-
 <span *ngIf="heroIsHighLevel">
   Přesnost: <buttoned-input [(value)]="envelope.precision" [decimal]="true"></buttoned-input><br>
 </span>
@@ -39,9 +42,18 @@
   Zkušenosti: {{envelope.experience}}<br>
 </span>
 
-<span>
-  Hotovost: {{envelope.money}}<br>
+<hr>
+<span *ngIf="showStrAgiInt">
+  Body zbroje: <strong>{{hero.currentState.armorPoints}}</strong><br>
+  +1 zbroj na <strong>{{heroService.nextArmor}}</strong><br>
 </span>
+<hr>
+<span *ngIf="showStrAgiInt">
+  Body pohybu: <strong>{{hero.currentState.speedPoints}}</strong><br>
+  +1 rychlost na <strong>{{heroService.nextSpeed}}</strong><br>
+</span>
+<hr>
+
 
 <span
  *ngIf="heroIsLowLevel"
