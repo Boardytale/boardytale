@@ -1,7 +1,26 @@
-<div *ngIf="selectedHero == null">
+<div class="hero-panel__tabs">
+ <span
+     [ngClass]="{'selected':tabName == TabNames.select}"
+     (click)="goToSelectHero()">Select hero</span>
+ <span
+     [ngClass]="{'selected':tabName == TabNames.hero}"
+     (click)="goToHeroPanel()">Hero panel</span>
+ <span
+     [ngClass]="{'selected':tabName == TabNames.shop}"
+     (click)="goToShop()">Shop</span>
+ <span
+     [ngClass]="{'selected':tabName == TabNames.shelf}"
+     (click)="goToShelf()">Item team shelf</span>
+</div>
+
+<div
+    *ngIf="tabName == TabNames.select"
+    class="hero-panel__select-tab"
+>
   <h3>Select hero to show inventory</h3>
   <div
       *ngFor="let hero of myHeroes"
+      [ngClass]="{'selected':selectedHero.id == hero.id}"
       class="hero-to-create-cont">
     <h1>{{hero.name}}</h1>
     <img [src]="hero.type.image.data">
@@ -13,10 +32,20 @@
     <span>Armor: {{hero.type.armor}}</span>
   </div>
 </div>
-<div *ngIf="hero != null" style="height: 100%">
+<div *ngIf="tabName == TabNames.hero" style="height: 100%">
+  <span *ngIf="hero == null">
+    No hero selected <a href="javascript:" (click)="goToSelectHero()">go to hero select</a>
+  </span>
   <edit-hero
+      *ngIf="hero != null"
       style="height: 100%;display:block"
   ></edit-hero>
+</div>
+<div *ngIf="tabName == TabNames.shop" style="height: 100%">
+  Here will be shop soon
+</div>
+<div *ngIf="tabName == TabNames.shelf" style="height: 100%">
+  We are working on it
 </div>
 
 <div class="navbar navbar-expand-lg navbar-light bg-light justify-content-start hero-controls">

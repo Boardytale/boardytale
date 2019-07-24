@@ -9657,6 +9657,24 @@ h3 {
     border-color: #dee2e6;
   }
 }
+.hero-panel__select-tab .selected {
+  border: 2px solid green;
+}
+.hero-panel__tabs {
+  height: 34px;
+}
+.hero-panel__tabs span {
+  border: 1px solid black;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 2px;
+  position: relative;
+  top: 6px;
+}
+.hero-panel__tabs span.selected {
+  background-color: #bfff8c;
+}
+
 .main-wrapper {
   height: 100vh;
 }

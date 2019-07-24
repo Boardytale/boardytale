@@ -10,6 +10,7 @@ import 'package:core/model/model.dart' as core;
 
 @Component(
     selector: 'hero-panel',
+    exports: [TabNames],
     directives: [coreDirectives, formDirectives, EditHeroComponent],
     templateUrl: "hero_panel_component.html",
     changeDetection: ChangeDetectionStrategy.OnPush)
@@ -20,6 +21,7 @@ class HeroPanelComponent {
   SettingsService settingsService;
   GatewayService gateway;
   core.HeroEnvelope heroEnvelope;
+  TabNames tabName = TabNames.select;
 
   core.Hero get hero => heroService.currentHero.value;
   List<core.GameHeroEnvelope> myHeroes;
@@ -34,6 +36,7 @@ class HeroPanelComponent {
     if (selectedHero == null) {
       getMyHeroes();
     } else {
+      goToHeroPanel();
       getHeroDetail();
     }
     heroService.currentHero.listen((_){
@@ -46,6 +49,30 @@ class HeroPanelComponent {
 
   core.GameHeroEnvelope get selectedHero => appService.currentHero;
 
+
+//  "goToSelectHero()">Select hero</span>
+//  <span (click)="goToHeroPanel()">Hero panel</span>
+//  <span (click)="goToShop()">Shop</span>
+//  <span (click)="goToShelf()">
+
+  void goToSelectHero() async {
+    tabName = TabNames.select;
+    getMyHeroes();
+    changeDetector.markForCheck();
+  }
+  void goToHeroPanel() async {
+    tabName = TabNames.hero;
+    changeDetector.markForCheck();
+  }
+  void goToShop() async {
+    tabName = TabNames.shop;
+    changeDetector.markForCheck();
+  }
+  void goToShelf() async {
+    tabName = TabNames.shelf;
+    changeDetector.markForCheck();
+  }
+
   void getMyHeroes() async {
     myHeroes = await heroService.getMyHeroes();
     changeDetector.markForCheck();
@@ -54,7 +81,7 @@ class HeroPanelComponent {
   void selectHero(core.GameHeroEnvelope hero) {
     appService.currentHero = hero;
     getHeroDetail();
-    changeDetector.markForCheck();
+    goToHeroPanel();
   }
 
   void getHeroDetail() async {
@@ -67,4 +94,11 @@ class HeroPanelComponent {
     heroService.setHero(heroEnvelope, detail.gainItems);
     changeDetector.markForCheck();
   }
+}
+
+enum TabNames{
+  select,
+  hero,
+  shop,
+  shelf
 }

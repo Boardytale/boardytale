@@ -1,0 +1,21 @@
+.hero-panel{
+  &__select-tab{
+    .selected{
+      border: 2px solid green;
+    }
+  }
+  &__tabs{
+    height: 34px;
+    span {
+      border: 1px solid black;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin: 2px;
+      position: relative;
+      top: 6px;
+    }
+    span.selected{
+      background-color: #bfff8c;
+    }
+  }
+}
