@@ -92,6 +92,8 @@ class ToUserServerMessage {
       ..content = json.encode((GetHeroDetail()..heroId = heroId).toJson());
   }
 
+  // ---
+
   HeroUpdate get getHeroUpdate => HeroUpdate.fromJson(json.decode(content));
 
   void addHeroDetailToUpdate(HeroEnvelope responseHero) {
@@ -103,6 +105,26 @@ class ToUserServerMessage {
       ..message = OnUserServerAction.updateHero
       ..content = json.encode(update.toJson());
   }
+
+  // ---
+
+  List<ItemEnvelope> get getShopItems {
+    List<dynamic> decoded = json.decode(content);
+    return decoded.map((itemData) {
+      return ItemEnvelope.fromJson(itemData);
+    }).toList();
+  }
+
+  void addItemsToShop(List<ItemEnvelope> items) {
+    content = json.encode(items.map((item)=>item.toJson()).toList());
+  }
+
+  factory ToUserServerMessage.createRequestForShopItems() {
+    return ToUserServerMessage()
+      ..message = OnUserServerAction.getShopItems
+      ..content = "";
+  }
+
 }
 
 @Typescript()
@@ -119,6 +141,8 @@ enum OnUserServerAction {
   getHeroDetail,
   @JsonValue('updateHero')
   updateHero,
+  @JsonValue('getShopItems')
+  getShopItems,
 }
 
 @JsonSerializable()

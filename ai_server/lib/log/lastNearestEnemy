@@ -1,93 +1,18 @@
 
- getNearestEnemyByTerrain for unit 9 
+ getNearestEnemyByTerrain for unit 8 
 
  generation 1 
 
- currentGenPath 6_0 
-next field nullnext field nullnext field 7_0added to possible paths 
-next field 6_1added to possible paths 
-next field 5_0added to possible paths 
-next field null
+ currentGenPath 6_3 
+next field 6_2added to possible paths 
+next field 7_2skipped cannot end on last 
+next field 7_3added to possible paths 
+next field 6_4added to possible paths 
+next field 5_3skipped waiting forest 
+next field 5_2added to possible paths 
+
  generation 2 
 
- currentGenPath 6_0 7_0 
-next field nullnext field 8_0added to possible paths 
-next field 8_1added to possible paths 
-next field 7_1added to possible paths 
-next field 6_1skipped reached 
-next field 6_0added to possible paths 
-
- currentGenPath 6_0 6_1 
-next field 6_0skipped reached 
-next field 7_0skipped reached 
-next field 7_1skipped reached 
-next field 6_2added to possible paths 
-next field 5_1added to possible paths 
-next field 5_0skipped reached 
-
- currentGenPath 6_0 5_0 
-next field nullnext field 6_0skipped reached 
-next field 6_1skipped reached 
-next field 5_1skipped reached 
-next field 4_1added to possible paths 
-next field 4_0added to possible paths 
-
- generation 3 
-
- currentGenPath 6_0 7_0 8_0 
-next field nullnext field nullnext field 9_0 - unit can end here by steps - 
-added to possible paths 
-next field 8_1skipped reached 
-next field 7_0skipped reached 
-next field null
- currentGenPath 6_0 7_0 8_1 
-next field 8_0skipped reached 
-next field 9_0skipped reached 
-next field 9_1 - unit can end here by steps - 
-skipped waiting forest 
-next field 8_2 - unit can end here by steps - 
-added to possible paths 
-next field 7_1skipped reached 
-next field 7_0skipped reached 
-
- currentGenPath 6_0 7_0 7_1 
-next field 7_0skipped reached 
-next field 8_1skipped reached 
-next field 8_2skipped reached 
-next field 7_2 - unit can end here by steps - 
-added to possible paths 
-next field 6_2skipped reached 
-next field 6_1skipped reached 
-
- currentGenPath 6_0 7_0 6_0 
-next field nullnext field nullnext field 7_0skipped reached 
-next field 6_1skipped reached 
-next field 5_0skipped reached 
-next field null
- currentGenPath 6_0 6_1 6_2 
-next field 6_1skipped reached 
-next field 7_1skipped reached 
-next field 7_2skipped reached 
-next field 6_3 - unit can end here by steps - 
-added to possible paths 
-next field 5_2 - unit can end here by steps - 
-added to possible paths 
-next field 5_1skipped reached 
-
- currentGenPath 6_0 6_1 5_1 
-next field 5_0skipped reached 
-next field 6_1skipped reached 
-next field 6_2skipped reached 
-next field 5_2skipped reached 
-next field 4_2 - unit can end here by steps - 
-added to possible paths 
-next field 4_1skipped reached 
-
- currentGenPath 6_0 5_0 4_1 
-next field 4_0skipped reached 
-next field 5_0skipped reached 
-next field 5_1skipped reached 
-next field 4_2skipped reached 
-next field 3_1 - unit can end here by steps - 
-added to possible paths 
-next field 3_0returned is enemy 
+ currentGenPath 6_3 6_2 
+next field 6_1returned is enemy 
+enemy 

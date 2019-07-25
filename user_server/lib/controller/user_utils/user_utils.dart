@@ -15,6 +15,7 @@ part 'heroes/update_hero.dart';
 part 'heroes/get_starting_units.dart';
 part 'heroes/set_gain.dart';
 part 'heroes/get_hero.dart';
+part 'heroes/get_shop_items.dart';
 part 'update_user.dart';
 
 Uuid uuid = Uuid();

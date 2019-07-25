@@ -401,7 +401,8 @@ export type OnUserServerAction =
     | 'getMyHeroes'
     | 'updateUser'
     | 'getHeroDetail'
-    | 'updateHero';
+    | 'updateHero'
+    | 'getShopItems';
 
 export type OnUserServerInnerAction =
     | 'getUserByInnerToken'

@@ -1417,7 +1417,8 @@ const _$OnUserServerActionEnumMap = <OnUserServerAction, dynamic>{
   OnUserServerAction.getMyHeroes: 'getMyHeroes',
   OnUserServerAction.updateUser: 'updateUser',
   OnUserServerAction.getHeroDetail: 'getHeroDetail',
-  OnUserServerAction.updateHero: 'updateHero'
+  OnUserServerAction.updateHero: 'updateHero',
+  OnUserServerAction.getShopItems: 'getShopItems'
 };
 
 ListOfHeroes _$ListOfHeroesFromJson(Map<String, dynamic> json) {
