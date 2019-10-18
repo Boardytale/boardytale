@@ -1,3 +1,9 @@
+# Temporarily hidden codebase
+
+Until we solve a licencing issues, the code is hidden. We can join our team on Gitlab. Just request access https://gitlab.com/mlcoch.zdenek/boardytale
+
+
+
 # boardytale
 Multiplayer game inspired by Wesnoth, built on Angular2, StageX and, Aqueduct2
 
